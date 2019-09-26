@@ -3,12 +3,11 @@ layout: default
 ---
 Hello, World!
 
-![]("ego.png")
 [link](https://stat.duke.edu/).
 [link](ss.html)
 
-<img src="ego.png" alt="ego" width="50"/>
 
 # Header A
+<img src="ego.png" alt="ego" width="80"/>
 $$\Sigma$$
 $ 3 +3 = \alpha$
