@@ -9,16 +9,18 @@ Hello, World!
 
 # Header A
 <img src="ego.png" alt="ego" width="80"/>
-$$ \Sigma $$
+$$
+\Sigma
+$$
 $3+3 = \alpha$
 abcd
 
 markdown
 Copy code
-This is an inline math equation: \( E = mc^2 \)
+This is an inline math equation: $E = mc^2$
 
 This is a display math equation:
 
 $$
 \int_{a}^{b} x^2 dx
-$$ 
+$$
