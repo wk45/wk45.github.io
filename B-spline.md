@@ -1,4 +1,8 @@
---- layout: full-width ---
+---
+
+layout: full-width 
+
+---
 
 # B-spline
 
