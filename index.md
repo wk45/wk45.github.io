@@ -9,5 +9,5 @@ Hello, World!
 
 # Header A
 <img src="ego.png" alt="ego" width="80"/>
-$$\Sigma$$
+$$ \Sigma $$
 $ 3 +3 = \alpha$
