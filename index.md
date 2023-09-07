@@ -6,7 +6,7 @@ Hello, World!
 [link](https://stat.duke.edu/).
 [link](ss.html)
 
-[link](B-spline.md)
+[link](/B-spline.md/)
 
 
 # Header A
