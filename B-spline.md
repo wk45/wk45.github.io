@@ -66,5 +66,8 @@ layout: full-width
 
 ```python
 1+1 = 3
+a = [];
+for i in range(10):
+    a.append(i*3)
 ```
 
