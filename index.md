@@ -6,6 +6,8 @@ Hello, World!
 [link](https://stat.duke.edu/).
 [link](ss.html)
 
+[link](B-slpine.md)
+
 
 # Header A
 <img src="ego.png" alt="ego" width="80"/>
