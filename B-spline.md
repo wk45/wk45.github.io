@@ -1,3 +1,5 @@
+--- layout: full-width ---
+
 # B-spline
 
 - Basis spline: spline function that has minimal support w.r.t. a given degree, smoothness, and domain partition.
