@@ -8,6 +8,11 @@ Hello, World!
 
 [link](/B-spline.md/)
 
+[link](/B-spline2.md/)
+
+
+# 
+
 
 # Header A
 <img src="ego.png" alt="ego" width="80"/>
