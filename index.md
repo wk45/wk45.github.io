@@ -1,37 +1,23 @@
 ---
 layout: default
 ---
-Hello, World!
 
-[link](https://stat.duke.edu/).
-[link](ss.html)
+I am PhD Candidate at FSU statistics department. My main research interest is functional data analysis and Bayesian inference. 
 
-[link](/B-spline.md/)
+<!-- [link](https://stat.duke.edu/). -->
+<!-- [link](ss.html) -->
+<!-- [link](/B-spline.md/) -->
+<!-- [link](/B-spline2.md/) -->
 
-[link](/B-spline2.md/)
+<!-- <img src="ego.png" alt="ego" width="80"/> -->
 
-[link](/Projects/PathAnalysis/Visualization/test99.html)
-# 
+# Projects
+## 1. Functional Data Analysis
 
+### 1. 1. Peak Persistence Diagrams ([PPD](https://arxiv.org/abs/2305.04826))
 
-# Header A
-<img src="ego.png" alt="ego" width="80"/>
-$$
-\Sigma
-$$
+### 1. 2. Phase Alignment of functions by Trajectory
+- Results
+[Path Analysis](/Projects/PathAnalysis/Visualization/test99.html)
 
-
-$3+3 = \alpha$
-
-abcd
-
-markdown
-
-Copy code
-
-This is an inline math equation: $E = mc^2$
-
-This is a display math equation:
-$$
-\int_{a}^{b} x^2 dx
-$$
+<!-- $3+3 = \alpha$ -->
