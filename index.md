@@ -2,8 +2,6 @@
 layout: default
 ---
 
-I am PhD Candidate at FSU statistics department. My main research interest is functional data analysis and Bayesian inference. 
-
 <!-- [link](https://stat.duke.edu/). -->
 <!-- [link](ss.html) -->
 <!-- [link](/B-spline.md/) -->
