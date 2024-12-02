@@ -17,8 +17,6 @@ layout: default
 ### 1. 2. Phase Alignment of functions by Trajectory
 - Results
 [Path Analysis](/Projects/PathAnalysis/Visualization/test99.html)
-- PT
-[PT](/Projects/PathAnalysis/PT/EssayPresentation.html)
 
 
 
