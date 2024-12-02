@@ -237,7 +237,7 @@ With <span style="color: blue;"> **Additive and Warping noise **</span>
   </dd>
 </dl>
 
-![](slide_images/slide5-2.png){style="display: block; margin: 0; auto; width: 90%;"}
+![](slide_images/slide5-2.png){style="display: block; margin: 0 auto; width: 90%;"}
 :::
 
 ::: {.column}
@@ -253,7 +253,7 @@ With <span style="color: blue;"> **Additive and Warping noise **</span>
     <span style="color: blue;">$\bar{h}$</span>
   </dd>
 </dl>
-![](slide_images/slide5-3.png){style="display: block; margin: 0; auto; width: 90%;"}
+![](slide_images/slide5-3.png){style="display: block; margin: 0 auto; width: 90%;"}
 :::
 ::: 
 
@@ -302,7 +302,7 @@ Aligned Mean
 ## <span style="font-weight: bold;"> Motivation</span> {.smaller auto-animate=true}
 
 ::: {layout-ncol=2}
-![<span style="text-align: center; font-size:%">Un-aligned</span>
+![<span style="text-align: center; font-size: 180%">Un-aligned</span>
 ](slide_images/Slide8/slide8-2.png)
 
 ![<span style="text-align: center; font-size: 180%">Aligned</span>
@@ -523,6 +523,25 @@ Let $\{\lambda_l\}_{l=1}^5 = (0, 0.02, 0.05, 0.15, 0.30)$
 <iframe src="interactive-ppd.html" width="100%" height="500" style="border:none;"></iframe>
 :::
 
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+<script>
+  MathJax = {
+    tex: {
+      inlineMath: [['$', '$'], ['\\(', '\\)']],
+    },
+    startup: {
+      ready: () => {
+        console.log("MathJax 3 ready");
+        MathJax.startup.defaultReady();
+      }
+    }
+  };
+</script>
+
+<script>
+  console.log('MathJax version:', window.MathJax?.version || 'Not loaded');
+</script>
+
 ## <span style="font-weight: bold;">Step 1: PPD and $\lambda$ Selection</span></span> <span style="color: blue; font-size: 80%"> <br> Criterion 1. **Significance** of a peak</span>{.smaller auto-animate=true}
 
 - We define **strength** of a peak in any absolutely continuous function $f(t_0)$ at a location of a peak, $t_0 \in [0,1]$:
@@ -687,7 +706,7 @@ $$ \hat{g} = (g_{\mathbf{h}^*} \circ \gamma^*)(t) $$
 
 ## <span style="font-weight: bold;"> Results <br> </span>{.smaller}
 
-![](slide_images/sim1.png)
+![](slide_images/Sim1.png)
 
 ## <span style="font-weight: bold;"> Results <br> </span>{.smaller}
 
@@ -883,7 +902,7 @@ where $\mathbf{U} \in \mathbb{R}^{L \times L}$ is a matrix with columns of eigen
     height: 80vh;
     padding: 0em;
     border: none;
-    background-color: transparent;
+    background-color: transparent;"
     class="cell">
 <iframe src="https://wk45.github.io/Projects/PathAnalysis/Visualization/test99.html" width="100%" height="100%" 
   style="display: block; margin: 0 auto; border: none;">

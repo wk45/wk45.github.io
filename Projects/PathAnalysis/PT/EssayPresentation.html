@@ -547,8 +547,8 @@ q(t) = \text{sign}(\dot{f}(t)) \sqrt{|\dot{f}(t)|}.
     padding: 10px; 
     border-radius: 10px; 
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
-    translate: (-50%, -60%);
-    font-size: 1.2em;">
+    translate:(-50%, -60%);
+    font-size: 1.2em">
 <p><br><br></p>
 <ul>
 <li><p>Given a candidate set, <span class="math inline">\(\{\lambda_l\}_{l=1}^L\)</span>.</p></li>
@@ -574,7 +574,7 @@ q(t) = \text{sign}(\dot{f}(t)) \sqrt{|\dot{f}(t)|}.
     padding: 10px; 
     border-radius: 10px; 
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
-    translate: (-50%, -60%);
+    translate:(-50%, -60%);
     font-size: 1.2em">
 <p><br><br></p>
 <ul>
@@ -658,6 +658,23 @@ q(t) = \text{sign}(\dot{f}(t)) \sqrt{|\dot{f}(t)|}.
 <iframe src="interactive-ppd.html" width="100%" height="500" style="border:none;">
 </iframe>
 </div>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+<script>
+  MathJax = {
+    tex: {
+      inlineMath: [['$', '$'], ['\\(', '\\)']],
+    },
+    startup: {
+      ready: () => {
+        console.log("MathJax 3 ready");
+        MathJax.startup.defaultReady();
+      }
+    }
+  };
+</script>
+<script>
+  console.log('MathJax version:', window.MathJax?.version || 'Not loaded');
+</script>
 </section>
 <section id="step-1-ppd-and-lambda-selection-criterion-1.-significance-of-a-peak" class="slide level2 smaller" data-auto-animate="true">
 <h2 data-id="quarto-animate-title"><span style="font-weight: bold;">Step 1: PPD and <span class="math inline">\(\lambda\)</span> Selection</span> <span style="color: blue; font-size: 80%"> <br> Criterion 1. <strong>Significance</strong> of a peak</span></h2>
@@ -759,7 +776,7 @@ Given <span class="math inline">\(\hat{g}_{\lambda}\)</span>, a peak at <span cl
     padding: 10px; 
     border-radius: 10px; 
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
-    translate: (-50%, -60%);
+    translate:(-50%, -60%);
     font-size: 1.2em">
 <p><br><br></p>
 <ol type="1">
