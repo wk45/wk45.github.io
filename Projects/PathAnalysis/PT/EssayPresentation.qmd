@@ -433,7 +433,7 @@ $$\hat{g}_\lambda := \bar{h}_{\lambda} := \frac{1}{n} \sum_{i=1}^n f^*_{\lambda,
     padding: 10px; 
     border-radius: 10px; 
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
-    tranlate(-50%, -60%);
+    translate:(-50%, -60%);
     font-size: 1.2em"
     class="fragment">
 <br><br>
@@ -461,7 +461,7 @@ $$\hat{g}_\lambda := \bar{h}_{\lambda} := \frac{1}{n} \sum_{i=1}^n f^*_{\lambda,
     padding: 10px; 
     border-radius: 10px; 
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
-    tranlate(-50%, -60%);
+    translate:(-50%, -60%);
     font-size: 1.2em">
 
   <br><br>
@@ -598,7 +598,7 @@ $$
 ::: {layout-ncol=2}
 ![](slide_images/PPD_lam_selection1.png)
 
-![](slide_images/PPD_lam_selection2.png)
+![](slide_images/ppd_lam_selection2.png)
 :::
 
 ## <span style="font-weight: bold;font-size: 80%">Step 2: Function Estimation with Peak-Constraints</span> {.smaller auto-animate=true}
@@ -616,7 +616,7 @@ $$
     padding: 10px; 
     border-radius: 10px; 
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
-    tranlate(-50%, -60%);
+    translate:(-50%, -60%);
     font-size: 1.2em"
     class="fragment fade-in">
 
