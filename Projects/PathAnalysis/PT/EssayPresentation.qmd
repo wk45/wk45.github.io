@@ -359,7 +359,7 @@ Our approach to solving the function alignment problem involves optimizing an ob
 We can peek the results of the means of the *partially* alinged functions.
 
 ## <span style="font-weight: bold;">Overview Algorithm</span>{auto-animate=true}
-![](slide_images/diagram2.jpg){style="position: absolute; top: 7%; left: 50%; transform: translateX(-50%); width: 90%;"}
+![](slide_images/Diagram2.jpg){style="position: absolute; top: 7%; left: 50%; transform: translateX(-50%); width: 90%;"}
 
 ## <span style="font-weight: bold;"> Background Material </span><span style="color: blue;"> Function Alignment</span> {.smaller auto-animate=true}
 Let $f \in \mathcal{F}$, where $\mathcal{F}$ is the space of absolutely continuous functions. The **square-root velocity function (SRVF)** for $f$ is defined as:
@@ -420,7 +420,7 @@ $$\hat{g}_\lambda := \bar{h}_{\lambda} := \frac{1}{n} \sum_{i=1}^n f^*_{\lambda,
 
 ## <span style="font-weight: bold;">Step 0: Function Alignment by SRVF</span> {.smaller auto-animate=true}
 
-![](slide_images/diagram2.jpg){style="position: absolute; top: 7%; left: 50%; transform: translateX(-50%); width: 90%; z-index: 0;"}
+![](slide_images/Diagram2.jpg){style="position: absolute; top: 7%; left: 50%; transform: translateX(-50%); width: 90%; z-index: 0;"}
 
 <!-- Semi-transparent Rectangle -->
 <div style="
