@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Four-Slide Carousel with Splide.js</title>
+  <!-- Splide.js CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@splidejs/splide@latest/dist/css/splide.min.css">
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      height: 100vh;
+      overflow: hidden;
+      background-color: #ffffff;
+      display: flex;
+      justify-content: center;
+      align-items: center; /* Vertically center content */
+    }
+
+    .splide {
+      width: 120%;
+    }
+
+    .splide__slide {
+      display: flex; /* Flexbox for centering */
+      flex-direction: column; /* Stack content vertically */
+      justify-content: center; /* Center vertically */
+      align-items: center; /* Center horizontally */
+      transition: transform 0.5s ease-in-out;
+    }
+
+    .splide__slide img {
+      width: 80%; /* Adjust the width as needed */
+      height: auto;
+      object-fit: contain;
+      margin-bottom: 1rem; /* Add space between image and caption */
+    }
+
+    .splide__slide p {
+      font-size: 2em;
+      text-align: center;
+      margin: 0;
+    }
+  </style>
+
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']], // Set inline math delimiters
+        displayMath: [['$$', '$$'], ['\\[', '\\]']] // Set display math delimiters
+      },
+    };
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+
+  <div id="image-carousel" class="splide">
+    <div class="splide__track">
+      <ul class="splide__list">
+        <li class="splide__slide" data-id="0">
+            <p>$\qquad \qquad \qquad \hat{g}_{\lambda_1}$ <span style="font-size: 70%">$\quad \quad(\lambda_1 = 0)$</span></p>
+            <img src="slide_images/slide8/fns-by-lambda-0.png" alt="Lambda 1">
+        </li>
+        <li class="splide__slide" data-id="1">
+            <p>$\qquad \qquad \qquad \hat{g}_{\lambda_2}$ <span style="font-size: 70%">$\quad \quad(\lambda_2 = 0.02)$</span></p>
+            <img src="slide_images/slide8/fns-by-lambda-0.02.png" alt="Lambda 2">
+        </li>
+        <li class="splide__slide" data-id="2">
+            <p>$\qquad \qquad \qquad \hat{g}_{\lambda_3}$ <span style="font-size: 70%">$\quad \quad(\lambda_3 = 0.05)$</span></p>
+            <img src="slide_images/slide8/fns-by-lambda-0.05.png" alt="Lambda 3">
+        </li>
+        <li class="splide__slide" data-id="3">
+            <p>$\qquad \qquad \qquad \hat{g}_{\lambda_4}$ <span style="font-size: 70%">$\quad \quad(\lambda_4 = 0.15)$</span></p>
+            <img src="slide_images/slide8/fns-by-lambda-0.15.png" alt="Lambda 4">
+        </li>
+        <li class="splide__slide" data-id="4">
+          <p>$\qquad \qquad \qquad \hat{g}_{\lambda_5}$ <span style="font-size: 70%">$\quad \quad(\lambda_5 = 0.30)$</span></p>
+          <img src="slide_images/slide8/fns-by-lambda-inf.png" alt="Lambda 5">
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Splide.js Script -->
+  <script src="https://cdn.jsdelivr.net/npm/@splidejs/splide@latest/dist/js/splide.min.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const splide = new Splide('#image-carousel', {
+          type: 'loop',
+          perPage: 2, // Display 4 slides per page
+          gap: 0, // Adjust gap between slides as needed
+          padding: { left: '5%', right: '5%' }, // Adjust padding to control adjacent slide visibility
+          speed: 500, // Transition speed in milliseconds
+          keyboard: 'global', // Enable global keyboard navigation
+          breakpoints: {
+            768: {
+              perPage: 1,
+            },
+          },
+        }).mount();
+
+      // Custom keyboard navigation
+      document.addEventListener('keydown', (event) => {
+          const MOVE_AMOUNT = 1; // Adjust slide move
+          if (event.key === 'ArrowRight') {
+              splide.go(`+${MOVE_AMOUNT}`); // Move to the right with smaller leap
+          } else if (event.key === 'ArrowLeft') {
+              splide.go(`-${MOVE_AMOUNT}`); // Move to the left with smaller leap
+          }
+      });
+    });
+  </script>
+</body>
+</html>
