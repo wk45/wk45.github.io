@@ -14,7 +14,7 @@
         h1 { color: #333; }
         p { 
             font-size: 15px;
-            text-align: left;  /* ✅ Align paragraph text to the left */
+            text-align: left;  /* Align paragraph text to the left */
             max-width: 80%;    /* Optional: Control width for better readability */
             margin: 0 auto;    /* Keeps it centered within the layout */
         }        
@@ -268,7 +268,7 @@
             peakHeight: data.peakHeight,
             peakLoc: data.peakLoc,
             sigMat: data.sigMat,
-            IdxOpt: data.IdxOpt  // ✅ Store optimal lambda indices
+            IdxOpt: data.IdxOpt  // Store optimal lambda indices
         };
     }
 
@@ -348,7 +348,7 @@
             requestAnimationFrame(animate3D);
             controls3D.update();
             renderer3D.render(scene3D, camera3D);
-                    // ✅ Log the current camera position and lookAt
+                    // Log the current camera position and lookAt
             // console.log("Camera Position:", camera3D.position);
             // console.log("Camera Target:", controls3D.target);
         }
@@ -361,18 +361,18 @@
         scene2D = new THREE.Scene();
         scene2D.background = new THREE.Color(0x333333);
 
-        // ✅ Compute min/max values dynamically
+        // Compute min/max values dynamically
         const xMin = Math.min(...x);
         const xMax = Math.max(...x);
         const yMin = Math.min(...ghat.flat());
         const yMax = Math.max(...ghat.flat());
 
-        // ✅ Slightly extend axis ranges (optional)
+        // Slightly extend axis ranges (optional)
         const padding = 0.05;
         const xRange = (xMax - xMin) * padding;
         const yRange = (yMax - yMin) * padding;
 
-        // ✅ Adjust camera to fit the computed range
+        // Adjust camera to fit the computed range
         camera2D = new THREE.OrthographicCamera(
             xMin - xRange, xMax + xRange, // left, right
             yMax + yRange, yMin - yRange, // top, bottom
@@ -384,7 +384,7 @@
         renderer2D.setSize(container.clientWidth, container.clientHeight);
         container.appendChild(renderer2D.domElement);
 
-        // // ✅ X-Axis (Extends just beyond xMin-xMax)
+        // // X-Axis (Extends just beyond xMin-xMax)
         // const xAxisPositions = [xMin - xRange, 0, 0, xMax + xRange, 0, 0];
         // const xAxisGeometry = new LineGeometry();
         // xAxisGeometry.setPositions(xAxisPositions);
@@ -398,7 +398,7 @@
         // const xAxisLine = new Line2(xAxisGeometry, xAxisMaterial);
         // scene2D.add(xAxisLine);
 
-        // // ✅ Y-Axis (Extends just beyond yMin-yMax)
+        // // Y-Axis (Extends just beyond yMin-yMax)
         // const yAxisPositions = [0, yMin - yRange, 0, 0, yMax + yRange, 0];
         // const yAxisGeometry = new LineGeometry();
         // yAxisGeometry.setPositions(yAxisPositions);
@@ -429,7 +429,7 @@
             scene2D.remove(selected2DLine);
         }
 
-        // ✅ Draw the main curve
+        // Draw the main curve
         const positions = [];
         for (let m = 0; m < M; m++) {
             positions.push(x[m], ghat[optLambdaIdx][m], 0);
@@ -448,17 +448,17 @@
         selected2DLine.computeLineDistances();
         scene2D.add(selected2DLine);
 
-        // ✅ Remove previous markers
+        // Remove previous markers
         markerObjects2D.forEach(marker => scene2D.remove(marker));
         markerObjects2D = [];
 
-        // ✅ Add markers (blue for normal peaks, grey for killed peaks)
+        // Add markers (blue for normal peaks, grey for killed peaks)
         for (let k = 0; k < K; k++) {
             let xVal = peakLoc[optLambdaIdx][k];
             let yVal = peakHeight[optLambdaIdx][k];
 
             if (xVal !== null && yVal !== null) {
-                const markerGeometry = new THREE.SphereGeometry(0.02, 12, 12); // ✅ Small dot
+                const markerGeometry = new THREE.SphereGeometry(0.02, 12, 12); // Small dot
                 const isKilled = sigMat[optLambdaIdx][k] <= selectedPerc;
                 const markerMaterial = new THREE.MeshBasicMaterial({
                     color: isKilled ? 0xaaaaaa : 0x000000  // Grey if killed, else blue
@@ -471,14 +471,14 @@
             }
         }
 
-        // ✅ Highlight **Optimal λ** markers in green
+        // Highlight **Optimal λ** markers in green
         if (optLambdaIdx !== null) {
             for (let k = 0; k < K; k++) {
                 let xVal = peakLoc[optLambdaIdx][k];
                 let yVal = peakHeight[optLambdaIdx][k];
 
                 if (xVal !== null && yVal !== null && sigMat[optLambdaIdx][k] > selectedPerc) {
-                    const greenMarkerGeometry = new THREE.SphereGeometry(0.025, 12, 12); // ✅ Bigger dot
+                    const greenMarkerGeometry = new THREE.SphereGeometry(0.025, 12, 12); // Bigger dot
                     const greenMarkerMaterial = new THREE.MeshBasicMaterial({ color: 0x00ffbb });
 
                     const greenMarker = new THREE.Mesh(greenMarkerGeometry, greenMarkerMaterial);
@@ -492,7 +492,7 @@
 
     function plot_g_2DPlot() {
         if (g2DLine) {
-            return; // ✅ Skip if already drawn (avoids redundant rendering)
+            return; // Skip if already drawn (avoids redundant rendering)
         }
 
         const positions = [];
@@ -506,7 +506,7 @@
 
         const lineMaterial = new LineMaterial({
             color: 0xff0000, // cyan
-            linewidth: 3,    // ✅ Thicker line for visibility
+            linewidth: 3,    // Thicker line for visibility
         });
         lineMaterial.resolution.set(renderer2D.domElement.width, renderer2D.domElement.height);
 
@@ -563,7 +563,7 @@
             side: THREE.DoubleSide,
             transparent: true,
             opacity: 0.5,
-            depthWrite: false   // ✅ Prevents issues where opaque objects render over transparent ones
+            depthWrite: false   // Prevents issues where opaque objects render over transparent ones
         });
         surfaceMesh = new THREE.Mesh(geometry, material);
         scene3D.add(surfaceMesh);
@@ -611,16 +611,16 @@
 
     function createLambdaOptLine(container) {
         const linePositions = [];
-        const gPositions = [];  // ✅ To store g(x) positions
+        const gPositions = [];  // To store g(x) positions
 
         let optLambdaIdx = IdxOpt ? IdxOpt[0] : 0;
 
         for (let m = 0; m < M; m++) {
             linePositions.push(x[m], ghat[optLambdaIdx][m], lam[optLambdaIdx]); // λ* Curve
-            gPositions.push(x[m], g[m], lam[optLambdaIdx]); // ✅ g(x) Curve at same λ*
+            gPositions.push(x[m], g[m], lam[optLambdaIdx]); // g(x) Curve at same λ*
         }
 
-        // ✅ Draw λ* Line
+        // Draw λ* Line
         const optLineGeometry = new LineGeometry();
         optLineGeometry.setPositions(linePositions);
         const optLineMaterial = new LineMaterial({
@@ -632,7 +632,7 @@
         lambdaOptLine.computeLineDistances();
         scene3D.add(lambdaOptLine);
 
-        // ✅ Draw g(x) Line (Store globally!)
+        // Draw g(x) Line (Store globally!)
         const gLineGeometry = new LineGeometry();
         gLineGeometry.setPositions(gPositions);
         const gLineMaterial = new LineMaterial({
@@ -641,7 +641,7 @@
         });
         gLineMaterial.resolution.set(container.clientWidth, container.clientHeight);
         
-        g3DLine = new Line2(gLineGeometry, gLineMaterial);  // ✅ Store g3DLine globally
+        g3DLine = new Line2(gLineGeometry, gLineMaterial);  // Store g3DLine globally
         g3DLine.computeLineDistances();
         scene3D.add(g3DLine);
     }
@@ -663,7 +663,7 @@
                 if (xVal !== null && yVal !== null) {
                     segment.push(xVal, yVal, zVal);
 
-                    // ✅ Create a black sphere marker
+                    // Create a black sphere marker
                     const sphereGeometry = new THREE.SphereGeometry(0.02, 12, 12); // Small & smooth
                     const sphereMaterial = new THREE.MeshBasicMaterial({ color: 0x000000 });
                     const sphere = new THREE.Mesh(sphereGeometry, sphereMaterial);
@@ -689,7 +689,7 @@
                 peakGeometry.setAttribute('color', new THREE.Float32BufferAttribute(colors, 3));
 
                 const peakMaterial = new LineMaterial({
-                    vertexColors: true,  // ✅ Enable per-vertex colors
+                    vertexColors: true,  // Enable per-vertex colors
                     linewidth: 1,
                 });
                 peakMaterial.resolution.set(container.clientWidth, container.clientHeight);
@@ -741,7 +741,7 @@
 
         for (let m = 0; m < M; m++) {
             newPositions.push(x[m], ghat[optLambdaIdx][m], lam[optLambdaIdx]); // Lambda* Curve
-            gNewPositions.push(x[m], g[m], lam[optLambdaIdx]); // ✅ g(x) at same λ*
+            gNewPositions.push(x[m], g[m], lam[optLambdaIdx]); // g(x) at same λ*
         }
 
         lambdaOptLine.geometry.setPositions(newPositions);
@@ -750,7 +750,7 @@
             document.getElementById("plot-container-3d").clientHeight
         );
 
-        // ✅ Also update g(x) in 3D
+        // Also update g(x) in 3D
         g3DLine.geometry.setPositions(gNewPositions);
         g3DLine.material.resolution.set(
             document.getElementById("plot-container-3d").clientWidth,
@@ -762,10 +762,10 @@
     function updatePercSelection(selectedPerc) {
         document.getElementById("percValue").innerText = selectedPerc.toFixed(0);
 
-        // ✅ Get the optimal lambda index for the selected percentage
+        // Get the optimal lambda index for the selected percentage
         let optLambdaIdx = (IdxOpt && IdxOpt.length > selectedPerc) ? IdxOpt[selectedPerc] : null;
 
-        // ✅ Update λ_opt curve if valid
+        // Update λ_opt curve if valid
         if (optLambdaIdx !== null) {
             const newPositions = [];
             for (let m = 0; m < M; m++) {
@@ -778,7 +778,7 @@
             );
         }
 
-        // ✅ First Pass: Update all peak colors normally (grey for killed, blue otherwise)
+        // First Pass: Update all peak colors normally (grey for killed, blue otherwise)
         for (let k = 0; k < K; k++) {
             for (let l = 0; l < L; l++) {
                 if (sigMat[l][k] !== null && peakPoints[k][l] !== undefined) {
@@ -793,41 +793,41 @@
             }
         }
 
-        // ✅ Second Pass: Ensure Green markers **ONLY on non-killed peaks**
+        // Second Pass: Ensure Green markers **ONLY on non-killed peaks**
         if (optLambdaIdx !== null) {
             for (let k = 0; k < K; k++) {
                 if (peakPoints[k][optLambdaIdx] !== undefined) {
-                    // ✅ Only update if the peak **is NOT grey**
+                    // Only update if the peak **is NOT grey**
                     if (sigMat[optLambdaIdx][k] > selectedPerc) {
                         peakPoints[k][optLambdaIdx].material.color.set(0x00ffbb);  // Green for optimal λ
-                        peakPoints[k][optLambdaIdx].scale.set(1.5, 1.5, 1.5); // ✅ Make it slightly bigger!
+                        peakPoints[k][optLambdaIdx].scale.set(1.5, 1.5, 1.5); // Make it slightly bigger!
                     }
                 }
             }
         }
     }
 
-    // ✅ **Call this function at the end of the plot setup to ensure initial green markers**
+    // **Call this function at the end of the plot setup to ensure initial green markers**
     updatePercSelection(0);
     function clearAllPlots() {
-        // ✅ Remove all objects from the 3D scene
+        // Remove all objects from the 3D scene
         while (scene3D.children.length > 0) { 
             scene3D.remove(scene3D.children[0]); 
         }
 
-        // ✅ Remove all objects from the 2D scene
+        // Remove all objects from the 2D scene
         while (scene2D.children.length > 0) { 
             scene2D.remove(scene2D.children[0]); 
         }
 
-        // ✅ Remove previous WebGL renderers to avoid stacking
+        // Remove previous WebGL renderers to avoid stacking
         const old3DRenderer = document.querySelector("#plot-container-3d canvas");
         if (old3DRenderer) old3DRenderer.remove();
 
         const old2DRenderer = document.querySelector("#plot-container-2d canvas");
         if (old2DRenderer) old2DRenderer.remove();
 
-        // ✅ Reset global variables for safety
+        // Reset global variables for safety
         selectedLine = null;
         lambdaOptLine = null;
         g2DLine = null;
