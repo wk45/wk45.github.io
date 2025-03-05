@@ -203,6 +203,7 @@
                 <figcaption>(c)</figcaption>
             </figure>
         </div>
+        <br>
 
         <p>In Plot (b), the values \(p_1, p_2, p_3, p_4\) represent persistence measures across varying percentile values. These measures are defined as the bar-lengths of significant peaks in \(\hat{g}_{\lambda \mid \text{perc}}\). The solid and dotted lines indicate ground truth and spurious peak labels, respectively. The strength percentile should be selected by distinguishing between these persistence measures—ensuring that ground truth peaks remain prominent while spurious peaks are suppressed. However, if both \(p_3\) and \(p_4\) become too small, this forces the PPD to select a very small \(\lambda^*\), which may lead to excessive alignment.</p>
         <br>
@@ -254,7 +255,9 @@
         </div>
         <br>
         <p>Out of the six labeled peaks, the true peak labels are 1 and 4, as shown in (b), with key percentile values \(\{0, 2, 36, 70\}\). Notably, the PPDs for both the 36th and 70th percentiles exhibit stable significance across peaks. However, these extreme PPDs, where the persistence measures for \( p_2, p_3, p_5, \) and \( p_6 \) are nearly zero, will inevitably force our method to select \(\lambda^* \approx 0\). Indeed, the corresponding \(\lambda^*\) values for each case are 0.29, 0.12, 0.01, and 0. The resulting \(\hat{g}_{\lambda^*\mid\text{perc}}\) is illustrated below:</p>    
+        <br>
         <img src="figs/tau_ex3_ghat.png" width="400">
+        <br>
         <p>As observed, \(\hat{g}_{\lambda^*\mid\text{perc}}\) for the 36th percentile exhibits distinct peaks and valleys, particularly for Peaks 2 and 3. In this case, determining an appropriate percentile range is somewhat ambiguous and requires user discretion based on visual inspection. From my perspective, a reasonable range for this case could be [0,10] or [0,16].</p><br>
 
         <br>
