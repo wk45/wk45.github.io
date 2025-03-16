@@ -13,17 +13,16 @@ Functional Data Anaylsis and Bayesian Inference
 
 ## Main Projects
 
-The main research is about Functional registration using Fisher-Rao metric in Riemannian manifold. 
+My primary research focuses on functional registration using the Fisher-Rao metric within a Riemannian manifold framework. This approach enables the alignment of functional data in a geometrically meaningful way, facilitating more accurate statistical analysis and inference in the context of functional data.
 
 #### • Peak Persistence Diagrams ([PPD](https://arxiv.org/abs/2305.04826))
 
-PPD is a very simple but novel visualization tool for the functional estimation.
+PPD is a simple yet novel visualization tool designed for functional estimation.
 
 
 #### • Phase Alignment of functions by Trajectory ([Path Analysis](/Projects/PathAnalysis/Visualization/test99.html))
 
-
-Functional registration can be achieved by investigating the path of the mean of aligned functions by projecting them onto lower dimensional space via functional principal component analysis (FPCA).
+Functional registration is accomplished by analyzing the trajectory of the mean function after alignment. This is done by projecting the aligned functions onto a lower-dimensional space using Functional Principal Component Analysis (FPCA), enabling effective visualization and interpretation of the registration process.
 
 #### • Bayesian Functional Alignment
 
