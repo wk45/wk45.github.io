@@ -1,8 +1,7 @@
 title: Woo Min Kim
 logo: ego.png
-description:
 show_downloads: false
-google_analytics: false
+google_analytics: True
 theme: jekyll-theme-minimal
 kramdown:
   math_engine: mathjax
