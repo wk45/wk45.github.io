@@ -3,16 +3,3 @@
 
 @import "jekyll-theme-minimal";
 
-/* Override sidebar (header) */
-header {
-  width: 15% !important;
-  float: left !important;
-  position: fixed !important;
-}
-
-/* Override main content (section) */
-section {
-  width: 85% !important;
-  float: right !important;
-  padding-bottom:50px;
-}
