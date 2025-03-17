@@ -3,12 +3,17 @@
 
 @import "jekyll-theme-minimal";
 
-.sidebar {
+/* Override sidebar (header) */
+header {
   width: 10% !important;
-  background-color: lightgray;
+  background-color: lightgray !important;
+  float: left !important;
+  position: fixed !important;
 }
 
-.content {
+/* Override main content (section) */
+section {
   width: 90% !important;
-  background-color: white;
+  background-color: white !important;
+  float: right !important;
 }

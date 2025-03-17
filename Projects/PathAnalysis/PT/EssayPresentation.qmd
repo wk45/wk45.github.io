@@ -828,9 +828,8 @@ $$
 ![](slide_images/2dPPDex3.png)
 
 ## {}
-<div style="font-size: 1.2em; font-weight: bold; text-align: center; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">2D Curve Registraion by Trajectory
+<div style="font-size: 1.2em; font-weight: bold; text-align: center; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">2D Curve Registration by Principal Component Trajectory
 </div>
-
 
 ## **Alignment and Trajectory Construction**{.smaller auto-animate=true}
 
