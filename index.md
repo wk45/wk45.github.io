@@ -22,13 +22,12 @@ To understand functional registration, it is important to recognize that functio
 
 Functional registration primarily addresses phase variation — temporal misalignment among functions — by aligning them in a geometrically meaningful way.
 
-You can explore these ideas with the interactive plot below.
-
 Consider a smooth function, $f(t)$, defined on the interval $[0,1]$, where $t$ represents time.
 
 - The left plot: a warping function $\gamma(t)$.
 - The right plot: the function after time warping, $f(\gamma(t))$.
 
+You can explore these ideas with the interactive plot below. (Drag the red points to see how $\gamma(t)$ warps $f(t)$.)
 <div style="display: flex; justify-content: center; margin-top: -1.5em; margin-bottom: -3em; margin-left: -3em;">
   <iframe 
     src="misc_pages/warping.html" 
