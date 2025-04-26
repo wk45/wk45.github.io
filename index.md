@@ -2,7 +2,7 @@
 layout: default
 ---
 
-## RESEARCH INTERESTS
+## <h2 id="research">RESEARCH INTEREST </h2>
 Functional Data Anaylsis | Functional Registration | Bayesian Statistics | Generative Models (VAEs)
 
 ## PROJECTS
