@@ -50,7 +50,7 @@ To address the computational challenges of Fisher-Rao metric, <a href="https://d
 
 In practice, functional data often arise as noisy, discretized measurements that are later smoothed to approximate continuous curves. To preserve important features like peaks and valleys, practitioners typically avoid aggressive smoothing, which leaves small residual fluctuations in the data.
 <br><br>
-These minor fluctuations pose a challenge when applying dynamic time warping (DTW) combined with the Fisher-Rao metric for alignment. Because the Fisher-Rao framework seeks to minimize geodesic distance precisely, it can be overly sensitive to noise, resulting in over-alignment where the warping function matches even insignificant variations.
+These minor fluctuations pose a challenge when applying <a href="https://en.wikipedia.org/wiki/Dynamic_time_warping">dynamic time warping</a> (DTW) combined with the Fisher-Rao metric for alignment. Because the Fisher-Rao framework seeks to minimize geodesic distance precisely, it can be overly sensitive to noise, resulting in over-alignment where the warping function matches even insignificant variations.
 
 <!-- <img src="figs/ppd/fig1.png" width="300"> -->
 <br><br>
@@ -70,7 +70,8 @@ it provides a probabilistic solution by modeling the full posterior distribution
 it allows prior information to be naturally incorporated into the registration process;
 and it can capture multiple modes in the posterior distribution, enabling exploration of multiple plausible warping solutions — a flexibility that traditional optimization-based methods cannot offer.
 <br><br>
-We <strong>successfully developed a Bayesian method</strong> for functional registration and signal estimation that move beyond the traditional Fisher-Rao framework, which is more robust to noisy functional data than PPD method.
+We have successfully <strong> successfully developed a Bayesian method</strong> for functional registration and signal estimation under noisy and time-warped data, providing greater robustness to noise by moving beyond the traditional Fisher-Rao framework.
+
 </div>
 
 <br>
@@ -96,5 +97,5 @@ The goal of this project is to apply <strong>Bayesian hierarchical modeling</str
 <br>
 <h4 id="tda"> ▫ Topological Feature Extraction with Human Brain Connectome</h4>
 <div style="margin-left: 1em;">
-    We explored how topological data analysis can simplify and reveal structural patterns within complex brain connectivity data. Using multi-level white matter tractography datasets, we applied <a href="https://en.wikipedia.org/wiki/Persistent_homology"><strong>persistent homology</strong></a> — a method that captures topological features such as loops and voids across different scales — to better understand the organization of the human brain connectome. The analysis was implemented in R with computational support from <a href="https://github.com/Ripser/ripser">Ripser</a>, a fast and efficient tool for computing persistence diagrams.
+    We explored how topological data analysis can simplify and reveal structural patterns within complex brain connectivity data. Using multi-level white matter tractography datasets, we applied <a href="https://en.wikipedia.org/wiki/Persistent_homology">persistent homology</a> — a method that captures topological features such as loops and voids across different scales — to better understand the organization of the human brain connectome. The analysis was implemented in R with computational support from <a href="https://github.com/Ripser/ripser">Ripser</a>, a fast and efficient tool for computing persistence diagrams.
 </div>
