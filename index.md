@@ -27,7 +27,8 @@ Consider a smooth function, $f(t)$, defined on the interval $[0,1]$, where $t$ r
 - The left plot: a warping function $\gamma(t)$.
 - The right plot: the function after time warping, $f(\gamma(t))$.
 
-You can explore these ideas with the interactive plot below. <span style="color:rgb(126, 127, 255);">(Drag the red points to see how $\gamma(t)$ warps $f(t)$.)</span>
+You can explore these ideas with the interactive plot below. 
+<span style="color:rgb(126, 127, 255);">(Drag the red points to see how $\gamma(t)$ warps $f(t)$.)</span>
 <div style="display: flex; justify-content: center; margin-top: -1.5em; margin-bottom: -3em; margin-left: -3em;">
   <iframe 
     src="misc_pages/warping.html" 
