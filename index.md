@@ -12,11 +12,7 @@ Functional Data Anaylsis ⏐ Functional Registration ⏐ Bayesian Statistics ⏐
 Functional data — curves, shapes, and other complex structures — arise in fields like biology, medicine, and the social sciences, where understanding dynamic patterns is critical.
 Functional Data Analysis (FDA) provides a framework for modeling these datasets, offering tools to uncover meaningful structure and variability. However, in many real-world applications, functional data are noisy, misaligned, and highly complex, posing challenges even for FDA.
 
-My primary research focuses on **functional registration** — or alignment — using the Fisher-Rao metric within a Riemannian manifold framework. 
-This approach aligns functions in a geometrically meaningful way, preserving their intrinsic structure and enabling more accurate statistical analysis — such as more reliable mean estimation, variance calculation, and other key summaries.
-As a result, subsequent analyses — including functional principal component analysis (FPCA) and hypothesis testing — become more statistically robust.
-
-To understand functional registration, it is important to recognize that functional data typically exhibit two types of variation:
+My primary research focuses on **functional registration** — or alignment — using the Fisher-Rao metric within a Riemannian manifold framework. To understand functional registration, it is important to recognize that functional data typically exhibit two types of variation:
 - Phase variation: temporal shifts of a function.
 - Amplitude variation: changes in magnitude of a function.
 
@@ -40,12 +36,21 @@ You can explore these ideas with the interactive plot below.
   </iframe>
 </div>
 
+Functional registration is particularly important when phase variation is present.
+When functions are generated from a common underlying signal with phase variability, the cross-sectional mean of the unregistered functions can be severely biased.
+Correcting phase variation enables more accurate and robust statistical analysis.
+
+A straightforward approach is to minimize $L^2$ distances directly among functions, but the $L^2$ metric is not invariant under time warping, making it unsuitable for phase alignment.
+In contrast, the Fisher-Rao metric is invariant to warping transformations, providing a consistent framework for registration.
+
+To address the computational challenges of Fisher-Rao distance, Srivastava et al. (2011) introduced the Square Root Velocity Function (SRVF) representation, where the standard $L^2$ metric corresponds exactly to the Fisher-Rao distance, enabling efficient and principled computation.
+
 <h4 id="ppd">▫ Peak Persistence Diagrams (<a href="https://github.com/wk45/PPD">PPD</a>)</h4>
 <div style="margin-left: 1em;">
 
 In practice, functional data often arise as noisy, discretized measurements that are later smoothed to approximate continuous curves. To preserve important features like peaks and valleys, practitioners typically avoid aggressive smoothing, which leaves small residual fluctuations in the data.
 <br><br>
-These minor fluctuations pose a challenge when applying dynamic time warping (DTW) combined with the Fisher-Rao metric for alignment. Although the Fisher-Rao framework is mathematically elegant, it can lead to over-alignment, where the warping function tries to match even noise-level variations.
+These minor fluctuations pose a challenge when applying dynamic time warping (DTW) combined with the Fisher-Rao metric for alignment. Because the Fisher-Rao framework seeks to minimize geodesic distance precisely, it can be overly sensitive to noise, resulting in over-alignment where the warping function matches even insignificant variations.
 
 <!-- <img src="figs/ppd/fig1.png" width="300"> -->
 <br><br>
