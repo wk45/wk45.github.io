@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Woo Min Kim</title>
+<meta name="generator" content="Jekyll v4.4.1" />
+<meta property="og:title" content="Woo Min Kim" />
+<meta property="og:locale" content="en_US" />
+<link rel="canonical" href="http://localhost:4000/" />
+<meta property="og:url" content="http://localhost:4000/" />
+<meta property="og:site_name" content="Woo Min Kim" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Woo Min Kim" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebSite","headline":"Woo Min Kim","name":"Woo Min Kim","publisher":{"@type":"Organization","logo":{"@type":"ImageObject","url":"http://localhost:4000/ego.png"}},"url":"http://localhost:4000/"}</script>
+<!-- End Jekyll SEO tag -->
+
+    <link rel="stylesheet" href="/assets/css/style.css?v=">
+
+    <!--[if lt IE 9]>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <![endif]-->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']],
+          processEscapes: true
+        }
+      });
+    </script>
+    <script type="text/javascript" async
+      src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
+
+    
+      <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-3E25WR3VM2"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-3E25WR3VM2');
+    </script>
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1 style="text-align: center;"><a href="http://localhost:4000/"></a></h1>
+        
+        
+          <img src="/ego.png" alt="Logo" style="display: block; margin: 0 auto; width: 50%;"/>
+        
+
+        <!-- <p></p> -->
+
+        <!--  -->
+
+        <!--  -->
+
+        
+      </header>
+      <section>
+
+      <h2 id="research-interests">RESEARCH INTERESTS</h2>
+<p>Functional Data Anaylsis | Functional Registration | Bayesian Statistics | Generative Models (VAEs)</p>
+
+<h2 id="projects">PROJECTS</h2>
+
+<h3 id="-functional-data-analysis-functional-registration-">■ Functional Data Analysis (Functional Registration) <a name="FDA"></a></h3>
+<p>Functional data — curves, shapes, and other complex structures — arise in fields like biology, medicine, and the social sciences, where understanding dynamic patterns is critical.
+Functional Data Analysis (FDA) provides a framework for modeling these datasets, offering tools to uncover meaningful structure and variability. However, in many real-world applications, functional data are noisy, misaligned, and highly complex, posing challenges even for FDA.</p>
+
+<p>My primary research focuses on <strong>functional registration</strong> using the Fisher-Rao metric within a Riemannian manifold framework. This approach aligns functions in a geometrically meaningful way, preserving their intrinsic structure and enabling more accurate statistical analysis — such as more reliable mean estimation, variance calculation, and other key summaries.
+As a result, subsequent analyses — including functional principal component analysis (FPCA) and hypothesis testing — become more statistically robust.</p>
+
+<p>To understand functional registration, it is important to recognize that functional data typically exhibit two types of variation:</p>
+<ul>
+  <li>Phase variation: temporal shifts of a function.</li>
+  <li>Amplitude variation: changes in magnitude of a function.</li>
+</ul>
+
+<p>You can explore these ideas with the interactive plot below.</p>
+
+<p>Consider a smooth function, $f(t)$, defined on the interval $[0,1]$, where $t$ represents time.</p>
+
+<ul>
+  <li>The left plot: a warping function $\gamma(t)$.</li>
+  <li>The right plot: the function after time warping, $f(\gamma(t))$.</li>
+</ul>
+
+<div style="display: flex; justify-content: center; margin-top: -1.5em; margin-bottom: -3em; margin-left: -3em;">
+  <iframe src="misc_pages/warping.html" width="500" height="350" style="border:0px solid black;
+    display: block;">
+  </iframe>
+</div>
+
+<h4 id="-peak-persistence-diagrams-ppd">▫ Peak Persistence Diagrams (<a href="https://github.com/wk45/PPD">PPD</a>)</h4>
+<div style="margin-left: 1em;">
+
+In practice, functional data often arise as noisy, discretized measurements that are later smoothed to approximate continuous curves. To preserve important features like peaks and valleys, practitioners typically avoid aggressive smoothing, which leaves small residual fluctuations in the data.
+<br /><br />
+These minor fluctuations pose a challenge when applying dynamic time warping (DTW) combined with the Fisher-Rao metric for alignment. Although the Fisher-Rao framework is mathematically elegant, it can lead to over-alignment, where the warping function tries to match even noise-level variations.
+
+<!-- <img src="figs/ppd/fig1.png" width="300"> -->
+<br /><br />
+To mitigate over-alignment in such cases, practitioners often introduce penalty terms — but selecting appropriate penalties remains an open and challenging problem. To address this limitation, we propose a simple yet effective visual tool: the Peak Persistence Diagram (PPD).
+PPD helps identify and summarize significant internal peaks in functional data, offering robustness to noise while remaining sensitive to meaningful structural patterns.
+</div>
+<p><br />
+<!-- #### • Phase Alignment of functions via [Trajectory Analysis](/Projects/PathAnalysis/Visualization/test99.html)
+Functional registration is accomplished by analyzing the trajectory of the mean function after alignment. This is done by projecting the aligned functions onto a lower-dimensional space using Functional Principal Component Analysis (FPCA), enabling effective visualization and interpretation of the registration process. --></p>
+
+<h4 id="-bayesian-functional-alignment-on-going">▫ Bayesian Functional Alignment (on-going)</h4>
+<div style="margin-left: 1em;">
+We addressed the challenge of functional registration under noisy and misaligned data by developing a more robust solution within a Bayesian framework.
+<br /><br />
+Classical optimization-based methods such as DTW find a global optimal warping path, so they are often highly sensitive to noise and outliers. In contrast, the Bayesian framework offers several key advantages:
+it provides a probabilistic solution by modeling the full posterior distribution of warping functions;
+it allows prior information to be naturally incorporated into the registration process;
+and it can capture multiple modes in the posterior distribution, enabling exploration of multiple plausible warping solutions — a flexibility that traditional optimization-based methods cannot offer.
+<br /><br />
+We <strong>successfully developed a Bayesian method</strong> for functional registration and signal estimation that move beyond the traditional Fisher-Rao framework, which is more robust to noisy functional data than PPD method.
+</div>
+
+<p><br /></p>
+
+<h3 id="-other-projects-than-functional-data">■ Other Projects than Functional Data</h3>
+
+<h4 id="-network-analysis-via-bayesian-method-hierarchical-latent-svd-model">▫ Network Analysis via Bayesian Method (<a href="/Projects/HLSVD/HSVD.pdf">Hierarchical Latent SVD Model</a>)</h4>
+
+<div style="margin-left: 1em;">
+
+In social network data analysis, latent space models (LDMs) are widely used to uncover underlying structures among nodes by embedding them in a latent space. These models can capture various relational metrics—such as distances, classes, and clusters—that facilitate further statistical analysis. Among the different types of LDMs, Hoff (2008) introduced an eigenmodel-based latent space to account for <em>homophily</em>, the tendency of similar nodes to connect.
+</div>
+
+<div style="text-align: center;">
+  <img src="figs/network/homophiliy.png" width="400" />
+</div>
+<blockquote>
+  <p>Homophily helps explain common patterns in social networks, including transitivity (“a friend of a friend is a friend”), balance (“the enemy of my friend is an enemy”), and the formation of cohesive subgroups of nodes” (Hoff 2008).</p>
+</blockquote>
+
+<div style="margin-left: 1em;">
+The goal of this project is to apply <strong>Bayesian hierarchical modeling</strong> to a more general class of latent space models—specifically, the latent SVD model—to induce a shrinkage effect and improve parameter estimation by borrowing strength across the network structure.
+</div>
+
+<p><br /></p>
+<h4 id="-topological-feature-extraction-with-human-brain-connectome">▫ Topological Feature Extraction with Human Brain Connectome</h4>
+<div style="margin-left: 1em;">
+    We explored how topological data analysis can simplify and reveal structural patterns within complex brain connectivity data. Using multi-level white matter tractography datasets, we applied <strong>persistent homology</strong> — a method that captures topological features such as loops and voids across different scales — to better understand the organization of the human brain connectome. The analysis was implemented in R with computational support from Ripser, a fast and efficient tool for computing persistence diagrams.
+</div>
+
+      abc
+      </section>
+      <footer>
+        <p>This page is maintained by <a href=""></a></p>
+      </footer>
+    </div>
+    <script src="/assets/js/scale.fix.js"></script>
+    
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+      ga('create', 'G-3E25WR3VM2', 'auto');
+      ga('send', 'pageview');
+    </script>
+    
+  </body>
+</html>

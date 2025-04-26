@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Woo Min Kim</title>
+<meta name="generator" content="Jekyll v4.4.1" />
+<meta property="og:title" content="Woo Min Kim" />
+<meta property="og:locale" content="en_US" />
+<link rel="canonical" href="http://localhost:4000/B-spline2.html" />
+<meta property="og:url" content="http://localhost:4000/B-spline2.html" />
+<meta property="og:site_name" content="Woo Min Kim" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Woo Min Kim" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","headline":"Woo Min Kim","publisher":{"@type":"Organization","logo":{"@type":"ImageObject","url":"http://localhost:4000/ego.png"}},"url":"http://localhost:4000/B-spline2.html"}</script>
+<!-- End Jekyll SEO tag -->
+
+    <link rel="stylesheet" href="/assets/css/style.css?v=">
+
+    <!--[if lt IE 9]>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <![endif]-->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']],
+          processEscapes: true
+        }
+      });
+    </script>
+    <script type="text/javascript" async
+      src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
+
+    
+      <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-3E25WR3VM2"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-3E25WR3VM2');
+    </script>
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1 style="text-align: center;"><a href="http://localhost:4000/"></a></h1>
+        
+        
+          <img src="/ego.png" alt="Logo" style="display: block; margin: 0 auto; width: 50%;"/>
+        
+
+        <!-- <p></p> -->
+
+        <!--  -->
+
+        <!--  -->
+
+        
+      </header>
+      <section>
+
+      <small></small>
+<h1></h1>
+
+<p class="view">by </p>
+
+<h1 id="b-spline">B-spline</h1>
+
+<ul>
+  <li>
+    <p>Basis spline: spline function that has minimal support w.r.t. a given degree, smoothness, and domain partition.</p>
+  </li>
+  <li>
+    <p>Any spline function of a given degree can be expressed as a linear combination of B-splines of that degree.</p>
+  </li>
+  <li>
+    <p>Cardinal B-splines have knots (equidistant from each other).</p>
+  </li>
+  <li>
+    <p>B-splines can be used for curve-fitting and numerical differentiation of experimental data.</p>
+  </li>
+  <li>
+    <p>A spline function of order $n$ is a piecewise polynomial function of the degree $n-1$ in a variable $x$.</p>
+  </li>
+  <li>
+    <p>The key property of spline functions is that they and their derivatives may be continuous, depending on the multiplicities of the knots.</p>
+  </li>
+  <li>
+    <p>B-splines of order $n$: Basis functions for spline functions of the same order defined over the same knots (all possible spline functions can be built from a linear comb. of B-splines, and there is only one ==unique== combination for each spline function.)</p>
+  </li>
+  <li>
+    <p>Definition</p>
+
+    <ul>
+      <li>
+        <p>Knots, denoted $t_0,…,t_n$.</p>
+      </li>
+      <li>
+        <p>When the knots are distinct, the first $n-2$ derivatives of the polynomial pieces are continuous across each knot.</p>
+      </li>
+      <li>
+        <p>$r$ knots are coincident, then only the first $n-r-1$ derivatives of the spline are continuous across that know.</p>
+      </li>
+      <li>
+        <p>a unique spline $B_{i,n}(x)$ satisfying</p>
+      </li>
+      <li>
+\[B_{i,n}(x) = \begin{cases}
+  0 &amp; x&lt;t_i \text{  or  } x \geq t_{i+n},\\
+  \text{non-zero}&amp;\text{o.w.}
+  \end{cases}\]
+      </li>
+      <li>
+        <p>If we add the additional constraint that $\sum_iB_{i,n}(x)=1$ $\forall x$ between the first and last know, then the scaling factor of $B_{i,n}(x)$ becomes fixed.</p>
+      </li>
+      <li>
+        <p>Alternatively, B-splines can be defined by construction by means of Cox-de Boor recursion formula.</p>
+      </li>
+      <li>
+\[B_{i,1}(x) := \begin{cases}
+1&amp;\text{if } t_i\leq x \leq t_{i+1}\\
+0&amp;\text{o.w.}
+\end{cases}\]
+      </li>
+      <li>
+        <p>These satisfy $\sum_{i}B_{i,1}(x) = 1$ for all $x$ b/c for any $x$ exactly one of the $B_{i,1}(x)=1$, and all the others are zero.</p>
+      </li>
+      <li>
+        <p>$B_{i,k+1}(x):=\omega_{i,k}(x)B_{i,k}(x)+[1-\omega_{i+1,k}(x)]B_{i+1,k}(x)$ where</p>
+      </li>
+      <li>
+\[\omega_{i,k}(x) :=\begin{cases}
+\frac{x-t_i}{t_{i+k}-t_i} &amp;t_{i+k}\neq t_i,\\
+0&amp;\text{o.w.}
+\end{cases}\]
+      </li>
+      <li></li>
+    </ul>
+  </li>
+</ul>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="mi">1</span><span class="o">+</span><span class="mi">1</span> <span class="o">=</span> <span class="mi">3</span>
+<span class="n">a</span> <span class="o">=</span> <span class="p">[];</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
+    <span class="n">a</span><span class="p">.</span><span class="nf">append</span><span class="p">(</span><span class="n">i</span><span class="o">*</span><span class="mi">3</span><span class="p">)</span>
+</code></pre></div></div>
+
+
+
+
+
+      abc
+      </section>
+      <footer>
+        <p>This page is maintained by <a href=""></a></p>
+      </footer>
+    </div>
+    <script src="/assets/js/scale.fix.js"></script>
+    
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+      ga('create', 'G-3E25WR3VM2', 'auto');
+      ga('send', 'pageview');
+    </script>
+    
+  </body>
+</html>

@@ -62,9 +62,13 @@
         {% endif %}
       </header>
       <section>
-
+      
+      <nav class="toc">
+       {% toc %}
+      </nav>
+      
       {{ content }}
-
+      
       </section>
       <footer>
         <p>This page is maintained by <a href="{{ site.github.owner_url }}">{{ site.github.owner_name }}</a></p>

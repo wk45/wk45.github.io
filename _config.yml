@@ -8,3 +8,5 @@ kramdown:
 sass:
   sass_dir: assets/css
   style: compressed  # Or 'expanded' for readable output
+plugins:
+  - jekyll-toc
