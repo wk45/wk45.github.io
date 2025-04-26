@@ -43,7 +43,7 @@ Correcting phase variation enables more accurate and robust statistical analysis
 A straightforward approach is to minimize $L^2$ distances directly among functions, but the $L^2$ metric is not invariant under time warping, making it unsuitable for phase alignment.
 In contrast, the Fisher-Rao metric is invariant to warping transformations, providing a consistent framework for registration.
 
-To address the computational challenges of Fisher-Rao distance, Srivastava et al. (2011) introduced the Square Root Velocity Function (SRVF) representation, where the standard $L^2$ metric corresponds exactly to the Fisher-Rao distance, enabling efficient and principled computation.
+To address the computational challenges of Fisher-Rao distance, <a href="https://doi.org/10.1109/TPAMI.2010.35" target="_blank">Srivastava et al. (2011)</a> introduced the Square Root Velocity Function (SRVF) representation, where the standard $L^2$ metric corresponds exactly to the Fisher-Rao distance, enabling efficient and principled computation.
 
 <h4 id="ppd">▫ Peak Persistence Diagrams (<a href="https://github.com/wk45/PPD">PPD</a>)</h4>
 <div style="margin-left: 1em;">
