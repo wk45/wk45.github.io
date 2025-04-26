@@ -12,12 +12,15 @@ Functional Data Anaylsis ⏐ Functional Registration ⏐ Bayesian Statistics ⏐
 Functional data — curves, shapes, and other complex structures — arise in fields like biology, medicine, and the social sciences, where understanding dynamic patterns is critical.
 Functional Data Analysis (FDA) provides a framework for modeling these datasets, offering tools to uncover meaningful structure and variability. However, in many real-world applications, functional data are noisy, misaligned, and highly complex, posing challenges even for FDA.
 
-My primary research focuses on **functional registration** using the Fisher-Rao metric within a Riemannian manifold framework. This approach aligns functions in a geometrically meaningful way, preserving their intrinsic structure and enabling more accurate statistical analysis — such as more reliable mean estimation, variance calculation, and other key summaries.
+My primary research focuses on **functional registration** - or alignment - using the Fisher-Rao metric within a Riemannian manifold framework. 
+This approach aligns functions in a geometrically meaningful way, preserving their intrinsic structure and enabling more accurate statistical analysis — such as more reliable mean estimation, variance calculation, and other key summaries.
 As a result, subsequent analyses — including functional principal component analysis (FPCA) and hypothesis testing — become more statistically robust.
 
 To understand functional registration, it is important to recognize that functional data typically exhibit two types of variation:
 - Phase variation: temporal shifts of a function.
 - Amplitude variation: changes in magnitude of a function.
+
+Functional registration primarily addresses phase variation — temporal misalignment among functions — by aligning them in a geometrically meaningful way.
 
 You can explore these ideas with the interactive plot below.
 
