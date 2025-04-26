@@ -6,9 +6,9 @@ layout: default
 
 Functional Data Anaylsis | Functional Registration | Bayesian Statistics | Generative Models (VAEs)
 
-## PROJECTS
+<h2 id="projects">PROJECTS</h2>
 
-### ■ Functional Data Analysis (Functional Registration) <a name="FDA"></a>
+<h3 id="fda">■ Functional Data Analysis (Functional Registration)</h3>
 Functional data — curves, shapes, and other complex structures — arise in fields like biology, medicine, and the social sciences, where understanding dynamic patterns is critical.
 Functional Data Analysis (FDA) provides a framework for modeling these datasets, offering tools to uncover meaningful structure and variability. However, in many real-world applications, functional data are noisy, misaligned, and highly complex, posing challenges even for FDA.
 
@@ -36,7 +36,7 @@ Consider a smooth function, $f(t)$, defined on the interval $[0,1]$, where $t$ r
   </iframe>
 </div>
 
-#### ▫ Peak Persistence Diagrams ([PPD](https://github.com/wk45/PPD))
+<h4 id="ppd">▫ Peak Persistence Diagrams (<a href="https://github.com/wk45/PPD">PPD</a>)</h4>
 <div style="margin-left: 1em;">
 
 In practice, functional data often arise as noisy, discretized measurements that are later smoothed to approximate continuous curves. To preserve important features like peaks and valleys, practitioners typically avoid aggressive smoothing, which leaves small residual fluctuations in the data.
@@ -52,7 +52,7 @@ PPD helps identify and summarize significant internal peaks in functional data, 
 <!-- #### • Phase Alignment of functions via [Trajectory Analysis](/Projects/PathAnalysis/Visualization/test99.html)
 Functional registration is accomplished by analyzing the trajectory of the mean function after alignment. This is done by projecting the aligned functions onto a lower-dimensional space using Functional Principal Component Analysis (FPCA), enabling effective visualization and interpretation of the registration process. -->
 
-#### ▫ Bayesian Functional Alignment (on-going)
+<h4 id="bayes">▫ Bayesian Functional Alignment (on-going)</h4>
 <div style="margin-left: 1em;">
 We addressed the challenge of functional registration under noisy and misaligned data by developing a more robust solution within a Bayesian framework.
 <br><br>
@@ -66,9 +66,9 @@ We <strong>successfully developed a Bayesian method</strong> for functional regi
 
 <br>
 
-### ■ Other Projects than Functional Data
+<h3 id="others"> ■ Other Projects than Functional Data </h3>
 
-#### ▫ Network Analysis via Bayesian Method ([Hierarchical Latent SVD Model](/Projects/HLSVD/HSVD.pdf))
+<h4 id="network"> ▫ Network Analysis via Bayesian Method (<a href="/Projects/HLSVD/HSVD.pdf">Hierarchical Latent SVD Model</a>) </h4>
 
 <div style="margin-left: 1em;">
 
@@ -85,7 +85,7 @@ The goal of this project is to apply <strong>Bayesian hierarchical modeling</str
 </div>
 
 <br>
-#### ▫ Topological Feature Extraction with Human Brain Connectome
+<h4 id="tda"> ▫ Topological Feature Extraction with Human Brain Connectome</h4>
 <div style="margin-left: 1em;">
     We explored how topological data analysis can simplify and reveal structural patterns within complex brain connectivity data. Using multi-level white matter tractography datasets, we applied <strong>persistent homology</strong> — a method that captures topological features such as loops and voids across different scales — to better understand the organization of the human brain connectome. The analysis was implemented in R with computational support from Ripser, a fast and efficient tool for computing persistence diagrams.
 </div>
