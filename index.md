@@ -4,7 +4,7 @@ layout: default
 
 <h2 id="research">RESEARCH INTEREST</h2>
 
-Functional Data Anaylsis | Functional Registration | Bayesian Statistics | Generative Models (VAEs)
+Functional Data Anaylsis ⏐ Functional Registration ⏐ Bayesian Statistics ⏐ Generative Models (VAEs)
 
 <h2 id="projects">PROJECTS</h2>
 
