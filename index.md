@@ -12,7 +12,7 @@ Functional Data Anaylsis ⏐ Functional Registration ⏐ Bayesian Statistics ⏐
 Functional data — curves, shapes, and other complex structures — arise in fields like biology, medicine, and the social sciences, where understanding dynamic patterns is critical.
 Functional Data Analysis (FDA) provides a framework for modeling these datasets, offering tools to uncover meaningful structure and variability. However, in many real-world applications, functional data are noisy, misaligned, and highly complex, posing challenges even for FDA.
 
-My primary research focuses on **functional registration** — or alignment — using the Fisher-Rao metric within a Riemannian manifold framework. To understand functional registration, it is important to recognize that functional data typically exhibit two types of variation:
+My primary research focuses on **functional registration** — or alignment — using the Fisher-Rao metric within a <a href="https://en.wikipedia.org/wiki/Riemannian_manifold">Riemannian manifold</a> framework. To understand functional registration, it is important to recognize that functional data typically exhibit two types of variation:
 - Phase variation: temporal shifts of a function.
 - Amplitude variation: changes in magnitude of a function.
 
@@ -81,7 +81,7 @@ We <strong>successfully developed a Bayesian method</strong> for functional regi
 
 <div style="margin-left: 1em;">
 
-In social network data analysis, latent space models (LDMs) are widely used to uncover underlying structures among nodes by embedding them in a latent space. These models can capture various relational metrics—such as distances, classes, and clusters—that facilitate further statistical analysis. Among the different types of LDMs, Hoff (2008) introduced an eigenmodel-based latent space to account for <em>homophily</em>, the tendency of similar nodes to connect.
+In social network data analysis, latent space models (LDMs) are widely used to uncover underlying structures among nodes by embedding them in a latent space. These models can capture various relational metrics—such as distances, classes, and clusters—that facilitate further statistical analysis. Among the different types of LDMs, <a href="https://doi.org/doi:10.48550/arXiv.0711.1146">Hoff (2008)</a> introduced an eigenmodel-based latent space to account for <em>homophily</em>, the tendency of similar nodes to connect.
 </div>
 
 <div style="text-align: center;">
@@ -96,5 +96,5 @@ The goal of this project is to apply <strong>Bayesian hierarchical modeling</str
 <br>
 <h4 id="tda"> ▫ Topological Feature Extraction with Human Brain Connectome</h4>
 <div style="margin-left: 1em;">
-    We explored how topological data analysis can simplify and reveal structural patterns within complex brain connectivity data. Using multi-level white matter tractography datasets, we applied <strong>persistent homology</strong> — a method that captures topological features such as loops and voids across different scales — to better understand the organization of the human brain connectome. The analysis was implemented in R with computational support from Ripser, a fast and efficient tool for computing persistence diagrams.
+    We explored how topological data analysis can simplify and reveal structural patterns within complex brain connectivity data. Using multi-level white matter tractography datasets, we applied <a href="https://en.wikipedia.org/wiki/Persistent_homology"><strong>persistent homology</strong></a> — a method that captures topological features such as loops and voids across different scales — to better understand the organization of the human brain connectome. The analysis was implemented in R with computational support from <a href="https://github.com/Ripser/ripser">Ripser</a>, a fast and efficient tool for computing persistence diagrams.
 </div>
