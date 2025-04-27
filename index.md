@@ -70,7 +70,7 @@ it provides a probabilistic solution by modeling the full posterior distribution
 it allows prior information to be naturally incorporated into the registration process;
 and it can capture multiple modes in the posterior distribution, enabling exploration of multiple plausible warping solutions — a flexibility that traditional optimization-based methods cannot offer.
 <br><br>
-We have successfully <strong> successfully developed a Bayesian method</strong> for functional registration and signal estimation under noisy and time-warped data, providing greater robustness to noise by moving beyond the traditional Fisher-Rao framework.
+We have successfully <strong> successfully developed a Bayesian method</strong> for functional registration and signal estimation under noisy and time-warped data, providing greater robustness to noise by moving beyond the traditional Fisher-Rao framework. A short report on this work is available in this <a href="misc_pages/bayes_reg/main.html">link</a>.
 
 </div>
 
