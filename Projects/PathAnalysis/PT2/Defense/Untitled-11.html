@@ -1,0 +1,860 @@
+
+## **Motivation:** <span style="color: blue; font-size:80%"> Additive Noise Only</span>{.smaller auto-animate=true}
+
+Functions are generated from a single ground truth, <span style="color: red;">$g$
+
+With <span style="color: blue;"> **(1) additive noise only **</span>
+$$
+f_i(t) = e_i + c_i g(t) + \epsilon_i(t)
+$$
+
+::: {.r-stack}
+![](slide_images/slide3-1.png){style="position: absolute; top: 32.5%; left: 50%; transform: translateX(-50%); width: 60%;"}
+
+::: {.fragment .fade-in data-fragment-index=1}
+![](slide_images/slide4-1.png){style="position: absolute; top: 32.5%; left: 50%; transform: translateX(-50%); width: 60%;"}
+:::
+
+:::
+
+<dl>
+  <dt class="legend-symbol red-line"></dt>
+  <dd>
+    <span style="color: red;"> $g$ </span>
+  </dd>
+  <dt class="legend-symbol blue-line fragment" data-fragment-index="1"></dt>
+  <dd class="fragment" data-fragment-index="1">
+    <span style="color: blue;">$\bar{f} = \frac{1}{n}\sum_{i=1}^n f_i$</span>
+  </dd>
+</dl>
+
+<style>
+  .legend-symbol {
+    display: inline-block;
+    width: 30px;
+    height: 5px;
+    vertical-align: middle;
+    margin-right: 8px;
+  }
+  .red-line {
+    background-color: red;
+  }
+  .blue-line {
+    background-color: blue;
+  }
+</style>
+
+## <span style="font-weight: bold; font-size:80%;"> Motivation: </span>  <span style="color: blue;"> Warping Noise Only</span> {.smaller auto-animate=true}
+
+Functions are generated from a single ground truth, <span style="color: red;">$g$</span>.
+
+With <span style="color: blue;"> **(2) Warping noise only **</span>
+$$
+f_i(t) = \alpha_i (g\circ \gamma_i)(t)
+$$
+
+::: {.r-stack}
+![](slide_images/slide3-2.png){style="position: absolute; top: 32.5%; left: 50%; transform: translateX(-50%); width: 60%;"}
+
+::: {.fragment .fade-in data-fragment-index="1"}
+![](slide_images/slide4-2.png){style="position: absolute; top: 32.5%; left: 50%; transform: translateX(-50%); width: 60%;"}
+:::
+:::
+
+<dl>
+  <dt class="legend-symbol red-line"></dt>
+  <dd>
+    <span style="color: red;"> $g$ </span>
+  </dd>
+  <!-- <dt class="legend-symbol blue-line"></dt> -->
+  <dt class="legend-symbol blue-line fragment" data-fragment-index="1"></dt>
+  <dd class="fragment" data-fragment-index="1">
+    <span style="color: blue;">$\frac{1}{n}\sum_{i=1}^n (f\circ\hat{\gamma}_i^{-1})$</span>
+  </dd>
+</dl>
+
+<style>
+  .legend-symbol {
+    display: inline-block;
+    width: 30px;
+    height: 5px;
+    vertical-align: middle;
+    margin-right: 8px;
+  }
+  .red-line {
+    background-color: red;
+  }
+  .blue-line {
+    background-color: blue;
+  }
+</style>
+
+## <span style="font-weight: bold;"> Motivation: </span>  <span style="color: blue; font-size:80%"> Additive and Warping Noise</span> {.smaller auto-animate=true}
+
+Functions are generated from a single ground truth, <span style="color: red;">$g$</span>.
+
+With <span style="color: blue;"> **Additive and Warping noise **</span>
+$$
+f_i(t) = \alpha_i (g\circ \gamma_i)(t) + \epsilon_i(t)
+$$
+
+::: {.r-stack}
+![](slide_images/slide5-1.png){style="position: absolute; top: 32.5%; left: 50%; transform: translateX(-50%); width: 60%;"}
+
+::: {.fragment .fade-in data-fragment-index="1"}
+![](slide_images/slide5-2.png){style="position: absolute; top: 32.5%; left: 50%; transform: translateX(-50%); width: 60%;"}
+:::
+
+::: {.fragment .fade-in data-fragment-index="2"}
+![](slide_images/slide5-3.png){style="position: absolute; top: 32.5%; left: 50%; transform: translateX(-50%); width: 60%;"}
+:::
+:::
+
+<dl>
+  <dt class="legend-symbol red-line"></dt>
+  <dd>
+    <span style="color: red;"> $g$ </span>
+  </dd>
+  
+  <dt class="legend-symbol blue-line fragment fade-in-then-out" data-fragment-index="1"></dt>
+  <dd class="fragment fade-in-then-Persistent peaks by Bar Length
+The most persistent peak has the longest bar in the bar chart.
+Rest of the persistent peaks are determined by the ratio to the longest bar, θ.
+out" data-fragment-index="1">
+    <span style="color: blue;">$\bar{f} = \frac{1}{n}\sum_{i=1}^n f_i$</span>
+  </dd>
+
+  <dt class="legend-symbol blue-line fragment fade-in" data-fragment-index="2"></dt>
+  <dd class="fragment fade-in" data-fragment-index="2">
+    <span style="color: blue;">$\bar{h} = \frac{1}{n}\sum_{i=1}^n f_i^*$  <br>  <span style="text-align: center; font-size: 70%; display: block;">$f_i^* = (f_i \circ \hat{\gamma}^{-1}_i)$</span>
+  </dd>
+</dl>
+
+<style>
+  .legend-symbol {
+    display: inline-block;
+    width: 30px;
+    height: 5px;
+    vertical-align: middle;
+    margin-right: 8px;
+  }
+  .red-line {
+    background-color: red;
+  }
+  .blue-line {
+    background-color: blue;
+  }
+</style>
+
+## <span style="font-weight: bold;"> Motivation: </span> <span style="color: blue;"> Additive and Warping Noise</span> {.smaller}
+
+Functions are generated from a single ground truth, <span style="color: red;">$g$</span>.
+
+With <span style="color: blue;"> **Additive and Warping noise **</span>
+
+<span style="text-align: center;"> $$f_i(t) = \alpha_i (g\circ \gamma_i)(t) + \epsilon_i(t)$$ </span>
+
+::: {.columns}
+::: {.column}
+<dl style="display: flex; align-items: center; gap: 8px;">
+  <!-- Red Line -->
+  <dt class="legend-symbol red-line" style="display: inline-block; background-color: red; width: 30px; height: 5px;"></dt>
+  <dd style="display: inline-block; margin: 0;">
+    <span style="color: red;">$g$ &nbsp;</span>
+  </dd>
+  <!-- Blue Line -->
+  <dt class="legend-symbol blue-line" style="display: inline-block; background-color: blue; width: 30px; height: 5px;"></dt>
+  <dd style="display: inline-block; margin: 0;">
+    <span style="color: blue;">$\bar{f}$</span>
+  </dd>
+</dl>
+
+![](slide_images/slide5-2.png){style="display: block; margin: 0 auto; width: 90%;"}
+:::
+
+::: {.column}
+<dl style="display: flex; align-items: center; gap: 8px;">
+  <!-- Red Line and Text -->
+  <dt class="legend-symbol red-line" style="display: inline-block; background-color: red; width: 30px; height: 5px;"></dt>
+  <dd style="display: inline-block; margin: 0;">
+    <span style="color: red;">$g$ &nbsp;</span>
+  </dd>
+  <!-- Blue Line -->
+  <dt class="legend-symbol blue-line" style="display: inline-block; background-color: blue; width: 30px; height: 5px;"></dt>
+  <dd style="display: inline-block; margin: 0;">
+    <span style="color: blue;">$\bar{h}$</span>
+  </dd>
+</dl>
+![](slide_images/slide5-3.png){style="display: block; margin: 0 auto; width: 90%;"}
+:::
+::: 
+
+## <span style="font-weight: bold;">Motivation:</span> <span style="color: blue;"> Real Data </span> {.smaller auto-animate=true}
+
+### Growth Rate Data
+::: {.columns}
+::: {.column width="50%"}
+- The location and duration of true growth spurts can be of interest.
+  * How many growth spurts does a person have in average?
+  * What are the duration of each spurt?
+  * When do spurts begin?
+  * Is the number of growth spurts different by gender?
+
+- Alignment by SRVF with additive noise.
+  - Possible spurious peaks can be captured.
+  - Distortion in locations and durations of peaks.
+:::
+
+::: {.column width="50%"}
+
+::: {.r-stack}
+
+<span class="fragment fade-out" data-fragment-index="1"> Un-aligned Mean </span>
+
+::: {.fragment .fade-in data-fragment-index="1"}
+Aligned Mean
+:::
+
+:::
+:::
+:::
+
+::: {.r-stack}
+
+::: {.fragment .fade-out data-fragment-index=1}
+  ![](slide_images/slide7-1.png){style="position: absolute; top: 30%; left: 75%; transform: translateX(-50%); width: 45%;"}
+:::
+
+::: {.fragment .fade-in data-fragment-index=1}
+  ![](slide_images/slide7-2.png){style="position: absolute; top: 30%; left: 75%; transform: translateX(-50%); width: 45%;"}
+:::
+
+:::
+
+## <span style="font-weight: bold;"> Motivation</span> {.smaller auto-animate=true}
+
+::: {layout-ncol=2}
+![<span style="text-align: center; font-size: 180%">Un-aligned</span>
+](slide_images/Slide8/slide8-2.png)
+
+![<span style="text-align: center; font-size: 180%">Aligned</span>
+](slide_images/Slide8/slide8-1.png)
+:::
+
+::: {.fragment .fade-in}
+<span style="text-align: center; font-size: 90%"> We assume that there exists a better function alignment in-between.</span>
+:::
+
+## <span style="font-weight: bold;"> Motivation</span> {.smaller auto-animate=true}
+
+
+::: {layout-ncol=3}
+![<span style="text-align: center; font-size: 180%">Un-aligned</span>
+](slide_images/Slide8/slide8-2.png)
+
+::: {.fragment .fade-in}
+![<span style="text-align: center; font-size: 180%">*Partially* aligned</span>
+](slide_images/Slide8/slide8-3.png)
+:::
+
+![<span style="text-align: center; font-size: 180%">Aligned</span>
+](slide_images/Slide8/slide8-1.png)
+:::
+
+<dl style="display: flex; align-items: center; gap: 8px;">
+  <!-- Red Line -->
+  <dt class="legend-symbol red-line" style="display: inline-block; background-color: red; width: 30px; height: 5px;"></dt>
+  <dd style="display: inline-block; margin: 0;">
+    <span style="color: red;">$g$ &nbsp;</span>
+  </dd>
+  <!-- Blue Line -->
+  <dt class="legend-symbol blue-line" style="display: inline-block; background-color: blue; width: 30px; height: 5px;"></dt>
+  <dd style="display: inline-block; margin: 0;">
+    <span style="color: blue;">$\bar{h}^*$</span>
+  </dd>
+</dl>
+
+## <span style="font-weight: bold;"> Motivation: </span> {.smaller auto-animate=true}
+
+Obviously, adjusting smoothing parameter, denoting $\lambda \in \mathbb{R}$.
+
+Given $\{\lambda_l\}_{l = 1}^L$, and an objective function, *partially* aligned function sets can be computed:
+$$
+\begin{align*}
+f^*_{\lambda_l,i}(t) &= (f_i \circ \hat{\gamma}_{\lambda,i})(t),\\
+\bar{h}_{\lambda_l}(t) &= \frac{1}{n}\sum_{i=1}^n f^*_{\lambda_l,i}(t)
+\end{align*}
+$$
+
+Our approach to solving the function alignment problem involves optimizing an objective function defined using the **Fisher-Rao metric**, rather than the more commonly used $\mathbb{L}^2$ norm.
+
+We can peek the results of the means of the *partially* alinged functions.
+
+## <span style="font-weight: bold;">Overview Algorithm</span>{auto-animate=true}
+![](slide_images/Diagram2.jpg){style="position: absolute; top: 7%; left: 50%; transform: translateX(-50%); width: 90%;"}
+
+## <span style="font-weight: bold;"> Background Material </span><span style="color: blue;"> Function Alignment</span> {.smaller auto-animate=true}
+Let $f \in \mathcal{F}$, where $\mathcal{F}$ is the space of absolutely continuous functions. The **square-root velocity function (SRVF)** for $f$ is defined as:
+$$
+q(t) = \text{sign}(\dot{f}(t)) \sqrt{|\dot{f}(t)|}.
+$$
+
+To model temporal variability, we introduce **warping functions**. A warping function $\gamma : [0,1] \to [0,1]$ is an element of the Lie group $\Gamma$, defined as:
+$$
+\Gamma = \{\gamma \mid \gamma(0) = 0, \gamma(1) = 1, \dot{\gamma}(t) > 0 \}.
+$$
+
+The action of the warping group $\Gamma$ on $\mathcal{F}$, denoted as $(f, \gamma)$, is given by function composition:
+$$
+(f, \gamma) = f \circ \gamma.
+$$
+
+When working with SRVFs, the group action changes due to the transformation of derivatives. For a pair $(q, \gamma)$, the action is defined as:
+$$
+(q, \gamma) = (q \circ \gamma) \sqrt{\dot{\gamma}}.
+$$
+
+## <span style="font-weight: bold;"> Background Material </span><span style="color: blue;"> Function Alignment</span> </span> {.smaller auto-animate=true}
+
+Given two SRVF functions $q_1$ and $q_2$, the goal of **registration** is to align $q_2$ to $q_1$ by finding the optimal warping function $\gamma^*$. This is formulated as:
+$$
+\gamma^* = \underset{\gamma \in \Gamma}{\arg \inf} \, \Big \| q_1 - (q_2, \gamma) \Big \|_{\mathbb{L}^2}.
+$$
+
+For a set of SRVF functions $\{q_1, \dots, q_n\}$, the problem of **penalized elastic alignment** involves finding a template function $q \in \mathbb{L}^2$ that minimizes the following objective:
+$$
+\sum_{i=1}^n \left( \inf_{\gamma_i \in \Gamma} \left[ \Big \| q - (q_i, \gamma_i) \Big \|^2 + \lambda \mathcal{R}(\gamma_i) \right] \right).
+$$
+
+Here, the regularization term $\mathcal{R}(\gamma)$ penalizes the deformation induced by $\gamma$ and is chosen as:
+$$
+\mathcal{R}(\gamma) = \|1 - \sqrt{\dot{\gamma}} \|_{\mathbb{L}^2}.
+$$
+
+This formulation balances alignment accuracy with regularization, ensuring meaningful and interpretable warping functions.
+
+
+
+## <span style="font-weight: bold;"> Background Material </span> <span style="color: blue;"> Function Alignment</span> {.smaller auto-animate=true}
+
+The penalized elastic alignment is given by:
+$$
+\sum_{i=1}^n \left( \min_{\gamma_i \in \Gamma} \Big ( \| q - (q_i, \gamma_i) \|^2 + \lambda \mathcal{R}(\gamma) \Big ) \right)
+$$
+
+The optimal $\gamma_i$s obtained inside the summation are used to (partially) align the given functions according to:
+$$ f^*_{\lambda, i} = f_i \circ \hat{\gamma}_{\lambda,i} $$
+
+The <span style="color: blue; font-weight: bold"> partial elastic mean </span> is defined as:
+$$\hat{g}_\lambda := \bar{h}_{\lambda} := \frac{1}{n} \sum_{i=1}^n f^*_{\lambda, i}$$
+
+
+
+## <span style="font-weight: bold;">Step 0: Function Alignment by SRVF</span> {.smaller auto-animate=true}
+
+![](slide_images/Diagram2.jpg){style="position: absolute; top: 7%; left: 50%; transform: translateX(-50%); width: 90%; z-index: 0;"}
+
+<!-- Semi-transparent Rectangle -->
+<div style="
+    position: absolute; 
+    top: 12.5%; 
+    left: 50%; 
+    width: 45%;
+    height: 80%;
+    background-color: rgba(220, 220, 220, 0.95); 
+    padding: 10px; 
+    border-radius: 10px; 
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
+    translate:(-50%, -60%);
+    font-size: 1.2em"
+    class="fragment">
+<br><br>
+
+  - Given a candidate set, $\{\lambda_l\}_{l=1}^L$.
+
+  - For each $\lambda_l$ where $l = 1,...,L$
+  (1) Collect the partially aligned functions $\{f^*_{\lambda_l,i}\}_{i=1}^{n}$.
+  (2) Compute the partial elastic mean 
+  $$\hat g_{\lambda_l} := \frac{1}{n}\sum_{i=1}^n f^*_{\lambda_l,i}$$
+</div>
+
+## <span style="font-weight: bold;" data-id="step-title">Step 1: PPD and $\lambda$ Selection</span> {.smaller}
+
+![](slide_images/Diagram3.jpg){data-id="diagram-image" style="position: absolute; top: 7%; left: 50%; transform: translateX(-50%); width: 90%; z-index: 0;"}
+
+<!-- Semi-transparent Rectangle -->
+<div style="
+    position: absolute; 
+    top: 12.5%; 
+    left: 0%; 
+    width: 45%;
+    height: 80%;
+    background-color: rgba(220, 220, 220, 0.95); 
+    padding: 10px; 
+    border-radius: 10px; 
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
+    translate:(-50%, -60%);
+    font-size: 1.2em">
+
+  <br><br>
+
+  - For each $\lambda_l$, where $l = 1,...,L$
+  (1) Label peaks of $\hat{g}_{\lambda_l}$<br><br>
+  (2) Draw peak persistent diagrams **(PPD)**<br><br>
+  (3) Select $\lambda^*$ by two criteria:
+  <br> $\quad\quad$ **Significance** and **Persistence**
+</div>
+
+
+## <span style="font-weight: bold;">Step 1: PPD and $\lambda$ Selection</span></span> <span style="color: blue; font-size: 80%"> <br> Definition of PPD</span>
+
+<div style="
+    margin: 0 auto;
+    width: 70%;
+    padding: 1em;
+    border: none;
+    background-color: transparent;
+    font-family: 'sans serif';
+">
+
+::: {.callout-note icon=false}
+
+## **Definition**
+
+A **peak persistence diagram** (PPD) of a set of functions $\{f_i\}$ is a plot of the significant peaks of their partial elastic mean, $\hat{g}_{\lambda}$, plotted versus $\lambda$. Depending on the context, one can be interested in either the presence, or heights, or even the locations of significant peaks.
+
+:::
+    
+</div>
+
+## <span style="font-weight: bold;">Step 1: PPD and $\lambda$ Selection</span></span> <span style="color: blue; font-size: 80%"> <br> Drawing PPD</span>{auto-animate=true}
+
+Label the peaks in $\hat{g}_{\lambda_l}$ by comparing the locations of peaks in $\hat{g}_{\lambda_{l+1}}$.
+  
+Let $\{\lambda_l\}_{l=1}^5 = (0, 0.02, 0.05, 0.15, 0.30)$
+
+::: {.cell}
+<iframe src="infinite-loop-figs.html" width="100%" height="500px" style="border:none;"></iframe>
+:::
+
+
+
+## <span style="font-weight: bold;">Step 1: PPD and $\lambda$ Selection</span></span> <span style="color: blue; font-size: 80%"> <br> Types of PPD</span>{auto-animate=true}
+
+::: {layout-ncol=3}
+![PPD Diagram](slide_images/PPDtypes1.png)
+
+![PPD 3D Surface](slide_images/PPDtypes2.png)
+
+![PPD 3D Surface](slide_images/PPDtypes3.png)
+:::
+
+## <span style="color: blue; font-size: 80%"> <br> Example </span>{auto-animate=true}
+
+:::{.cell}
+<iframe src="interactive-ppd.html" width="100%" height="500" style="border:none;"></iframe>
+:::
+
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+<script>
+  MathJax = {
+    tex: {
+      inlineMath: [['$', '$'], ['\\(', '\\)']],
+    },
+    startup: {
+      ready: () => {
+        console.log("MathJax 3 ready");
+        MathJax.startup.defaultReady();
+      }
+    }
+  };
+</script>
+
+<script>
+  console.log('MathJax version:', window.MathJax?.version || 'Not loaded');
+</script>
+
+## <span style="font-weight: bold;">Step 1: PPD and $\lambda$ Selection</span></span> <span style="color: blue; font-size: 80%"> <br> Criterion 1. **Significance** of a peak</span>{.smaller auto-animate=true}
+
+- We define **strength** of a peak in any absolutely continuous function $f(t_0)$ at a location of a peak, $t_0 \in [0,1]$:
+$$ \frac{-\ddot{f}(t_0)}{\max_{t\in[0,1]}{\ddot{f}(t)}}$$
+
+- A strength always lies in the interval [0,1].
+
+- A peak is ***insignificant*** if the strength of a peak is less than a certain threshold, $\tau$.
+
+- Threshold Selection:
+  - We need an adaptable hyperparameter derived from the dataset.
+  - For $i = 1,...,n$, we collect all strengths of peaks in $f_i$.
+  - We choose $\tau$ to be the $p$-th percentile of such strength collection.
+
+## <span style="color: blue; font-size: 80%"> Criterion 1. **Significance** of a peak</span>{.smaller auto-animate=true}
+- Threshold Selection:
+  - We need an adaptable hyperparameter derived from the dataset.
+  - For $i = 1,...,n$, we collect all strengths of peaks in $f_i$.
+  - We choose $\tau$ to be the $p$-th percentile of such strength collection.
+
+<div style="text-align: center;">
+  <img src="slide_images/tau_selection.png" alt="Tau Selection" style="width: 45%; height: auto;"><br>
+  The collection of sorted **strengths** of raw functions, $\{f_i\}_{i=1}^n$
+</div>
+
+
+## <span style="color: blue; font-size: 80%"> Criterion 1. **Significance** of a peak</span>{.smaller auto-animate=true}
+- Threshold Selection: 
+  - We need an adaptable hyperparameter derived from the dataset.
+  - For $i = 1,...,n$, we collect all strengths of peaks in $f_i$.
+  - We choose $\tau$ to be the $p$-th percentile of such strength collection.
+
+::: {.column}
+![](slide_images/tau_selection.png)
+:::
+
+::: {.column}
+
+::: {.r-stack}
+
+<div class="fragment fade-out" data-fragment-index="1" style="display: flex; align-items: center; justify-content: center; height: 600px;">
+  <figure>
+    <img src="slide_images/tau_selection_legend.png" alt="legend" style="width: 50%; height: auto;">
+    <figcaption style="margin-top: 0px; font-style: italic; font-size: 1.2em;">
+        Each vertical line implies the $\tau$ selected by the percentiles.
+    </figcaption>
+  </figure>
+</div>
+
+<p class="fragment fade-in" data-fragment-index="1" style="font-size: 120%">
+Given $\hat{g}_{\lambda}$, a peak at $t_0$ is ***insignificant*** if 
+$$ \frac{-\ddot{\hat{g}}_\lambda(t_0)}{\max_{t\in[0,1]}\ddot{\hat{g}}_\lambda(t)} \leq \tau,
+$$
+</p>
+:::
+:::
+
+## <span style="font-weight: bold;">Step 1: PPD and $\lambda$ Selection</span></span>  <span style="color: blue; font-size: 80%"> <br>Criterion 2. **Persistence** of a peak</span>{auto-animate=true}
+
+
+- The most persistent peak corresponds to the longest bar in the bar chart.
+
+- Other persistent peaks are identified based on their bar lengths relative to the longest bar, using a threshold ratio $\theta$.
+
+## **Step 1: PPD and $\lambda$ Selection** <span style="color: blue; font-size: 80%;"><br>(2) Selection of $\lambda^*$</span> {.scrollable .smaller auto-animate=true}
+
+- We choose optimal $\lambda^*$ as close to zero as possible while all significant peaks are included.
+- Scatter points: Partially aligned functions, $\{𝑓^*_{\lambda^*,𝑖}\}$
+- <span style="color: blue;">Blue</span> Curve: Mean of partial elastic mean, $\hat{g}_{\lambda^*}$
+- <span style="color: cyan;">Cyan Curve</span>: Initial shape function, $\hat{g}_{init}$
+- <span style="color: red;">Red Curve</span>: Ground truth, $g$
+
+::: {layout-ncol=2}
+![](slide_images/PPD_lam_selection1.png)
+
+![](slide_images/ppd_lam_selection2.png)
+:::
+
+## <span style="font-weight: bold;font-size: 80%">Step 2: Function Estimation with Peak-Constraints</span> {.smaller auto-animate=true}
+
+![](slide_images/Diagram4.jpg){data-id="diagram-image" style="position: absolute; top: 7%; left: 50%; transform: translateX(-50%); width: 90%; z-index: 0;"}
+
+<!-- Semi-transparent Rectangle -->
+<div style="
+    position: absolute; 
+    top: 12.5%; 
+    left: 0%; 
+    width: 45%;
+    height: 80%;
+    background-color: rgba(220, 220, 220, 0.95); 
+    padding: 10px; 
+    border-radius: 10px; 
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
+    translate:(-50%, -60%);
+    font-size: 1.2em"
+    class="fragment fade-in">
+
+  <br><br>
+
+  (1) Obtain shape template from $\hat g_{\lambda^*}$<br><br>
+  (2) Estimate $\hat{g}$ with $\{f^*_{\lambda^*,i}\}_{i=1}^n$ by keeping number of peaks.<br><br>
+</div>
+
+
+## <span style="font-weight: bold; font-size: 80%">Step 2: Function Estimation With Peak-Constraints</span> {.smaller auto-animate=true}
+
+We need a smooth and relaxed fitting method when removing insignificant peaks.
+
+Curve estimation is based on the locations of interior peaks and valleys of the shape estimate, denoting $\hat{g}_{\text{init}}$.
+
+::: {layout-align="center"}
+![](slide_images/functionEst1.png){width=60%}
+:::
+
+## <span style="font-weight: bold; font-size: 80%">Step 2: Function Estimation With Peak-Constraints <br> </span> {.smaller auto-animate=true}
+
+<span style="font-weight: bold; font-size: 120%"> **Parameters** </span>
+
+Let $M$ be the number of *extrema points* of $\hat{g}_{init}$ which comprises interior peaks, valleys, and the two endpoints.
+
+1. **Heights** of extrema points, denoting $\mathbf{h} = \{h_k\}_{k=1}^M$.
+
+  - Constaints in heights: <br>
+  $\quad$ \* A valley’s height should be less than the heights of its neighboring peaks.<br>
+  $\quad$ \* Let $\mathcal{H}$ be the set of $\mathbf{h}$'s satisfying the constraint.
+
+2. **Locations**: Warping of the shape template function.
+
+<span style="font-weight: bold; font-size: 120%">Deformation </span>
+
+- Given a $\mathbf{h}_0 \in \mathcal{H}$, one can replace the heights of extrema points of $\hat{g}_{\text{init}}$.
+
+- A smooth interpolation of $\mathbf{h}_0$ is the updated template function, denoting $g_\mathbf{h}$.
+
+## <span style="font-weight: bold; font-size: 80%">Step 2: Function Estimation With Peak-Constraints <br> </span> {.smaller auto-animate=true}
+
+The heights and warping functions can be estimated as follows:
+
+$$
+\begin{equation}
+(\gamma^*, \mathbf{h}^*) = \underset{\gamma \in \Gamma,\mathbf{h} \in {\mathcal{H}}}{\mbox{argmin}} \Bigg( \sum_{i=1}^n \int_0^1 (g_{\mathbf{h}}(\gamma(t)) - {f}^*_{\lambda^*,i}(t))^2 dt + \rho \int_0^1 \ddot{g}_{\mathbf{h}}(\gamma(t))^2dt \Bigg)
+\end{equation}
+$$
+
+The final estimation:
+
+$$ \hat{g} = (g_{\mathbf{h}^*} \circ \gamma^*)(t) $$
+
+
+## <span style="font-weight: bold; font-size: 80%">Step 2: Function Estimation With Peak-Constraints <br> </span> {.smaller auto-animate=true}
+
+- <span style="color: darkgray;">**Scatter points:**</span> Partially aligned functions, $\{f_{\lambda^*, i}^*\}$
+- <span style="color: blue;">**Blue Curve:**</span> Partial elastic mean, $\hat{g}_{\lambda^*}$
+- <span style="color: cyan;">**Cyan Curve:**</span> Initial Shape Function, $\hat{g}_{\text{init}}$
+- <span style="color: green;">**Green Curve:**</span> $\hat{g}$
+
+::: {layout-ncol=2}
+![](slide_images/functionEst1.png)
+
+![](slide_images/functionEst2.png)
+:::
+
+## <span style="font-weight: bold;"> Results <br> </span>{.smaller}
+
+![](slide_images/Sim1.png)
+
+## <span style="font-weight: bold;"> Results <br> </span>{.smaller}
+
+![](slide_images/sim2.png)
+
+## <span style="font-weight: bold;"> Results <br> </span>{.smaller}
+### Case 1
+
+![](slide_images/sim3.png)
+
+## <span style="font-weight: bold;"> Results <br> </span>{.smaller}
+### Case 2
+![](slide_images/sim4.png)
+
+## <span style="font-weight: bold;"> Results <br> </span>{.smaller}
+### RMSE Comparison
+
+![](slide_images/l2Dist.png)
+
+
+## <span style="font-weight: bold;"> Results <br> </span>{.smaller}
+### Female Growth Rate
+![](slide_images/r-fm.png)
+
+
+## <span style="font-weight: bold;"> Results <br> </span>{.smaller  auto-animate=true}
+### Covid-19
+COVID Hospitalization Data for Europe: 
+
+The daily hospital-occupancy counts associated with COVID-19 in 25 European countries during the period from April 2020 to July 2021 (Mathieu et al. (2020))
+
+## <span style="font-weight: bold;"> Results <br> </span>{.smaller auto-animate=true}
+### Covid-19
+
+![](slide_images/r-cov.png)
+
+## {}
+<div style="font-size: 1.5em; font-weight: bold; text-align: center; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">2D Planar Curve Registration with Phase and Additive Noise
+</div>
+
+
+## <span style="font-weight: bold;">2D Curve Registration:<br></span><span style="color: blue; font-size: 80%">Representation of a 2D Curve</span> {.smaller auto-animate=true}
+
+- A continuous planar curve is parameterized as:
+  $$
+  \beta: [0,1] \to \mathbb{R}^2, \quad \beta(t) = (x(t), y(t)).
+  $$
+
+- Assumptions for this study:
+  1. **Noise-Free Data**:
+     - No rotation, translation, or scale noise.
+  2. **Arc-Length Reparameterization**:
+     - Curves are analyzed for shape only.
+  3. **Noise in Angle Function Space**:
+     - Phase and additive noise are imposed on the **angle function** instead of the original coordinates.
+
+- Reparameterization ensures a constant arc-length, focusing on the curve's shape.
+
+## <span style="font-weight: bold;">2D Curve Registration:<br></span><span style="color: blue; font-size: 80%">Planar Curve Components</span> {.smaller auto-animate=true}
+
+A planar curve requires two variables:
+
+- **Speed Function ( $\phi$ )**: Treated as constant (arc-length).
+- **Angle Function ( $\theta$ )**:
+  - Captures tangent direction:  
+$$
+\theta(t) = \texttt{atan2}(\dot{y}(t), \dot{x}(t)).
+$$
+
+- **Handling Discontinuity**:
+  - Apply `unwrap` to ensure $\theta(t)$ is smooth and continuous, avoiding jumps in $[-\pi, \pi]$.
+
+
+## <span style="font-weight: bold;">2D Curve Registration:<br></span><span style="color: blue; font-size: 80%">Model Specification</span> {.smaller auto-animate=true}
+ 
+- The angle function $\theta_i$ of an arc-length reparameterized curve $\tilde{\beta}_i$ is modeled as:
+  $$
+  f_i(t) = (g \circ \gamma_i)(t) + \epsilon_i(t),
+  $$
+  where:
+- $\quad f_i(t)$: Angle function of $\tilde{\beta}_i$,
+- $\quad g(t)$: Mean angle function,
+- $\quad \gamma_i(t)$: Warping function,
+- $\quad \epsilon_i(t)$: Additive noise.
+
+- For a consistent notation with the previous work, we replace the notation $\theta_i$ to $f_i$.
+
+## **Challenges with Noise in Original Coordinates** {.smaller}
+
+- Noise in $x(t)$ and $y(t)$ causes:
+  - Divergence in angle unwrapping.
+  - Misalignment of angle function peaks and troughs.
+  - Reconstruction error amplies while working with curvature of the curve.
+
+<span style="color: blue; font-size: 120%">**Motivation for Aligning Angle Derivatives, $\dot f_i$**</span>
+
+- **Vertices (Points of maximal curvature)**:
+  - Key bending points of 2D curves.
+  - Captured only through curvature information.
+
+- **Why aligning angle derivatives?**
+  - Angle derivatives embed curvature information.
+  - Preserve essential shape features such as vertices for accurate alignment.
+
+## <span style="font-weight: bold;"> Results <br> </span>{.smaller}
+### PPD Comparison
+![](slide_images/PPD_comparison.png)
+
+## <span style="font-weight: bold;"> Results <br> </span>{.smaller}
+### Case 1
+![](slide_images/2dPPDex1.png)
+
+## <span style="font-weight: bold;"> Results <br> </span>{.smaller}
+### Case 2
+![](slide_images/2dPPDex2.png)
+
+## <span style="font-weight: bold;"> Results <br> </span>{.smaller}
+### Case 3
+![](slide_images/2dPPDex3.png)
+
+## {}
+<div style="font-size: 1.2em; font-weight: bold; text-align: center; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">2D Curve Registration by Principal Component Trajectory
+</div>
+
+## **Alignment and Trajectory Construction**{.smaller auto-animate=true}
+
+<span style="color: blue; font-size: 120%">**Function Alignment**</span><br>
+
+- For $l = 1,...,L$, collect $\{\lambda_l\}_{l=1}^L$ from a log-scaled grid.
+
+- Collect partial elastic means: $\{\hat g_{\lambda_l}\}_{l=1}^L$.
+
+<span style="color: blue; font-size: 120%">**Dimensionality Reduction**</span><br>
+
+- The trajectory $\{\hat{g}_{\lambda_l}\}_{l=1}^L$ is discretized over $T$ time points, forming a data matrix $\mathbf{G} \in \mathbb{R}^{L \times T}$.
+- PCA is applied to reduce dimensionality:
+  $$
+  \mathbf{C} = \frac{1}{T - 1} \mathbf{G} \mathbf{G}^\top, \quad \mathbf{C} \mathbf{U} = \mathbf{U} \Sigma^2.$$
+where $\mathbf{U} \in \mathbb{R}^{L \times L}$ is a matrix with columns of eigenvectors.
+
+- The <span style="color: blue;">trajectory in the reduced space</span> is:
+  $$
+  \mathbf{Z}_L = \mathbf{U}_{[:,1:J]}^\top \mathbf{G}, \quad \mathbf{Z}_L \in \mathbb{R}^{L \times J},
+  $$
+  where $J$ indicates the first $J$ largest eigenvalues which explains at least 95% of the variance.
+
+
+## **Principal Curve Estimation**{.smaller auto-animate=true}
+
+- Local jitter in the trajectory generated by the rows of $\mathbf{Z}$ makes small loops in the trajectory.  
+- A smooth approximation of the trajectory is called principal curve denoting $S$.
+- It can be achieved by a cubic spline approximation method.
+- $S$ can be parameterized as $\mathbf{s}(\xi)$ is computed:
+  - $\xi \in [0,1]$ represents arc length normalized by the total length of $S$.
+  - Each trajectory point is projected onto $S$ using:
+    $$
+    \xi_l = \underset{\xi \in [0,1]}{\arg \min} \|\mathbf{r}(\lambda_l) - \mathbf{s}(\xi)\|.
+    $$
+
+<span style="color: blue; font-size: 120%"> **Order Correction** </span><br>
+
+- Monotonic regression ensures $\lambda$ progression is preserved:
+  $$
+  \min_{\mathbf{y}} \sum_{l=1}^L \|\mathbf{s}(\xi_l) - \mathbf{y}_l\|^2, \quad \text{subject to } \mathbf{y}_{l-1} \leq \mathbf{y}_l.
+  $$
+
+## **Resampling $\lambda$**{.smaller auto-animate=true}
+
+- After constructing the principal curve, $\lambda$ is resampled on a **linear grid** for consistent spacing:
+  $$
+  \{\lambda_k\}_{k=1}^K, \quad \lambda_k = \lambda_{\text{min}} + \frac{k-1}{K-1} (\lambda_{\text{max}} - \lambda_{\text{min}}).
+  $$
+- Resampling ensures:
+  - Uniform resolution for downstream analysis.
+  - Better interpretability of the alignment trajectory.
+
+## **Stable Regions and Upper Bound**{.smaller auto-animate=true}
+
+- Density-based clustering (DBSCAN) identifies stable regions.
+- Stable regions:
+  - High-density regions in PC space correspond to stabilized alignment behavior.
+- Correlation matrix $\mathbf{R}$ refines the upper bound for $\lambda$:
+  $$
+  \mathbf{R}(k_1, k_2) = \frac{\mathbf{C}(k_1, k_2)}{\sqrt{\mathbf{C}(k_1, k_1) \mathbf{C}(k_2, k_2)}}, \quad \mathbf{C} = \frac{1}{K - 1} \mathbf{Z}_K \mathbf{Z}_K^\top.
+  $$
+
+## <span style="font-size:0.8em;">**Results **([link](https://wk45.github.io/Projects/PathAnalysis/Visualization/test99.html))</span> {.smaller auto-animate=true scrollable=false}
+
+<div style="
+    margin: 0% auto;
+    width: 100%;
+    height: 80vh;
+    padding: 0em;
+    border: none;
+    background-color: transparent;"
+    class="cell">
+<iframe src="https://wk45.github.io/Projects/PathAnalysis/Visualization/test99.html" width="100%" height="100%" 
+  style="display: block; margin: 0 auto; border: none;">
+
+</iframe>
+</div>
+
+## **Discussion and Future Plans**{auto-animate=true}
+- Followup topics for Dissertation
+
+1. Trajectory Analysis: Explore 2D curve trajectories directly, avoiding reliance on angle functions.
+
+2. Efficient Computation:
+- Leverage gradient descent for computational efficiency.
+- Highlight its independence from the number of discretized function points.
+
+3. Investigate deeper theoretical justifications for the methods employed.
+
+4. Develop Bayesian frameworks for richer and more flexible warping solutions.
+
+## {}
+<div style="font-size: 1.2em; font-weight: bold; text-align: center; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">Thank you
+</div>
+
