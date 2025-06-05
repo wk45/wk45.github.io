@@ -20,6 +20,10 @@
   outline-color: #000;*/
 }
 
+.reveal .slides section {
+  margin-top: 0.5em; /* adjust as needed */
+}
+
 .reveal h1,
 .reveal h2,
 .reveal h3,
@@ -65,4 +69,8 @@
 
 .date {
   font-size: 1.5rem !important; 
+}
+
+.reveal a {
+  color: #3333b3; /* or any color you want */
 }
