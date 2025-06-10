@@ -811,7 +811,7 @@ Choose <span class="math inline">\lambda^*</span> as close to zero as possible w
 </ul>
 </div>
 </div>
-<div class="quarto-layout-panel" data-layout-ncol="2" style="margin-top: -1em;">
+<div class="quarto-layout-panel" style="margin-top: -1em;" data-layout-ncol="2">
 <div class="quarto-layout-row">
 <div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
 <p><img src="figs/ppd/lambda_selection/ppd.png" style="width: 70%; display: block; margin: auto;"></p>
@@ -2128,75 +2128,365 @@ Warping Fns
 <p><a href="#/section-10" style="color:#3333b3; font-size: 80%;">[Return to Pairwise]</a></p>
 </div>
 </section></section>
+<section>
 <section id="multiple-function-alignment-1" class="title-slide slide level2 center" data-state="hide-menubar" data-auto-animate="true">
 <h2 data-id="quarto-animate-title">Multiple-function Alignment</h2>
 <div class="columns" style="display: flex; gap: -1em;">
 <div class="column" style="width: 59%">
-<p>(will be updated)</p>
-Latent noise-free signals <span class="math inline">f_i</span>:<br><br>
+Latent noise-free signals <span class="math inline">\{f_i\}_{i=1}^5</span>:
 <div>
-<span class="math display">f_i(t) = \sum_{j=1}^2 a_{ij} \cdot \exp\left\{ -\frac{(t - \mu_{ij})^2}{2\sigma_{ij}^2} \right\} \textsf{ for } i=1,...,5</span>
+<span class="math display">f_i(t) = \sum_{j=1}^2 a_{ij} \cdot \exp\left\{ -\frac{(t - \mu_{ij})^2}{2\sigma_{ij}^2} \right\}</span>
 </div>
-</div><div class="column" style="item-align: center; text-align: center; width: 39%; margin-top: -1.5em;">
+<div style="margin-top: -0.5em; font-size: 90%;">
+<p><span class="math inline">\quad\,\,a_{i1},\,\,a_{i,2}\overset{\textrm{i.i.d.}}{\sim} \mathrm{Unif([0.6,1])}</span><br> <span class="math inline">\quad\,\, \mu_{i1} \overset{\textrm{i.i.d.}}{\sim} \mathrm{Unif}([0.2,0.45]),\,\, \mu_{i2} \overset{\textrm{i.i.d.}}{\sim} \mathrm{Unif}([0.55,0.95])</span><br> <span class="math inline">\quad\,\, \sigma_{i1} \overset{\textrm{i.i.d.}}{\sim} \mathrm{Unif}([0.05,0.08]),\,\, \sigma_{i2} \overset{\textrm{i.i.d.}}{\sim} \mathrm{Unif}([0.05,0.12])</span></p>
+</div>
+</div><div class="column" style="item-align: center; text-align: center; width: 41%; margin-top: 0em;">
 <img src="figs/bayes/mult/raw_f.svg" style="width: 80%;">
 <p style="margin-top: -1em;">
-<span class="math inline">f_i</span>’s
+<span class="math inline">\quad f_i</span>’s
 </p>
 </div></div>
 <div class="columns" style="display: flex; gap: 0em; margin-top: 0em; items-align: center;">
 <div class="column center" style="width: 59%">
-<!-- The observed noisy signals $\{y_i\}_{i=1}^5$:
-</br>
+<p>The observed noisy signals <span class="math inline">\{y_i\}_{i=1}^5</span>:</p>
 <div style="text-align:center;">
-<span style="color:#336699;">$y_1([t]) = f_1([t]) + \epsilon_1([t])$</span></br>
-<span style="color:#ff6600;">$y_2([t]) = f_2([t]) + \epsilon_2([t])$</span></div>
-$\qquad\,\,\textsf{additive noise: } \,\, \epsilon_1([t]), \,\, \epsilon_2([t]) \overset{\textrm{i.i.d.}}{\sim} \mathcal{N}(\mathbf{0}, 4^2\ \mathbf{I})$</br>
-$\qquad\,\,\textsf{discretized time: } \,\, [t] \in \mathbb{R}^{T}$</br>
-$\qquad\,\,\textsf{identity matrix: } \,\, \mathbf{I}\in\mathbb{R}^{T\times T}$ -->
-</div><div class="column" style="item-align: center; text-align: center; width: 39%; margin-top: 1em;">
-<img src="figs/bayes/mult/raw_signal.svg" style="width: 80%;" data-id="fig-pe">
+<span class="math inline">y_i([t]) = f_i([t]) + \epsilon_i([t])</span>
+</div>
+<p><span class="math inline">\qquad\,\,</span> additive noise: <span class="math inline">\,\, \epsilon_i([t])\overset{\textrm{i.i.d.}}{\sim} \mathcal{N}(\mathbf{0}, 0.2^2\ \mathbf{I})</span><br> <span class="math inline">\qquad\,\,</span> discretized time: <span class="math inline">\,\, [t] \in \mathbb{R}^{T}</span><br> <span class="math inline">\qquad\,\,</span> identity matrix: <span class="math inline">\,\, \mathbf{I}\in\mathbb{R}^{T\times T}</span></p>
+</div><div class="column" style="item-align: center; text-align: center; width: 41%; margin-top: 0em;">
+<img src="figs/bayes/mult/raw_signals.svg" style="width: 80%;" data-id="fig-pe">
 <p style="margin-top: -1em;">
-<span class="math inline">y_i</span>’s
+<span class="math inline">\quad \,\, y_i</span>’s
 </p>
 </div></div>
 <div style="position: absolute; top: -1em; right: 0; padding: 0.5em;">
 <a href="#/section-11" style="color:#3333b3; font-size: 80%;">[Return]</a>
 </div>
 </section>
-
+<section id="section-14" class="slide level3" data-state="hide-menubar" data-auto-animate="true">
+<h3 data-id="quarto-animate-title"></h3>
+<h2>
+Multiple-function Alignment
+</h2>
+<div class="r-stack">
+<div class="fragment fade-out" data-fragment-index="1" style="display: block; width: fit-content; margin-left: 0;">
+• estimated warpings: <span class="math inline">\hat\gamma_i</span> <br> • aligned noisy obs: <br> <span class="math inline">\qquad\qquad\tilde{y}_i = y_i\circ\hat\gamma_i</span>
+</div>
+<div class="fragment fade-in" data-fragment-index="1" style="display: block; width: fit-content; margin-left: 0;">
+• estimated warpings: <span class="math inline">\hat\gamma_i</span> <br> • aligned signals: <br> <span class="math inline">\qquad\qquad\tilde{f}_i = f_i\circ\hat\gamma_i</span>
+</div>
+</div>
+<div class="columns" style="display: flex; align-items: center; gap: -5em; margin-top: -2em;">
+<div class="column" style="width: 30%; text-align: center;">
+<div class="r-stack">
+<div class="fragment fade-out" data-fragment-index="1">
+<img src="figs/bayes/mult/raw_signals.svg" style="width: 100%;" data-id="fig-pe">
+<div style="font-size: 100%; text-align: center; margin-top: -1em;">
+<span class="math inline">\quad \,\, y_i</span>’s
+</div>
+</div>
+<div class="fragment fade-in" data-fragment-index="1">
+<img src="figs/bayes/mult/raw_f.svg" style="width: 100%;">
+<div style="font-size: 100%; text-align: center; margin-top: -1em;">
+<span class="math inline">\quad \,\, f_i</span>’s
+</div>
+</div>
+</div>
+<p><br></p>
+</div><div class="column" style="width: 70%; margin-top: -3em;">
+<div class="r-stack">
+<table style="margin: auto; border-collapse: collapse; border: 1px solid black; padding: -0.5em;" class="fragment fade-out" data-fragment-index="1">
+<thead>
+<tr>
+<th style="border: 1px solid black; vertical-align: middle; text-align: center;">
+</th>
+<th style="text-align: center">
+Aligned Signals
+</th>
+<th style="text-align: center">
+Warping Fns
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="border: 1px solid black; vertical-align: middle; text-align: center; writing-mode: vertical-rl; transform: rotate(180deg);">
+<strong>F–R</strong>
+</td>
+<td>
+<img src="figs/bayes/mult/aligned_signals_FR.svg" width="100%">
+<div style="font-size: 100%; text-align: center; margin-top: -0.5em;">
+<span class="math inline">\quad \,\, \tilde{y}_i^{\scriptscriptstyle\textrm{(F--R)}}</span>’s
+</div>
+</td>
+<td>
+<img src="figs/bayes/mult/gam_FR.svg" width="100%">
+<div style="font-size: 100%; text-align: center; margin-top: -0.5em;">
+<span class="math inline">\quad \,\, \hat{\gamma}_i^{\scriptscriptstyle\textrm{(F--R)}}</span>
+</div>
+</td>
+</tr>
+<tr>
+<td style="border: 1px solid black; vertical-align: middle; text-align: center; writing-mode: vertical-rl; transform: rotate(180deg);">
+<strong>Bayes</strong>
+</td>
+<td>
+<img src="figs/bayes/mult/aligned_signals_Bayes.svg" width="100%">
+<div style="font-size: 100%; text-align: center; margin-top: -0.5em;">
+<span class="math inline">\quad \,\, \tilde{y}_i^{\scriptscriptstyle\textrm{(Bayes)}}</span>’s
+</div>
+</td>
+<td>
+<img src="figs/bayes/mult/gam_Bayes.svg" width="100%">
+<div style="font-size: 100%; text-align: center; margin-top: -0.5em;">
+<span style="color:#000066;"><span class="math inline">\quad \,\, \hat{\gamma}_i^{\scriptscriptstyle\textrm{(Bayes)}}</span></span>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+<table class="fragment fade-in" data-fragment-index="1" style="margin: auto; border-collapse: collapse; border: 1px solid black; margin-top: -0.5em;">
+<thead>
+<tr>
+<th style="border: 1px solid black; vertical-align: middle; text-align: center;">
+</th>
+<th style="text-align: center;font-size:80%;">
+Aligned Signals
+</th>
+<th style="text-align: center;font-size:80%;">
+Warping Fns
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="border: 1px solid black; vertical-align: middle; text-align: center; writing-mode: vertical-rl; transform: rotate(180deg);font-size:80%;">
+<strong>F–R</strong>
+</td>
+<td>
+<img src="figs/bayes/mult/aligned_f_FR.svg" width="75%">
+</td>
+<td>
+<img src="figs/bayes/mult/gam_FR.svg" width="75%">
+</td>
+</tr>
+<tr>
+<td style="border: 1px solid black; vertical-align: middle; text-align: center; writing-mode: vertical-rl; transform: rotate(180deg);font-size:80%;">
+<strong>Bayes</strong>
+</td>
+<td>
+<img src="figs/bayes/mult/aligned_f_Bayes.svg" width="75%">
+</td>
+<td>
+<img src="figs/bayes/mult/gam_Bayes.svg" width="75%">
+</td>
+</tr>
+<tr>
+<td style="border: 1px solid black; vertical-align: middle; text-align: center; writing-mode: vertical-rl; transform: rotate(180deg); font-size:60%;">
+<strong>F–R (noise-free)</strong>
+</td>
+<td>
+<img src="figs/bayes/mult/aligned_f_FR_noisefree.svg" width="75%">
+</td>
+<td>
+<img src="figs/bayes/mult/gam_FR_noisefree.svg" width="75%">
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div></div>
+<div style="position: absolute; top: -0.5em; right: 0; padding: 0.5em;">
+<a href="#/section-11" style="color:#3333b3; font-size: 80%;">[Return]</a>
+</div>
+</section></section>
+<section>
 <section id="underlying-signal-estimation-1" class="title-slide slide level2 center" data-state="hide-menubar" data-auto-animate="true">
 <h2 data-id="quarto-animate-title">Underlying Signal Estimation</h2>
+<div style="margin-top:-1em;">
 <div class="columns" style="display: flex; gap: -1em;">
 <div class="column" style="width: 59%">
-<p>will be updated</p>
-</div><div class="column" style="item-align: center; text-align: center; width: 39%; margin-top: -1.5em;">
-<img src="figs/bayes/mult/raw_f.svg" style="width: 80%;">
+<p>Latent underlying signal <span class="math inline">g(t)</span>: <span class="math display">g(t) = \sum_{j=1}^3 a_j \exp\left(-\frac{(t - \mu_j)^2}{2 \sigma_j^2}\right)</span></p>
+<div style="margin-top: -0.5em; font-size: 80%;">
+<p><span class="math inline">\qquad\,\,(a_1, a_2, a_3) = (1.5, 1.2, 1.5)</span><br> <span class="math inline">\qquad\,\, (\mu_1, \mu_2, \mu_3) = (0.06, 0.5, 0.94)</span><br> <span class="math inline">\qquad\,\, (\sigma_1, \sigma_2, \sigma_3) = (0.2, 0.15, 0.2)</span></p>
+</div>
+</div><div class="column" style="item-align: center; text-align: center; width: 39%; margin-top: 0em;">
+<div style="display: flex; justify-content: center; align-items: center;">
+<div style="flex: 1;">
+<img src="figs/bayes/sig_est/raw_f.svg" style="width: 100%;">
 <p style="margin-top: -1em;">
-<span class="math inline">f_i</span>’s
+<span class="math inline">\quad \,\,f_i</span>’s and <span style="color:red"><span class="math inline">\boldsymbol g</span></span>
 </p>
+</div>
+<div style="flex: 0 0 auto;">
+<img src="figs/bayes/sig_est/legend_only.svg" style="width: 100%;">
+</div>
+</div>
 </div></div>
 <div class="columns" style="display: flex; gap: 0em; margin-top: 0em; items-align: center;">
 <div class="column center" style="width: 59%">
-<!-- The observed noisy signals $\{y_i\}_{i=1}^5$:
-</br>
+The observed noisy signals <span class="math inline">\{y_i\}_{i=1}^5</span>:
 <div style="text-align:center;">
-<span style="color:#336699;">$y_1([t]) = f_1([t]) + \epsilon_1([t])$</span></br>
-<span style="color:#ff6600;">$y_2([t]) = f_2([t]) + \epsilon_2([t])$</span></div>
-$\qquad\,\,\textsf{additive noise: } \,\, \epsilon_1([t]), \,\, \epsilon_2([t]) \overset{\textrm{i.i.d.}}{\sim} \mathcal{N}(\mathbf{0}, 4^2\ \mathbf{I})$</br>
-$\qquad\,\,\textsf{discretized time: } \,\, [t] \in \mathbb{R}^{T}$</br>
-$\qquad\,\,\textsf{identity matrix: } \,\, \mathbf{I}\in\mathbb{R}^{T\times T}$ -->
+<span class="math display">y_i = e_i + c_i (g\ \circ \gamma_i^{-1}) + \epsilon_i</span>
+</div>
+<div style="font-size:80%;">
+<p><span class="math inline">\qquad\,\,</span> additive noise: <span class="math inline">\,\, \epsilon_i([t])\overset{\textrm{i.i.d.}}{\sim} \mathcal{N}(\mathbf{0}, 0.2^2\ \mathbf{I})</span><br> <span class="math inline">\qquad\,\,</span> translation: <span class="math inline">\,\, e_i\overset{\textrm{i.i.d.}}{\sim} \mathcal{N}(0,0.1^2)</span><br> <span class="math inline">\qquad\,\,</span> scale factor: <span class="math inline">\,\, c_i \overset{\textrm{i.i.d.}}{\sim} \mathrm{Gamma}(10,0.1)</span><br> <span class="math inline">\qquad\,\,</span> discretized time: <span class="math inline">\,\, [t] \in \mathbb{R}^{T}</span><br> <span class="math inline">\qquad\,\,</span> identity matrix: <span class="math inline">\,\, \mathbf{I}\in\mathbb{R}^{T\times T}</span></p>
+</div>
 </div><div class="column" style="item-align: center; text-align: center; width: 39%; margin-top: 1em;">
-<img src="figs/bayes/mult/raw_signal.svg" style="width: 80%;" data-id="fig-pe">
+<img src="figs/bayes/sig_est/raw_signals.svg" style="width: 80%;" data-id="fig-pe">
 <p style="margin-top: -1em;">
-<span class="math inline">y_i</span>’s
+<span class="math inline">\quad \,\, y_i</span>’s
 </p>
 </div></div>
+</div>
 <div style="position: absolute; top: -1em; right: 0; padding: 0.5em;">
 <a href="#/section-12" style="color:#3333b3; font-size: 80%;">[Return]</a>
 </div>
-
 </section>
+<section id="section-15" class="slide level3" data-state="hide-menubar" data-auto-animate="true">
+<h3 data-id="quarto-animate-title"></h3>
+<h2>
+Underlying Signal Estimation
+</h2>
+<div style="margin-top:-1em;">
+<div class="r-stack">
+<div class="fragment fade-out" data-fragment-index="1" style="display: block; width: fit-content; margin-left: 0;">
+• estimated warpings: <span class="math inline">\hat\gamma_i</span> <br> • aligned noisy obs: <br> <span class="math inline">\qquad\qquad\tilde{y}_i = y_i\circ\hat\gamma_i</span>
+</div>
+<div class="fragment fade-in" data-fragment-index="1" style="display: block; width: fit-content; margin-left: 0;">
+• estimated warpings: <span class="math inline">\hat\gamma_i</span> <br> • aligned signals: <br> <span class="math inline">\qquad\qquad\tilde{f}_i = f_i\circ\hat\gamma_i</span>
+</div>
+</div>
+</div>
+<div style="margin-top:1em;">
+<div class="columns" style="display: flex; align-items: center; gap: -5em; margin-top: -2em;">
+<div class="column" style="width: 30%; text-align: center;">
+<div class="r-stack">
+<div class="fragment fade-out" data-fragment-index="1">
+<img src="figs/bayes/sig_est/raw_signals.svg" style="width: 100%;" data-id="fig-pe">
+<div style="font-size: 100%; text-align: center; margin-top: -1em;">
+<span class="math inline">\quad \,\, y_i</span>’s
+</div>
+</div>
+<div class="fragment fade-in" data-fragment-index="1">
+<img src="figs/bayes/sig_est/raw_f.svg" style="width: 100%;">
+<div style="font-size: 100%; text-align: center; margin-top: -1em;">
+<span class="math inline">\quad \,\, f_i</span>’s
+</div>
+</div>
+</div>
+<div class="fragment fade-in" data-fragment-index="2">
+<p><img src="figs/bayes/sig_est/g_Bayes.svg" style="width: 100%;"></p>
+</div>
+</div><div class="column" style="width: 70%; margin-top: -3em;">
+<div class="r-stack">
+<table style="margin: auto; border-collapse: collapse; border: 1px solid black; padding: -0.5em;" class="fragment fade-out" data-fragment-index="1">
+<thead>
+<tr>
+<th style="border: 1px solid black; vertical-align: middle; text-align: center;">
+</th>
+<th style="text-align: center">
+Aligned Signals
+</th>
+<th style="text-align: center">
+Warping Fns
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="border: 1px solid black; vertical-align: middle; text-align: center; writing-mode: vertical-rl; transform: rotate(180deg);">
+<strong>F–R</strong>
+</td>
+<td>
+<img src="figs/bayes/sig_est/aligned_signals_FR.svg" width="100%">
+<div style="font-size: 100%; text-align: center; margin-top: -0.5em;">
+<span class="math inline">\quad \,\, \tilde{y}_i^{\scriptscriptstyle\textrm{(F--R)}}</span>’s
+</div>
+</td>
+<td>
+<img src="figs/bayes/sig_est/gam_FR.svg" width="100%">
+<div style="font-size: 100%; text-align: center; margin-top: -0.5em;">
+<span class="math inline">\quad \,\, \hat{\gamma}_i^{\scriptscriptstyle\textrm{(F--R)}}</span>
+</div>
+</td>
+</tr>
+<tr>
+<td style="border: 1px solid black; vertical-align: middle; text-align: center; writing-mode: vertical-rl; transform: rotate(180deg);">
+<strong>Bayes</strong>
+</td>
+<td>
+<img src="figs/bayes/sig_est/aligned_signals_Bayes.svg" width="100%">
+<div style="font-size: 100%; text-align: center; margin-top: -0.5em;">
+<span class="math inline">\quad \,\, \tilde{y}_i^{\scriptscriptstyle\textrm{(Bayes)}}</span>’s
+</div>
+</td>
+<td>
+<img src="figs/bayes/sig_est/gam_Bayes.svg" width="100%">
+<div style="font-size: 100%; text-align: center; margin-top: -0.5em;">
+<span style="color:#000066;"><span class="math inline">\quad \,\, \hat{\gamma}_i^{\scriptscriptstyle\textrm{(Bayes)}}</span></span>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+<table class="fragment fade-in" data-fragment-index="1" style="margin: auto; border-collapse: collapse; border: 1px solid black; margin-top: -0.5em;">
+<thead>
+<tr>
+<th style="border: 1px solid black; vertical-align: middle; text-align: center;">
+</th>
+<th style="text-align: center;font-size:80%;">
+Aligned Signals
+</th>
+<th style="text-align: center;font-size:80%;">
+Warping Fns
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="border: 1px solid black; vertical-align: middle; text-align: center; writing-mode: vertical-rl; transform: rotate(180deg);font-size:80%;">
+<strong>F–R</strong>
+</td>
+<td>
+<img src="figs/bayes/sig_est/aligned_f_FR.svg" width="75%">
+</td>
+<td>
+<img src="figs/bayes/sig_est/gam_FR.svg" width="75%">
+</td>
+</tr>
+<tr>
+<td style="border: 1px solid black; vertical-align: middle; text-align: center; writing-mode: vertical-rl; transform: rotate(180deg);font-size:80%;">
+<strong>Bayes</strong>
+</td>
+<td>
+<img src="figs/bayes/sig_est/aligned_f_Bayes.svg" width="75%">
+</td>
+<td>
+<img src="figs/bayes/sig_est/gam_Bayes.svg" width="75%">
+</td>
+</tr>
+<tr>
+<td style="border: 1px solid black; vertical-align: middle; text-align: center; writing-mode: vertical-rl; transform: rotate(180deg); font-size:60%;">
+<strong>F–R (noise-free)</strong>
+</td>
+<td>
+<img src="figs/bayes/sig_est/aligned_f_FR_noisefree.svg" width="75%">
+</td>
+<td>
+<img src="figs/bayes/sig_est/gam_FR_noisefree.svg" width="75%">
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div></div>
+</div>
+<div style="position: absolute; top: -0.5em; right: 0; padding: 0.5em;">
+<a href="#/section-12" style="color:#3333b3; font-size: 80%;">[Return]</a>
+</div>
 
+</section></section>
 
     </div>
   <div class="quarto-auto-generated-content" style="display: none;">
