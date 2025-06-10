@@ -1638,13 +1638,23 @@ Tucker, J Derek, Lyndsay Shand, and Kenny Chowdhary. 2021. <span>“Multimodal B
 </ul>
 </div>
 <div style="position: absolute; top: -1em; right: 0; padding: 0.5em;">
-<a href="#/estimation-of-the-underlying-signal-g" style="color:#3333b3; font-size: 80%;">[Return]</a>
+<a href="#/step-1-persistent-peak-diagrams-ppd" style="color:#3333b3; font-size: 80%;">[Return]</a>
 </div>
 </section>
 <section id="persistence-of-peaks" class="slide level3 center appendix" data-state="hide-menubar">
 <h3>Persistence of Peaks</h3>
+<ul>
+<li>We define the <strong>persistence measure</strong> of a peak <span class="math inline">k</span> as:</li>
+</ul>
+<p><span class="math display">p_k = \left| \left\{ 0 \leq \lambda \leq \lambda_{\max} \mid \textsf{peak } k \textsf{ in } \hat{g}_{\lambda} \textsf{ is significant} \right\} \right|.</span></p>
+<ul>
+<li><p>A <em>persistent</em> peak in <span class="math inline">g</span> should remain visible in <span class="math inline">\hat{g}_{\lambda}</span> over a broad range of <span class="math inline">\lambda</span>.</p></li>
+<li><p>We apply a clustering approach to determine <span class="math inline">\lambda^*</span> in a data-driven manner.</p></li>
+<li><p>partition the set <span class="math inline">\{ p_k \}</span> into two groups using hierarchical clustering (Ward’s method).</p></li>
+<li><p>The cluster with larger values is labeled as persistent, while the other is non-persistent. We then define <span class="math inline">\lambda^*</span> as the smallest <span class="math inline">\lambda</span> that retains the persistent peaks in <span class="math inline">\hat{g}_{\lambda}</span>. <!-- This choice is motivated by the observation that extrema in $\hat{g}_{\lambda}$ tend to diminish as $\lambda$ increases. Finally, we denote the total number of persistent peaks by $m$. --></p></li>
+</ul>
 <div style="position: absolute; top: -1em; right: 0; padding: 0.5em;">
-<a href="#/estimation-of-the-underlying-signal-g" style="color:#3333b3; font-size: 80%;">[Return]</a>
+<a href="#/step-1-persistent-peak-diagrams-ppd" style="color:#3333b3; font-size: 80%;">[Return]</a>
 </div>
 </section>
 <section id="estimation-of-the-underlying-signal" class="slide level3 center wider-slide" data-state="hide-menubar">
