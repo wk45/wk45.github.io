@@ -309,10 +309,10 @@ In presence of both noises, <br> <span class="math inline">\qquad</span><strong>
 <strong>SRVF-based</strong> <sup>2</sup> <strong>deterministic methods</strong>
 </div>
 <p>uses panalty constraining warping toward identity warping function.<br></p>
-</div><div class="fragment">
+</div><div class="fragment" style="line-height:0.8">
 <br> <span style="margin-left:1em"><strong>↳</strong></span>
 <div style="display: flex; align-items: baseline; margin-top: -1.8em; margin-left: 2.5em; margin-right:2em;">
-<p><span>both approaches are sensitive to the penalty function and alignment weight.</span></p>
+<p><span>both<span class="math inline">^{(1,2)}</span> approaches are sensitive to the penalty function and alignment weight.</span></p>
 </div>
 </div>
 </div>
@@ -324,8 +324,8 @@ In presence of both noises, <br> <span class="math inline">\qquad</span><strong>
 leverage probabilistic priors and define likelihood with SRVFs.
 </div>
 <br>
-<div class="fragment">
-<p><strong>↳</strong> did not account for the data with additive noise process. (will be updated)<sup>4</sup></p>
+<div class="fragment" style="line-height: 1">
+<strong>↳</strong> assumes noise-free data and does not model additive noise.<sup>4</sup>
 </div>
 </div></div>
 <aside class="notes">
@@ -341,7 +341,9 @@ leverage probabilistic priors and define likelihood with SRVFs.
           overflow: hidden!important;
           display:block!important;
       }</style></aside>
-<aside><ol class="aside-footnotes"><li id="fn1"><p><span class="citation" data-cites="kneip1992landmark">Kneip and Gasser (<a href="#/references" role="doc-biblioref" onclick="">1992</a>)</span>, <span class="citation" data-cites="ramsay1998curve">Ramsay and Li (<a href="#/references" role="doc-biblioref" onclick="">1998</a>)</span>, <span class="citation" data-cites="gervini2004self">Gervini and Gasser (<a href="#/references" role="doc-biblioref" onclick="">2004</a>)</span>, <span class="citation" data-cites="james2007curve">James (<a href="#/references" role="doc-biblioref" onclick="">2007</a>)</span></p></li><li id="fn2"><p><span class="citation" data-cites="srivastava2016functional">Srivastava and Klassen (<a href="#/references" role="doc-biblioref" onclick="">2016</a>)</span></p></li><li id="fn3"><p><span class="citation" data-cites="cheng2016bayesian">Cheng, Dryden, and Huang (<a href="#/references" role="doc-biblioref" onclick="">2016</a>)</span>; <span class="citation" data-cites="lu2017bayesian">Lu, Herbei, and Kurtek (<a href="#/references" role="doc-biblioref" onclick="">2017</a>)</span>; <span class="citation" data-cites="ma2025bayesian">Ma and Wu (<a href="#/references" role="doc-biblioref" onclick="">2025</a>)</span></p></li><li id="fn4"><p><span class="citation" data-cites="tucker2021multimodal">Tucker, Shand, and Chowdhary (<a href="#/references" role="doc-biblioref" onclick="">2021</a>)</span>, indeed, addressed the functional alignment with additive noise, but (1) it confined to the pairwise alignment and (2) its hierarchical Bayesian model is not fully plausible. (will be edited)</p></li></ol></aside></section>
+<aside><ol class="aside-footnotes"><li id="fn1"><p><span class="citation" data-cites="kneip1992landmark">Kneip and Gasser (<a href="#/references" role="doc-biblioref" onclick="">1992</a>)</span>, <span class="citation" data-cites="ramsay1998curve">Ramsay and Li (<a href="#/references" role="doc-biblioref" onclick="">1998</a>)</span>, <span class="citation" data-cites="gervini2004self">Gervini and Gasser (<a href="#/references" role="doc-biblioref" onclick="">2004</a>)</span>, <span class="citation" data-cites="james2007curve">James (<a href="#/references" role="doc-biblioref" onclick="">2007</a>)</span></p></li><li id="fn2"><p><span class="citation" data-cites="srivastava2016functional">Srivastava and Klassen (<a href="#/references" role="doc-biblioref" onclick="">2016</a>)</span></p></li><li id="fn3"><p><span class="citation" data-cites="cheng2016bayesian">Cheng, Dryden, and Huang (<a href="#/references" role="doc-biblioref" onclick="">2016</a>)</span>; <span class="citation" data-cites="lu2017bayesian">Lu, Herbei, and Kurtek (<a href="#/references" role="doc-biblioref" onclick="">2017</a>)</span>; <span class="citation" data-cites="ma2025bayesian">Ma and Wu (<a href="#/references" role="doc-biblioref" onclick="">2025</a>)</span></p></li><li id="fn4"><p><span class="citation" data-cites="tucker2021multimodal">Tucker, Shand, and Chowdhary (<a href="#/references" role="doc-biblioref" onclick="">2021</a>)</span> indeed addressed functional alignment in the presence of additive noise. However,<br>
+(1) it is limited to pairwise alignment, and<br>
+(2) their hierarchical Bayesian model employed is not fully plausible.</p></li></ol></aside></section>
 
 <section id="projects-two-paths-forward" class="title-slide slide level2 center" data-auto-animate="true">
 <h2 data-id="quarto-animate-title">Projects: Two Paths Forward</h2>
@@ -843,7 +845,28 @@ Choose <span class="math inline">\lambda^*</span> as close to zero as possible w
 
 <section id="results" class="title-slide slide level2 center">
 <h2>Results</h2>
-<p>Will be updated soon. 1 or 2 examples.</p>
+<div class="columns" style="display: flex;">
+<div class="column center" style="width:20%;">
+<div style="item-align: center;">
+<p><a href="#/" data-modal-type="image" data-modal-url="/figs/ppd/sim/ex2(1).png"><img data-src="./figs/ppd/sim/ex2(1).png"></a></p>
+</div>
+</div><div class="column center" style="width:20%;">
+<div style="item-align: center;">
+<p><a href="#/" data-modal-type="image" data-modal-url="/figs/ppd/sim/ex2(2).png"><img data-src="./figs/ppd/sim/ex2(2).png"></a></p>
+</div>
+</div><div class="column center" style="width:20%;">
+<div style="item-align: center;">
+<p><a href="#/" data-modal-type="image" data-modal-url="/figs/ppd/sim/ex2(3).png"><img data-src="./figs/ppd/sim/ex2(3).png"></a></p>
+</div>
+</div><div class="column center" style="width:20%;">
+<div style="item-align: center;">
+<p><a href="#/" data-modal-type="image" data-modal-url="/figs/ppd/sim/ex2(4).png"><img data-src="./figs/ppd/sim/ex2(4).png"></a></p>
+</div>
+</div><div class="column center" style="width:20%;">
+<div style="item-align: center;">
+<p><a href="#/" data-modal-type="image" data-modal-url="/figs/ppd/sim/ex2(5).png"><img data-src="./figs/ppd/sim/ex2(5).png"></a></p>
+</div>
+</div></div>
 </section>
 
 <section id="section-6" class="title-slide slide level2 unnumbered center" data-auto-animate="true" data-name="Project 2">
@@ -966,54 +989,70 @@ Registration Frameworks
 <div id="tabset-2-2">
 <div style="font-size:90%; line-height: 1; padding-left: 1em;">
 <p><span class="citation" data-cites="ma2024stochastic">Ma, Zhou, and Wu (<a href="#/references" role="doc-biblioref" onclick="">2024</a>)</span> proposed the use of CLR<sup>3</sup> for warping function representation.</p>
-<ul>
-<li><p>Consider <span class="math inline">\Gamma_1 \subset \Gamma</span> with bounded derivatives s.t. <span class="math display">\Gamma_1 = \left\{ \gamma: [0,1] \rightarrow [0,1] \mid  \gamma(0) = 0, \gamma(1) = 1, 0 &lt; m_\gamma&lt;\dot\gamma(t) &lt; M_\gamma &lt; \infty\right\}.</span></p></li>
-<li><p>To build an isometric isomorphism to transform <span class="math inline">\Gamma_1</span> to a proper Euclidean space, it is required to struct <span class="math inline">\Gamma_1</span> is an inner-product space under <span class="math inline">\mathbb{L}^2</span> norm.</p></li>
-<li><p><span class="math inline">\Gamma_1</span> is closed under the operations <span class="math inline">\oplus_\Gamma</span> and <span class="math inline">\odot_\Gamma</span>, making it a <strong>vector space</strong> (see below).</p></li>
-</ul>
-<div class="columns" style="display: flex; gap: 0.5em; margin-top: -0.5em;">
-<div class="column" style="width:50%;">
-<div style="line-height: 0.8; border: 2px solid #000000; padding-left: 0.5em; border-radius: 8px; background-color: #ffffff;">
+<p><span class="math inline">\,\,</span>•<span class="math inline">\,\,\,</span>Consider <span class="math inline">\Gamma_1 \subset \Gamma</span> with bounded derivatives s.t. <span class="math display">\Gamma_1 = \left\{ \gamma: [0,1] \rightarrow [0,1] \mid  \gamma(0) = 0, \gamma(1) = 1, 0 &lt; m_\gamma&lt;\dot\gamma(t) &lt; M_\gamma &lt; \infty\right\}.</span></p>
+<!-- - To build an isometric isomorphism to transform $\Gamma_1$ to a proper Euclidean space, it is required to struct $\Gamma_1$ is an inner-product space under $\mathbb{L}^2$ norm. -->
+<p><span class="math inline">\,\,</span>•<span class="math inline">\,\,\,</span>Definitions of <strong>operations</strong> and <strong>inner product</strong> on <span class="math inline">\Gamma_1</span>.</p>
+<div class="columns" style="display: flex; margin-top: -0.5em;">
+<div class="column" style="width:49%;">
+<div style="margin-top: -1em;">
+<div class="custom-block" style="box-sizing: border-box; overflow-wrap: break-word; width: 98%;">
+<div class="custom-block-body" data-font-family="Computer Modern">
 For <span class="math inline">f, \, g \in \Gamma_1</span>, the <strong>product operator</strong>, <br> <span class="math inline">\,\,\, \oplus_\Gamma</span>: <span class="math inline">\Gamma_1 \times \Gamma_1 \rightarrow \Gamma_1</span>
 <div style="margin-top: -0.8em;">
 <span class="math display"> [f \oplus_\Gamma g](t) = \frac{\int_0^t \dot f(s)\dot g(s) ds}{\int_0^1 \dot f(\tau)\dot g(\tau) d\tau} </span>
 </div>
 </div>
-</div><div class="column" style="width:50%;">
-<div style="line-height: 0.8; border: 2px solid #000000; padding-left: 0.5em; border-radius: 8px; background-color: #ffffff;">
+</div>
+</div>
+</div><div class="column" style="width:49%;">
+<!-- <div style="line-height: 0.8; border: 2px solid #000000; padding-left: 0.5em; border-radius: 8px; background-color: #ffffff;"> -->
+<div style="margin-top: -1em;">
+<div class="custom-block" style="box-sizing: border-box; overflow-wrap: break-word; width: 98%;">
+<div class="custom-block-body" data-font-family="Computer Modern">
 For <span class="math inline">f \in \Gamma_1</span>, <span class="math inline">\, \alpha \in \mathbb{R}</span>, the <strong>power operator</strong>, <br> <span class="math inline">\,\,\, \odot_\Gamma</span>: <span class="math inline">\mathbb{R} \times \Gamma_1 \rightarrow \Gamma_1</span>
 <div style="margin-top: -0.8em;">
 <span class="math display">
-[\alpha \odot_\Gamma f](t) = \frac{\int_0^t {\dot f}^{\alpha}(s) ds}{\int_0^t {\dot f}^{\alpha}(\tau) d\tau}
+[\alpha \odot_\Gamma f](t) = \frac{\int_0^t {\dot f}^{\alpha}(s) ds}{\int_0^1 {\dot f}^{\alpha}(\tau) d\tau}
 </span>
+</div>
+</div>
 </div>
 </div>
 </div></div>
-<div style="line-height: 0.8; border: 2px solid #000000; padding-left: 0.5em; border-radius: 8px; background-color: #ffffff; margin-top:0.5em">
+<!-- <div style="line-height: 0.8; border: 2px solid #000000; padding-left: 0.5em; border-radius: 8px; background-color: #ffffff; margin-top:0.5em">  -->
+<div style="margin-top: -1.5em;">
+<div class="custom-block" style="box-sizing: border-box; overflow-wrap: break-word; width: 98%;">
+<div class="custom-block-body" data-font-family="Computer Modern">
 For <span class="math inline">f, \, g \in \Gamma_1</span>, the <strong>inner product</strong>, <span class="math inline">\langle \cdot,\cdot \rangle_{\Gamma}: \Gamma_1 \times \Gamma_1 \rightarrow \mathbb{R}</span> <span class="math display">\langle f,g \rangle_{\Gamma} = \int_0^1 \log(\dot f(t)) \log(\dot g(t))dt - \int_0^1 \log(\dot f(s))ds \int_0^1 \log(\dot g(\tau)) d\tau</span>
 </div>
-<ul>
-<li>By CLR transformation, a Euclidean space under conventinal <span class="math inline">\mathbb{L}^2</span> norm is achievable.</li>
-</ul>
+</div>
+</div>
+<p><span class="math inline">\,\,</span>•<span class="math inline">\,\,\,</span>Let <span class="math inline">H(0,1) \subset \mathbb{L}^2([0,1])</span> be the space of functions with zero integral over <span class="math inline">[0,1]</span> and bounded derivatives:</p>
 <div style="margin-top: -0.8em;">
-<span class="math display">H(0,1) = \left\{ h \in \mathbb{L}^2([0,1]) \;\middle|\; \int_0^1 h(t)\,dt = 0,\; -\infty&lt; m_h &lt; h(t) &lt; M_h &lt; \infty \right\} \subset \mathbb{L}^2([0,1]).
+<span class="math display">H(0,1) = \left\{ h \in \mathbb{L}^2([0,1]) \;\middle|\; \int_0^1 h(t)\,dt = 0,\; -\infty&lt; m_h &lt; h(t) &lt; M_h &lt; \infty \right\}
 </span>
 </div>
-<ul>
-<li>For <span class="math inline">\gamma \in \Gamma_1, \,\, h \in H(0,1)</span>, CLR transformation, <span class="math inline">\psi: \Gamma_1 \rightarrow H(0,1)</span> and its inverse, <span class="math inline">\psi^{-1}</span>:</li>
-</ul>
-<div style="margin-top: -1.5em;">
+<!-- - $\Gamma_1$ is closed under the operations $\oplus_\Gamma$ and $\odot_\Gamma$, making it a **vector space**. -->
+<span class="math inline">\,\,</span>•<span class="math inline">\,\,\,</span>CLR transformation, <span class="math inline">\psi: \Gamma_1 \rightarrow H(0,1)</span> and its inverse, <span class="math inline">\psi^{-1}</span>: <br> <span class="math inline">\quad</span> For all <span class="math inline">\gamma \in \Gamma_1, \,\, h \in H(0,1)</span>,
+<div style="margin-top: -1em;">
 <p><span class="math display">\psi(\gamma)(t) = \log(\dot\gamma(t)) - \int_0^1 \log(\dot\gamma(s))ds, \qquad
-\psi^{-1}(h)(t) = \frac{ \int_0^t \exp{ (h(s)) } ds }{ \int_0^1 \exp{ (h(\tau)) }  d\tau}.</span></p>
+\psi^{-1}(h)(t) = \frac{ \int_0^t \exp{ (h(s)) } ds }{ \int_0^1 \exp{ (h(\tau)) }  d\tau}</span></p>
 </div>
-<!-- - Note that $\psi(f \oplus_{\Gamma} g) = \psi(f) + \psi(g)$ and $\psi(\alpha \odot_\Gamma f) = \alpha \cdot \psi(f)$, which implies that $\psi$ is a linear isomorphism. -->
-<ul>
-<li><p>The spaces <span class="math inline">H(0,1)</span> and <span class="math inline">\Gamma_1</span> are <strong>isometrically isomorphic</strong>, i.e., <span class="math inline">\langle \psi(f), \psi(g) \rangle_{\mathbb{L}^2} = \langle f, g \rangle_{\Gamma}</span> for all <span class="math inline">f, g \in \Gamma_1</span>.</p></li>
-<li><p>The CLR representation of warping functions is a <strong>linear inner-product space</strong>, enabling standard statistical analysis without geometric distortion.</p></li>
-<li><p>CLR does not require truncation to handle improper sampling, improving computational efficiency and posterior inference. (<a href="#/illustration-of-fpca-in-srd-vs-clr" style="color:#3333b3">Example</a>)</p></li>
-</ul>
+<div style="margin-top: -0.8em;">
+<span class="math inline">\,\,</span>•<span class="math inline">\,\,\,</span>The spaces <span class="math inline">H(0,1)</span> and <span class="math inline">\Gamma_1</span> are <strong>isometric</strong> and <strong>isomorphic</strong> i.e.,<br> <span class="math inline">\quad</span> For all <span class="math inline">f,\, g \in \Gamma_1</span> and <span class="math inline">\alpha \in \mathbb{R}</span>,
+<div style="margin-left:35%;margin-top:-1.2em;">
+<span class="math inline">\langle \psi(f), \psi(g) \rangle_{\mathbb{L}^2} = \langle f, g \rangle_{\Gamma} \quad</span> <br> <span class="math inline">\psi(f \oplus_{\Gamma} g) = \psi(f) + \psi(g), \,\,\, \psi(\alpha \odot_\Gamma f) = \alpha \cdot \psi(f)</span>
 </div>
-<!-- </div> -->
+</div>
+<br> <span class="math inline">\,\,</span>•<span class="math inline">\,\,\,</span>
+<div style="margin-left: 1.25em; margin-top: -1.2em;">
+CLR enables <span style="color:red;"><strong>directly representation of warpings in a subset of <span class="math inline">\mathbb{L}^2</span></strong></span> without geometric distortion.
+</div>
+<br><span class="math inline">\,\,</span>•<span class="math inline">\,\,\,</span>
+<div style="margin-left: 1.25em; margin-top: -1.6em;">
+<p>CLR does not require truncation to handle improper sampling, improving computational efficiency and posterior inference. (<a href="#/illustration-of-fpca-in-srd-vs-clr" style="color:#3333b3">Example</a>) <br> <br></p>
+</div>
+</div>
 </div>
 </div>
 </div>
@@ -1055,7 +1094,7 @@ Registration Frameworks
 <div style="padding-left: 1em;">
 <ul>
 <li><p>We perform alignment directly in the <strong>original function space</strong> rather than SRVF space.</p></li>
-<li><p>The <strong>pinching effect</strong> arises when <span class="math inline">\dot{\gamma}(t) \to 0</span>, causing extreme compression and distortion of function features. (<a href="#/pinching-effect-free-pairwise-alignment" style="color:#3333b3">Example</a>)</p></li>
+<li><p>The <strong>pinching effect</strong> arises when <span class="math inline">\dot{\gamma}(t) \to 0</span>, causing extreme compression and distortion of function features. (<a href="#/pinching-effect-example" style="color:#3333b3">Example</a>)</p></li>
 <li><p>By placing a GP prior on the CLR-transformed warping <span class="math inline">\psi(\gamma)</span>, we ensure:</p>
 <ul>
 <li><span class="math inline">\dot{\gamma}(t) &gt; 0</span> almost surely (due to <span class="math inline">\log \dot{\gamma}</span>),</li>
@@ -1089,29 +1128,6 @@ Registration Frameworks
 
 </div> -->
 <!-- </div> -->
-<!-- 
-
-## Why $f$-space? {auto-animate=true .center}
-
-<div class="middle-content" auto-animate="true">
-<div style="padding-left: 1em; margin-top:-1em;">
-
-<h3> **---$\,\,$Noiseless case** </h3>
-<div style="padding-left: 1em;">
-  - Absolutely continuous functions: $f_1$ and $f_2 = f_1\circ\gamma$.
-  - SRVFs: $q_1$ and $q_2$.   
-
-$\,\,$ Alignment in $f$-space and $q$-space is equivalent. i.e.,
-
-  <!-- $\,\,$ If $f_2 = f_1 \circ \gamma$, then: -->
-<!-- 
-<div style="margin-top: -1em;">
-  $$
-  \|f_2 - f_1 \circ \gamma\|^2 = 0 \quad \Longleftrightarrow \quad \|q_2 - q_1 \star \gamma\|^2 = 0.
-  $$
-  </div></div>
-
-</div></div> -->
 <!-- 
 ### {auto-animate=true .center}
 <div data-id = 'slide-title' class= "hh2">Why Bayesian Approach?</div>
@@ -1258,7 +1274,7 @@ h_\gamma' = \mu_h + \sqrt{1 - \beta^2} \ (h_{\gamma}-\mu_h) + \beta \, \xi, \qqu
 <section id="section-10" class="slide level3 center">
 <h3></h3>
 <h3>
-Pairwise Alignment Algorithm <span class="fragment"> <a href="#/pinching-effect-free-pairwise-alignment">(Simulation Results)</a></span>
+Pairwise Alignment Algorithm <span class="fragment"> <a href="#/pairwise-alignment-1">(Simulation Results)</a></span>
 </h3>
 <div data-id="algorithm-box" style="font-size: 80%; line-height: 0.8; border: 1px solid #ccc; padding: 0em 1em; border-radius: 8px; background-color: #eeeeee;">
 <div style="color: black;" data-id="line1">
@@ -1512,50 +1528,44 @@ c^{(m)}_i &amp; \textsf{with probability } 1 - \alpha_c
 </div>
 </div>
 </section></section>
+<section>
 <section id="overall-advantages-of-our-bayesian-framework" class="title-slide slide level2 center" data-auto-animate="true">
 <h2 data-id="quarto-animate-title">Overall Advantages of our Bayesian Framework</h2>
 <div class="middle-content" data-auto-animate="true">
 <ul>
-<li>Models <span class="math inline">\gamma_i</span> as a random variable to <strong>reflect uncertainty</strong> in alignment</li>
-<li>Provides <span style="color:red"><strong>robustness</strong></span> to additive noise process without pinching effect. (<a href="#/robustness-by-the-use-of-f-space" style="color:#3333b3">Example</a>)</li>
-<li>Allows <span style="color:red"><strong>flexibility</strong></span> in modeling the warping function
+<li><p>Models <span class="math inline">\gamma_i</span> as a random variable to <strong>reflect uncertainty</strong> in alignment</p></li>
+<li><p>Provides <span style="color:red"><strong>robustness</strong></span> to additive noise process without pinching effect.(<a href="#/robustness-by-the-use-of-f-space" style="color:#3333b3">Example</a>) <!-- ([Example](#){data-modal-type="iframe" data-modal-url="/example_robustness.html"}) --></p></li>
+<li><p>Allows <span style="color:red"><strong>flexibility</strong></span> in modeling the warping function</p>
 <ul>
 <li>Enables <strong>incorporation of prior belief</strong> of warping functions (<a href="#/flexibility-of-bayesian-registration-prior-info-incorporation" style="color:#3333b3">Example</a>)</li>
 <li>Captures <strong>multiple plausible alignments</strong> via posterior inference <a href="#/flexibility-of-bayesian-registration-quantification-of-uncertainty" style="color:#3333b3">(Example)</a></li>
 </ul></li>
-<li>Eliminates the need for <strong>pre-smoothing</strong> data before alignment.</li>
-<li>Supports a broader class of functional data (i.e., <span class="math inline">\mathbb{L}^2</span>), whereas SRVF-based approaches require absolute continuity to ensure well-defined derivatives.</li>
+<li><p>Eliminates the need for <strong>pre-smoothing</strong> data before alignment.</p></li>
+<li><p>Supports a broader class of functional data (i.e., <span class="math inline">\mathbb{L}^2</span>), whereas SRVF-based approaches require absolute continuity to ensure well-defined derivatives.</p></li>
 </ul>
 </div>
-</section>
-
-<section>
-<section id="conclusion" class="title-slide slide level2 center scrollable">
-<h2>Conclusion</h2>
+<!-- ## Conclusion
 <div class="middle-content2" style="margin-top: -1em; font-size: 90%">
-<p>First Systematic Approach to Multi-Function Alignment under Dual Noise</p>
-<ol type="1">
-<li><strong>Bayesian Modeling</strong> (vs deterministic approaches)
-<ul>
-<li>More flexible and interpretable</li>
-<li>More robust to noise than deterministic approaches</li>
-<li>Captures full posterior uncertainty over warpings</li>
-</ul></li>
-<li><strong>CLR-Based Time Warping Representation</strong> (vs SRVF-based approaches)
-<ul>
-<li>Isometric mapping to a linear inner-product space avoids geometric distortion</li>
-<li>Ensures well-behaved posteriors; avoids improper samples</li>
-<li>Suppresses the pinching effect via bounded derivatives</li>
-</ul></li>
-<li><strong>Likelihood in <span class="math inline">\boldsymbol{f}</span>-Space</strong>(vs SRVF-based approaches)
-<ul>
-<li>Avoids amplifying noise by not differentiating signals</li>
-<li>Eliminates need for inverse SRVF transformations</li>
-<li>Pinching effect naturally mitigated by the CLR warp prior</li>
-<li>Offers computational efficiency and numerical stability</li>
-</ul></li>
-</ol>
-</div>
+
+First Systematic Approach to Multi-Function Alignment under Dual Noise
+
+1. **Bayesian Modeling** (vs deterministic approaches)
+    -   More flexible and interpretable
+    -   More robust to noise than deterministic approaches
+    -   Captures full posterior uncertainty over warpings
+
+2. **CLR-Based Time Warping Representation** (vs SRVF-based approaches)
+    -   Isometric mapping to a linear inner-product space avoids geometric distortion
+    -   Ensures well-behaved posteriors; avoids improper samples
+    -   Suppresses the pinching effect via bounded derivatives
+
+3. **Likelihood in $\boldsymbol{f}$-Space**(vs SRVF-based approaches)
+    -   Avoids amplifying noise by not differentiating signals
+    -   Eliminates need for inverse SRVF transformations
+    -   Pinching effect naturally mitigated by the CLR warp prior
+    -   Offers computational efficiency and numerical stability
+
+</div> -->
 </section>
 <section id="future-work" class="slide level3 center">
 <h3>Future Work</h3>
@@ -1729,31 +1739,53 @@ Resamples via SRVF
 </section></section>
 <section>
 <section id="robustness-by-the-use-of-f-space" class="title-slide slide level2 center" data-state="hide-menubar">
-<h2>Robustness by the use of <span class="math inline">f</span>-space</h2>
-<div style="margin-top: -2em; font-size: 110%;">
-<p><span class="math display">
-f_1(t) = \overbrace{\sin(2\pi t)}^{\textsf{\text{main signal}}} \quad+   \overbrace{\ \epsilon\ \sin\left(\frac{t}{\epsilon^{2}}\right)}^{\textsf{\text{small, fast oscillation}}}, \quad
-f_2(t) = \sin\big(2\pi\, \overbrace{\gamma_1(t)}^{\substack{\textsf{\text{warping}} \\ \\ \textsf{\text{in signal}}}}\big) + \epsilon \sin\Bigl(\dfrac{\overbrace{\gamma_2(t)}^{\substack{\textsf{\text{warping}}\\ \\ \textsf{\text{in noise}}}}}{\epsilon^2}\Bigr)
-</span></p>
-<div style="margin-top: -0.5em; margin-left: -1em; font-size: 90%;">
-<p><span class="math display">\dot{f}_1(t) = 2\pi \cos(2\pi t) +
-\underbrace{\dfrac{1}{\epsilon} \cos\left(\dfrac{t}{\epsilon^2}\right)}_{\textsf{noise 1}}, \quad
-\dot{f}_2(t) = 2\pi\, \dot{\gamma}_1(t)\, \cos\big(2\pi\, \gamma_1(t)\big) +
-\underbrace{\dfrac{\dot\gamma_2(t)}{\epsilon} \cos\left(\dfrac{\gamma_2(t)}{\epsilon^2}\right)}_{\textsf{\text{noise 2}}} </span></p>
+<h2></h2>
+<div style="margin-top:-4em">
+<h2>
+Robustness by the use of <span class="math inline">f</span>-space
+</h2>
+<div class="r-stack">
+<div class="fragment fade-out" data-fragment-index="2" style="margin-top: -1em; font-size: 100%;">
+<ul>
+<li>In noise-less settings, <span class="math display">f_2 = f_1 \circ \gamma \,\,\Leftrightarrow \,\, \mathrm{srvf}(f_2) = \mathrm{srvf}(f_1)\star\gamma.</span></li>
+<li>With additive noise (<span class="math inline">f_2(t) = f_1(\gamma(t))+\epsilon(t)</span>), this equivalence does not hold.</li>
+<li>Consider two noisy signals <span class="math inline">f_1</span> and <span class="math inline">f_2</span> with warping functions <span class="math inline">\gamma_1</span> and <span class="math inline">\gamma_2</span>, respectively:</li>
+</ul>
 </div>
-<div class="fragment" style="margin-top: -3em; margin-left: 20%; font-size: 100%;">
-<p><span class="math display">\qquad\qquad\underbrace{\phantom{
-\dfrac{1}{\epsilon} \cos\left(\dfrac{t}{\epsilon^2}\right) +
-\dfrac{\dot\gamma_2(t)}{\epsilon} \cos\left(\dfrac{\gamma_2(t)}{\epsilon^2}\right) \qquad \qquad \qquad \quad
-}}_{\color{red}\textsf{each noise term dominates when } \epsilon \rightarrow 0}</span></p>
+<div class="fragment fade-in" style="display: flex; justify-content: space-around; align-items: flex-start; gap: 1em; text-align: center; margin-top: -1em; background-color: white; border:2px solid black;" data-fragment-index="2">
+<div style="width: 32%;">
+<img src="figs/bayes/robustness/gams_error.svg" style="width: 70%;">
 </div>
-</div>
-<div style="display: flex; justify-content: space-around; align-items: flex-start; gap: 1em; text-align: center; margin-top: -1em;">
-<div style="width: 45%;">
+<div style="width: 32%;">
 <img src="figs/bayes/robustness/raw_signals.svg" style="width: 100%;">
 </div>
-<div style="width: 45%;">
+<div style="width: 32%;">
 <img src="figs/bayes/robustness/raw_srvfs.svg" style="width: 100%;">
+</div>
+</div>
+</div>
+<div style="margin-top: -0.5em;">
+<span class="math display">
+{\color{#336699}\boldsymbol{f_1}}(t) = \overbrace{\sin(2\pi t)}^{\textsf{\text{main signal}}} \quad+   \overbrace{\ \epsilon\ \sin\left(\frac{t}{\epsilon^{2}}\right)}^{\textsf{\text{small, fast oscillation}}}, \quad
+{\color{#ff6600}\boldsymbol{f_2}}(t) = \sin\big(2\pi\, \overbrace{{\color{#cc00cc}\boldsymbol{\gamma_1}}(t)}^{\substack{\textsf{\text{warping}} \\ \\ \textsf{\text{in signal}}}}\big) + \epsilon \sin\Bigl(\dfrac{\overbrace{{\color{red}\boldsymbol{\gamma_2}}(t)}^{\substack{\textsf{\text{warping}}\\ \\ \textsf{\text{in noise}}}}}{\epsilon^2}\Bigr)
+</span>
+</div>
+<div style="margin-top: -0.5em; margin-left: 0.5em;">
+<ul>
+<li>The derivatives of these signals are:</li>
+</ul>
+</div>
+<div style="margin-top: -0.5em; margin-left: -1em; font-size: 90%;">
+<p><span class="math display">{\color{#336699}\boldsymbol{\dot{f}_1}}(t) = 2\pi \cos(2\pi t) +
+\underbrace{\dfrac{1}{\epsilon} \cos\left(\dfrac{t}{\epsilon^2}\right)}_{\large\textsf{noise 1}}, \quad
+{\color{#ff6600}\boldsymbol{\dot{f}_2}}(t) = 2\pi\, \dot{\gamma}_1(t)\, \cos\big(2\pi\, \gamma_1(t)\big) +
+\underbrace{\dfrac{\dot\gamma_2(t)}{\epsilon} \cos\left(\dfrac{\gamma_2(t)}{\epsilon^2}\right)}_{\large\textsf{noise 2}} </span></p>
+</div>
+<div class="fragment" style="margin-top: -3.8em; margin-left: 17%; font-size: 100%; padding-left: 15%;" data-fragment-index="1">
+<p><span class="math inline">\underbrace{\phantom{
+\dfrac{1}{\epsilon} \cos\left(\dfrac{t}{\epsilon^2}\right) +
+\dfrac{\dot\gamma_2(t)}{\epsilon} \cos\left(\dfrac{\gamma_2(t)}{\epsilon^2}\right) \,\,\,\,\,\,\,
+}}_{\large\color{red}\textsf{each noise term dominates when } \epsilon \rightarrow 0}</span></p>
 </div>
 </div>
 </section>
@@ -1798,6 +1830,20 @@ Warping Functions
 </tr>
 </tbody>
 </table>
+</div>
+<div class="fragment fade-in-then-out">
+<div class="no-md">
+<div class="drawing-overlay">
+<svg width="100%" height="100%" viewbox="0 0 100 100">
+<defs> <marker id="head-red" orient="auto" markerwidth="4" markerheight="4" refx="0.1" refy="2"> <path d="M0,0 V4 L2,2 Z" fill="red"></path> </marker> </defs> <path d="M32.8 36.2 L32.2 36.2" stroke="red" stroke-width="1" fill="none" marker-end="url(#head-red)"></path>
+</svg>
+</div>
+<div class="drawing-overlay">
+<svg width="100%" height="100%" viewbox="0 0 100 100">
+<defs> <marker id="head-magenta" orient="auto" markerwidth="4" markerheight="4" refx="0.1" refy="2"> <path d="M0,0 V4 L2,2 Z" fill="magenta"></path> </marker> </defs> <path d="M32.8 78.3 L38.4 78.3" stroke="magenta" stroke-width="1" fill="none" marker-end="url(#head-magenta)"></path>
+</svg>
+</div>
+</div>
 </div>
 <div style="position: absolute; top: -1em; right: 0; padding: 0.5em;">
 <p><a href="#/overall-advantages-of-our-bayesian-framework" style="color:#3333b3; font-size: 80%;">[Return]</a></p>
@@ -1966,8 +2012,8 @@ Alignment by Bayes
 </ul>
 </section></section>
 <section>
-<section id="pinching-effect-free-pairwise-alignment" class="title-slide slide level2 center" data-state="hide-menubar" data-auto-animate="true">
-<h2 data-id="quarto-animate-title">Pinching-effect-free Pairwise Alignment</h2>
+<section id="pairwise-alignment-1" class="title-slide slide level2 center" data-state="hide-menubar" data-auto-animate="true">
+<h2 data-id="quarto-animate-title">Pairwise Alignment</h2>
 <div class="columns" style="display: flex; gap: -1em;">
 <div class="column" style="width: 59%">
 Latent noise-free signals <span style="color:#336699;"><span class="math inline">\boldsymbol f_1</span></span>and <span style="color:#ff6600;"><span class="math inline">\boldsymbol f_2</span></span>with Gaussian pdf (denoted by <span class="math inline">\phi(t; \mu, \sigma^2)</span>):<br><br>
@@ -2000,7 +2046,7 @@ The observed noisy signals <span style="color:#336699;"><span class="math inline
 <section id="section-13" class="slide level3" data-state="hide-menubar" data-auto-animate="true">
 <h3 data-id="quarto-animate-title"></h3>
 <h2>
-Pinching-effect-free Pairwise Alignment
+Pairwise Alignment
 </h2>
 <div class="r-stack">
 <div class="fragment fade-out" data-fragment-index="1" style="display: block; width: fit-content; margin-left: 0;">
@@ -2131,11 +2177,8 @@ Warping Fns
 </table>
 </div>
 </div></div>
-<div style="position: absolute; top: -0.6em; right: 0; padding: 0em;">
-<p><a href="#/section-9" style="color:#3333b3; font-size: 80%;">[Return to Reg]</a></p>
-</div>
-<div style="position: absolute; top: 0.6em; right: 0; padding: 0em;">
-<p><a href="#/section-10" style="color:#3333b3; font-size: 80%;">[Return to Pairwise]</a></p>
+<div style="position: absolute; top: -0.5em; right: 0; padding: 0.5em;">
+<a href="#/section-10" style="color:#3333b3; font-size: 80%;">[Return]</a>
 </div>
 </section></section>
 <section>
@@ -2495,8 +2538,85 @@ Warping Fns
 <div style="position: absolute; top: -0.5em; right: 0; padding: 0.5em;">
 <a href="#/section-12" style="color:#3333b3; font-size: 80%;">[Return]</a>
 </div>
-
 </section></section>
+<section id="pinching-effect-example" class="title-slide slide level2 center">
+<h2>Pinching Effect Example</h2>
+<div style="margin-top:-1em;">
+<div class="columns" style="display: flex; column-gap: 0.5em; align-items: center;">
+<div class="column" style="width:42%;">
+<ul>
+<li><p>Registration of <span style="color:#336699"><span class="math inline">f_1</span></span> toward <span style="color:#ff6600"><span class="math inline">f_2</span></span></p></li>
+<li><p>Registered signal: <span style="color:#339933"><span class="math inline">\tilde{f}_1</span></span> (i.e., <span class="math inline">f_1 \circ \hat\gamma</span>)</p>
+<div style="margin-left:0.5em">
+where <span class="math inline">\hat\gamma</span> minimizing <span class="math inline">\|\tilde f_1 -  f_2\|_{\mathbb{L}^2}</span>.
+</div></li>
+</ul>
+</div><div class="column" style="width:58%;">
+<div class="column" style="width: 58%; margin-right: -1em;">
+<div class="r-stack">
+<div class="fragment fade-out" data-fragment-index="1">
+<img src="figs/bayes/pinching/pinching0.svg" style="width: 100%;">
+<div style="font-size: 100%; text-align: center; margin-top: -0.5em;">
+<span style="color:#336699"><span class="math inline">f_1</span></span> and <span style="color:#ff6600"><span class="math inline">f_2</span></span>
+</div>
+</div>
+<div class="fragment fade-in" data-fragment-index="1">
+<img src="figs/bayes/pinching/pinching.svg" style="width: 100%;">
+<div style="font-size: 100%; text-align: center; margin-top: -0.5em;">
+<span style="color:#336699"><span class="math inline">f_1</span></span>, <span style="color:#ff6600"><span class="math inline">f_2</span></span> and <span style="color:#339933"><span class="math inline">\tilde{f}_1</span></span>
+</div>
+</div>
+</div>
+</div><div class="column" style="width: 48%; margin-left: -1em;">
+<div class="fragment fade-in" data-fragment-index="1" style="text-align: center;">
+<img src="figs/bayes/pinching/gam0.svg" style="width: 70%;">
+<div style="font-size: 100%; margin-top: -0.5em;">
+<span style="color:#339933"><span class="math inline">\quad \,\, \hat\gamma</span></span>
+</div>
+</div>
+</div></div></div>
+<ul>
+<li><p>Recall the CLR transformation: <span style="font-size: 80%;"><span class="math inline">\quad\psi(\gamma)(t) = \log(\dot\gamma(t)) - \int_0^1 \log(\dot\gamma(s))ds</span></span>.</p></li>
+<li><p>CLR transformation is a function of <span class="math inline">\log(\dot \gamma)</span>.</p></li>
+</ul>
+<div style="text-align:center; margin-top:-0.5em;">
+<span class="math inline">\log(\dot\gamma) \rightarrow -\infty \,\,\, \Longrightarrow \,\,\, \dot\gamma \rightarrow 0 \quad</span> and <span class="math inline">\quad \log(\dot\gamma) \rightarrow \infty \,\,\, \Longrightarrow \,\,\, \dot\gamma \rightarrow \infty</span>
+</div>
+<ul>
+<li><p>Consider <span class="math inline">h \in H(0,1)</span> and <span class="math inline">h \sim \mathcal{GP}(\mu_h, \mathcal{K}_h)</span>.</p></li>
+<li><p>Extreme values of <span class="math inline">\dot\gamma</span> (e.g., <span class="math inline">0</span> or <span class="math inline">\infty</span>) can be effectively avoided as the changes by confining the magnitude of the covariance operator <span class="math inline">\mathcal{K}_h</span> that does not allow for large fluctuations.</p></li>
+</ul>
+</div>
+<div style="position: absolute; top: -0.5em; right: 0; padding: 0.5em;">
+<a href="#/section-9" style="color:#3333b3; font-size: 80%;">[Return]</a>
+</div>
+<!-- 
+
+## Why $f$-space? {auto-animate=true .center}
+
+<div class="middle-content" auto-animate="true">
+<div style="padding-left: 1em; margin-top:-1em;">
+
+
+<h3> **---$\,\,$Noiseless case** </h3>
+<div style="padding-left: 1em;">
+  - Absolutely continuous functions: $f_1$ and $f_2 = f_1\circ\gamma$.
+  - SRVFs: $q_1$ and $q_2$.   
+
+$\,\,$ Alignment in $f$-space and $q$-space is equivalent. i.e.,
+
+$\,\,$ If $f_2 = f_1 \circ \gamma$, then:
+
+<div style="margin-top: -1em;">
+  $$
+  \|f_2 - f_1 \circ \gamma\|^2 = 0 \quad \Longleftrightarrow \quad \|q_2 - q_1 \star \gamma\|^2 = 0.
+  $$
+  </div></div>
+
+</div></div> -->
+
+</section>
+
 
     </div>
   <div class="quarto-auto-generated-content" style="display: none;">
