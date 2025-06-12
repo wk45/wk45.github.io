@@ -776,7 +776,7 @@ A PPD of a set of functions <span class="math inline">\{f_i\}_{i=1}^n</span> is 
 <p>A peak is considered persistent if its classification remains consistent with that of the most persistent peak across values of persistence measurements.</p>
 </div>
 </div>
-<p><a href="#/" data-modal-type="iframe" data-modal-url="/misc_pages/interactive-ppd.html"><span class="math inline">\,\,</span><u>Example of ppd</u></a></p>
+<p><a href="#/" data-modal-type="iframe" data-modal-url="./misc_pages/interactive-ppd.html"><span class="math inline">\,\,</span><u>Example of PPD</u></a></p>
 </div>
 </div>
 </section>
@@ -793,7 +793,7 @@ Choose <span class="math inline">\lambda^*</span> as close to zero as possible w
 </ul>
 </div>
 </div>
-<div class="quarto-layout-panel" data-layout-ncol="2" style="margin-top: -1em;">
+<div class="quarto-layout-panel" style="margin-top: -1em;" data-layout-ncol="2">
 <div class="quarto-layout-row">
 <div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
 <p><img src="figs/ppd/lambda_selection/ppd.png" style="width: 70%; display: block; margin: auto;"></p>
@@ -1268,7 +1268,7 @@ Pairwise Alignment Algorithm <span class="fragment"> <a href="#/pairwise-alignme
 </div>
 <div>
 <span class="math inline">{\color{gray}\mathtt{2}.}  \qquad \textsf{\textbf{For }} m = 1 \textsf{\textbf{ to }} M:</span><br> <span class="math inline">{\color{gray}\mathtt{3}.}  \qquad \qquad \textsf{Generate }\beta_h \sim \pi_{\beta_h} \textsf{ and }\xi \sim GP(0, \mathcal{K}_h)</span><br> <span class="math inline">{\color{gray}\mathtt{4}.}  \qquad\qquad \textsf{Propose }h' = \sqrt{1-\beta_h^2} \, h^{(m)} + \beta_h \xi</span><br> <span class="math inline">{\color{gray}\mathtt{5}.}  \qquad\qquad \textsf{Update }h^{(m+1)} = \begin{cases} h' &amp; \textsf{with probability }\\
-h^{(m)} &amp; \textsf{with probability } 1 - \alpha_h \end{cases}</span> <span style="display: inline-block; position: relative; top: -1rem; left: -3em;"> <a href="#/" data-modal-type="image" data-modal-url="/figs/eqns/equation1.svg" data-modal-background="white" data-modal-padding="1em"><span class="math inline">\alpha_h</span></a> </span> <br> <span class="math inline">{\color{gray}\mathtt{6}.}  \qquad\qquad \gamma_{h}^{(m+1)} = \psi^{-1}(h^{(m+1)})</span>
+h^{(m)} &amp; \textsf{with probability } 1 - \alpha_h \end{cases}</span> <span style="display: inline-block; position: relative; top: -1rem; left: -3em;"> <a href="#/" data-modal-type="image" data-modal-url="./figs/eqns/equation1.svg" data-modal-background="white" data-modal-padding="1em"><span class="math inline">\alpha_h</span></a> </span> <br> <span class="math inline">{\color{gray}\mathtt{6}.}  \qquad\qquad \gamma_{h}^{(m+1)} = \psi^{-1}(h^{(m+1)})</span>
 <div>
 <span class="math inline">{\color{gray}\mathtt{7}.}  \qquad \textsf{\textbf{End}}</span>
 </div>
@@ -1328,7 +1328,7 @@ g &amp; \sim \mathcal{GP}(\mu_g, \mathcal{K}_g),
 <li>SRVF Framework
 <ul>
 <li>The center of orbit is defined via the Karcher mean of <span class="math inline">\mathtt{srvf}(\gamma_i)</span></li>
-<li>SRVF’s <a href="#/" data-modal-type="image" data-modal-url="/figs/eqns/srvf-iso.svg" data-modal-background="white" data-modal-padding="1em">isometry under warping group action</a> allows to shift its Karcher mean at <span class="math inline">\mathtt{srvf}(\gamma_{\text{id}})</span>. allows to shift its Karcher mean at <span class="math inline">\mathtt{srvf}(\gamma_{\text{id}})</span>.</li>
+<li>SRVF’s <a href="#/" data-modal-type="image" data-modal-url="./figs/eqns/srvf-iso.svg" data-modal-background="white" data-modal-padding="1em">isometry under warping group action</a> allows to shift its Karcher mean at <span class="math inline">\mathtt{srvf}(\gamma_{\text{id}})</span>. allows to shift its Karcher mean at <span class="math inline">\mathtt{srvf}(\gamma_{\text{id}})</span>.</li>
 </ul></li>
 <li>CLR Framework
 <ul>
@@ -1361,7 +1361,7 @@ Multiple Alignment Algorithm <span class="fragment"> <a href="#/multiple-functio
 <div>
 <span class="math inline">{\color{gray}\mathtt{2}.}  \qquad \, \textsf{\textbf{For }} m = 1 \textsf{\textbf{ to }} M:</span><br> <span class="math inline">{\color{gray}\mathtt{3}.}  \qquad \qquad \, \textsf{\textbf{For }} i = 1 \textsf{\textbf{ to }} N:</span><br> <span class="math inline">{\color{gray}\mathtt{4}.}  \qquad \qquad \qquad \, \textsf{Generate }\beta_{h_i} \sim \pi_{\beta_h} \textsf{ and }\xi \sim GP(0, \mathcal{K}_h)</span><br> <span class="math inline">{\color{gray}\mathtt{5}.}  \qquad\qquad \qquad \, \textsf{Propose }h_i' = \sqrt{1-\beta_{h_i}^2} \, h^{(m)} + \beta_{h_i} \xi</span><br> <span class="math inline">{\color{gray}\mathtt{6}.}  \qquad\qquad \qquad \, \textsf{Update }h_i^{(m+1)} = \begin{cases} h'_i &amp; \text{with probability } \\
 h^{(m)}_i &amp; \text{with probability } 1 - \alpha_h
-\end{cases}</span> <span style="display: inline-block; position: relative; top: -0.8rem; left: -3em;"> <a href="#/" data-modal-type="image" data-modal-url="/figs/eqns/equation2.svg" data-modal-background="white" data-modal-padding="1em"><span class="math inline">\alpha_h</span></a> </span> <br> <span class="math inline">{\color{gray}\mathtt{7}.}  \qquad\qquad \qquad \gamma_{h_i}^{(m+1)} = \psi^{-1}(h_i^{(m+1)})</span>
+\end{cases}</span> <span style="display: inline-block; position: relative; top: -0.8rem; left: -3em;"> <a href="#/" data-modal-type="image" data-modal-url="./figs/eqns/equation2.svg" data-modal-background="white" data-modal-padding="1em"><span class="math inline">\alpha_h</span></a> </span> <br> <span class="math inline">{\color{gray}\mathtt{7}.}  \qquad\qquad \qquad \gamma_{h_i}^{(m+1)} = \psi^{-1}(h_i^{(m+1)})</span>
 </div>
 <div>
 <span class="math inline">{\color{gray}\mathtt{8}.}  \qquad\qquad \, \textsf{\textbf{End}}</span>
@@ -1381,7 +1381,7 @@ h^{(m)}_i &amp; \text{with probability } 1 - \alpha_h
 <div>
 <span class="math inline">{\color{gray}\mathtt{13}.}\qquad\qquad \textsf{Update } g^{(m+1)} = \begin{cases} g' &amp; \textsf{with probability }\\
 g^{(m)} &amp; \textsf{with probability } 1 - \alpha_g
-\end{cases}</span><span style="display: inline-block; position: relative; top: -0.8rem; left: -2.5em;"> <a href="#/" data-modal-type="image" data-modal-url="/figs/eqns/equation3.svg" data-modal-background="white" data-modal-padding="1em"><span class="math inline">\alpha_g</span></a> </span>
+\end{cases}</span><span style="display: inline-block; position: relative; top: -0.8rem; left: -2.5em;"> <a href="#/" data-modal-type="image" data-modal-url="./figs/eqns/equation3.svg" data-modal-background="white" data-modal-padding="1em"><span class="math inline">\alpha_g</span></a> </span>
 </div>
 <div>
 <span class="math inline">{\color{gray}\mathtt{14}.} \quad\,\,\,\, \textsf{\textbf{End}}</span>
@@ -1466,12 +1466,12 @@ c_i' \sim \text{Log}\mathcal{N}(\log c_i, \sigma^2_{\text{prop}}) \quad \text{wh
 <span class="math inline">{\color{gray}\mathtt{ 4}.} \qquad \qquad \qquad \, \textsf{Generate }\beta_{h_i} \sim \pi_{\beta_h} \textsf{ and }\xi \sim GP(0, \mathcal{K}_h)</span><br> <span class="math inline">{\color{gray}\mathtt{ 5}.}  \qquad \qquad \qquad \, \textsf{Propose }h_i' = \sqrt{1-\beta_{h_i}^2} \, h^{(m)} + \beta_{h_i} \xi</span><br> <span class="math inline">{\color{gray}\mathtt{ 6}.}  \qquad\qquad \qquad \,\textsf{Update }h_i^{(m+1)} = \begin{cases}
 h'_i &amp; \textsf{with probability } \\
 h^{(m)}_i &amp; \textsf{with probability } 1 - \alpha_h
-\end{cases}</span><span style="display: inline-block; position: relative; top: -0.8rem; left: -2.5em;"> <a href="#/" data-modal-type="image" data-modal-url="/figs/eqns/equation4.svg" data-modal-background="white" data-modal-padding="1em"><span class="math inline">\alpha_h</span></a> </span><br> <span class="math inline">{\color{gray}\mathtt{ 7}.}  \qquad\qquad \qquad\, \gamma_{h_i}^{(m+1)} = \psi^{-1}(h_i^{(m+1)})</span>
+\end{cases}</span><span style="display: inline-block; position: relative; top: -0.8rem; left: -2.5em;"> <a href="#/" data-modal-type="image" data-modal-url="./figs/eqns/equation4.svg" data-modal-background="white" data-modal-padding="1em"><span class="math inline">\alpha_h</span></a> </span><br> <span class="math inline">{\color{gray}\mathtt{ 7}.}  \qquad\qquad \qquad\, \gamma_{h_i}^{(m+1)} = \psi^{-1}(h_i^{(m+1)})</span>
 </div>
 <div data-id="line8">
-<span class="math inline">{\color{gray}\mathtt{ 8}.}  \qquad\qquad \qquad\,\textsf{Update } e_i^{(m+1)} \sim \mathcal{N}(</span> <a href="#/" data-modal-type="image" data-modal-url="/figs/eqns/equation7.svg" data-modal-background="white" data-modal-padding="1em"><span class="math inline">\mu_{e_i|y}, \sigma^2_{e|y}</span></a> <span class="math inline">)</span><br> <span class="math inline">{\color{gray}\mathtt{9}.}  \qquad \qquad \qquad \, \textsf{Propose }c_i' \sim \text{Log}\mathcal{N}(u_i^{(m)}, \sigma^2_{\text{prop}}) \textsf{ where } u_i^{(m)} = \log c_i^{(m)}</span><br> <span class="math inline">{\color{gray}\mathtt{10}.} \qquad \qquad \quad \,\,\,\, \textsf{Update }c_i^{(m+1)} = \begin{cases} c'_i &amp; \textsf{with probability } \\
+<span class="math inline">{\color{gray}\mathtt{ 8}.}  \qquad\qquad \qquad\,\textsf{Update } e_i^{(m+1)} \sim \mathcal{N}(</span> <a href="#/" data-modal-type="image" data-modal-url="./figs/eqns/equation7.svg" data-modal-background="white" data-modal-padding="1em"><span class="math inline">\mu_{e_i|y}, \sigma^2_{e|y}</span></a> <span class="math inline">)</span><br> <span class="math inline">{\color{gray}\mathtt{9}.}  \qquad \qquad \qquad \, \textsf{Propose }c_i' \sim \text{Log}\mathcal{N}(u_i^{(m)}, \sigma^2_{\text{prop}}) \textsf{ where } u_i^{(m)} = \log c_i^{(m)}</span><br> <span class="math inline">{\color{gray}\mathtt{10}.} \qquad \qquad \quad \,\,\,\, \textsf{Update }c_i^{(m+1)} = \begin{cases} c'_i &amp; \textsf{with probability } \\
 c^{(m)}_i &amp; \textsf{with probability } 1 - \alpha_c
-\end{cases}</span><span style="display: inline-block; position: relative; top: -0.8rem; left: -2.5em;"> <a href="#/" data-modal-type="image" data-modal-url="/figs/eqns/equation5.svg" data-modal-background="white" data-modal-padding="1em"><span class="math inline">\alpha_c</span></a> </span>
+\end{cases}</span><span style="display: inline-block; position: relative; top: -0.8rem; left: -2.5em;"> <a href="#/" data-modal-type="image" data-modal-url="./figs/eqns/equation5.svg" data-modal-background="white" data-modal-padding="1em"><span class="math inline">\alpha_c</span></a> </span>
 <div>
 <span class="math inline">{\color{gray}\mathtt{11}.}  \qquad\qquad \textsf{\textbf{End}}</span><br> <span class="math inline">{\color{gray}\mathtt{12}.}  \qquad \qquad \bar{c} = \sum_{i=1}^Nc^{(m+1)}_{i}/N; \quad \bar{\gamma} = \psi^{-1}\left(\frac{1}{N}\sum_{i=1}^N h_i^{(m+1)}\right)</span><br> <span class="math inline">{\color{gray}\mathtt{13}.}\qquad \qquad c^{(m+1)}_{1:N} \leftarrow c^{(m+1)}_{1:N}/{\bar{c}}; \quad g^{(m)} \leftarrow \bar{c} g^{(m)} \circ \bar{\gamma}^{-1}; \quad \gamma_{h_{1:N}}^{(m+1)}\leftarrow \gamma_{h_{1:N}}^{(m+1)} \circ \bar{\gamma}^{-1}; \quad h_{1:N}^{(m+1)} \leftarrow \psi(\gamma_{h_{1:N}}^{(m+1)})</span>
 </div>
@@ -1480,7 +1480,7 @@ c^{(m)}_i &amp; \textsf{with probability } 1 - \alpha_c
 <span class="math inline">{\color{gray}\mathtt{14}.}\qquad \qquad \textsf{Generate }</span> <span class="math inline">\beta_{g} \sim \pi_{\beta_{g}}</span> <span class="math inline">\zeta \sim GP(0, \mathcal{K}_g)</span><br> <span class="math inline">{\color{gray}\mathtt{15}.}\qquad \qquad \textsf{Propose }</span> <span class="math inline">{g}' = \mu_g +\sqrt{1-\beta_{g}^2} \, ({g}^{(m)}-\mu_g) + \beta_{g} \zeta</span><br> <span class="math inline">{\color{gray}\mathtt{16}.}\qquad \qquad \textsf{Update } g^{(m+1)} = \begin{cases}
 g' &amp; \textsf{with probability } \\
 g^{(m)} &amp; \textsf{with probability } 1 - \alpha_g
-\end{cases}</span><span style="display: inline-block; position: relative; top: -0.8rem; left: -2.5em;"> <a href="#/" data-modal-type="image" data-modal-url="/figs/eqns/equation9.svg" data-modal-background="white" data-modal-padding="1em"><span class="math inline">\alpha_g</span></a> </span>
+\end{cases}</span><span style="display: inline-block; position: relative; top: -0.8rem; left: -2.5em;"> <a href="#/" data-modal-type="image" data-modal-url="./figs/eqns/equation9.svg" data-modal-background="white" data-modal-padding="1em"><span class="math inline">\alpha_g</span></a> </span>
 </div>
 <div data-id="line17">
 <span class="math inline">{\color{gray}\mathtt{17}.} \qquad \textsf{\textbf{End}}</span>
@@ -1497,15 +1497,15 @@ Underlying Signal Estimation Algorithm <span class="fragment"> <a href="#/underl
 <span class="math inline">\textsf{\textbf{Input: }} \quad \textsf{Noisy pairwise data} \quad y_1, ..., y_N; \quad \textsf{pre-given distributions}  \quad \pi_{\beta_h}, \,\, \pi_{\beta_g};</span> <br> <span class="math inline">\qquad \qquad \textsf{prior mean and covariance  for warpings and templates} \,\, \mu_h, \,\, \mu_g, \,\, \mathcal{K}_h, \,\, \mathcal{K}_g; \qquad \textsf{error variance} \,\, \sigma^2</span><br> <span class="math inline">\textsf{\textbf{Output: }} \quad \textsf{Posterior samples} \,\, \{\gamma^{(m)}\}_{m=2}^{M+1}</span><br> <span class="math inline">{\color{gray}\mathtt{ 1}.} \qquad \, g^{(1)} = \mu_g; \quad h_{1:N}^{(1)} = \mu_h; \quad \gamma_{h_{1:N}}^{(1)} = \psi^{-1}(h_{1:N}^{(1)}); \quad c_{1:N} = 1; \quad e_{1:N}= 0</span><br> <span class="math inline">{\color{gray}\mathtt{ 2}.}  \qquad \, \textsf{\textbf{For }} m = 1\textsf{\textbf{ to }}M:</span><br> <span class="math inline">{\color{gray}\mathtt{ 3}.}  \qquad \qquad \,\textsf{\textbf{For }} i = 1 \textsf{\textbf{ to }} N:</span>
 </div>
 <div>
-<span class="math inline">{\color{gray}\mathtt{ 4}.}  \qquad \qquad \quad \,\,\,</span> <span style="border: 1.5px solid blue; padding-left:0.2em; padding-top:0.2em;padding-right:0.2em; border-radius: 4px;"> <a href="#/" data-modal-type="image" data-modal-url="/figs/eqns/equation8.svg" data-modal-background="white" data-modal-padding="1em"><span class="math inline">\textsf{Update } h_i^{(m+1)} \textsf{ and } \gamma_{h_i}^{(m+1)}</span></a></span>
+<span class="math inline">{\color{gray}\mathtt{ 4}.}  \qquad \qquad \quad \,\,\,</span> <span style="border: 1.5px solid blue; padding-left:0.2em; padding-top:0.2em;padding-right:0.2em; border-radius: 4px;"> <a href="#/" data-modal-type="image" data-modal-url="./figs/eqns/equation8.svg" data-modal-background="white" data-modal-padding="1em"><span class="math inline">\textsf{Update } h_i^{(m+1)} \textsf{ and } \gamma_{h_i}^{(m+1)}</span></a></span>
 </div>
 <div data-id="line8">
-<span class="math inline">{\color{gray}\mathtt{ 8}.}  \qquad\qquad \qquad\,\textsf{Update } e_i^{(m+1)} \sim \mathcal{N}(</span> <a href="#/" data-modal-type="image" data-modal-url="/figs/eqns/equation7.svg" data-modal-background="white" data-modal-padding="1em"><span class="math inline">\mu_{e_i|y}, \sigma^2_{e|y}</span></a> <span class="math inline">)</span><br> <span class="math inline">{\color{gray}\mathtt{9}.}  \qquad \qquad \qquad \, \textsf{Propose }c_i' \sim \text{Log}\mathcal{N}(u_i^{(m)}, \sigma^2_{\text{prop}}) \textsf{ where } u_i^{(m)} = \log c_i^{(m)}</span><br> <span class="math inline">{\color{gray}\mathtt{10}.} \qquad \qquad \quad \,\,\,\, \textsf{Update }c_i^{(m+1)} = \begin{cases} c'_i &amp; \textsf{with probability } \\
+<span class="math inline">{\color{gray}\mathtt{ 8}.}  \qquad\qquad \qquad\,\textsf{Update } e_i^{(m+1)} \sim \mathcal{N}(</span> <a href="#/" data-modal-type="image" data-modal-url="./figs/eqns/equation7.svg" data-modal-background="white" data-modal-padding="1em"><span class="math inline">\mu_{e_i|y}, \sigma^2_{e|y}</span></a> <span class="math inline">)</span><br> <span class="math inline">{\color{gray}\mathtt{9}.}  \qquad \qquad \qquad \, \textsf{Propose }c_i' \sim \text{Log}\mathcal{N}(u_i^{(m)}, \sigma^2_{\text{prop}}) \textsf{ where } u_i^{(m)} = \log c_i^{(m)}</span><br> <span class="math inline">{\color{gray}\mathtt{10}.} \qquad \qquad \quad \,\,\,\, \textsf{Update }c_i^{(m+1)} = \begin{cases} c'_i &amp; \textsf{with probability } \\
 c^{(m)}_i &amp; \textsf{with probability } 1 - \alpha_c
-\end{cases}</span><span style="display: inline-block; position: relative; top: -0.8rem; left: -2.5em;"> <a href="#/" data-modal-type="image" data-modal-url="/figs/eqns/equation5.svg" data-modal-background="white" data-modal-padding="1em"><span class="math inline">\alpha_c</span></a> </span><br> <span class="math inline">{\color{gray}\mathtt{11}.}  \qquad\qquad \textsf{\textbf{End}}</span><br> <span class="math inline">{\color{gray}\mathtt{12}.}  \qquad \qquad \bar{c} = \sum_{i=1}^Nc^{(m+1)}_{i}/N; \quad \bar{\gamma} = \psi^{-1}\left(\frac{1}{N}\sum_{i=1}^N h_i^{(m+1)}\right)</span><br> <span class="math inline">{\color{gray}\mathtt{13}.}\qquad \qquad c^{(m+1)}_{1:N} \leftarrow c^{(m+1)}_{1:N}/{\bar{c}}; \quad g^{(m)} \leftarrow \bar{c} g^{(m)} \circ \bar{\gamma}^{-1}; \quad \gamma_{h_{1:N}}^{(m+1)}\leftarrow \gamma_{h_{1:N}}^{(m+1)} \circ \bar{\gamma}^{-1}; \quad h_{1:N}^{(m+1)} \leftarrow \psi(\gamma_{h_{1:N}}^{(m+1)})</span>
+\end{cases}</span><span style="display: inline-block; position: relative; top: -0.8rem; left: -2.5em;"> <a href="#/" data-modal-type="image" data-modal-url="./figs/eqns/equation5.svg" data-modal-background="white" data-modal-padding="1em"><span class="math inline">\alpha_c</span></a> </span><br> <span class="math inline">{\color{gray}\mathtt{11}.}  \qquad\qquad \textsf{\textbf{End}}</span><br> <span class="math inline">{\color{gray}\mathtt{12}.}  \qquad \qquad \bar{c} = \sum_{i=1}^Nc^{(m+1)}_{i}/N; \quad \bar{\gamma} = \psi^{-1}\left(\frac{1}{N}\sum_{i=1}^N h_i^{(m+1)}\right)</span><br> <span class="math inline">{\color{gray}\mathtt{13}.}\qquad \qquad c^{(m+1)}_{1:N} \leftarrow c^{(m+1)}_{1:N}/{\bar{c}}; \quad g^{(m)} \leftarrow \bar{c} g^{(m)} \circ \bar{\gamma}^{-1}; \quad \gamma_{h_{1:N}}^{(m+1)}\leftarrow \gamma_{h_{1:N}}^{(m+1)} \circ \bar{\gamma}^{-1}; \quad h_{1:N}^{(m+1)} \leftarrow \psi(\gamma_{h_{1:N}}^{(m+1)})</span>
 </div>
 <div>
-<span class="math inline">{\color{gray}\mathtt{14}.}\qquad \quad \,\,</span> <span style="border: 1.5px solid red; padding-left:0.2em;padding-right:0.2em; border-radius: 4px;"> <a href="#/" data-modal-type="image" data-modal-url="/figs/eqns/equation9.svg" data-modal-background="white" data-modal-padding="1em"><span class="math inline">\textsf{Update } g^{(m+1)}</span></a></span>
+<span class="math inline">{\color{gray}\mathtt{14}.}\qquad \quad \,\,</span> <span style="border: 1.5px solid red; padding-left:0.2em;padding-right:0.2em; border-radius: 4px;"> <a href="#/" data-modal-type="image" data-modal-url="./figs/eqns/equation9.svg" data-modal-background="white" data-modal-padding="1em"><span class="math inline">\textsf{Update } g^{(m+1)}</span></a></span>
 </div>
 <div data-id="line17">
 <span class="math inline">{\color{gray}\mathtt{17}.} \qquad \textsf{\textbf{End}}</span>
@@ -1659,7 +1659,7 @@ Tucker, J Derek, Lyndsay Shand, and Kenny Chowdhary. 2021. <span>“Multimodal B
 <div class="columns" style="display: flex;">
 <div class="column center" style="width:33%;">
 <div style="item-align: center;">
-<p><a href="#/" data-modal-type="image" data-modal-url="/figs/ppd/curve_est/fig1.png"><img data-src="./figs/ppd/curve_est/fig1.png"></a></p>
+<p><a href="#/" data-modal-type="image" data-modal-url="./figs/ppd/curve_est/fig1.png"><img data-src="./figs/ppd/curve_est/fig1.png"></a></p>
 </div>
 </div><div class="column" style="width:67%;">
 <div data-id="algorithm-box" style="font-size: 75%; line-height: 1.2; border: 1px solid #ccc; padding: 0.5em 0.5em; border-radius: 8px; background-color: #eeeeee;">
