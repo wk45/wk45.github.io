@@ -164,6 +164,7 @@
       margin-right: 0; 
     }
   </style>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/leader-line/1.0.7/leader-line.min.js"></script>
 </head>
 <body class="quarto-light">
   <div class="reveal">
@@ -792,7 +793,7 @@ Choose <span class="math inline">\lambda^*</span> as close to zero as possible w
 </ul>
 </div>
 </div>
-<div class="quarto-layout-panel" data-layout-ncol="2" style="margin-top: -1em;">
+<div class="quarto-layout-panel" style="margin-top: -1em;" data-layout-ncol="2">
 <div class="quarto-layout-row">
 <div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
 <p><img src="figs/ppd/lambda_selection/ppd.png" style="width: 70%; display: block; margin: auto;"></p>
@@ -824,53 +825,28 @@ Choose <span class="math inline">\lambda^*</span> as close to zero as possible w
 
 <section id="results" class="title-slide slide level2 center">
 <h2>Results</h2>
-<div style="line-height: 0.5; margin-top: -1em;">
-<div class="columns" style="display: flex;">
-<div class="column" style="width:20%;">
-
-</div><div class="column center" style="width:30%;">
-<div style="item-align: center; text-align: center;">
-<a href="#/" data-modal-type="image" data-modal-url="./figs/ppd/sim/ex2(1).png"><img data-src="./figs/ppd/sim/ex2(1).png"></a>
-<p style="margin-top:-0.8em;">
-Raw data
-</p>
-</div>
-</div><div class="column center" style="width:30%;">
-<div style="item-align: center; text-align: center;">
-<a href="#/" data-modal-type="image" data-modal-url="./figs/ppd/sim/ex2(2).png"><img data-src="./figs/ppd/sim/ex2(2).png"></a>
-<p style="margin-top:-0.8em;">
-Fully elastic alignment
-</p>
-</div>
-</div><div class="column" style="width:5%;">
-
-</div><div class="column" style="width:15%;">
-<p><img data-src="./figs/ppd/sim/legend.png"></p>
-</div></div>
 <div class="columns" style="display: flex;">
 <div class="column center" style="width:20%;">
-<div style="item-align: center; text-align: center;">
-<a href="#/" data-modal-type="image" data-modal-url="./figs/ppd/sim/ex2(3).png"><img data-src="./figs/ppd/sim/ex2(3).png"></a>
-<p style="margin-top:-0.8em;">
-PPD bar-chart
-</p>
+<div style="item-align: center;">
+<p><a href="#/" data-modal-type="image" data-modal-url="./figs/ppd/sim/ex2(1).png"><img data-src="./figs/ppd/sim/ex2(1).png"></a></p>
 </div>
 </div><div class="column center" style="width:20%;">
-<div style="item-align: center; text-align: center;">
-<a href="#/" data-modal-type="image" data-modal-url="./figs/ppd/sim/ex2(4).png"><img data-src="./figs/ppd/sim/ex2(4).png"></a>
-<p style="margin-top:-0.8em;">
-PPD surface
-</p>
+<div style="item-align: center;">
+<p><a href="#/" data-modal-type="image" data-modal-url="./figs/ppd/sim/ex2(2).png"><img data-src="./figs/ppd/sim/ex2(2).png"></a></p>
 </div>
 </div><div class="column center" style="width:20%;">
-<div style="item-align: center; text-align: center;">
-<a href="#/" data-modal-type="image" data-modal-url="./figs/ppd/sim/ex2(5).png"><img data-src="./figs/ppd/sim/ex2(5).png"></a>
-<p style="margin-top:-0.8em;">
-Aligned functions by proposed method
-</p>
+<div style="item-align: center;">
+<p><a href="#/" data-modal-type="image" data-modal-url="./figs/ppd/sim/ex2(3).png"><img data-src="./figs/ppd/sim/ex2(3).png"></a></p>
+</div>
+</div><div class="column center" style="width:20%;">
+<div style="item-align: center;">
+<p><a href="#/" data-modal-type="image" data-modal-url="./figs/ppd/sim/ex2(4).png"><img data-src="./figs/ppd/sim/ex2(4).png"></a></p>
+</div>
+</div><div class="column center" style="width:20%;">
+<div style="item-align: center;">
+<p><a href="#/" data-modal-type="image" data-modal-url="./figs/ppd/sim/ex2(5).png"><img data-src="./figs/ppd/sim/ex2(5).png"></a></p>
 </div>
 </div></div>
-</div>
 </section>
 
 <section id="section-5" class="title-slide slide level2 unnumbered center" data-auto-animate="true" data-name="Project 2">
@@ -1362,7 +1338,7 @@ g &amp; \sim \mathcal{GP}(\mu_g, \mathcal{K}_g),
 </ul>
 <!-- - By setting $\mathbb{E}[\psi(\gamma_i)] = 0$, we can center the sample at the identity: $\psi(\gamma_{\text{id}})(t) = 0$. -->
 <ul>
-<li>By setting <span class="math inline">\gamma = \bar \gamma^{-1}</span>, the updated warpings have mean <span class="math inline">\gamma_\mathrm{id}</span>. That is, <span class="math inline">\mathbb{E}[\psi (\gamma_i \circ \gamma)] = 0</span>.</li>
+<li>Here, <span class="math inline">\gamma</span> is a free variable you can choose. You choose it such that the updated warpings <span class="math inline">{\gamma_i \circ \gamma}</span> will have mean 0 (i.e., <span class="math inline">\mathbb{E}[\psi(\gamma_i \circ \gamma)] = 0</span>.)</li>
 </ul></li>
 </ul>
 </div>
@@ -1428,7 +1404,7 @@ y_i([t]) = c_i g \circ \gamma_i^{-1}([t]) + e_i + \epsilon_i([t]),  \quad \epsil
 \end{array}
 \end{align*}
 </span></p></li>
-<li><p>For identifiability, we assume <span class="math inline">\mathbb{E}[c_i] = 1</span>, <span class="math inline">\mathbb{E}(e_i) = 0</span>, and <span class="math inline">\mathbb{E}[\psi(\gamma_i)] = 0</span>.</p></li>
+<li><p>For identifiability, we assume <span class="math inline">\mathbb{E}[c_i] = 1</span>, <span class="math inline">\mathbb{E}(e_i) = 0</span>, and <span class="math inline">\mathbb{E}[\phi(\gamma_i)] = 0</span>.</p></li>
 <li><p>GP prior for warping function <span class="math inline">\gamma_i</span> and <span class="math inline">g</span> as in the multiple-function alignment.</p></li>
 <li><p>The prior for the scale factor <span class="math inline">c_i</span> and translation <span class="math inline">e_i</span> are given by: <span class="math display">
 c_i,...,c_N \overset{\mathrm{i.i.d.}}{\sim}\textsf{Gamma}(\textsf{shape: } \alpha_c, \textsf{ scale: } \theta_c), \qquad e_i,...,e_N \overset{\mathrm{i.i.d.}}{\sim} \mathcal{N}(0, \sigma^2_e)
@@ -1474,7 +1450,7 @@ c_i' \sim \text{Log}\mathcal{N}(\log c_i, \sigma^2_{\text{prop}}) \quad \text{wh
 </span></li>
 <li>Prior density in log-space: <span class="math inline">\qquad \pi_U(u_i) = \frac{1}{\Gamma(\alpha_c)\theta_c^{\alpha_c}} \cdot e^{\alpha_c u_i} \cdot \exp\left(-\frac{e^{u_i}}{\theta_c}\right)</span></li>
 <li>MH acceptance: <span class="math inline">\qquad \alpha_c = \min\left(1, \frac{
-\mathcal{L}(c_i', h_{\gamma_i}, e_i, g;\ y_i)\ \pi_U(\log c_i')}
+\mathcal{L}(c_i’, h_{\gamma_i}, e_i, g;\ y_i)\ \pi_U(\log c_i’)}
 {\mathcal{L}(c_i, h_{\gamma_i}, e_i, g;\ y_i)\ \pi_U(\log c_i)}
 \right)</span></li>
 </ul>

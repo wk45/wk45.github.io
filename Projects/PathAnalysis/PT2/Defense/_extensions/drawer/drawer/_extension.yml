@@ -1,9 +1,0 @@
-title: drawer
-version: 1.0.0
-contributes:
-  revealjs-plugins:
-    - name: RevealDrawer
-      script: drawer.js
-      stylesheet: drawer.css
-      esm: true
-
