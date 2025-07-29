@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <title>문제 예시 - Resizable</title>
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
+      Ubuntu, Cantarell, 'Helvetica Neue', sans-serif;
+      margin: 0;
+      padding: 1rem;
+      background-color: #fff;
+      color: #222;
+    }
+
+    .container {
+      display: flex;
+      width: 100%;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    .question-area,
+    .sidebar {
+      height: 100%;
+      overflow: auto;
+      min-width: 150px;
+      resize: horizontal;
+    }
+
+    .question-area {
+      width: 50%;
+    }
+
+    .resizer {
+      width: 5px;
+      background-color: #ccc;
+      cursor: col-resize;
+      user-select: none;
+    }
+
+    .sidebar {
+      flex: 1;
+    }
+
+
+    h2 {
+      margin-top: 0;
+    }
+
+    ol {
+      padding-left: 1.5rem;
+    }
+
+    details {
+      border-radius: 8px;
+      padding: 1em;
+      font-size: 0.95em;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+      margin-bottom: 1rem;
+    }
+
+    details summary {
+      font-weight: bold;
+      cursor: pointer;
+      margin-bottom: 0.5em;
+    }
+
+    summary::after {
+      content: "▼";
+      float: right;
+      transition: transform 0.2s ease;
+    }
+
+    details[open] summary::after {
+      transform: rotate(180deg);
+    }
+
+    .answer-box {
+      background-color: #e8f9fb;
+      border-left: 4px solid #00b3b3;
+    }
+
+    .quote-box {
+      background-color: #dddddd;
+      border-left: 4px solid #dddddd;
+    }
+
+    .reference-box {
+      background-color: #eef2fc;
+      border-left: 4px solid #668cff;
+    }
+
+    .wrong-box {
+      background-color: #fcecec;
+      border-left: 4px solid #ff5c5c;
+    }
+
+    i[data-lucide] {
+      width: 1em;
+      height: 1em;
+      stroke: currentColor; /* inherit text color */
+      vertical-align: -0.125em; /* aligns better with text baseline */
+    }
+
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <div class="question-area" id="leftPane">
+    <h2>문제 1.</h2>
+    <p><strong>죄형법정주의에 관한 설명 중 옳은 것은? (다툼이 있는 경우 판례에 의함)</strong></p>
+    
+    ① 법률의 시행령이 형사처벌에 관한 사항을 명확히 규정하고 있다면 법률의 명시적인 위임범위를 벗어나 처벌의 대상을 확장하더라도 죄형법정주의에 어긋나는 것은 아니다.<br><br>
+    ② 처벌법규의 구성요건이 서술적 개념으로 규정되어 있지 않다면 이는 죄형법정주의에서 파생되는 명확성의 원칙에 어긋난다.<br><br>
+    ③ ｢형사소송법｣ 제33조(국선변호인)에 규정된 법원이 직권으로 변호인을 선정하여야 할 사유 중 하나인 ‘피고인이 구속된 때’의 의미에 피고인이 해당 형사사건이 아닌 별개의 사건, 즉 별건으로 구속되어 있거나 다른 형사사건에서 유죄로 확정되어 수형 중인 경우도 포함된다고 보는 것은 문언해석의 한계를 벗어나지 않는다.<br><br>
+    ④ 형면제 사유에 관하여 범위를 제한적으로 유추적용하는 것은 죄형법정주의에 어긋나지 않는다.<br><br>
+    ⑤ 정보통신망을 이용한 명예훼손죄는 사실적시 행위를 공공연하게 할 것을 요구하므로 특정 개인이나 소수에게 말하여 그로 인해 불특정 또는 다수인에게 전파가능성이 있다는 이유로 공연성을 인정하는 것은 죄형법정주의에서 금지하는 유추해석에 해당한다.
+    
+  </div>
+
+  <div class="resizer" id="dragHandle"></div>
+
+  <div class="sidebar" id="rightPane">
+    <details class="answer-box" open>
+      <summary><span style="font-size: 1.5rem;"><i data-lucide="check-circle"></i> 정답 </span></summary>
+      <p>정답은 ③.</p>
+
+      <p>대법원(2021도6357 전합)은 형사소송법 제33조 제1항 제1호의 '피고인이 구속된 때'의 의미에 대한 종래 판례 법리의 변경하고 피고인이 해당 형사사건에서 구속되어 재판을 받고 있는 경우에 한정하지 않고, 피고인이 별건으로 구속영장이 발부되어 집행되거나 다른 형사사건에서 유죄판결이 확정되어 그 판결의 집행으로 구금 상태에 있는 경우 또한 포괄하고 있다고 판시하였다.</p>
+
+      <details class="quote-box" open>
+        <summary>📃 Quote</summary>
+      </details>
+    </details>
+
+    <details class="reference-box">
+      <summary><span style="font-size: 1.5rem;"><i data-lucide="book-open"></i> 유사판례</span></summary>
+      <p><strong>대법원 2024. 7. 31. 선고 2024도8519 판결</strong></p>
+    </details>
+
+    <details class="wrong-box">
+      <summary>❌ 오답설명</summary>
+      <p>① 위임입법의 한계: 법률의 시행령이 형사처벌에 관한 사항을 명확히 규정하고 있다면 법률의 명시적인 위임범위를 벗어나 처벌의 대상을 확장하더라도 죄형법정주의에 어긋나는 것은 아니다.(X)</p>
+      <p>② 명확성의 원칙: 처벌법규의 구성요건이 서술적 개념으로 규정되어 있지 않다면 이는 죄형법정주의에서 파생되는 명확성의 원칙에 어긋난다.(X) </p>
+      <p>④ 유추해석금지의 원칙: 형면제 사유에 관하여 범위를 제한적으로 유추적용하는 것은 죄형법정주의에 어긋나지 않는다.(X) </p>
+      <p>⑤유추해석금지의 원칙: 정보통신망을 이용한 명예훼손죄는 사실적시 행위를 공공연하게 할 것을 요구하므로 특정 개인이나 소수에게 말하여 그로 인해 불특정 또는 다수인에게 전파가능성이 있다는 이유로 공연성을 인정하는 것은 죄형법정주의에서 금지하는 유추해석에 해당한다.(X) </p>
+    </details>
+
+  </div>
+</div>
+
+<script>
+  const resizer = document.getElementById('dragHandle');
+  const leftPane = document.getElementById('leftPane');
+  const rightPane = document.getElementById('rightPane');
+  const container = document.querySelector('.container');
+
+  let isDragging = false;
+
+  resizer.addEventListener('mousedown', (e) => {
+    e.preventDefault();
+    isDragging = true;
+    document.body.style.cursor = 'col-resize';
+  });
+
+  document.addEventListener('mousemove', (e) => {
+    if (!isDragging) return;
+
+    const containerRect = container.getBoundingClientRect();
+    const offset = e.clientX - containerRect.left;
+
+    const min = 100;
+    const max = containerRect.width - min;
+    if (offset < min || offset > max) return;
+
+    leftPane.style.width = `${offset}px`;
+  });
+
+  document.addEventListener('mouseup', () => {
+    if (isDragging) {
+      isDragging = false;
+      document.body.style.cursor = 'default';
+    }
+  });
+
+  lucide.createIcons();
+</script>
+
+</body>
+</html>
