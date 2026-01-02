@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="ko" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pass Research Lab - Optimized & Themed</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        /* * [Theme Configuration]
+         * Light Theme: 사용자가 제공한 기존 코드 색상 복원
+         * Dark Theme: 다크 모드용 반전 색상
+         */
+        :root {
+            /* --- Light Theme (Default) --- */
+            --bg-color: #f5f5f7;
+            --brand-purple: #9575CD;    /* 요청하신 연보라 */
+            --brand-purple-dim: rgba(149, 117, 205, 0.25);
+            --line-green: #00C853;      /* 요청하신 진한 초록 */
+            
+            --text-main: #1d1d1f;
+            --text-sub: #86868b;
+            
+            --device-frame: #1a1a1a;    /* 기기 베젤 (진한 회색) */
+            --device-bg: #ffffff;       /* 기기 화면 (흰색) */
+            --card-shadow: rgba(0, 0, 0, 0.2);
+            
+            /* 라이트 모드에서는 컨투어 없음 (투명) */
+            --device-contour: rgba(0,0,0,0);
+            
+            /* 차트 관련 색상 */
+            --chart-line: #e5e5e5;
+            --chart-text: #888;
+            --chart-avg-fill: rgba(200,200,200,0.3);
+            --chart-avg-stroke: #ccc;
+            --marker-fill: #fff;
+            
+            --ring-bg: #f0f0f0;
+            
+            --footer-bg: #111;
+            --footer-text: #fff;
+        }
+
+        [data-theme="dark"] {
+            /* --- Dark Theme --- */
+            --bg-color: #121212;        /* 아주 어두운 배경 */
+            --brand-purple: #9575CD;    /* 보라색 유지 (어두운 배경에서도 잘 보임) */
+            --brand-purple-dim: rgba(149, 117, 205, 0.35);
+            --line-green: #00E676;      /* 다크모드용 살짝 밝은 초록 */
+            
+            --text-main: #f5f5f7;
+            --text-sub: #a1a1a6;
+            
+            --device-frame: #1E1E1E;    /* 기기 베젤 (배경보다 살짝 밝음) */
+            --device-bg: #2C2C2E;       /* 기기 화면 (다크 그레이) */
+            --card-shadow: rgba(0, 0, 0, 0.5);
+            
+            /* [핵심] 다크 모드용 랩탑 컨투어 (보라색 빛) */
+            --device-contour: #9575CD;
+            
+            --chart-line: #444;
+            --chart-text: #aaa;
+            --chart-avg-fill: rgba(255,255,255,0.1);
+            --chart-avg-stroke: #555;
+            --marker-fill: #2C2C2E;
+            
+            --ring-bg: #333;
+            
+            --footer-bg: #000;
+            --footer-text: #fff;
+        }
+
+        body {
+            margin: 0; padding: 0;
+            background-color: var(--bg-color);
+            font-family: 'Pretendard', sans-serif;
+            color: var(--text-main);
+            overflow-x: hidden;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        /* Toggle Button */
+        .theme-btn {
+            position: fixed; top: 20px; right: 20px; z-index: 9999;
+            background: var(--text-main); color: var(--bg-color);
+            border: none; width: 44px; height: 44px; border-radius: 50%;
+            cursor: pointer; display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            transition: transform 0.2s;
+        }
+        .theme-btn:hover { transform: scale(1.1); }
+        .theme-btn svg { width: 22px; height: 22px; fill: currentColor; }
+
+        /* Layout & Typography */
+        .hero-section { height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; position: relative; z-index: 10; }
+        .hero-title { font-size: 80px; font-weight: 800; line-height: 1.2; margin: 0; letter-spacing: -2px; word-break: keep-all; color: var(--text-main); }
+        .brand-accent { color: var(--brand-purple); }
+        .hero-subtitle { margin-top: 20px; font-size: 24px; font-weight: 500; color: #666; }
+        .scroll-hint { position: absolute; bottom: 40px; left: 50%; transform: translateX(-50%); font-size: 14px; font-weight: 600; color: #999; animation: bounce 2s infinite; }
+
+        .sticky-track { height: 300vh; position: relative; }
+        .sticky-viewport { position: sticky; top: 0; height: 100vh; width: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center; overflow: hidden; }
+
+        .stage-container {
+            position: relative; width: 1100px; height: 500px;
+            display: flex; justify-content: center; align-items: flex-end;
+            transform-origin: center bottom; margin-bottom: 20px; isolation: isolate; 
+            will-change: transform, opacity, filter; 
+            transition: transform 0.1s linear; 
+        }
+
+        /* Devices */
+        .device {
+            position: relative; flex-shrink: 0; cursor: pointer;
+            --tx: 0px; --ty: 0px;
+            transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.5s ease, opacity 0.4s ease;
+            will-change: transform;
+        }
+        .device:not(.is-zoomed):hover { transform: translateY(-25px) scale(1.03); z-index: 50; box-shadow: 0 50px 100px rgba(0,0,0,0.35); }
+        .device.is-zoomed { transform: translate(var(--tx), var(--ty)) scale(1.3) !important; z-index: 1000; box-shadow: 0 80px 140px rgba(0,0,0,0.6); cursor: default; }
+        .stage-container.has-zoomed .device:not(.is-zoomed) { opacity: 0.3; filter: blur(5px); pointer-events: none; transition: opacity 0.4s ease, filter 0.4s ease; }
+
+        /* Component Details (Using Variables) */
+        .ipad { 
+            width: 340px; height: 460px; background: var(--device-frame); border-radius: 24px; 
+            box-shadow: inset 0 0 0 2px var(--device-contour), 0 30px 60px var(--card-shadow); 
+            margin-right: -80px; z-index: 2; transform: translateY(20px); 
+            display: flex; justify-content: center; align-items: center; 
+            transition: background 0.3s, box-shadow 0.3s;
+        }
+        .ipad-screen { width: 316px; height: 436px; background: var(--device-bg); border-radius: 18px; overflow: hidden; display: flex; flex-direction: column; padding: 30px 20px; box-sizing: border-box; transition: background 0.3s; }
+        
+        .laptop { 
+            width: 640px; height: 410px; border: 14px solid var(--device-frame); border-bottom-width: 20px; border-radius: 18px 18px 0 0; background: var(--device-frame); 
+            margin-bottom: 30px; 
+            /* [컨투어 라인] 다크모드에서만 보라색 테두리 발동 */
+            box-shadow: 0 0 0 2px var(--device-contour), 0 30px 60px var(--card-shadow); 
+            position: relative; z-index: 1; 
+            transition: background 0.3s, border-color 0.3s, box-shadow 0.3s;
+        }
+        .laptop-screen { width: 100%; height: 100%; background: var(--device-bg); overflow: hidden; display: flex; flex-direction: column; padding: 40px; box-sizing: border-box; border-radius: 2px; gap: 20px; justify-content: center; transition: background 0.3s; }
+        .laptop::after { content: ''; position: absolute; bottom: -32px; left: -10%; width: 120%; height: 12px; background: linear-gradient(to bottom, #dcdcdc, #b0b0b0); border-radius: 0 0 12px 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.2); }
+        [data-theme="dark"] .laptop::after { background: linear-gradient(to bottom, #333, #111); }
+        
+        .iphone { 
+            width: 180px; height: 360px; background: var(--device-frame); border-radius: 36px; padding: 8px; 
+            box-shadow: 0 0 0 2px var(--device-contour), 0 30px 60px var(--card-shadow); 
+            margin-left: -100px; z-index: 3; transform: translateY(50px); position: relative; 
+            transition: background 0.3s, box-shadow 0.3s;
+        }
+        .iphone-screen { width: 100%; height: 100%; background: var(--device-bg); border-radius: 30px; overflow: hidden; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 20px; box-sizing: border-box; position: relative; transition: background 0.3s; }
+        .dynamic-island { position: absolute; top: 10px; left: 50%; transform: translateX(-50%); width: 60px; height: 18px; background: #000; border-radius: 20px; z-index: 10; }
+        .home-indicator { position: absolute; bottom: 8px; left: 50%; transform: translateX(-50%); width: 60px; height: 4px; background: var(--text-main); border-radius: 10px; opacity: 0.2; }
+
+        .header-title { font-size: 14px; font-weight: 700; color: var(--text-main); margin-bottom: 4px; }
+        .header-sub { font-size: 11px; color: var(--text-sub); margin-bottom: 5px; font-weight: 600; }
+        .stat-val { font-size: 36px; font-weight: 800; color: var(--text-main); letter-spacing: -1px; line-height: 1; font-feature-settings: "tnum"; font-variant-numeric: tabular-nums; }
+        .stat-label { font-size: 12px; color: var(--text-sub); margin-top: 8px; font-weight: 600; }
+        
+        .ipad-chart-area { flex: 1; width: 100%; display: flex; justify-content: center; align-items: flex-end; padding-bottom: 10px; }
+        .laptop-chart-container { width: 100%; height: 140px; position: relative; }
+        .progress-bar-container { width: 100%; height: 8px; background: var(--ring-bg); border-radius: 4px; margin-top: 8px; overflow: hidden; }
+        .progress-bar-fill { height: 100%; background: var(--line-green); width: 0%; will-change: width; }
+        .iphone-chart-area { margin: 20px 0; position: relative; width: 100px; height: 100px; display: flex; justify-content: center; align-items: center; }
+
+        svg { width: 100%; height: 100%; overflow: visible; }
+        canvas { width: 100%; height: 100%; }
+        .laptop-path { fill: none; stroke: var(--brand-purple); stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
+        .laptop-area { fill: var(--brand-purple-dim); stroke: none; }
+        .laptop-marker { fill: var(--marker-fill); stroke: var(--brand-purple); stroke-width: 3; will-change: transform, opacity; }
+        .ring-bg { stroke: var(--ring-bg); stroke-width: 8; fill: none; }
+        .ring-progress { stroke: var(--brand-purple); stroke-width: 8; fill: none; stroke-linecap: round; transform-origin: 50% 50%; transform: rotate(-90deg); will-change: stroke-dashoffset; }
+
+        .fixed-text-area { position: relative; height: 100px; width: 100%; display: flex; justify-content: center; align-items: center; text-align: center; z-index: 5; transition: opacity 0.5s ease, transform 0.5s ease, filter 0.5s ease; }
+        .stage-container.has-zoomed + .fixed-text-area { opacity: 0; transform: translateY(20px) scale(0.9); filter: blur(8px); pointer-events: none; }
+        .story-msg { position: absolute; opacity: 0; transform: translateY(20px); transition: all 0.4s ease; width: 100%; pointer-events: none; }
+        .story-msg.active { opacity: 1; transform: translateY(0); }
+        .story-msg h2 { font-size: 32px; font-weight: 700; margin: 0 0 10px 0; color: var(--text-main); }
+        .story-msg p { font-size: 17px; color: var(--text-sub); margin: 0; font-weight: 500; }
+        .hl { color: var(--brand-purple); }
+
+        .footer { height: 80vh; background: var(--footer-bg); color: var(--footer-text); display: flex; flex-direction: column; justify-content: center; align-items: center; position: relative; z-index: 20; transition: background 0.3s; }
+        .cta-btn { padding: 20px 60px; background: var(--brand-purple); color: #fff; border: none; border-radius: 50px; font-size: 20px; font-weight: 700; cursor: pointer; margin-top: 30px; transition: transform 0.2s; }
+        .cta-btn:hover { transform: scale(1.05); }
+
+        @keyframes bounce { 0%, 100% {transform: translateX(-50%) translateY(0);} 50% {transform: translateX(-50%) translateY(-10px);} }
+        @media (max-width: 768px) { .hero-title { font-size: 48px; } }
+    </style>
+</head>
+<body>
+
+    <button class="theme-btn" id="theme-btn" aria-label="Toggle Theme">
+        <svg id="icon-sun" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" style="display:none"><path d="M12 18a6 6 0 1 1 0-12 6 6 0 0 1 0 12zm0-2a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM11 1h2v3h-2V1zm0 19h2v3h-2v-3zM3.515 4.929l1.414-1.414L7.05 5.636 5.636 7.05 3.515 4.93zM16.95 18.364l1.414-1.414 2.121 2.121-1.414 1.414-2.121-2.121zm2.121-14.85l1.414 1.415-2.121 2.121-1.414-1.414 2.121-2.121zM5.636 16.95l1.414 1.414-2.121 2.121-1.414-1.414 2.121-2.121zM23 11v2h-3v-2h3zM4 11v2H1v-2h3z"/></svg>
+        <svg id="icon-moon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 7a7 7 0 0 0 12 4.9v.1c0 5.523-4.477 10-10 10S2 17.523 2 12 6.477 2 12 2h.1A6.979 6.979 0 0 0 10 7zm-6 5a8 8 0 0 0 15.062 3.762A9 9 0 0 1 8.238 4.938 7.999 7.999 0 0 0 4 12z"/></svg>
+    </button>
+
+    <div class="hero-section" id="hero-section">
+        <h1 class="hero-title">당신의 <span class="brand-accent">합격</span>을<br>연구합니다.</h1>
+        <p class="hero-subtitle">데이터로 증명하는 압도적 전략</p>
+        <div class="scroll-hint">↓ SCROLL TO START</div>
+    </div>
+
+    <div class="sticky-track" id="sticky-track">
+        <div class="sticky-viewport">
+            <div class="stage-container" id="dashboard-stage">
+                <div class="device ipad" data-y-offset="20">
+                    <div class="ipad-screen">
+                        <div>
+                            <div class="header-title">취약점 분석</div>
+                            <div class="header-sub">평균 정답률</div>
+                            <div class="stat-val" id="ipad-val">0.0%</div>
+                        </div>
+                        <div class="ipad-chart-area"><canvas id="radar-canvas"></canvas></div>
+                    </div>
+                </div>
+                <div class="device laptop" data-y-offset="0">
+                    <div class="laptop-screen">
+                        <div style="width:100%">
+                            <div class="header-title">누적 진행률</div>
+                            <div class="progress-bar-container"><div id="progress-bar-fill" class="progress-bar-fill"></div></div>
+                            <div style="display:flex; justify-content:space-between; font-size:10px; color:var(--text-sub); margin-top:4px;"><span>0%</span><span>100%</span></div>
+                        </div>
+                        <div style="width:100%">
+                            <div style="display:flex; justify-content:space-between; align-items:flex-end; margin-bottom:10px;">
+                                <div><div class="header-title">전체 학습량</div><div class="header-sub" style="margin:0">정답률 추이</div></div>
+                                <div class="stat-val" id="laptop-acc-val" style="font-size:28px;">0.0%</div>
+                            </div>
+                            <div class="laptop-chart-container">
+                                <svg viewBox="0 0 500 140" preserveAspectRatio="none">
+                                    <path id="laptop-area" class="laptop-area" d="" />
+                                    <path id="laptop-path" class="laptop-path" d="" />
+                                    <circle id="laptop-marker" class="laptop-marker" r="6" cx="0" cy="0" />
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="device iphone" data-y-offset="50">
+                    <div class="iphone-screen">
+                        <div class="dynamic-island"></div>
+                        <div class="header-title">오늘의 목표</div>
+                        <div class="iphone-chart-area">
+                            <svg viewBox="0 0 100 100">
+                                <circle class="ring-bg" cx="50" cy="50" r="40" />
+                                <circle id="mobile-ring" class="ring-progress" cx="50" cy="50" r="40" stroke-dasharray="251.3" stroke-dashoffset="251.3" />
+                            </svg>
+                            <div class="stat-val" id="mobile-val" style="position:absolute; font-size:22px;">0%</div>
+                        </div>
+                        <div class="stat-label">일일 활동</div>
+                        <div class="home-indicator"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="fixed-text-area">
+                <div class="story-msg" id="msg-1"><h2><span class="hl">약점</span>을 꿰뚫어보다</h2><p>과목별 취약점을 레이더 차트로 정밀 진단합니다.</p></div>
+                <div class="story-msg" id="msg-2"><h2><span class="hl">성장</span>을 증명하다</h2><p>누적된 학습 데이터가 합격선에 도달합니다.</p></div>
+                <div class="story-msg" id="msg-3"><h2><span class="hl">매일</span>을 기록하다</h2><p>작은 몰입이 만드는 거대한 결과를 확인하세요.</p></div>
+            </div>
+        </div>
+    </div>
+
+    <section class="footer">
+        <h2 style="font-size:48px; text-align:center; font-weight:800;">합격의 순간까지<br>함께하겠습니다.</h2>
+        <button class="cta-btn">무료 진단 받기</button>
+    </section>
+
+    <script>
+        // const STATIC_DATA = [42.2, 41.5, 43.0, 42.8, 45.5, 50.0, 48.5, 52.4, 56.0, 55.5, 59.2, 62.0, 61.5, 65.0, 68.5, 67.8, 70.5, 72.0, 73.5, 74.2, 74.7];
+        // const civil_DATA = [46.2, 44.5, 45.0, 43.8, 47.5, 53.0, 49.5, 50.4, 53.0, 51.5, 55.2, 59.0, 60.5, 66.0, 71.5, 70.8, 71.5, 70.0, 71.5, 73.2, 75.7];
+        // const crim_DATA = [38.2, 38.5, 41.0, 41.8, 43.5, 49.0, 50.5, 55.4, 60.0, 60.5, 63.2, 66.0, 63.5, 65.0, 67.5, 66.8, 71.5, 75.0, 75.5, 75.2, 74.7];
+        // const pub_DATA = [42.2, 41.5, 43.0, 42.8, 45.5, 48.0, 45.5, 51.4, 55.0, 54.5, 59.2, 61.0, 60.5, 64.0, 66.5, 65.8, 68.5, 71.0, 73.5, 74.2, 73.7];
+        const STATIC_DATA = [42.2, 41.5, 43.0, 45.5, 48.5, 52.4, 56.0, 59.2, 62.0, 68.5, 67.8, 70.5, 73.5, 74.2, 74.7];
+        const civil_DATA = [46.16, 43.85, 45.14, 47.73, 49.48, 50.26, 53.07, 54.68, 58.70, 71.43, 70.82, 71.34, 71.73, 73.11, 75.52];
+        const crim_DATA = [38.35, 38.96, 40.93, 43.97, 50.66, 55.68, 59.43, 63.89, 66.21, 67.94, 67.21, 71.63, 75.61, 75.47, 74.32];
+        const pub_DATA= [42.09, 41.69, 42.93, 44.80, 45.36, 51.26, 55.50, 59.03, 61.09, 66.13, 65.37, 68.53, 73.15, 74.02, 74.26];
+
+        function getStaticValue(progress) {
+            if (progress <= 0) return STATIC_DATA[0];
+            if (progress >= 1) return STATIC_DATA[STATIC_DATA.length - 1];
+            const maxIndex = STATIC_DATA.length - 1;
+            const pos = progress * maxIndex;
+            const index = Math.floor(pos);
+            const t = pos - index;
+            const v1 = STATIC_DATA[index];
+            const v2 = STATIC_DATA[index + 1];
+            return v1 + (v2 - v1) * t;
+        }
+
+        const stickyTrack = document.getElementById('sticky-track');
+        const heroSection = document.getElementById('hero-section');
+        const stageContainer = document.getElementById('dashboard-stage');
+        const msgs = [document.getElementById('msg-1'), document.getElementById('msg-2'), document.getElementById('msg-3')];
+        const ipadVal = document.getElementById('ipad-val');
+        const laptopAccVal = document.getElementById('laptop-acc-val');
+        const progressBarFill = document.getElementById('progress-bar-fill');
+        const mobileRing = document.getElementById('mobile-ring');
+        const mobileVal = document.getElementById('mobile-val');
+        const laptopPath = document.getElementById('laptop-path');
+        const laptopArea = document.getElementById('laptop-area');
+        const laptopMarker = document.getElementById('laptop-marker');
+        const radarCanvas = document.getElementById('radar-canvas');
+        const ctx = radarCanvas.getContext('2d');
+        const LABELS = ['민법', '형법', '공법'];
+
+        const themeBtn = document.getElementById('theme-btn');
+        const iconSun = document.getElementById('icon-sun');
+        const iconMoon = document.getElementById('icon-moon');
+
+        let currentState = { scrollY: 0, targetProgress: 0, currentProgress: 0, trackTop: 0, trackHeight: 0, vh: 0 };
+
+        // --- Theme Logic ---
+        function toggleTheme() {
+            const html = document.documentElement;
+            const current = html.getAttribute('data-theme');
+            const next = current === 'light' ? 'dark' : 'light';
+            html.setAttribute('data-theme', next);
+            if(next === 'dark') { iconMoon.style.display='none'; iconSun.style.display='block'; }
+            else { iconMoon.style.display='block'; iconSun.style.display='none'; }
+            // Force redraw canvas
+            drawRadar(getStaticValue(currentState.currentProgress));
+        }
+        themeBtn.addEventListener('click', toggleTheme);
+
+        function getCSSVar(name) {
+            return getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+        }
+
+        // --- Canvas & Optimization ---
+        function resizeCanvas() {
+            const width = radarCanvas.offsetWidth;
+            const height = radarCanvas.offsetHeight;
+            const dpr = window.devicePixelRatio || 1;
+            if (radarCanvas.width !== width * dpr || radarCanvas.height !== height * dpr) {
+                radarCanvas.width = width * dpr;
+                radarCanvas.height = height * dpr;
+                ctx.scale(dpr, dpr);
+                drawRadar(getStaticValue(currentState.currentProgress));
+            }
+        }
+
+        function drawRadar(currentAcc) {
+            const w = radarCanvas.width / (window.devicePixelRatio || 1);
+            const h = radarCanvas.height / (window.devicePixelRatio || 1);
+            const cx = w / 2; const cy = h / 2; const radius = w * 0.28;
+
+            const maxIndex = STATIC_DATA.length - 1;
+            const pos = currentState.currentProgress * maxIndex;
+            const index = Math.floor(pos);
+            const nextIndex = Math.min(index + 1, maxIndex);
+            const t = pos - index;
+
+            const v1 = civil_DATA[index] + (civil_DATA[nextIndex] - civil_DATA[index]) * t;
+            const v2 = crim_DATA[index] + (crim_DATA[nextIndex] - crim_DATA[index]) * t;
+            const v3 = pub_DATA[index] + (pub_DATA[nextIndex] - pub_DATA[index]) * t;
+            const data = [v1, v2, v3];
+
+            ctx.clearRect(0, 0, w, h);
+
+            // Fetch current theme colors
+            const cLine = getCSSVar('--chart-line');
+            const cText = getCSSVar('--chart-text');
+            const cPurple = getCSSVar('--brand-purple');
+            const cFillAvg = getCSSVar('--chart-avg-fill');
+            const cStrAvg = getCSSVar('--chart-avg-stroke');
+            const cPurpleDim = getCSSVar('--brand-purple-dim');
+            const cMarker = getCSSVar('--marker-fill');
+
+            ctx.strokeStyle = cLine; ctx.lineWidth = 1;
+            for(let i=1; i<=4; i++) {
+                ctx.beginPath();
+                for(let j=0; j<=3; j++) {
+                    const angle = (Math.PI * 2 * j) / 3 - Math.PI / 2;
+                    const r = radius * (i/4);
+                    const x = cx + r * Math.cos(angle);
+                    const y = cy + r * Math.sin(angle);
+                    if(j===0) ctx.moveTo(x,y); else ctx.lineTo(x,y);
+                }
+                ctx.closePath(); ctx.stroke();
+            }
+
+            ctx.font = '10px Pretendard'; ctx.textAlign = 'center';
+            ctx.fillStyle = cText; ctx.fillText('■ 전체 평균', cx, h - 15);
+            ctx.fillStyle = cPurple; ctx.fillText('■ 유저 평균', cx, h - 30);
+
+            drawPolygon(ctx, cx, cy, radius, [65, 60, 65], cStrAvg, cFillAvg);
+            drawPolygon(ctx, cx, cy, radius, data, cPurple, cPurpleDim);
+
+            ctx.font = 'bold 11px Pretendard';
+            for(let i=0; i<3; i++) {
+                const angle = (Math.PI * 2 * i) / 3 - Math.PI / 2;
+                const r = radius * (data[i] / 100);
+                const x = cx + r * Math.cos(angle);
+                const y = cy + r * Math.sin(angle);
+                ctx.beginPath(); ctx.arc(x, y, 4, 0, Math.PI*2); 
+                ctx.fillStyle = cMarker; ctx.fill(); ctx.stroke();
+                
+                const lx = cx + (radius + 25) * Math.cos(angle);
+                const ly = cy + (radius + 25) * Math.sin(angle);
+                ctx.fillStyle = cText; ctx.fillText(LABELS[i], lx, ly - 8);
+                ctx.fillStyle = cPurple; ctx.fillText(data[i].toFixed(1) + "%", lx, ly + 8);
+            }
+        }
+
+        function drawPolygon(ctx, cx, cy, radius, data, stroke, fill) {
+            ctx.beginPath();
+            for(let i=0; i<3; i++) {
+                const angle = (Math.PI * 2 * i) / 3 - Math.PI / 2;
+                const r = radius * (data[i] / 100);
+                const x = cx + r * Math.cos(angle);
+                const y = cy + r * Math.sin(angle);
+                if(i===0) ctx.moveTo(x,y); else ctx.lineTo(x,y);
+            }
+            ctx.closePath(); ctx.fillStyle = fill; ctx.fill(); ctx.strokeStyle = stroke; ctx.lineWidth = 2; ctx.stroke();
+        }
+
+        function renderLoop() {
+            if (Math.abs(currentState.targetProgress - currentState.currentProgress) > 0.0001) {
+                currentState.currentProgress += (currentState.targetProgress - currentState.currentProgress) * 0.1;
+                const progress = currentState.currentProgress;
+                const currentAcc = getStaticValue(progress);
+
+                if(radarCanvas.width > 0) drawRadar(currentAcc);
+                ipadVal.textContent = currentAcc.toFixed(1) + "%";
+                
+                const barVal = 19 + (63.2 * progress); 
+                progressBarFill.style.width = barVal + "%";
+
+                const width = 500; const height = 140;
+                const currentX = width * progress;
+                let d = "";
+                const maxIdx = STATIC_DATA.length - 1;
+                const curIdx = progress * maxIdx;
+                const drawEndIdx = Math.ceil(curIdx);
+                for(let i=0; i<=drawEndIdx; i++) {
+                    const t = i / maxIdx; 
+                    if (t > progress) break;
+                    const x = width * t;
+                    const val = STATIC_DATA[i];
+                    const y = height - (val / 100) * height;
+                    if (i===0) d = `M ${x} ${y}`; else d += ` L ${x} ${y}`;
+                }
+                const tipY = height - (currentAcc / 100) * height;
+                if (progress > 0) d += ` L ${currentX} ${tipY}`; else d = `M 0 ${height - (STATIC_DATA[0]/100)*height}`;
+                
+                laptopPath.setAttribute('d', d);
+                laptopArea.setAttribute('d', d + ` V ${height} H 0 Z`);
+                laptopMarker.setAttribute('cx', currentX);
+                laptopMarker.setAttribute('cy', tipY);
+                laptopMarker.style.opacity = progress > 0 ? 1 : 0;
+                laptopAccVal.textContent = currentAcc.toFixed(1) + "%";
+
+                const maxOffset = 251.3;
+                const targetOffset = maxOffset - (maxOffset * 0.85 * progress);
+                mobileRing.style.strokeDashoffset = targetOffset;
+                mobileVal.textContent = (85 * progress).toFixed(0) + "%";
+
+                if(progress <= 0) msgs.forEach(m => m.classList.remove('active'));
+                else {
+                    if(progress < 0.33) { msgs[0].classList.add('active'); msgs[1].classList.remove('active'); msgs[2].classList.remove('active'); }
+                    else if(progress < 0.66) { msgs[0].classList.remove('active'); msgs[1].classList.add('active'); msgs[2].classList.remove('active'); }
+                    else if(progress < 0.95) { msgs[0].classList.remove('active'); msgs[1].classList.remove('active'); msgs[2].classList.add('active'); }
+                    else msgs.forEach(m => m.classList.remove('active'));
+                }
+
+                const FADE_START = 0.85; 
+                if (progress > FADE_START) {
+                    const fadeRatio = (progress - FADE_START) / (1 - FADE_START);
+                    stageContainer.style.opacity = 1 - fadeRatio;
+                    stageContainer.style.filter = `blur(${fadeRatio * 10}px)`;
+                } else {
+                    stageContainer.style.opacity = 1;
+                    stageContainer.style.filter = 'none';
+                }
+            }
+            requestAnimationFrame(renderLoop);
+        }
+
+        window.addEventListener('scroll', () => {
+            const scrollY = window.scrollY;
+            currentState.scrollY = scrollY;
+            if(scrollY < currentState.vh) heroSection.style.opacity = 1 - (scrollY / currentState.vh);
+            else heroSection.style.opacity = 0;
+            let p = 0;
+            if (scrollY >= currentState.trackTop) p = (scrollY - currentState.trackTop) / (currentState.trackHeight - currentState.vh);
+            currentState.targetProgress = Math.max(0, Math.min(1, p));
+        }, { passive: true });
+
+        function adjustStageScale() {
+            const width = window.innerWidth;
+            let scale = Math.min(0.9, (width - 40) / 1100); 
+            if (scale < 0.35) scale = 0.35; 
+            stageContainer.style.transform = `scale(${scale})`;
+        }
+
+        window.addEventListener('resize', () => {
+            currentState.vh = window.innerHeight;
+            currentState.trackTop = stickyTrack.offsetTop;
+            currentState.trackHeight = stickyTrack.offsetHeight;
+            adjustStageScale();
+            resizeCanvas();
+        });
+
+        currentState.vh = window.innerHeight;
+        currentState.trackTop = stickyTrack.offsetTop;
+        currentState.trackHeight = stickyTrack.offsetHeight;
+        adjustStageScale();
+        resizeCanvas();
+        renderLoop();
+
+        const devices = document.querySelectorAll('.device');
+        devices.forEach(device => {
+            device.addEventListener('click', function(e) {
+                e.stopPropagation();
+                const isAlreadyZoomed = this.classList.contains('is-zoomed');
+                resetZoom();
+                if (!isAlreadyZoomed) {
+                    const stageRect = stageContainer.getBoundingClientRect();
+                    const stageCx = stageRect.left + stageRect.width / 2;
+                    const stageCy = stageRect.top + stageRect.height / 2;
+                    const deviceRect = this.getBoundingClientRect();
+                    const deviceCx = deviceRect.left + deviceRect.width / 2;
+                    const deviceCy = deviceRect.top + deviceRect.height / 2;
+                    let dx = stageCx - deviceCx;
+                    let dy = stageCy - deviceCy;
+                    const initialYOffset = parseInt(this.getAttribute('data-y-offset') || '0');
+                    dy += initialYOffset;
+                    this.style.setProperty('--tx', `${dx}px`);
+                    this.style.setProperty('--ty', `${dy}px`);
+                    this.classList.add('is-zoomed');
+                    stageContainer.classList.add('has-zoomed');
+                }
+            });
+        });
+        document.addEventListener('click', () => { resetZoom(); });
+        function resetZoom() {
+            devices.forEach(d => d.classList.remove('is-zoomed'));
+            stageContainer.classList.remove('has-zoomed');
+        }
+    </script>
+</body>
+</html>
