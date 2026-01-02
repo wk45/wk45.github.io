@@ -110,7 +110,7 @@ Let $\tilde{\epsilon}_{ijk} = Z_{ijk} - X_{ijk}\beta_k - a_{ik} - b_{jk}-  u_{ik
 p\Bigg(\rho_k\mid  \begin{pmatrix} \tilde{\epsilon}_{ijk}\\ \tilde{\epsilon}_{jik} \end{pmatrix},\dots \Bigg) &\propto \prod_{i \neq j}^{n_k}\exp\Bigg(-\frac{1}{2} \begin{pmatrix} \tilde{\epsilon}_{ijk}\\ \tilde{\epsilon}_{jik}\end{pmatrix}^T \Sigma_{\rho}^{-1} \begin{pmatrix} \tilde{\epsilon}_{ijk}\\ \tilde{\epsilon}_{jik} \end{pmatrix}\Bigg)\cdot \text{dUnif}(\rho_k; -1, 1)
 \end{align*} To update $\rho_k$, Metropolis-Hastings is needed due to non-conjugacy.
 
-### Update $\mu$ 
+### Update $\mu$
 
 \begin{align*}
 p(\mu\mid \vec{Y}, \dots) &\propto \prod_{k=1}^{K}\text{dNorm}(\beta_{k}; \mu, \sigma) \cdot \text{dNorm}(\mu;\lambda,\tau)\\
