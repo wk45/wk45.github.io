@@ -6,7 +6,7 @@ export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, '.', '');
   return {
     // 여기에 base 설정을 꼭 추가해야 합니다!
-    base: '/Projects/prjLL2/',
+    base: '/Projects/prjLL2/dist/',
     
     server: {
       port: 3000,
