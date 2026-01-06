@@ -3,10 +3,20 @@
 
 @import "jekyll-theme-minimal";
 
-.sidebar {
-  width: 10% !important;
+
+header {
+  width: 200px !important; 
 }
 
-.content {
-  width: 90% !important;
+section {
+  width: calc(100% - 250px) !important;
+  max-width: none !important;
+}
+
+@media screen and (max-width: 768px) {
+  header, section {
+    width: 100% !important;
+    width: auto !important;
+    position: relative !important;
+  }
 }
