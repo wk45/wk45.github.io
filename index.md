@@ -141,7 +141,7 @@ layout: default
     <hr class="card-divider">
     
     <div id="ppd">
-      <h4>▫ Peak Persistence Diagrams (<a href="https://github.com/wk45/PPD">PPD</a>)</h4>
+      <h4>▫ Peak Persistence Diagrams (<a href="https://doi.org/10.1109/TSP.2025.3613678">PPD</a>)</h4>
       <p>
         In practice, functional data often contains noise and small fluctuations. When applying dynamic time warping (DTW) with the Fisher-Rao metric, this noise can lead to <strong>over-alignment</strong> (warping functions matching insignificant noise).
       </p>
