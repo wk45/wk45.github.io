@@ -1,0 +1,984 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <script type="text/javascript" async 
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PPD τ Selection Visualization</title>
+
+    <style>
+        body { font-family: Arial, Helvetica, sans-serif; text-align: center; margin: 0; padding: 20px; }
+        h1 { font-size: 35px; color: #333; }
+        h2 { font-size: 30px; color: #333; }
+        p { 
+            font-size: 35px;
+            text-align: left;  /* Align paragraph text to the left */
+            max-width: 80%;    /* Optional: Control width for better readability */
+            margin: 0 auto;    /* Keeps it centered within the layout */
+        }        
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        #dataset-container {
+            margin: 10px 0;
+            text-align: center;
+        }
+        
+        /* Style the label */
+        #dataset-container label {
+            font-size: 25px;
+            font-weight: bold;
+            margin-right: 8px;
+        }
+
+        /* Style the dropdown select box */
+        #datasetSelector {
+            font-size: 25px;
+            padding: 8px 12px;
+            border: 2px solid #007bff;
+            border-radius: 6px;
+            background-color: #f8f9fa;
+            color: #333;
+            cursor: pointer;
+            transition: all 0.3s ease-in-out;
+        }
+                
+        #plots-wrapper {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 25px; /* Space between 3D and 2D plots */
+            flex-wrap: wrap; /* Wraps for smaller screens */
+        }
+
+        .plot-container {
+            width: 50vh;
+            height: 50vh;
+            background: #f0f0f0;
+            border: 1px solid #ccc;
+        }
+
+        /* Ensure top-bar aligns legend & slider */
+        #top-bar {
+            display: flex;
+            justify-content: center; /* Push legend & slider apart */
+            align-items: center;
+            gap: 40px;  /* Adjust spacing between legend & slider */
+            width: 100%;
+            margin-bottom: 10px; /* Add spacing before plots */
+            margin-top: 10px; /* Add spacing before plots */
+        }
+
+        /* Legend layout */
+        #legend-container {
+            display: flex;
+            gap: 25px;  /* Add spacing between legend items */
+            align-items: center;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            font-size: 25px;
+            white-space: nowrap;
+        }
+
+        .legend-box {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            margin-right: 5px;
+            border: 1px solid #000;
+        }
+
+        /* Slider layout */
+        #slider-container {
+            display: flex;
+            align-items: center;
+            gap: 10px; /* Spacing between text and slider */
+            font-size: 25px;
+        }
+
+        #lambdaOptValue {
+            font-weight: bold;
+        }
+
+        #percValue {
+            font-weight: bold;
+        }
+    </style>
+    </head>
+    <body>
+        <a href="index.html"> Current Report</a>
+        <h1> Strength Threshold, \(\tau\), Selection Visualization </h1>    
+        <p> Unlike our previous non-sequential alignment algorithm, the selection of the optimal \(\lambda\), denoted as \(\lambda^*\), when \(\tau = 0\), is reasonably robust. This pattern holds across all four examples presented in the paper, suggesting that the choice of \(\tau\) is less critical. Without sequential alignment, the influence of \(\lambda\) was too strong, often leading to implausible spurious peaks. However, this sequential approach effectively mitigates such occurrences. </p>  
+        <br>  
+        <p> The interactive plots below allow you to explore \(\hat{g}_{\lambda^*}\) across different strength percentile values, denoted as \(\hat{g}_{\lambda^* \mid \text{perc}}\). The left plot displays the PPD 3D surface, while the right plot compares \(g\) with \(\hat{g}_{\lambda^* \mid \text{perc}}\) in 2D space. The teal-colored dots represent the persistent and significant peaks in \(\hat{g}_{\lambda^* \mid \text{perc}}\). </p>  
+        <br>  
+        <p> You can use the <span style="font-weight: bold">dataset dropdown menu</span> to switch datasets and adjust the <span style="font-weight: bold">percentile slider</span> to observe changes in the plots. </p>  
+        <br>
+
+
+        <div id="dataset-container">
+            <label for="datasetSelector">Select Dataset:</label>
+            <select id="datasetSelector">
+                <option value="data2/data1.json">Dataset 1</option>
+                <option value="data2/data2.json">Dataset 2</option>
+                <option value="data2/data3.json">Dataset 3</option>
+                <option value="data2/data4.json">Dataset 4</option>
+                <option value="data2/covid_death.json">RealData COVID Death_rate</option>
+                <option value="data2/covid_hosp.json">RealData COVID Hosp_rate</option>
+                <option value="data2/covid_infection.json">RealData COVID Infec_rate</option>
+                <option value="data2/elec_jan.json">RealData Elec_jan</option>
+                <option value="data2/elec_jul.json">RealData Elec_jul</option>
+                <option value="data2/female.json">RealData Female Growth</option>
+                <option value="data2/male.json">RealData Male Growth</option>
+                <option value="data2/air.json">RealData Air</option>
+                <option value="data2/bci.json">RealData BCI</option>
+                <option value="data2/cci.json">RealData CCI</option>
+                <option value="data2/gdp.json">RealData GDP_changes</option>
+                <option value="data2/stock.json">RealData Stock_changes</option>
+                <option value="data2/birth_rate.json">RealData Birth_rate</option>
+            </select>
+        </div>
+
+        <div class="container">
+
+            <!-- Legend + Slider Row -->
+            <div id="top-bar">
+                <!-- Legend -->
+                <div id="legend-container">
+
+                    <div class="legend-item" id="legend-g">
+                        <span class="legend-box" style="background-color: #ff0000;"></span> 
+                        \(g\)
+                    </div>
+                    <div class="legend-item">
+                        <span class="legend-box" style="background-color: #00ffff;"></span> 
+                        \( \hat{g}_{\lambda^* \mid \text{perc}} \) ( \( \lambda^* \) = <span id="lambdaOptValue"></span> )
+                    </div>
+                    <div class="legend-item">
+                        <span class="legend-box" style="background-color: rgba(0, 153, 153, 0.5);"></span> 
+                        \( \hat{g}_{0}\)
+                    </div>
+                    <div class="legend-item">
+                        <span class="legend-box" style="background-color: rgba(170, 170, 0, 0.5);"></span> 
+                        \( \hat{g}_{\infty} \)
+                    </div>
+                </div>
+        
+                <!-- Slider -->
+                <div id="slider-container">
+                    <label for="percSlider"> Percentile (<span id="percValue">0</span>%):</label>
+                    <input type="range" id="percSlider" min="0" max="100" value="0" step="1">
+                </div>
+            </div>
+        
+            <!-- Plots -->
+            <div id="plots-wrapper">
+                <div id="plot-container-3d" class="plot-container"></div>
+                <div id="plot-container-2d" class="plot-container"></div>
+            </div>
+        
+        </div>
+        <br>
+        <p> Below, you can find the plot illustrating the relationship between strength percentile and persistence measures, along with PPD bar charts for selected notable percentile values. </p>
+        <br>
+        <h2>Example 1</h2>
+        <div style="text-align: center;">
+            <figure style="display: inline-block; text-align: center; margin: 10px;">
+                <img src="figs/tau_ex1.png" width="400">
+                <figcaption>(a)</figcaption>
+            </figure>
+            <figure style="display: inline-block; text-align: center; margin: 10px;">
+                <img src="figs/tau_ex1_percVSpm.png" width="400">
+                <figcaption>(b)</figcaption>
+            </figure>
+            <figure style="display: inline-block; text-align: center; margin: 10px;">
+                <img src="figs/tau_ex1_ppds.png" width="400">
+                <figcaption>(c)</figcaption>
+            </figure>
+        </div>
+        <br>
+
+        <p>In Plot (b), the values \(p_1, p_2, p_3, p_4\) represent persistence measures across varying percentile values. These measures are defined as the bar-lengths of significant peaks in \(\hat{g}_{\lambda \mid \text{perc}}\). The solid and dotted lines indicate ground truth and spurious peak labels, respectively. The strength percentile should be selected by distinguishing between these persistence measures—ensuring that ground truth peaks remain prominent while spurious peaks are suppressed. However, if both \(p_3\) and \(p_4\) become too small, this forces the PPD to select a very small \(\lambda^*\), which may lead to excessive alignment.</p>
+        <br>
+        <p>To identify an appropriate range, I selected four key percentile values: \(\{0, 37, 56, 82\}\), shown as vertical dotted lines in (b). Plot (c) displays the corresponding PPDs for each case. Clearly, the 82nd percentile is too restrictive, as most PPD regions appear gray, indicating a lack of significant peaks. The 56th percentile is a potential choice; however, the insignificance of Peak 2 over \(\lambda \in [0.2, 0.36]\) may be implausible, considering that peaks tend to blend more as \(\lambda\) increases. Despite Peak 2 being significant over \([0, 0.19] \cup [0.37, 0.7]\), its fluctuating significance suggests instability.</p>
+        <br>
+        <p>Taking this discontinuity in the significance of true peaks (1 and 2) into account, the 37th percentile serves as a reasonable upper bound in this case. You can verify this by adjusting the percentile value in the interactive plot for Example 1. Alternatively, the 26th percentile can also be considered an upper bound, as the persistence measures of \(p_1\) and \(p_2\) in (b) remain unaffected by changes in the percentile threshold. So the percentile range is either [0, 37] or [0, 26].</p>
+
+        <br>
+        <h2>Example 2</h2>
+            <div style="text-align: center;">
+                <figure style="display: inline-block; text-align: center; margin: 10px;">
+                    <img src="figs/tau_ex2.png" width="400">
+                    <figcaption>(a)</figcaption>
+                </figure>
+                <figure style="display: inline-block; text-align: center; margin: 10px;">
+                    <img src="figs/tau_ex2_percVSpm.png" width="400">
+                    <figcaption>(b)</figcaption>
+                </figure>
+                <figure style="display: inline-block; text-align: center; margin: 10px;">
+                    <img src="figs/tau_ex2_ppds.png" width="400">
+                    <figcaption>(c)</figcaption>
+                </figure>
+            </div>
+            <br>
+            <p> The true peak labels are 2 and 4 as shown in (b), and the key percentile values are \(\{0, 47, 68, 92\}\). The 68th percentile was chosen because this is the last percentile value where \(p_2\) keeps its maximum persistence measure while those of the others decreased. Its PPD in (c), contains fluctuating significance of Peak 4, and the upper bound I can suggest is the 47th percentile value which both true peaks have unaffected persistence measure for increasing pecentile value. (maybe this sentence is too long for the explanation..), and its PPD barchart is also stable.</p>
+        <br>
+
+        <p>The true peak labels are 2 and 4, as shown in (b), and the key percentile values are \(\{0, 47, 68, 92\}\). The 68th percentile was chosen because it is the last percentile where \(p_2\) maintains its maximum persistence measure, while those of other peaks decrease. However, its PPD in (c) shows fluctuating significance for Peak 4 by making insignificance range over \(\lambda \in [0.38, 0.68]\).</p>
+
+        <br>
+
+        <p>To address this, the 47th percentile can serve as a more stable upper bound, as both true peaks retain their persistence measures even as the percentile increases. Additionally, the PPD barchart for this case remains stable, making it a reasonable choice. So the percentile range for this case is [0, 47].</p> 
+
+        <br>
+        <h2>Example 3</h2>
+        <div style="text-align: center;">
+            <figure style="display: inline-block; text-align: center; margin: 10px;">
+                <img src="figs/tau_ex3.png" width="400">
+                <figcaption>(a)</figcaption>
+            </figure>
+            <figure style="display: inline-block; text-align: center; margin: 10px;">
+                <img src="figs/tau_ex3_percVSpm.png" width="400">
+                <figcaption>(b)</figcaption>
+            </figure>
+            <figure style="display: inline-block; text-align: center; margin: 10px;">
+                <img src="figs/tau_ex3_ppds.png" width="400">
+                <figcaption>(c)</figcaption>
+            </figure>
+        </div>
+        <br>
+        <p>Out of the six labeled peaks, the true peak labels are 1 and 4, as shown in (b), with key percentile values \(\{0, 2, 36, 70\}\). Notably, the PPDs for both the 36th and 70th percentiles exhibit stable significance across peaks. However, these extreme PPDs, where the persistence measures for \( p_2, p_3, p_5, \) and \( p_6 \) are nearly zero, will inevitably force our method to select \(\lambda^* \approx 0\). Indeed, the corresponding \(\lambda^*\) values for each case are 0.29, 0.12, 0.01, and 0. The resulting \(\hat{g}_{\lambda^*\mid\text{perc}}\) is illustrated below:</p>    
+        <br>
+        <img src="figs/tau_ex3_ghat.png" width="400">
+        <br>
+        <p>As observed, \(\hat{g}_{\lambda^*\mid\text{perc}}\) for the 36th percentile exhibits distinct peaks and valleys, particularly for Peaks 2 and 3. In this case, determining an appropriate percentile range is somewhat ambiguous and requires user discretion based on visual inspection. From my perspective, a reasonable range for this case could be [0,10] or [0,16].</p><br>
+
+        <br>
+        <h2>Example 4</h2>
+        <div style="text-align: center;">
+            <figure style="display: inline-block; text-align: center; margin: 10px;">
+                <img src="figs/tau_ex4.png" width="400">
+                <figcaption>(a)</figcaption>
+            </figure>
+            <figure style="display: inline-block; text-align: center; margin: 10px;">
+                <img src="figs/tau_ex4_percVSpm.png" width="400">
+                <figcaption>(b)</figcaption>
+            </figure>
+            <figure style="display: inline-block; text-align: center; margin: 10px;">
+                <img src="figs/tau_ex4_ppds.png" width="400">
+                <figcaption>(c)</figcaption>
+            </figure>
+        </div>
+        <br>
+        <p>In this example, the true peak label is 1. Considering the fluctuating significance of Peak 1, the PPD for the 37th percentile can be excluded. Instead, the 16th or 27th percentiles may serve as a reasonable upper bound for the selection range.
+        </p><br>
+        <h2>Conclusion</h2>
+        <br>
+        <p>I observe that in all cases, the 0th strength percentile is never excluded from the selection range. This is due to the new sequential alignment algorithm, which effectively prevents extreme functional alignment. Consequently, a tighter choice for the percentile value is possible. </p>
+        <br>
+        <p>Since this approach mitigates excessive alignment of \( f_i \)'s, the importance of selecting the percentile value—or equivalently, the choice of \( \tau \)—has significantly diminished. Previously, we used the 15th percentile, where we found that \( \hat{g}_{\lambda^*} \) was sensitive to changes in the value. However, with this new sequential algorithm, I believe we can even set \( \tau = 0 \), or, if necessary, retain the 15th percentile since the shape variations in \( \hat{g}_\lambda \) with respect to \(\lambda\) have become considerably more robust.</p>
+
+
+
+
+
+        
+
+
+
+
+  <script type="module">
+    import * as THREE from 'https://cdn.skypack.dev/three@0.128.0';
+    import { OrbitControls } from 'https://cdn.skypack.dev/three@0.128.0/examples/jsm/controls/OrbitControls.js';
+    import { Line2 } from 'https://cdn.skypack.dev/three@0.128.0/examples/jsm/lines/Line2.js';
+    import { LineMaterial } from 'https://cdn.skypack.dev/three@0.128.0/examples/jsm/lines/LineMaterial.js';
+    import { LineGeometry } from 'https://cdn.skypack.dev/three@0.128.0/examples/jsm/lines/LineGeometry.js';
+
+    
+    let M, L, K, x, lam, lam_og, perc, sigMat, ghat, peakHeight, peakLoc, IdxOpt, g;
+    let scene3D, camera3D, renderer3D, controls3D, surfaceMesh, selectedLine, lambdaOptLine;
+    let scene2D, camera2D, renderer2D, selected2DLine
+    let peakLines, peakPoints;
+    let g2DLine = null;
+    let g3DLine = null;
+    let markerObjects2D = [];  // Store 2D markers for easy updates
+
+    async function loadData(datasetFile) {
+        const response = await fetch(datasetFile);
+        const data = await response.json();
+        
+        return {
+            M: data.x.length,
+            L: data.lam.length,
+            K: data.peakHeight[0].length,
+            x: data.x,
+            g: data.g,
+            lam_og: [...data.lam],
+            lam: [...data.lam].reverse(),
+            ghat: data.ghat,
+            peakHeight: data.peakHeight,
+            peakLoc: data.peakLoc,
+            sigMat: data.sigMat,
+            IdxOpt: data.IdxOpt  // Store optimal lambda indices
+        };
+    }
+
+    async function createPlots(datasetFile) {
+        ({ M, L, K, x, lam, lam_og, ghat, IdxOpt, peakHeight, peakLoc, sigMat, g } = await loadData(datasetFile));
+        // get me the max value of lam
+        let lam_max = Math.max(...lam);
+        lam = lam.map(l => l/lam_max);
+
+        updateLegend(g);
+
+        // document.getElementById("lambdaSlider").max = L - 1;
+        document.getElementById("percSlider").max = 100;
+
+        create3DPlot("plot-container-3d", datasetFile);
+
+        create2DPlot(IdxOpt ? IdxOpt[0] : 0);
+        updateLambdaOptValue(0);  
+
+        document.getElementById("percSlider").addEventListener("input", (event) => {
+            let percValue = parseInt(event.target.value);
+            document.getElementById("percValue").innerText = percValue;
+            updateLambdaOptLine(percValue);
+        });  
+    }
+
+
+    
+    function create3DPlot(containerId, datasetFile) {
+        // Remove previous scene elements if they exist
+        
+        const container = document.getElementById(containerId);
+        scene3D = new THREE.Scene();
+        scene3D.background = new THREE.Color(0x333333);
+        
+        camera3D = new THREE.PerspectiveCamera(40, container.clientWidth / container.clientHeight, 0.1, 1000);
+        // camera3D.position.set(1, 1.5, 1.9);
+        // console.log(camera3D.position);
+        // camera3D.position.set(0.2, 1.5, 2.5);
+        // camera3D.position.set(0.2, 1.5, 2.5);
+        
+        camera3D.position.set(0.4,2.6,1.1);
+
+        renderer3D = new THREE.WebGLRenderer({ antialias: true });
+        renderer3D.setSize(container.clientWidth, container.clientHeight);
+        container.appendChild(renderer3D.domElement);
+        
+        controls3D = new OrbitControls(camera3D, renderer3D.domElement);
+
+        let centerX = (Math.min(...x) + Math.max(...x)) / 2;
+        let centerY = (Math.min(...ghat.flat()) + Math.max(...ghat.flat())) / 2;
+        let centerZ = (Math.min(...lam) + Math.max(...lam)) / 2;
+
+        controls3D.target.set(centerX, centerY, centerZ);
+
+        // camera3D.position.set(0.5,2.3,0.35); // Move camera high along Y-axis
+
+        // camera3D.lookAt(0.5,0.5,0.35);
+        // Lighting
+        const light = new THREE.DirectionalLight(0xffffff, 1.5);
+        light.position.set(0.5, 2.5, 0).normalize();
+        scene3D.add(light);
+        const ambientLight = new THREE.AmbientLight(0x404040, 2);
+        scene3D.add(ambientLight);
+        
+        createSurfacePlot();
+        createPeakLines(container);
+        // createLambdaLine(container);
+        createLambdaOptLine(container);
+
+        // Update based on slider
+        // updateLamSelection(0);
+        // document.getElementById("lambdaSlider").addEventListener("input", (event) => {
+        //   updateLamSelection(parseInt(event.target.value));
+        // });
+        
+        updatePercSelection(0);
+        document.getElementById("percSlider").addEventListener("input", (event) => {
+          updatePercSelection(parseInt(event.target.value));
+        });
+
+        function animate3D() {
+            requestAnimationFrame(animate3D);
+            controls3D.update();
+            renderer3D.render(scene3D, camera3D);
+                    // Log the current camera position and lookAt
+            // console.log("Camera Position:", camera3D.position);
+            // console.log("Camera Target:", controls3D.target);
+        }
+        animate3D();
+    }
+
+    function create2DPlot(optLambdaIdx) {
+
+        const container = document.getElementById("plot-container-2d");
+        scene2D = new THREE.Scene();
+        scene2D.background = new THREE.Color(0x333333);
+
+        // Compute min/max values dynamically
+        const xMin = Math.min(...x);
+        const xMax = Math.max(...x);
+        const yMin = Math.min(...ghat.flat());
+        const yMax = Math.max(...ghat.flat());
+
+        // Slightly extend axis ranges (optional)
+        const padding = 0.05;
+        const xRange = (xMax - xMin) * padding;
+        const yRange = (yMax - yMin) * padding;
+
+        // Adjust camera to fit the computed range
+        camera2D = new THREE.OrthographicCamera(
+            xMin - xRange, xMax + xRange, // left, right
+            yMax + yRange, yMin - yRange, // top, bottom
+            0.1, 1000
+        );
+        camera2D.position.set(0, 0, 5);
+
+        renderer2D = new THREE.WebGLRenderer({ antialias: true });
+        renderer2D.setSize(container.clientWidth, container.clientHeight);
+        container.appendChild(renderer2D.domElement);
+
+        plot_ghat_2DPlot(0, 0x009999);   // First line (magenta)
+        plot_ghat_2DPlot(L-1, 0xaaaa00); 
+
+        if (g !== null) {
+            plot_g_2DPlot();
+        }   
+        
+        update2DPlot(optLambdaIdx);
+
+        function animate2D() {
+            requestAnimationFrame(animate2D);
+            renderer2D.render(scene2D, camera2D);
+        }
+
+        animate2D();
+    }
+
+    function update2DPlot(optLambdaIdx, selectedPerc = 0) {
+        if (selected2DLine) {
+            scene2D.remove(selected2DLine);
+        }
+
+        // Draw the main curve
+        const positions = [];
+        for (let m = 0; m < M; m++) {
+            positions.push(x[m], ghat[optLambdaIdx][m], 0);
+        }
+
+        const lineGeometry = new LineGeometry();
+        lineGeometry.setPositions(positions);
+
+        const lineMaterial = new LineMaterial({
+            color: 0x00ffff, // cyan line
+            linewidth: 5,
+        });
+        lineMaterial.resolution.set(renderer2D.domElement.width, renderer2D.domElement.height);
+
+        selected2DLine = new Line2(lineGeometry, lineMaterial);
+        selected2DLine.computeLineDistances();
+        scene2D.add(selected2DLine);
+
+        // Remove previous markers
+        markerObjects2D.forEach(marker => scene2D.remove(marker));
+        markerObjects2D = [];
+
+        // Add markers (blue for normal peaks, grey for killed peaks)
+        for (let k = 0; k < K; k++) {
+            let xVal = peakLoc[optLambdaIdx][k];
+            let yVal = peakHeight[optLambdaIdx][k];
+
+            if (xVal !== null && yVal !== null) {
+                const markerGeometry = new THREE.SphereGeometry(0.02, 12, 12); // Small dot
+                const isKilled = sigMat[optLambdaIdx][k] <= selectedPerc;
+                const markerMaterial = new THREE.MeshBasicMaterial({
+                    color: isKilled ? 0xaaaaaa : 0x000000
+                });
+
+                const marker = new THREE.Mesh(markerGeometry, markerMaterial);
+                marker.position.set(xVal, yVal, 0);
+                scene2D.add(marker);
+                markerObjects2D.push(marker);
+            }
+        }
+
+        // Highlight **Optimal λ** markers in green
+        if (optLambdaIdx !== null) {
+            for (let k = 0; k < K; k++) {
+                let xVal = peakLoc[optLambdaIdx][k];
+                let yVal = peakHeight[optLambdaIdx][k];
+
+                if (xVal !== null && yVal !== null && sigMat[optLambdaIdx][k] > selectedPerc) {
+                    const greenMarkerGeometry = new THREE.SphereGeometry(0.025, 12, 12); // Bigger dot
+                    const greenMarkerMaterial = new THREE.MeshBasicMaterial({ color: 0x00ffbb });
+
+                    const greenMarker = new THREE.Mesh(greenMarkerGeometry, greenMarkerMaterial);
+                    greenMarker.position.set(xVal, yVal, 0);
+                    scene2D.add(greenMarker);
+                    markerObjects2D.push(greenMarker);
+                }
+            }
+        }
+    }
+
+    function plot_g_2DPlot() {
+        if (g2DLine) {
+            return; // Skip if already drawn (avoids redundant rendering)
+        }
+
+        const positions = [];
+
+        for (let m = 0; m < M; m++) {
+            positions.push(x[m], g[m], 0); // Flattened format for Line2
+        }
+
+        const lineGeometry = new LineGeometry();
+        lineGeometry.setPositions(positions);
+
+        const lineMaterial = new LineMaterial({
+            color: 0xff0000, // cyan
+            linewidth: 3,    // Thicker line for visibility
+        });
+        lineMaterial.resolution.set(renderer2D.domElement.width, renderer2D.domElement.height);
+
+        g2DLine = new Line2(lineGeometry, lineMaterial);
+        g2DLine.computeLineDistances();
+        scene2D.add(g2DLine);
+        
+    }
+
+    // function plot_ghat_2DPlot(idx,colorHex) {
+    //     if (ghat2DLine) {
+    //         return; // Skip if already drawn (avoids redundant rendering)
+    //     }
+
+    //     const positions = [];
+
+    //     for (let m = 0; m < M; m++) {
+    //         positions.push(x[m], ghat[idx][m], 0); // Flattened format for Line2
+    //     }
+
+    //     const lineGeometry = new LineGeometry();
+    //     lineGeometry.setPositions(positions);
+
+    //     const lineMaterial = new LineMaterial({
+    //         color: colorHex,
+    //         linewidth: 3,    // Thicker line for visibility
+    //     });
+    //     lineMaterial.resolution.set(renderer2D.domElement.width, renderer2D.domElement.height);
+
+    //     ghat2DLine = new Line2(lineGeometry, lineMaterial);
+    //     ghat2DLine.computeLineDistances();
+    //     scene2D.add(ghat2DLine);
+    // }
+    let ghat2DLines = []; // Store multiple lines
+
+    function plot_ghat_2DPlot(idx, colorHex) {
+        // Create a new line instead of checking a single ghat2DLine
+        const positions = [];
+
+        for (let m = 0; m < M; m++) {
+            positions.push(x[m], ghat[idx][m], 0); // Flattened format for Line2
+        }
+
+        const lineGeometry = new LineGeometry();
+        lineGeometry.setPositions(positions);
+
+        const lineMaterial = new LineMaterial({
+            color: colorHex,
+            linewidth: 3,    // Thicker line for visibility
+            transparent: true,
+            opacity: 0.3,
+        });
+        lineMaterial.resolution.set(renderer2D.domElement.width, renderer2D.domElement.height);
+
+        const newLine = new Line2(lineGeometry, lineMaterial);
+        newLine.computeLineDistances();
+        scene2D.add(newLine);
+
+        ghat2DLines.push(newLine); // Store the created line
+    }
+    
+    function createSurfacePlot() {
+      // Create Surface Mesh
+      const geometry = new THREE.BufferGeometry();
+        const vertices = new Float32Array(M * L * 3);
+        const indices = [];
+        let index = 0;
+        for (let l = 0; l < L; l++) {
+          for (let m = 0; m < M; m++) {
+            vertices[index++] = x[m];
+            vertices[index++] = ghat[l][m];
+            vertices[index++] = lam[l];
+          }
+        }
+        for (let l = 0; l < L - 1; l++) {
+          for (let m = 0; m < M - 1; m++) {
+            let a = l * M + m;
+            let b = a + 1;
+            let c = (l + 1) * M + m;
+            let d = c + 1;
+            indices.push(a, b, c, b, d, c);
+          }
+        }
+        geometry.setAttribute('position', new THREE.BufferAttribute(vertices, 3));
+        
+        // Set vertex colors
+        const colors = new Float32Array(M * L * 3);
+        const flatGhat = ghat.flat();
+        const minGhat = Math.min(...flatGhat);
+        const maxGhat = Math.max(...flatGhat);
+        let colorIndex = 0;
+        for (let l = 0; l < L; l++) {
+          for (let m = 0; m < M; m++) {
+            let colorFactor = (ghat[l][m] - minGhat) / (maxGhat - minGhat);
+            colors[colorIndex++] = colorFactor;
+            colors[colorIndex++] = 1 - colorFactor;
+            colors[colorIndex++] = 0.6;
+          }
+        }
+        geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+        geometry.setIndex(indices);
+        geometry.computeVertexNormals();
+        
+        const material = new THREE.MeshStandardMaterial({
+            vertexColors: true,
+            side: THREE.DoubleSide,
+            transparent: true,
+            opacity: 0.7,
+            depthWrite: false   // Prevents issues where opaque objects render over transparent ones
+        });
+        surfaceMesh = new THREE.Mesh(geometry, material);
+        scene3D.add(surfaceMesh);
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    function createLambdaLine(container){
+        const linePositions = [];
+        for (let m = 0; m < M; m++) {
+            linePositions.push(x[m], ghat[0][m], lam[0]);
+        }
+        const lambdaLineGeometry = new LineGeometry();
+        lambdaLineGeometry.setPositions(linePositions);
+        
+        const lambdaLineMaterial = new LineMaterial({
+            color: 0xffff00, // magenta: 0xff00ff, green: 0x00ff00, blue: 0x00ffbb, cyan: 0x00ffff, yellow: 0xffff00
+            linewidth: 3, // Line width in world units
+        });
+        lambdaLineMaterial.resolution.set(container.clientWidth, container.clientHeight);
+        
+        selectedLine = new Line2(lambdaLineGeometry, lambdaLineMaterial);
+        selectedLine.computeLineDistances();
+        scene3D.add(selectedLine);
+    }
+
+    function createLambdaOptLine(container) {
+        const linePositions = [];
+        const gPositions = [];  // To store g(x) positions
+
+        let optLambdaIdx = IdxOpt ? IdxOpt[0] : 0;
+
+        for (let m = 0; m < M; m++) {
+            linePositions.push(x[m], ghat[optLambdaIdx][m], lam[optLambdaIdx]); // λ* Curve
+            if (g!==null) gPositions.push(x[m], g[m], lam[optLambdaIdx]); // g(x) Curve at same λ*
+        }
+
+        // Draw λ* Line
+        const optLineGeometry = new LineGeometry();
+        optLineGeometry.setPositions(linePositions);
+        const optLineMaterial = new LineMaterial({
+            color: 0x00ffff, // Cyan for λ*
+            linewidth: 5,
+        });
+        optLineMaterial.resolution.set(container.clientWidth, container.clientHeight);
+        lambdaOptLine = new Line2(optLineGeometry, optLineMaterial);
+        lambdaOptLine.computeLineDistances();
+        scene3D.add(lambdaOptLine);
+
+        if (g !== null) {
+            // Draw g(x) Line (Store globally!)
+            const gLineGeometry = new LineGeometry();
+            gLineGeometry.setPositions(gPositions);
+            const gLineMaterial = new LineMaterial({
+                color: 0xff0000, // Red for g(x)
+                linewidth: 3,
+            });
+            gLineMaterial.resolution.set(container.clientWidth, container.clientHeight);
+            
+            g3DLine = new Line2(gLineGeometry, gLineMaterial);  // Store g3DLine globally
+            g3DLine.computeLineDistances();
+            scene3D.add(g3DLine);
+        }
+    }
+
+    function createPeakLines(container) {
+        peakLines = []; // Store references for updates
+        peakPoints = [];
+        
+        for (let k = 0; k < K; k++) {
+            let peakPositions = [];
+            let markerObjects = [];
+            let segment = [];
+
+            for (let l = 0; l < L; l++) {
+                let xVal = peakLoc[l][k];
+                let zVal = lam[l];
+                let yVal = peakHeight[l][k];
+
+                if (xVal !== null && yVal !== null) {
+                    segment.push(xVal, yVal, zVal);
+
+                    // ✅ Create a black sphere marker
+                    const sphereGeometry = new THREE.SphereGeometry(0.02, 12, 12); // Small & smooth
+                    const sphereMaterial = new THREE.MeshBasicMaterial({ 
+                        color: 0x000000,
+                        transparent: true
+                    });
+                    
+                    const sphere = new THREE.Mesh(sphereGeometry, sphereMaterial);
+                    sphere.position.set(xVal, yVal, zVal);
+                    scene3D.add(sphere);
+                    
+                    markerObjects.push(sphere); // Store marker for later updates
+                } else {
+                    if (segment.length > 0) {
+                        peakPositions.push([...segment]);  // Store valid segment
+                        segment = []; // Reset for a new segment
+                    }
+                    markerObjects.push(null); 
+                }
+
+
+            }
+            peakPoints.push(markerObjects);
+            
+            if (segment.length > 0) {
+                peakPositions.push([...segment]);
+            }
+
+            if (peakPositions.length > 1) { 
+                const peakGeometry = new LineGeometry();
+                peakGeometry.setPositions(peakPositions.flat());
+
+                // Define colors array dynamically
+                const colors = new Float32Array(peakPositions.flat().length); // One color per vertex (RGB)
+                
+                for (let i = 0; i < colors.length; i += 3) {
+                    colors[i] = 0.0;    // Red
+                    colors[i+1] = 1.0;  // Green
+                    colors[i+2] = 0.0;  // Blue
+                }
+
+                peakGeometry.setAttribute('color', new THREE.Float32BufferAttribute(colors, 3));
+
+                const peakMaterial = new LineMaterial({
+                    vertexColors: true,  // Enable per-vertex colors
+                    linewidth: 1,
+                });
+                peakMaterial.resolution.set(container.clientWidth, container.clientHeight);
+
+                const peakLine = new Line2(peakGeometry, peakMaterial);
+                peakLine.computeLineDistances();
+                scene3D.add(peakLine);
+                peakLines.push({ peakLine, k });
+            }            
+        }
+    }
+    
+    // update function for legend
+    function updateLambdaOptValue(selectedPerc = 0) {
+        if (IdxOpt && lam_og) {
+            let optLambdaIdx = IdxOpt[selectedPerc] ?? IdxOpt[0]; // Ensure valid index
+
+            if (optLambdaIdx !== undefined) {
+                let lambdaOptValue = lam_og[optLambdaIdx].toFixed(2);
+                document.getElementById("lambdaOptValue").innerText = lambdaOptValue;
+            } else {
+                console.warn("Invalid optLambdaIdx:", optLambdaIdx);
+            }
+        }
+    }
+
+    
+    function updateLamSelection(selectedLambdaIdx) {
+        document.getElementById("lambdaValue").innerText = lam_og[selectedLambdaIdx].toFixed(2);
+        const newPositions = [];
+        for (let m = 0; m < M; m++) {
+        newPositions.push(x[m], ghat[selectedLambdaIdx][m], lam[selectedLambdaIdx]);
+        }
+        selectedLine.geometry.setPositions(newPositions);
+        
+        const container = document.getElementById("plot-container-3d");
+        selectedLine.material.resolution.set(container.clientWidth, container.clientHeight);
+    }
+    
+    function updateLambdaOptLine(selectedPerc) {
+        let optLambdaIdx = IdxOpt ? IdxOpt[selectedPerc] : 0;
+        update2DPlot(optLambdaIdx, selectedPerc);
+
+        const newPositions = [];
+        const gNewPositions = [];
+
+        for (let m = 0; m < M; m++) {
+            newPositions.push(x[m], ghat[optLambdaIdx][m], lam[optLambdaIdx]); // Lambda* Curve
+            if (g !== null) gNewPositions.push(x[m], g[m], lam[optLambdaIdx]); // g(x) at same λ*
+        }
+
+        lambdaOptLine.geometry.setPositions(newPositions);
+        lambdaOptLine.material.resolution.set(
+            document.getElementById("plot-container-3d").clientWidth,
+            document.getElementById("plot-container-3d").clientHeight
+        );
+
+        if (g !== null){
+            // Also update g(x) in 3D
+            g3DLine.geometry.setPositions(gNewPositions);
+            g3DLine.material.resolution.set(
+                document.getElementById("plot-container-3d").clientWidth,
+                document.getElementById("plot-container-3d").clientHeight
+            );
+        }
+    }
+    
+
+    function updatePercSelection(selectedPerc) {
+        document.getElementById("percValue").innerText = selectedPerc.toFixed(0);
+
+        // Get the optimal lambda index for the selected percentage
+        let optLambdaIdx = (IdxOpt && IdxOpt.length > selectedPerc) ? IdxOpt[selectedPerc] : null;
+
+        // Update λ_opt curve if valid
+        if (optLambdaIdx !== null) {
+            const newPositions = [];
+            for (let m = 0; m < M; m++) {
+                newPositions.push(x[m], ghat[optLambdaIdx][m], lam[optLambdaIdx]);
+            }
+            lambdaOptLine.geometry.setPositions(newPositions);
+            lambdaOptLine.material.resolution.set(
+                document.getElementById("plot-container-3d").clientWidth,
+                document.getElementById("plot-container-3d").clientHeight
+            );
+        }
+
+        // First Pass: Update all peak colors normally (grey for killed, blue otherwise)
+        for (let k = 0; k < K; k++) {
+            for (let l = 0; l < L; l++) {
+                if (sigMat[l][k] !== null && peakPoints[k][l] !== null) {
+                    if (sigMat[l][k] <= selectedPerc) {
+                        peakPoints[k][l].material.color.set(0xaaaaaa);  // Grey for "killed" peaks
+                        peakPoints[k][l].material.opacity = 0.3; // 🔄 Reset opacity to default
+                        peakPoints[k][l].scale.set(1, 1, 1); // Reset size for grey markers
+                    } else {
+                        peakPoints[k][l].material.color.set(0x000000);  // black for normal peaks
+                        peakPoints[k][l].material.opacity = 1; // 🔄 Reset opacity to default
+                        peakPoints[k][l].scale.set(1, 1, 1); // Reset size for normal peaks
+                    }
+                }
+            }
+        }
+
+        // Second Pass: Ensure Green markers **ONLY on non-killed peaks**
+        if (optLambdaIdx !== null) {
+            for (let k = 0; k < K; k++) {
+                if (peakPoints[k][optLambdaIdx] !== null) {
+                    // Only update if the peak **is NOT grey**
+                    if (sigMat[optLambdaIdx][k] > selectedPerc) {
+                        peakPoints[k][optLambdaIdx].material.color.set(0x00ffbb);
+                        peakPoints[k][optLambdaIdx].material.opacity = 1;  // Green for optimal λ
+                        peakPoints[k][optLambdaIdx].scale.set(1.5, 1.5, 1.5); // Make it slightly bigger!
+                        // console.log("Green Marker:", k, optLambdaIdx, peakPoints[k][optLambdaIdx]);
+                    }
+                }
+            }
+        }
+    }
+
+    // **Call this function at the end of the plot setup to ensure initial green markers**
+    updatePercSelection(0);
+    function clearAllPlots() {
+        // Remove all objects from the 3D scene
+        while (scene3D.children.length > 0) { 
+            scene3D.remove(scene3D.children[0]); 
+        }
+
+        // Remove all objects from the 2D scene
+        while (scene2D.children.length > 0) { 
+            scene2D.remove(scene2D.children[0]); 
+        }
+
+        // Remove previous WebGL renderers to avoid stacking
+        const old3DRenderer = document.querySelector("#plot-container-3d canvas");
+        if (old3DRenderer) old3DRenderer.remove();
+
+        const old2DRenderer = document.querySelector("#plot-container-2d canvas");
+        if (old2DRenderer) old2DRenderer.remove();
+
+        // Reset global variables for safety
+        selectedLine = null;
+        lambdaOptLine = null;
+        g2DLine = null;
+        peakLines = [];
+        peakPoints = [];
+    }
+
+    function updateLegend(g) {
+        const legendG = document.getElementById("legend-g");
+        if (!g || g.every(value => value === null)) {  
+            legendG.style.display = "none";  // Hide the legend if g is null
+        } else {
+            legendG.style.display = "flex";  // Show it if g exists
+        }
+    }
+
+    // Call this function after loading the dataset
+    document.getElementById("percSlider").addEventListener("input", (event) => {
+        const percValue = parseInt(event.target.value);
+        updateLambdaOptValue(percValue);
+    });
+        
+    document.getElementById("datasetSelector").addEventListener("change", (event) => {
+        const selectedDataset = event.target.value;  // Get the selected dataset filename
+        
+        const percSlider = document.getElementById("percSlider");
+        percSlider.value = 0;  // Reset slider to 0
+        clearAllPlots();
+        createPlots(selectedDataset);
+    });
+    
+    createPlots("data2/data1.json");
+
+</script>
+</body>
+</html>

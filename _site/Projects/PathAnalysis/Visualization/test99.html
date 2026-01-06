@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Report with Plotly Plots</title>
+    <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"> -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <style>
+        body, html {
+            height: 100%;
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        .dashboard-container {
+    display: grid;
+    grid-template-columns: 6.25% 46.875% 46.875%; /* Adjust percentages as needed */
+    grid-template-rows: 25% 25% 25% 25%; /* 4 equally-sized rows */
+    height: 100vh; /* Full viewport height */
+    grid-gap: 10px;
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+#Plot2 {
+    grid-column: 2 / 3; /* Spans from the 2nd to the 3rd grid columns */
+    grid-row: 1 / span 4; /* Spans all rows */
+    min-height: 120vh; /* This makes it 110% of the viewport height */
+    width: 100%;
+}
+
+.dropdown-container {
+    grid-column: 1;
+    grid-row: 1; /* Takes the full height of the grid */
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    padding-right: 10px;
+}
+
+.dropdown-container select {
+    width: 90%; /* Adjust as needed */
+    margin-bottom: 10px;
+}
+
+#Plot1_1, #Plot1_2 {
+    width: 90%;
+    height: "auto";
+}
+
+#Plot1_1 {
+    grid-column: 3;
+    grid-row: 1 / span 2; /* Takes the first two rows */
+}
+
+#Plot1_2 {
+    grid-column: 3;
+    grid-row: 3 / span 4; /* Takes the last two rows */
+}
+
+/* Media queries for responsiveness */
+@media screen and (max-width: 1200px) {
+    .dashboard-container {
+        grid-template-columns: 6.25% 46.875% 46.875%; /* Adjust column sizes */
+    }
+}
+
+@media screen and (max-width: 800px) {
+    .dashboard-container {
+        grid-template-columns: 100%; /* Stack everything vertically */
+        grid-template-rows: auto; /* Adjust row sizes */
+    }
+
+    #Plot2, #Plot1_1, #Plot1_2 {
+        grid-column: 1 / span 1; /* Each takes full width */
+        grid-row: auto; /* Adjust row sizes */
+        height: 50vh; /* Half the viewport height */
+    }
+
+    .dropdown-container {
+        grid-column: 1 / span 1;
+        grid-row: auto; /* Dropdowns on top */
+        flex-direction: row; /* Align dropdowns horizontally */
+        justify-content: space-around; /* Spread dropdowns */
+        width: 100%;
+    }
+}
+
+    </style>
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Dropdowns positioned in a small column on the left -->    
+        <script>
+            let plotData = {};
+    
+            fetch('data.json')
+                .then(response => response.json())
+                .then(data => {
+                    plotData = data;
+                    console.log('Dataset loaded successfully:', plotData);
+    
+                    // Initialize default plots
+                    document.getElementById("plotSelect").value = "dataset1";
+                    document.getElementById("plot2Select").value = "grouppath";
+                    switchPlots();  // Call your existing function
+                })
+                .catch(error => console.error('Error loading dataset:', error));
+        </script>
+
+        <div class="dropdown-container">
+            <div>
+                <label for="plotSelect" class="form-label">Dataset:</label>
+                <select id="plotSelect" class="form-select" onchange="switchPlots()">
+                    <option value="dataset1">Bone</option>
+                    <option value="dataset2">Heart</option>
+                    <option value="dataset3">HB</option>
+                    <option value="dataset4">3Peaks</option>
+                    <option value="dataset5">2Peaks</option>
+                </select>
+            </div>
+            <div>
+                <label for="plot2Select" class="form-label">Plot Mode:</label>
+                <select id="plot2Select" class="form-select" onchange="switchPlots()">
+                    <option value="grouppath">Group Path</option>
+                    <option value="individualpaths">Individual Paths</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- Plot2 takes up the majority of the grid space -->
+        <div id="Plot2"></div>
+
+        <!-- Plot1_1 (1D Alignment) and Plot1_2 (2D Alignment) split the right column -->
+        <div id="Plot1_1"></div>
+        <div id="Plot1_2"></div>
+    </div>
+
+        <script>
+            function switchPlots() {
+                const selectedDataset = document.getElementById('plotSelect').value;  // dataset1, dataset2, etc.
+                const selectedPlotMode = document.getElementById('plot2Select').value; // grouppath, individualpaths
+
+                // Update Plot2 (Path plot)
+                const plot2Data = plotData[selectedDataset].plot2[selectedPlotMode];
+
+                
+
+                Plotly.newPlot('Plot2', plot2Data.data, {...plot2Data.layout, autosize: true, height: '150%', responsive: true, useWebGL: true,
+                                                        margin: {l: 0, r: 0, t: 0, b: 0}});
+
+                // Conditionally switch between group and individual paths for the 1D and 2D Alignment plots
+                if (selectedPlotMode === 'grouppath') {
+                    // For group paths, use 'Angle' and 'Curve'
+                    const plot1_1_Data = plotData[selectedDataset].plot1['Angle'];
+                    
+                    Plotly.newPlot('Plot1_1', plot1_1_Data.data, {... plot1_1_Data.layout, autosize: true, responsive: true, useWebGL: true}).then(function() {                  
+                        syncCamerasWithinPlot('Plot1_1', 'scene', ['scene2', 'scene3']);
+                    });
+
+                    const plot1_2_Data = plotData[selectedDataset].plot1['Curve'];
+                    Plotly.newPlot('Plot1_2', plot1_2_Data.data, {... plot1_2_Data.layout, autosize: true, responsive: true, useWebGL: true}).then(function() {                  
+                        syncCamerasWithinPlot('Plot1_2', 'scene', ['scene2', 'scene3']);
+                    });
+
+                } else if (selectedPlotMode === 'individualpaths') {
+                
+                    const plot1_1_Data = plotData[selectedDataset].plot1['Angle_indv'];
+                    const plot1_2_Data = plotData[selectedDataset].plot1['Curve_indv'];
+
+                    var totalTraces = plot2Data.data.length - 1;
+                    var kk3 = totalTraces / 7;
+                    var Plot1_1Div = document.getElementById('Plot1_1');
+
+                    Plotly.newPlot('Plot1_1', plot1_1_Data.data, {... plot1_1_Data.layout, autosize: true, responsive: true, useWebGL: true}).then(function() {                  
+                        syncCamerasWithinPlot('Plot1_1', 'scene', ['scene2', 'scene3']);
+                    });
+                    Plotly.newPlot('Plot1_2', plot1_2_Data.data, {... plot1_2_Data.layout, autosize: true, responsive: true, useWebGL: true}).then(function() {                  
+                        syncCamerasWithinPlot('Plot1_2', 'scene', ['scene2', 'scene3']);
+                    });
+                    // const plot1_2_Data = plotData[selectedDataset].plot1['Curve'];
+                    // Plotly.newPlot('Plot1_2', plot1_2_Data.data, plot1_2_Data.layout).then(function() {                  
+                    //     syncCamerasWithinPlot('Plot1_2', 'scene', ['scene2', 'scene3']);
+                    // });
+
+                    updatePlot1BasedOnVisiblePoints('Plot1_1',plot2Data, plot1_1_Data, kk3);
+                    updatePlot1BasedOnVisiblePoints('Plot1_2',plot2Data, plot1_2_Data, kk3);
+
+
+                    // Track which traces are "frozen" (i.e., clicked and thicker)
+                    var frozenTraces = new Set();
+
+                    var Plot2Div = document.getElementById('Plot2');
+
+                    Plot2Div.on('plotly_click', function(data) {
+                        if (data && data.points && data.points.length > 0) {
+                            var traceIndex = data.points[0].curveNumber;
+                            var correspondingIndex = recalculateTraceIndex(traceIndex, kk3);
+
+                            // Toggle between freezing and unfreezing the line
+                            if (!frozenTraces.has(correspondingIndex)) {
+                                // Freeze the line by increasing the thickness and adding to the frozen set
+                                frozenTraces.add(correspondingIndex);
+                                Plotly.restyle('Plot1_1', {
+                                    'line.width': 8  // Freeze the line thickness when clicked
+                                }, correspondingIndex);
+                                Plotly.restyle('Plot1_2', {
+                                    'line.width': 8  // Freeze the line thickness when clicked
+                                }, correspondingIndex);
+                            } else {
+                                // Unfreeze the line by resetting the thickness and removing from the frozen set
+                                frozenTraces.delete(correspondingIndex);
+                                Plotly.restyle('Plot1_1', {
+                                    'line.width': 3  // Reset to default thickness when clicked again
+                                }, correspondingIndex);
+                                Plotly.restyle('Plot1_2', {
+                                    'line.width': 3  // Reset to default thickness when clicked again
+                                }, correspondingIndex);
+                            }
+                        }
+                    });
+
+
+                    // Store the indices of added traces to remove them on unhover
+                    var addedTraceIndex = [];
+
+                    Plot2Div.on('plotly_hover', function (data) {
+                        // Dynamically check the visibility status of traces in Plot2
+                        var plot2Traces = plot2Data.data;  // Assuming plot2Data contains the current state of Plot2
+
+                        // If there was a previous trace, remove it
+                        if (Array.isArray(addedTraceIndex) && addedTraceIndex.length > 0) {
+                            Plotly.deleteTraces('Plot1_1', addedTraceIndex[0]);
+                            // Plotly.deleteTraces('Plot1_2', addedTraceIndex[1]);
+                            addedTraceIndex = []; // Reset the array
+                        }
+
+                        // Extract trace index and subindex
+                        if (data && data.points && data.points.length > 0) {
+                            var traceIndex = data.points[0].curveNumber;
+
+                            // Dynamically check if the trace is visible
+                            var traceVisibility = plot2Traces[traceIndex].visible;
+                            // console.log("Trace visibility for traceIndex " + traceIndex + ": ", traceVisibility);
+
+                            // Proceed only if the trace is visible (either true or undefined for visible)
+                            if (traceVisibility === true || traceVisibility === undefined) {
+                                // console.log("Hover event triggered on a visible trace.");
+
+                                // Check if traceIndex is within the desired range
+                                if (traceIndex <= (7 * kk3) && traceIndex >= (6 * kk3) + 1) {
+                                    var pointSubindex = data.points[0].pointNumber;
+
+                                    // Recalculate the trace index in Plot1_1
+                                    var plot1TraceIndex = traceIndex - (kk3 * 3);
+                                    // Generate the line data
+                                    var highlightLineX1 = generateLineX1(plot1_1_Data, plot1TraceIndex);
+                                    var highlightLineY1 = generateLineY(plot1_1_Data, plot1TraceIndex, pointSubindex);
+                                    // var highlightLineX2 = generateLineX2(plot1_2_Data, plot1TraceIndex, pointSubindex);
+                                    // var highlightLineY2 = generateLineY(plot1_2_Data, plot1TraceIndex, pointSubindex);
+                                    // console.log("highlightLineX1",highlightLineX1)
+                                    // Add the new trace (line) to Plot1_1
+                                    Plotly.addTraces('Plot1_1', {
+                                        x: highlightLineX1,
+                                        y: highlightLineY1,
+                                        type: 'scatter',
+                                        mode: 'lines',
+                                        line: {
+                                            color: 'black',
+                                            width: 4
+                                        },
+                                        showlegend: false // Ensure it doesn't add to the legend
+                                    }).then(function (gd1) {
+                                        // Store the index of the added trace
+                                        addedTraceIndex[0] = gd1.data.length - 1;
+                                    });
+
+                                    // Add the new trace (line) to Plot1_1
+                                    // Plotly.addTraces('Plot1_2', {
+                                    //     x: highlightLineX2,
+                                    //     y: highlightLineY2,
+                                    //     type: 'scatter',
+                                    //     mode: 'lines',
+                                    //     line: {
+                                    //         color: 'black',
+                                    //         width: 4
+                                    //     },
+                                    //     showlegend: false // Ensure it doesn't add to the legend
+                                    // }).then(function (gd2) {
+                                    //     // Store the index of the added trace
+                                    //     addedTraceIndex[1] = gd2.data.length - 1;
+                                    // });
+                                }
+                            } 
+                        } else {
+                            console.error("No valid hover data found");
+                        }
+                    });
+
+
+                    // Remove the added traces on unhover
+                    Plot2Div.on('plotly_unhover', function () {
+                        // Ensure addedTraceIndex is an array and has elements to delete
+                        if (Array.isArray(addedTraceIndex) && addedTraceIndex.length > 0) {
+                            if (addedTraceIndex[0] !== null) {
+                                // Remove the previously added traces from Plot1_1
+                                Plotly.deleteTraces('Plot1_1', addedTraceIndex[0]);
+                            }
+                            // if (addedTraceIndex[1] !== null) {
+                                // Remove the previously added traces from Plot1_2
+                                // Plotly.deleteTraces('Plot1_2', addedTraceIndex[1]);
+                            // }
+                            addedTraceIndex = []; // Reset the array
+                        }
+                    });
+
+                    // Listen for visibility changes (triggered when clicking the legend)
+                    Plot2Div.on('plotly_restyle', function(eventData) {
+                        // Check for the updated visibility of traces in Plot2
+                        const visiblePointsIndices = getVisiblePointsIndicesInPlot2(plot2Data);
+
+                        // Update the visibility of the corresponding traces in Plot1_1
+                        updatePlot1BasedOnVisiblePoints('Plot1_1',plot2Data, plot1_1_Data, kk3);
+                        updatePlot1BasedOnVisiblePoints('Plot1_2',plot2Data, plot1_2_Data, kk3);
+                        // Recalculate the traceIndex based on visibility changes
+                        if (visiblePointsIndices && visiblePointsIndices.length > 0) {
+                            visiblePointsIndices.forEach(function(index) {
+                                // Recalculate index for Plot1_1 for each visible trace
+                                var plot1TraceIndex = index - (3 * kk3);
+
+                                // Show or hide traces based on Plot2 visibility
+                                Plotly.restyle('Plot1_1', {'visible': true}, plot1TraceIndex);
+                                Plotly.restyle('Plot1_2', {'visible': true}, plot1TraceIndex);
+                            });
+                        }
+                    });
+
+
+
+                }
+
+                // Call this after plots are updated
+                adjustPlotSize();
+            }
+
+            function generateLineX1(dataset, traceIndex, subIndex) {
+                xValues = dataset.data[traceIndex].x;
+                return xValues;
+            }
+
+
+            function generateLineX2(dataset, traceIndex, subIndex) {
+                // Check if traceIndex is valid
+                if (traceIndex < 0 || traceIndex >= dataset.data.length) {
+                    console.error("Invalid traceIndex:", traceIndex);
+                    return null;
+                }
+
+                xValues = dataset.data[traceIndex].x;
+                // console.log("dataset: ", dataset);
+
+                // Ensure yValues is an array and contains the correct data
+                if (!Array.isArray(xValues)) {
+                    console.error("xValues is not an array for traceIndex:", traceIndex);
+                    return null;
+                }
+
+                // Check if subIndex is within bounds of yValues array
+                if (subIndex < 0 || subIndex >= xValues.length) {
+                    // console.error("Invalid subIndex:", subIndex);
+                    return null;
+                }
+
+                // Access the full array at the subIndex (if that's the goal) or just the specific value
+                var xValue = xValues[subIndex];
+                // console.log("xValue: ", xValue);
+
+                // console.log("Generated Y value at traceIndex", traceIndex, "and subIndex", subIndex, ":", yValue);
+                return xValue;
+            }
+            
+            function generateLineY(dataset, traceIndex, subIndex) {
+                // Check if traceIndex is valid
+                if (traceIndex < 0 || traceIndex >= dataset.data.length) {
+                    console.error("Invalid traceIndex:", traceIndex);
+                    return null;
+                }
+                // console.log("dataset: ", dataset);
+
+                yValues = dataset.data[traceIndex].y;
+
+                // Ensure yValues is an array and contains the correct data
+                if (!Array.isArray(yValues)) {
+                    console.error("yValues is not an array for traceIndex:", traceIndex);
+                    return null;
+                }
+
+                // Check if subIndex is within bounds of yValues array
+                if (subIndex < 0 || subIndex >= yValues.length) {
+                    // console.error("Invalid subIndex:", subIndex);
+                    return null;
+                }
+
+                // Access the full array at the subIndex (if that's the goal) or just the specific value
+                var yValue = yValues[subIndex];
+
+                // console.log("Generated Y value at traceIndex", traceIndex, "and subIndex", subIndex, ":", yValue);
+                return yValue;
+            }
+            // Step 1: Get visible points in Plot2
+            function getVisiblePointsIndicesInPlot2(plot2Data) {
+                // First .map: Extract index and visibility
+                const mappedTraces = plot2Data.data.map((trace, index) => {
+                    const traceInfo = { index, visible: trace.visible };
+                    // console.log(`Mapped Trace ${index}: visible = ${trace.visible}`);
+                    return traceInfo;
+                });
+
+                // Log after first .map()
+                // console.log('After first .map:', mappedTraces);
+
+                // .filter: Filter only traces with visible: true
+                const filteredTraces = mappedTraces.filter(trace => {
+                    const isVisible = trace.visible === true;
+                    // console.log(`Filtering Trace ${trace.index}: isVisible = ${isVisible}`);
+                    return isVisible;
+                });
+
+                // Log after .filter()
+                // console.log('After .filter:', filteredTraces);
+
+                // Second .map: Extract only the indices of the visible traces
+                const visibleTraces = filteredTraces.map(trace => {
+                    // console.log(`Extracting index: ${trace.index}`);
+                    return trace.index;
+                });
+
+                // Log after second .map()
+                // console.log('After second .map (visible traces):', visibleTraces);
+                // Return the indices of the visible traces
+                return visibleTraces;
+            }
+
+            // Step 2: Map visible points to Plot1_1
+            function mapVisiblePointsToPlot1(visiblePointsIndices, plot2Data, plot1_1_Data, kk3) {
+                var mappedPointsInPlot1 = visiblePointsIndices.map(index => {
+                    // Recalculate index to map to Plot1_1
+                    var plot1_1_Index = recalculateTraceIndex(index, kk3);
+                    return plot1_1_Index;
+                });
+                var uniqueMappedPointsInPlot1 = Array.from(new Set(mappedPointsInPlot1));
+                // console.log('Unique mapped points indices for Plot2:', uniqueMappedPointsInPlot1);
+                return uniqueMappedPointsInPlot1;
+            }
+
+            function plotCorrespondingPointsInPlot(plotId, plotData, mappedPointsInPlot) {
+                // console.log(`${plotId} data:`, plotData);
+                console.log("plotData:", plotData);
+                if (!plotData || !plotData.data) {
+                    console.error(`Invalid plotData provided for ${plotId}.`);
+                    return;
+                }
+
+                console.log("plotData.data:", plotData.data);
+                // Initialize visibility array to set all traces to 'false' by default
+                var update = { visible: plotData.data.map(() => false) }; // Set all to false by default
+
+                // Set the mapped points to 'true'
+                mappedPointsInPlot.forEach((plotIndex, idx) => {
+                    if (plotIndex >= 0 && plotIndex < update.visible.length) {
+                        update.visible[plotIndex] = true; // Set the corresponding index to 'true' (visible)
+                        // console.log(`Setting index ${plotIndex} to visible (true) in ${plotId}.`); // Log which index is being updated
+                    } else {
+                        console.error(`Invalid index ${plotIndex} in ${plotId}. It is out of bounds.`);
+                    }
+                });
+
+                // Log the visibility array to verify the update
+                // console.log(`Updated visibility array for ${plotId}:`, update.visible);
+
+                // Apply the visibility update to the given plot (plotId)
+                Plotly.restyle(plotId, update)
+            }
+
+
+
+            // Integrating everything
+            function updatePlot1BasedOnVisiblePoints(plotId, plot2Data, plot1Data, kk3) {
+                // Step 1: Get visible points in Plot2
+                var visiblePointsIndices = getVisiblePointsIndicesInPlot2(plot2Data);
+
+                // Step 2: Map visible points to Plot1_1
+                var mappedPointsInPlot = mapVisiblePointsToPlot1(visiblePointsIndices, plot2Data, plot1Data, kk3);
+                // console.log('Mapped points indices for Plot1_1:', mappedPointsInPlot1);
+
+                // Step 3: Plot the corresponding points in Plot1_1 with matching colors
+                plotCorrespondingPointsInPlot(plotId, plot1Data, mappedPointsInPlot);
+            }
+
+            function generateCurve(selectedDataset, traceIndex) {
+                // Assuming angle_indv data is stored in plotData[selectedDataset].plot1['Angle_indv']
+                const angleIndvData = plotData[selectedDataset].plot1['Angle_indv'];
+                // console.log('angleIndvData:', angleIndvData);
+
+                // Retrieve the correct trace from angle_indv using traceIndex
+                const traceData = angleIndvData.data[traceIndex];
+                // console.log(traceData);
+
+                // Return the trace data to be used in Plot1_1
+                return {
+                    x: traceData.x,  // Assuming the x-values are stored in the trace
+                    y: traceData.y,  // Assuming the y-values are stored in the trace
+                    mode: 'lines',
+                    type: 'scatter',
+                    name: `Curve for Trace ${traceIndex}`
+                };
+            }
+
+
+            function recalculateTraceIndex(traceIndex, kk3) {
+                if (traceIndex <= (3 * kk3) - 1 && traceIndex >= 2 * kk3) {
+                    // End markers in Plot2 correspond to end markers in Plot1_1
+                    return traceIndex - (2 * kk3) + 1;
+
+                } else if (traceIndex <= (4 * kk3) - 1 && traceIndex >= 3 * kk3) {
+                    // Start markers in Plot2 correspond to start markers in Plot1_1
+                    return traceIndex - (2 * kk3) + 1;
+                } else if (traceIndex <= (5 * kk3) - 1 && traceIndex >= 4 * kk3) {
+                    // Green markers (estimation) in Plot2 correspond to est markers in Plot1_1
+                    return traceIndex - (2 * kk3) + 1;
+                } else
+                // Default to 0 if it doesn't match any valid range
+                return 0;
+            }
+
+            function adjustPlotSize() {
+                const plot1_1_Div = document.getElementById('Plot1_1');
+                const plot1_2_Div = document.getElementById('Plot1_2');
+                const plot2Div = document.getElementById('Plot2');
+
+                // Set the height to a percentage of the window's height
+                plot1_1_Div.style.height = window.innerHeight * 0.5 + 'px';
+                plot1_2_Div.style.height = window.innerHeight * 0.5 + 'px';
+                plot2Div.style.height = window.innerHeight * 0.5 + 'px';
+
+                Plotly.Plots.resize('Plot1_1');
+                Plotly.Plots.resize('Plot1_2');
+                Plotly.Plots.resize('Plot2');
+            }
+
+
+            function syncCamerasWithinPlot(plotId, sourceSceneId, targetSceneIds) {
+                var plot = document.getElementById(plotId);
+
+                // Listen for camera changes in the source scene (scene1)
+                // plot.on('plotly_relayout', function(eventData) {
+                const debouncedSyncCameras = debounce(function(eventData) {
+
+                        if (eventData[sourceSceneId + '.camera']) {
+                        // Get the new camera settings from the source scene
+                        const newCamera = eventData[sourceSceneId + '.camera'];
+                            // Prepare the relayout update for the target scenes
+                        const relayoutUpdate = {};
+                        targetSceneIds.forEach(sceneId => {
+                            relayoutUpdate[sceneId + '.camera'] = newCamera;
+                        });
+                            // Apply the new camera settings to the target scenes
+                        Plotly.relayout(plot, relayoutUpdate);
+                    }
+                }, 1);
+                // Listen for camera changes in the source scene (scene1)
+                plot.on('plotly_relayout', function(eventData) {
+                    debouncedSyncCameras(eventData); // Call the debounced version
+                });
+            }
+
+            
+
+            // Event Listener for click on Plot2 to "freeze" the function in Plot1_1
+            document.getElementById('Plot2').addEventListener('plotly_click', function(data) {
+                var pointIndex = data.points[0].pointIndex;  // Get the clicked point's index
+                var traceIndex = data.points[0].curveNumber; // Get the trace index
+                
+
+                // Make sure the clicked function stays visible
+                var update = {'visible': true};
+
+                // Make sure the function in Plot1_1 remains visible
+                Plotly.restyle('Plot1_1', update, [traceIndex]);
+            });
+
+            // Event Listener for clicking legend items in Plot2
+            document.getElementById('Plot2').addEventListener('plotly_legendclick', function(data) {
+                var traceIndex = data.curveNumber;
+
+                // Toggle visibility of the corresponding function in Plot1_1
+                var currentVisibility = angleIndvData[traceIndex].visible;
+
+                // Toggle visibility
+                var update = {'visible': !currentVisibility};
+                Plotly.restyle('Plot1_1', update, [traceIndex]);
+
+                return false;  // Prevent default legend click behavior
+            });
+
+
+            // Call this function on window resize
+            window.onresize = adjustPlotSize;
+
+            // Adjust size and sync cameras when the page loads
+            window.onload = function() {
+                // Start loading immediately
+                console.log("Page loaded, starting to adjust plots.");
+
+                document.getElementById("plotSelect").value = "dataset1"; // Replace with your desired value
+                document.getElementById("plot2Select").value = "individualpaths"; // Replace with your desired value
+
+                // Adjust plot sizes immediately
+                adjustPlotSize();
+
+                // Defer switching the plots and syncing cameras slightly
+                setTimeout(() => {
+                    console.log("Switching plots...");
+                    switchPlots();  // Switch the plots to load the default dataset
+
+                    // Sync cameras after switching plots
+                    console.log("Syncing cameras...");
+                    syncCamerasWithinPlot('Plot1_1', 'scene', ['scene2', 'scene3']);
+                    syncCamerasWithinPlot('Plot1_2', 'scene', ['scene2', 'scene3']);
+                }, 50);  // Delay switching the plots and syncing cameras by 50ms
+            }
+
+            // Debounce function to delay execution
+            function debounce(func, wait) {
+                let timeout;
+                return function(...args) {
+                    const context = this;
+                    clearTimeout(timeout);
+                    timeout = setTimeout(() => func.apply(context, args), wait);
+                };
+            }
+
+        </script>
+
+    </div>
+    <script type="text/javascript">MathJax.Hub.Queue(["Typeset", MathJax.Hub]);</script>
+
+
+</body>
+</html>

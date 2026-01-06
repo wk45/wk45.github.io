@@ -1,0 +1,23 @@
+/* styles.css */
+.reveal .toc {
+  max-height: 300px; /* Adjust the height as needed */
+  overflow-y: auto;
+}
+
+.reveal .slides {
+  margin: 0;
+  padding: 0;
+}
+.scrollable {
+    bottom: 0px;
+    overflow-y: auto !important; /* Allow vertical scrolling */
+    overflow-x: hidden !important; /* Disable horizontal scrolling */
+
+    /* Hide scrollbars in all major browsers */
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* Internet Explorer and Edge */
+}
+
+.scrollable::-webkit-scrollbar {
+    display: none; /* Hides the scrollbar in Chrome, Safari, and Edge */
+}

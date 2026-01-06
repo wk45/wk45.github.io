@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Compact Horizontal Dashboard</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.6.0/p5.min.js"></script>
+    <style>
+      body {
+        margin: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        background-color: transparent !important;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        color: #333;
+        padding: 20px 0;
+      }
+      
+      /* Main Card Container - Fixed to 500px as requested */
+      .card {
+        width: 500px;
+        background: none;
+        border-radius: 12px;
+        box-shadow: none;
+        border: none;
+        overflow: hidden; 
+        display: flex;
+        flex-direction: column;
+      }
+
+      /* Canvas Wrapper */
+      #canvas-wrapper {
+        width: 100%;
+        display: block;
+        /* Background color for the canvas area */
+        background: white; 
+      }
+
+      /* Controls Area */
+      .ui-panel {
+        padding: 15px 20px;
+        background: transparent;
+        border-top: 1px solid #f5f5f5;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      .slider-container {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+      }
+
+      input[type=range] {
+        width: 100%;
+        cursor: pointer;
+        accent-color: #333;
+        margin: 0;
+        display: block;
+      }
+
+      .slider-labels {
+        display: flex;
+        justify-content: space-between;
+        font-size: 0.75rem;
+        color: #999;
+        font-family: monospace;
+      }
+      
+      .legend { 
+        display: flex; 
+        justify-content: center; 
+        gap: 15px; 
+        font-size: 0.75rem; 
+        color: #666; 
+        padding-top: 10px;
+        border-top: 1px dashed #eee;
+      }
+      .legend-item { display: flex; align-items: center; gap: 4px; }
+      .dot { width: 8px; height: 8px; border-radius: 50%; }
+      .dash-icon { border-bottom: 2px dashed #aaa; width: 12px; height: 1px; display: inline-block; }
+
+    </style>
+  </head>
+  <body>
+    <div style="text-align: center; margin-bottom: 10px; font-family: sans-serif; font-size: 14px; color: #666;">
+    <span style="color:rgb(126, 127, 255);"><i>(Drag the slider to see how persistent homology changes.)</i></span>
+</div>
+    <div class="card">
+      <div id="canvas-wrapper"></div>
+      
+      <div class="ui-panel">
+        <div class="slider-container">
+          <input type="range" id="epsSlider" min="0" max="1000" value="0">
+          <div class="slider-labels">
+            <span>0</span>
+            <span style="color:#333; font-weight:600;">Filtration Radius (ε)</span>
+            <span id="maxLabel">Max</span>
+          </div>
+        </div>
+
+        <div class="legend">
+          <div class="legend-item"><span class="dot" style="background:#4E79A7;"></span> H₀</div>
+          <div class="legend-item"><span class="dot" style="background:#E15759;"></span> H₁ Loop</div>
+          <div class="legend-item"><span class="dash-icon"></span> Future</div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // --- Layout Configuration for 500px Width ---
+      // Total Width = 500px
+      // Left Margin: 15px
+      // Scatter Width: 240px
+      // Gap: 20px
+      // Barcode Width: 210px
+      // Right Margin: 15px
+      // Total = 15 + 240 + 20 + 210 + 15 = 500
+      
+      const margin = 15;
+      const colGap = 20;     
+      const rowGap = 20;     // Gap between H0 and H1 vertical
+      
+      const scatterSize = 240; 
+      const barcodeW = 210;    
+      
+      // Calculate barcode height
+      const barcodeH = (scatterSize - rowGap) / 2; 
+
+      const totalW = margin + scatterSize + colGap + barcodeW + margin;
+      const totalH = margin + scatterSize + margin;
+
+      const cBlue = '#4E79A7';
+      const cRed = '#E15759';
+      
+      let points = [];
+      let simplices = [];
+      let intervalsH0 = [];
+      let intervalsH1 = [];
+      
+      let axisMax = 0; 
+      let slider, maxLabel;
+
+      function setup() {
+        let c = createCanvas(totalW, totalH);
+        c.parent('canvas-wrapper');
+        
+        slider = document.getElementById('epsSlider');
+        maxLabel = document.getElementById('maxLabel');
+
+        initData();
+      }
+
+      function initData() {
+        points = [];
+        // 1. Large Circle
+        createJitteredCircle(0.35, 0.65, 0.25, 8); 
+        // 2. Small Circle
+        createJitteredCircle(0.75, 0.25, 0.12, 5);
+        
+        computePersistentHomology();
+        
+        // Axis Scaling
+        let lastDeath = 0;
+        for(let iv of intervalsH1) if(iv.death !== Infinity && iv.death > lastDeath) lastDeath = iv.death;
+        for(let iv of intervalsH0) if(iv.death !== Infinity && iv.death > lastDeath) lastDeath = iv.death;
+        
+        axisMax = (lastDeath > 0) ? lastDeath * 1.15 : 0.5;
+        maxLabel.innerText = axisMax.toFixed(2);
+      }
+      
+      function createJitteredCircle(cx, cy, r, count) {
+          for (let i = 0; i < count; i++) {
+            let angle = (TWO_PI / count) * i;
+            let jx = random(-0.015, 0.015);
+            let jy = random(-0.015, 0.015);
+            points.push({
+              x: constrain(cx + r * cos(angle) + jx, 0.05, 0.95),
+              y: constrain(cy + r * sin(angle) + jy, 0.05, 0.95),
+              id: points.length
+            });
+          }
+      }
+
+      function draw() {
+        background(255);
+        
+        let sliderNorm = slider.value / 1000;
+        let currentEps = sliderNorm * axisMax;
+        
+        // --- 1. Left Column: Scatter Plot ---
+        push();
+        translate(margin, margin);
+        drawGeometry(currentEps, scatterSize);
+        pop();
+
+        // --- 2. Right Column: H0 Barcode (Top Row) ---
+        push();
+        translate(margin + scatterSize + colGap, margin);
+        drawBarcode(intervalsH0, currentEps, "H₀ Components", cBlue, barcodeW, barcodeH);
+        pop();
+
+        // --- 3. Right Column: H1 Barcode (Bottom Row) ---
+        push();
+        // Translate down by H0 height + gap
+        translate(margin + scatterSize + colGap, margin + barcodeH + rowGap);
+        drawBarcode(intervalsH1, currentEps, "H₁ Loops", cRed, barcodeW, barcodeH);
+        pop();
+      }
+
+      function drawGeometry(eps, size) {
+        // Frame
+        stroke(230); noFill(); rect(0,0,size,size);
+        
+        // Grid
+        stroke(245);
+        for(let i=1; i<5; i++) {
+            let p = i*size/5; 
+            line(p,0,p,size); line(0,p,size,p);
+        }
+
+        // Triangles
+        noStroke(); fill(225, 87, 89, 40); 
+        for(let s of simplices) {
+            if(s.dim === 2 && eps >= s.val) drawTriangle(s, size);
+        }
+
+        // Edges
+        stroke(180); strokeWeight(1);
+        for(let s of simplices) {
+            if(s.dim === 1 && eps >= s.val) {
+                let p1 = points[s.verts[0]];
+                let p2 = points[s.verts[1]];
+                line(p1.x*size, p1.y*size, p2.x*size, p2.y*size);
+            }
+        }
+
+        // Balls & Points
+        for(let p of points) {
+            let px = p.x * size;
+            let py = p.y * size;
+            noStroke(); fill(0,0,0, 8); circle(px, py, eps*size*2);
+            fill(50); noStroke(); circle(px, py, 4);
+        }
+
+        // H1 Highlight
+        for(let iv of intervalsH1) {
+            if (eps >= iv.death && eps < iv.death + 0.05) {
+                let killer = simplices.find(s => s.dim === 2 && Math.abs(s.val - iv.death) < 0.0001);
+                if (killer) {
+                    fill(225, 87, 89, 200); noStroke();
+                    drawTriangle(killer, size);
+                }
+            } else if (eps >= iv.birth && eps < iv.death) {
+                highlightCycle(iv, eps, size);
+            }
+        }
+      }
+
+      function drawTriangle(s, size) {
+          let p0 = points[s.verts[0]];
+          let p1 = points[s.verts[1]];
+          let p2 = points[s.verts[2]];
+          triangle(p0.x*size, p0.y*size, p1.x*size, p1.y*size, p2.x*size, p2.y*size);
+      }
+
+      function highlightCycle(interval, eps, size) {
+          let u = interval.generatorEdge[0];
+          let v = interval.generatorEdge[1];
+          let path = bfsPath(u, v, interval.birth);
+          if(path) {
+              stroke(cRed); strokeWeight(2.5); noFill();
+              beginShape();
+              vertex(points[u].x*size, points[u].y*size);
+              for(let idx of path) vertex(points[idx].x*size, points[idx].y*size);
+              endShape(CLOSE);
+          }
+      }
+
+      function drawBarcode(intervals, currentEps, label, col, w, h) {
+        // Frame
+        stroke(230); noFill(); rect(0,0,w,h);
+        
+        // Label
+        noStroke(); fill(80); textAlign(LEFT, TOP); textStyle(BOLD); textSize(10); 
+        text(label, 5, 4); textStyle(NORMAL);
+        
+        if(intervals.length === 0) {
+            textAlign(CENTER); fill(150); text("No features", w/2, h/2); return;
+        }
+
+        let rowH = (h - 20) / (intervals.length + 0.5);
+        
+        for(let i=0; i<intervals.length; i++) {
+            let iv = intervals[i];
+            let y = 20 + i*rowH + rowH/2;
+            
+            let startX = map(iv.birth, 0, axisMax, 0, w);
+            let deathVal = (iv.death === Infinity) ? axisMax : iv.death;
+            let endX = map(deathVal, 0, axisMax, 0, w);
+            endX = Math.min(endX, w); 
+
+            // 1. Ghost Line
+            stroke(220); strokeWeight(1);
+            drawingContext.setLineDash([2, 2]);
+            line(startX, y, endX, y);
+            drawingContext.setLineDash([]);
+            
+            // 2. Active Line
+            let isBorn = currentEps >= iv.birth;
+            if(isBorn) {
+                let visEnd = Math.min(currentEps, deathVal);
+                visEnd = Math.min(visEnd, axisMax);
+                let drawEndPixel = map(visEnd, 0, axisMax, 0, w);
+                
+                let isDead = currentEps >= iv.death;
+                if (isDead) {
+                    stroke(180); strokeWeight(2); 
+                    line(startX, y, endX, y); 
+                    noStroke(); fill(180); circle(startX, y, 2); circle(endX, y, 2);
+                } else {
+                    stroke(col); strokeWeight(4);
+                    line(startX, y, drawEndPixel, y);
+                    noStroke(); fill(col); circle(startX, y, 3);
+                }
+            }
+        }
+        
+        // Scanner line
+        let scanX = map(currentEps, 0, axisMax, 0, w);
+        if(scanX <= w) {
+            stroke(0, 80); strokeWeight(1);
+            line(scanX, 0, scanX, h);
+        }
+      }
+
+      // --- Math Helpers ---
+      function distSq(p1, p2) { return (p1.x-p2.x)**2 + (p1.y-p2.y)**2; }
+      function getDist(i, j) { return Math.sqrt(distSq(points[i], points[j])); }
+
+      function computePersistentHomology() {
+        simplices = [];
+        let N = points.length;
+        
+        for(let i=0; i<N; i++) simplices.push({ dim:0, val:0, verts:[i] });
+        for(let i=0; i<N; i++) {
+            for(let j=i+1; j<N; j++) simplices.push({ dim:1, val: getDist(i,j)/2, verts:[i,j] });
+        }
+        for(let i=0; i<N; i++) {
+            for(let j=i+1; j<N; j++) {
+                for(let k=j+1; k<N; k++) {
+                    let d = Math.max(getDist(i,j), getDist(j,k), getDist(i,k))/2;
+                    simplices.push({ dim:2, val: d, verts:[i,j,k] });
+                }
+            }
+        }
+        
+        simplices.sort((a,b) => (Math.abs(a.val - b.val) > 1e-6) ? a.val - b.val : a.dim - b.dim);
+        
+        let simplexMap = new Map();
+        simplices.forEach((s, idx) => { s.id = idx; simplexMap.set(s.verts.slice().sort((a,b)=>a-b).join(','), idx); });
+        
+        let low = new Array(simplices.length).fill(-1);
+        let pivot = new Map();
+        let reducedCols = [];
+
+        for(let j=0; j<simplices.length; j++) {
+            let s = simplices[j];
+            let col = new Set();
+            if (s.dim > 0) {
+                let faces = getFaces(s);
+                for(let f of faces) {
+                    let key = f.sort((a,b)=>a-b).join(',');
+                    if(simplexMap.has(key)) col.add(simplexMap.get(key));
+                }
+            }
+            while(col.size > 0) {
+                let maxRow = -1; for(let r of col) if(r > maxRow) maxRow = r;
+                if (pivot.has(maxRow)) {
+                    let k = pivot.get(maxRow);
+                    for(let r of reducedCols[k]) { if(col.has(r)) col.delete(r); else col.add(r); }
+                } else {
+                    low[j] = maxRow; pivot.set(maxRow, j); break;
+                }
+            }
+            reducedCols.push(col);
+        }
+
+        intervalsH0 = []; intervalsH1 = [];
+        for(let i=0; i<simplices.length; i++) {
+            let s = simplices[i];
+            if (s.dim === 0) {
+                let death = pivot.has(i) ? simplices[pivot.get(i)].val : Infinity;
+                intervalsH0.push({ birth: 0, death: death });
+            } else if (s.dim === 1) {
+                if (low[i] === -1) {
+                    let death = pivot.has(i) ? simplices[pivot.get(i)].val : Infinity;
+                    if (death > s.val + 0.0001) intervalsH1.push({ birth: s.val, death: death, generatorEdge: s.verts });
+                }
+            }
+        }
+        intervalsH0.sort((a,b) => b.death - a.death);
+        intervalsH1.sort((a,b) => b.death - a.death);
+      }
+
+      function getFaces(s) {
+          let v = s.verts;
+          if (s.dim === 1) return [[v[0]], [v[1]]];
+          if (s.dim === 2) return [[v[0],v[1]], [v[1],v[2]], [v[0],v[2]]];
+          return [];
+      }
+
+      function bfsPath(start, end, maxVal) {
+          let q = [start];
+          let parent = new Map(); parent.set(start, -1);
+          let visited = new Set([start]);
+          while(q.length > 0) {
+              let curr = q.shift();
+              if (curr === end) break;
+              for(let s of simplices) {
+                  if (s.dim === 1 && s.val < maxVal) { 
+                      let n = -1;
+                      if (s.verts[0] === curr) n = s.verts[1];
+                      else if (s.verts[1] === curr) n = s.verts[0];
+                      if (n !== -1 && !visited.has(n)) { visited.add(n); parent.set(n, curr); q.push(n); }
+                  }
+              }
+          }
+          if (!parent.has(end)) return null;
+          let path = []; let curr = end;
+          while(curr !== -1) { path.push(curr); curr = parent.get(curr); }
+          return path;
+      }
+    </script>
+  </body>
+</html>

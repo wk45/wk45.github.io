@@ -1,0 +1,1042 @@
+## Acknowledgement
+
+- I am deeply grateful to **Dr. Anuj Srivastava** for his guidance throughout this research.
+- Special thanks to **Dr. Sutanoy Dasgupta**, the co-author, for the research ideas and valuable assistance.
+- I deeply appreciate **Dr. Eric Klassen** and **Dr. Xiulin Xie** for their support and willingness to serve as my committee members.
+- I am sincerely thankful to my major advisor, **Dr. Wei Wu**, for his unwavering support, warm understanding, and encouragement in shaping my work and future path.
+
+**Thank you all for your support!**
+
+<style>
+.reveal .slide .katex {
+  font-size: 1em;
+}
+.hh2{
+  font-size: 2.5rem !important;
+  color: #3333b3;
+  padding-top: 0.1em;
+  padding-bottom: 0.1em;
+  margin-bottom: 3rem !important;
+}
+.middle-content {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  height: 100%;
+  padding-left: 1em;
+}
+
+.middle-content2 {
+  /* display: flex; */
+  justify-content: center;
+  flex-direction: column;
+  height: 100%;
+  padding-left: 1em;
+}
+
+.custom-block {
+  border-radius: 16px;
+  box-shadow: 4px 4px 16px rgba(0, 0, 0, 0.25);
+  overflow: hidden;
+  margin: 1.5em 0;
+  line-height: 1.4;
+}
+
+.custom-block-header {
+  background-color: #2a2a94; /* deep blue */
+  color: white;
+  padding: 0em 0.5em;
+  font-size: 120%;
+}
+
+.custom-block-body {
+  padding: 0.5em 1em;
+  background-color: #f1f1f9;
+  color: #000;
+}
+</style>
+
+## Motivation
+<div class="middle-content">
+  - **Two sources of variation**:
+    - Phase: temporal shifts of a function.
+    - Amplitude: changes in magnitude of a function.
+    
+  - **Problems**:
+    - Misalignment of phase leads to distorted key statistical summaries.
+    - Function alignment becomes challenging when both phase and amplitude variations are present.
+  - **Goal**: </br>
+    <div style="margin-left: 1em"> In presence of both phase and amplitude variations, </br>
+      $\qquad$**(1) align signals** and **(2) estimate the underlying signal** robustly.</div>
+</div>
+
+## Early Works (will be updated)
+<h3> Old Works in $f$-space with error </h3>
+...
+<h3> Fisher-Rao method with penalty </h3>
+...
+<h3> Tucker 2021 </h3>
+
+
+
+## Projects: Two Paths Forward {auto-animate=true}
+<div class="middle-content" style="margin-top:-1em;">
+<span data-id="slide-title" style="font-size: 2rem; color: #3333b3">(1) Persistent Peak Diagrams (PPD)</span>
+<div style="margin-left: 1em">
+- On top of the SRVF framework, we introduce a **visual tool** to explore the effects of different penalty weights on function alignment.
+- **Persistent Peak Diagrams (PPD)**:
+  - Visualize how the alignment changes with varying penalty weights.
+  - Track the peaks in the aligned mean function to choose optimal penalty weights based on the stability of these peaks.
+</div>
+
+<span style="font-size: 2rem; color: #3333b3">(2) Bayesian Registration</span>
+<div style="margin-left: 1em">
+- A probabilistic framework with prior distribution provides a **flexible** function-alignment under noisy observations.
+  - Enables the incorporation of prior knowledge
+  - Allows multiple plausible alignments
+
+- We enable a more **robust** registration under noisy observations than previous SRVF-based approaches.
+
+</div>
+</div>
+
+## {auto-animate=true .unnumbered .center}
+<h2 style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, 0%); text-align: center; line-height: 1.4; width: 70%;"><span data-id="slide-title">Project 1</span> </br></br> **Signal estimation in the presence of phase and amplitude noises via PPD**
+</h2>
+<!-- <h2 class="r-fit-text"> **Function Alignment In Presence of </br> Phase and Amplitude Noises with Visual Aid** </h2> -->
+
+## Phase and Amplitude Variation Model
+<div class="middle-content2">
+
+  Given an <span style="color: red"> **underlying signal $\boldsymbol{g}$** </span>, the generative data model is:
+$$
+f_i(t)={\color{green}c_i} g({\color{blue}\gamma_i}(t))+{\color{magenta}\epsilon_i}(t), \quad i=1,2,\ldots,n.
+$$
+<div class="middle-content">
+<ol> 
+  <li> <span style="color:green"> **Multiplicative noise:**</span> $\quad {\color{green}c_i} \in \mathbb{R}^+$ and i.i.d. with $\mathbb{E}[c_i] = 1$.  </li>
+  <li> <span style="color:blue"> **Warping noise: ** </span> <br>A warping function, ${\color{blue}\gamma_i} \in \Gamma$, controls the phase variation. Here, $\Gamma$ is a diffeomorphism forming a group such that
+$$
+\Gamma = \{\gamma:[0,1]\to[0,1] \mid \gamma(0) = 0, \gamma(1) = 1, \dot \gamma > 0\},
+$$
+We assume $\{\gamma_i\}_{i=1}^n$ is centered at $\gamma_{\mathrm{id}}$.
+  </li>
+  <li> <span style="color:magenta"> **Additive smooth noise function**:</span> ${\color{magenta}\epsilon_i} \in \mathbb{L}^2$, random smooth function with $\mathbb{E}[\epsilon_i(t)] = 0$. </li>
+</ol></div>
+</div>
+
+### Generative Model Comparison {.center}
+
+<img src="figs/ppd/Figure1.png" data-preview-image data-preview-fit="cover">
+
+### Penalized Optimization Framework {.center}
+<!-- <div style="margin-left: 1em; font-size: 90%;"> -->
+<div class="middle-content">
+Given SRVFs $\{q_i\in\mathbb{L}^2\mid i=1,...,n\}$, and penalty weight, $\lambda$, the penalized elastic alignment is given by:
+$$
+\min_{\bar{q} \in \mathbb{L}^2} \left[ \sum_{i=1}^n \left( \min_{c_i, \mathbb{R}, \gamma_i\in \Gamma} \left( \| \bar{q} - c_i (q_i \star \gamma_i)\|^2 + \lambda \mathcal{R}(\gamma_i) \right) \right) \right] \ .
+$$
+
+where $(q\star\gamma) = (q\circ\gamma)\sqrt{\dot\gamma}$, and $\bar{q}\in\mathbb{L}^2$ is a template function. Then, the optimal warping given $\lambda$ is as follows:
+$$
+\gamma_{\lambda,i}^* = \underset{\gamma_i \in \Gamma}{\mathrm{argmin}} \left(\| q - c_i^* (q_i \star \gamma_i) \|^2 + \lambda \mathcal{R}(\gamma_i) \right).
+$$
+The quantity of interest is the <span style="color: blue; font-weight: bold"> partial elastic mean </span>:
+$${\color{blue}\hat{g}_\lambda = \frac{1}{n} \sum_{i=1}^n f^*_{\lambda, i}} \quad \textsf{where} \quad f^*_{\lambda, i} = f_i \circ \gamma_{\lambda,i}^*$$
+
+</div>
+
+## Penalized Elastic Signal Alignment (PESA){auto-animate=true .large-math}
+
+<h3>Sequential alignment algorithm</h3>
+<div class="middle-content">
+Given the candidate penalty weights $\{\lambda_1,...\lambda_L = \lambda_{\mathrm{max}}\}$, we compute the partial elastic mean $\hat{g}_\lambda$ and update the alignment sequentially.
+
+- Computation order of the penalty: $\lambda_L$,$\lambda_{L-1}$,...,$\lambda_1$
+- At step $k$: compute $\hat{g}_{\lambda_k}$ using the previous steps alignment.
+- Sequentially progress alignment from no alignment to the fully elastic alignment.
+</div>
+
+<div data-id="algorithm-box" style="font-size: 100%; line-height: 1.2; border: 1px solid #ccc; padding: 1em 1em; border-radius: 8px; background-color: #eeeeee;">
+
+<div data-id="line1">
+$\textsf{\textbf{Input:}}$
+</div>
+$\begin{array}{rl}
+\textsf{\text{data: }} & \{f_1, ..., f_n\} \\
+\qquad\quad\quad\quad\textsf{\text{candidate }} \lambda\textsf{\text{: }} & \{\lambda_1, ..., \lambda_L = \lambda_{\max}\}
+\end{array}$
+<div data-id="line2">
+$\textsf{\textbf{Output:}}$
+</div>
+$\quad\textsf{\text{aligned-function mean: }} \quad \{\hat{g}_{\lambda_1}, ..., \hat{g}_{\lambda_L}\}$</div>
+
+### {auto-animate=true} 
+<!-- initialization: -->
+<div data-id="algorithm-box" style="font-size: 100%; line-height: 1.2; border: 1px solid #ccc; padding: 0em 1em; border-radius: 8px; background-color: #eeeeee;">
+
+<div style="color: gray;" data-id="line1">
+$\textsf{\textbf{Input: }}$ $\quad \{f_1, ..., f_n\}\ \ , \qquad \{\lambda_1, ..., \lambda_L\}$</div>
+<div style="color: gray;" data-id="line2"> $\textsf{\textbf{Output: }}$ $\quad \{\hat{g}_{\lambda_1}, ..., \hat{g}_{\lambda_L}\}$</div>
+
+<div style="color: black;" data-id="line3">
+$\textsf{\textbf{for }} k = L \textsf{\textbf{ down to }} 1:$ 
+<div class="fragment" data-fragment-index="1">
+$\qquad \textsf{\textbf{for }} i = 1 \textsf{\textbf{ to }}n:$</br>
+$\qquad\qquad q_i \leftarrow 
+\begin{cases}
+\mathtt{srvf}(f_i) & \textsf{\text{if }} k = L \\
+\mathtt{srvf}(\tilde{f}_{\lambda_{k+1}, i}) & \textsf{\text{otherwise}}
+\end{cases}\ \ , \qquad c_i^* \leftarrow 1$</br>
+$\qquad \textsf{\textbf{end}}$</br>
+$\qquad \bar{q} \leftarrow
+\begin{cases}
+\frac{1}{n}\sum q_i & \textsf{\text{if }} k = L \\
+\bar{q}_{\lambda_{k+1}} & \textsf{\text{otherwise}}
+\end{cases}$</div></div>
+$\textsf{\textbf{end}}$</div>
+
+### {auto-animate=true}
+<div data-id="algorithm-box" style="font-size: 100%; line-height: 1.2; border: 1px solid #ccc; padding: 0em 1em; border-radius: 8px; background-color: #eeeeee;">
+
+<div style="color: gray;" data-id="line1">
+$\textsf{\textbf{Input: }}$ $\quad \{f_1, ..., f_n\}\ \ , \qquad \{\lambda_1, ..., \lambda_L\}$</div>
+<div style="color: gray;" data-id="line2"> $\textsf{\textbf{Output: }}$ $\quad \{\hat{g}_{\lambda_1}, ..., \hat{g}_{\lambda_L}\}$</div>
+
+<div style="color: gray;" data-id="line3">
+${\color{black}\textsf{\textbf{for }} k = {\color{red}L} \textsf{\textbf{ down to }} 1:}$
+</br> $\qquad \textsf{\textbf{for }} i = 1 \textsf{\textbf{ to }}n:$</br>
+$\qquad\qquad q_i \leftarrow 
+\begin{cases}
+{\color{red}\mathtt{srvf}(f_i)} & \textsf{\text{if }} k = L \\
+\mathtt{srvf}(\tilde{f}_{\lambda_{k+1}, i}) & \textsf{\text{otherwise}}
+\end{cases}\ \ , \qquad c_i^* \leftarrow 1$</br>
+$\qquad \textsf{\textbf{end}}$</br>
+$\qquad \bar{q} \leftarrow
+\begin{cases}
+{\color{red}\frac{1}{n}\sum q_i} & \textsf{\text{if }} k = L \\
+\bar{q}_{\lambda_{k+1}} & \textsf{\text{otherwise}}
+\end{cases}$ </br></div>
+
+<div data-id="alignment-label-block" style="position: relative; margin: top: 0.5em; left: 1em;">
+<div class="fragment" data-fragment-index="7"  data-id="alg-label1" style="font-size:100%; font-weight:bold; color: orange; position: absolute; left: 50%;">$\,$DTW alignment steps</div><span auto-animate-id="align-block" class="fragment" data-fragment-index="1" style="align-items: flex-start; gap: 1em;">$\,\, \textsf{\textbf{repeat until convergence:}}$ <br>
+$\qquad \textsf{\textbf{for }} i = 1 \textsf{\textbf{ to }} n:$<br>
+$\qquad\qquad \gamma_{\lambda_k,i}^* \leftarrow \mathrm{argmin}_\gamma \big[ \|\bar{q} - c_i^*(q_i \circ \gamma)\|^2 + \lambda_k \mathcal{R}(\gamma) \big]$</span> <div class="fragment" data-fragment-index="2" style="position: absolute; top: 2.58em; left: 68%; font-size: 100%; font-style: italic; color: #444; white-space: nowrap;">  via Dynamic Programming </div>
+<span class="fragment" data-fragment-index="3"></br>$\qquad\qquad f_i^* \leftarrow \tilde{f}_{\lambda_{k-1}, i} \circ \gamma_{\lambda_k,i}^*$  ,  </span>
+<span class="fragment" data-fragment-index="4">$\quad q_i^* \leftarrow \mathtt{srvf}(f_i^*)$  ,  </span> 
+<span class="fragment" data-fragment-index="5" >$\quad c_i^* \leftarrow \frac{\langle \bar{q}\ \, q_i^* \rangle}{\langle q_i^*,\ \ q_i^* \rangle}$</br>
+$\qquad \textsf{\textbf{end}}$</br>
+</span> <div class="fragment" data-fragment-index="6">$\qquad\qquad \bar{q}^* \leftarrow \frac{1}{n}\sum q_i^*, \quad \epsilon \leftarrow \|\bar{q} - \bar{q}^*\|^2$</br> $\qquad\qquad \textsf{\textbf{if }} \epsilon > tol: \bar{q} \leftarrow \bar{q}^*$ <div style="font-size: 200%; position: absolute; top: 75.5%; left: 50%; transform: translate(-50%, -50%); text-align: center;"> &#125;</div> <div class="fragment" data-fragment-index="6" data-id="alg-box1" style="position: absolute; top: 75.5%; left: 65%; transform: translate(-50%, -50%); text-align: center; font-size: 100%; font-style: italic; color: #444;"> convergence check</div></br>$\,\, \textsf{\textbf{end repeat}}$</div> <div class="fragment" data-fragment-index="7"
+      style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; border: 2px solid #888; border-radius: 0px; pointer-events: none; border-color: orange;"></div></div>
+<div>$\textsf{\textbf{end}}$</br></div></div>
+
+
+### {auto-animate=true}
+
+<div data-id="algorithm-box"  style="font-size: 100%; line-height: 1.2; border: 1px solid #ccc; padding: 0em 1em; border-radius: 8px; background-color: #eeeeee;">
+
+<div style="color: gray;" data-id="line1">
+$\textsf{\textbf{Input: }}$ $\quad \{f_1, ..., f_n\}\ \ , \qquad \{\lambda_1, ..., \lambda_L\}$</div>
+<div style="color: gray;" data-id="line2"> $\textsf{\textbf{Output: }}$ $\quad \{\hat{g}_{\lambda_1}, ..., \hat{g}_{\lambda_L}\}$</div>
+
+<div style="color: gray;" data-id="line3">
+${\color{black} \textsf{\textbf{for }} k =  {\color{red}L} \textsf{\textbf{ down to }} 1:}$
+</br>$\qquad \textsf{\textbf{for }} i = 1 \textsf{\textbf{ to }} n:$</br>
+$\qquad\qquad q_i \leftarrow 
+\begin{cases}
+{\color{red}\mathtt{srvf}(f_i)} & \textsf{\text{if }} k = L \\
+\mathtt{srvf}(\tilde{f}_{\lambda_{k+1}, i}) & \textsf{\text{otherwise}}
+\end{cases}\ \ , \qquad c_i^* \leftarrow 1$</br>
+$\qquad \textsf{\textbf{end}}$</br>
+$\qquad \bar{q} \leftarrow
+\begin{cases}
+{\color{red}\frac{1}{n}\sum q_i} & \textsf{\text{if }} k = L \\
+\bar{q}_{\lambda_{k+1}} & \textsf{\text{otherwise}}
+\end{cases}$ </br></br></div>
+
+<div data-id="alignment-label-block" style="position: relative; margin: top: 0.5em; left: 1em;">
+<div style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; border: 2px solid #888; border-radius: 0px; pointer-events: none; border-color: orange;" data-id="alg-box1"></div>
+<div data-id="alg-label1" style="font-size:100%; font-weight:bold; color: orange;">$\,$DTW alignment steps</div> <div style="color: gray;"> $\qquad\quad$Iteratively update $\bar{q}$, $\{\tilde{f}_{\lambda_{k},i}^*\}_{i=1}^n$ and $\{\gamma_{\lambda_k, i}^*\}_{i=1}^n$</div> </div>
+<div class="fragment" data-fragment-index="1"> </br>$\qquad \bar{\gamma}^{-1} \leftarrow (\frac{1}{n} \sum \gamma_{\lambda_k, i}^*)^{-1}\ \ , \qquad$
+<span> $\bar{q}_{\lambda_k}$ </span>
+<span> $\leftarrow \bar{q} \circ \bar{\gamma}^{-1}$</span>
+<span class="fragment" data-fragment-index="1" style="font-size: 100%; font-style: italic; color: #444;position: absolute; left:55%">(centering)</span> </div>
+<div class="fragment" data-fragment-index="2"> 
+$\qquad \textsf{\textbf{for }} i = 1 \textsf{\textbf{ to }} n: \qquad$
+<span>$\tilde{f}_{\lambda_k, i}$</span>
+$\leftarrow f_i^* \circ \bar{\gamma}^{-1}$
+<span class="fragment" data-fragment-index="2" style="font-size: 100%; font-style: italic; color: #444;position: absolute; left:55%">(alignment)</span> </div>
+<span class="fragment" data-fragment-index="3">$\qquad \hat{g}_{\lambda_k} \leftarrow \frac{1}{n} \sum \tilde{f}_{\lambda_k, i}$</span><span class="fragment" data-fragment-index="3" style="font-size: 100%; font-style: italic; color: #444; position: absolute; left:55%">(aligned mean)</span>
+</br>$\textsf{\textbf{end}}$</div>
+
+
+###
+<!-- green,blue -->
+
+<div data-id="algorithm-box"  style="font-size: 100%; line-height: 1.2; border: 1px solid #ccc; padding: 0em 1em; border-radius: 8px; background-color: #eeeeee;">
+
+<div style="color: gray;">
+$\textsf{\textbf{Input: }}$ $\quad \{f_1, ..., f_n\}\ \ , \qquad \{\lambda_1, ..., \lambda_L\}$</div>
+<div style="color: gray;"> $\textsf{\textbf{Output: }}$ $\quad \{\hat{g}_{\lambda_1}, ..., \hat{g}_{\lambda_L}\}$</div>
+
+<div style="color: gray;">
+${\color{black} \textsf{\textbf{for }} k = L \textsf{\textbf{ down to }} 1:}$
+</br>$\qquad \textsf{\textbf{for }} i = 1 \textsf{\textbf{ to }} n:$</br>
+$\qquad\qquad q_i \leftarrow 
+\begin{cases}
+\mathtt{srvf}(f_i) & \textsf{\text{if }} k = L \\
+{\color{blue}\mathtt{srvf}(\boldsymbol{\tilde{f}_{\lambda_{k+1}, i}})} & {\color{blue}\textsf{\text{otherwise}}}
+\end{cases}\ \ , \qquad c_i^* \leftarrow 1$</br>
+$\qquad \textsf{\textbf{end}}$</br>
+$\qquad \bar{q} \leftarrow
+\begin{cases}
+\frac{1}{n}\sum q_i & \textsf{\text{if }} k = L \\
+{\color{green}\boldsymbol{\bar{q}_{\lambda_{k+1}}}} & {\color{green}\textsf{\text{otherwise}}}
+\end{cases}$ </br></br></div>
+
+<div auto-animate-id="alignment-label-block" style="position: relative; margin: top: 0.5em; left: 1em;">
+<div style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; border: 2px solid #888
+; border-radius: 0px; pointer-events: none;" data-id="alg-box1"></div>
+<div style="font-size:100%; font-weight:bold; color: gray;">$\,$DTW alignment steps</div> <div style="color: gray;">$\qquad\quad$Iteratively update $\bar{q}$, $\{\tilde{f}_{\lambda_{k},i}^*\}_{i=1}^n$ and $\{\gamma_{\lambda_k, i}^*\}_{i=1}^n$</div> </div>
+<span style="color: gray;"> </br>$\qquad \bar{\gamma}^{-1} \leftarrow (\frac{1}{n} \sum \gamma_{\lambda_k, i}^*)^{-1}\ \ , \qquad$
+<span style="color: green;" data-id="alg-k_update_qbar"> $\boldsymbol{\bar{q}_{\lambda_k}}$ </span>
+<span style="color: gray;"> $\leftarrow \bar{q} \circ \bar{\gamma}^{-1}$</span>
+<span style="font-size: 100%; font-style: italic; color: gray;position: absolute; left:55%">(centering)</span></br>
+<span style="color: gray;"> $\qquad \textsf{\textbf{for }} i = 1 \textsf{\textbf{ to }} n: \qquad$ </span>
+<span style="color: blue;" data-id="alg-k_update_f"> $\boldsymbol{\tilde{f}_{\lambda_k, i}}$ </span>
+<span style="color: gray;"> $\leftarrow f_i^* \circ \bar{\gamma}^{-1}$ </span>
+<span style="font-size: 100%; font-style: italic; color: gray;position: absolute; left:55%">(alignment)</span></br>
+<span style="color: gray;">$\qquad \hat{g}_{\lambda_k} \leftarrow \frac{1}{n} \sum \tilde{f}_{\lambda_k, i}$</span>
+<span style="font-size: 100%; font-style: italic; color: gray;position: absolute; left:55%">(aligned mean)</span></br>${\color{black}\textsf{\textbf{end}}}$</div>
+
+###
+<!-- Last algorithm ghat gathering -->
+
+<div data-id="algorithm-box"  style="font-size: 100%; line-height: 1.2; border: 1px solid #ccc; padding: 0em 1em; border-radius: 8px; background-color: #eeeeee;">
+
+<div style="color: gray;"> $\textsf{\textbf{Input: }}$ $\quad \{f_1, ..., f_n\}\ \ , \qquad \{\lambda_1, ..., \lambda_L\}$</div>
+<div style="color: red;"> $\textsf{\textbf{Output: }}$ $\quad \{\hat{g}_{\lambda_1}, ..., \hat{g}_{\lambda_L}\}$</div> <div style="color: gray;">${\color{black} \textsf{\textbf{for }} k = L \textsf{\textbf{ down to }} 1:}$
+</br>$\qquad \textsf{\textbf{for }} i = 1 \textsf{\textbf{ to }} n:$</br>
+$\qquad\qquad q_i \leftarrow 
+\begin{cases}
+\mathtt{srvf}(f_i) & \textsf{\text{if }} k = L \\
+{\color{gray}\mathtt{srvf}(\tilde{f}_{\lambda_{k+1}, i})} & {\color{gray}\textsf{\text{otherwise}}}
+\end{cases}\ \ , \qquad c_i^* \leftarrow 1$</br>
+$\qquad \textsf{\textbf{end}}$</br>
+$\qquad \bar{q} \leftarrow
+\begin{cases}
+\frac{1}{n}\sum q_i & \textsf{\text{if }} k = L \\
+{\color{gray}\bar{q}_{\lambda_{k+1}}} & {\color{gray}\textsf{\text{otherwise}}}
+\end{cases}$ </br></br></div>
+
+<div auto-animate-id="alignment-label-block" style="position: relative; margin: top: 0.5em; left: 1em;">
+<div style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; border: 2px solid #888
+; border-radius: 0px; pointer-events: none;" data-id="alg-box1"></div>
+<div style="font-size:100%; font-weight:bold; color: gray;">$\,$DTW alignment steps</div> <div style="color: gray;">$\qquad\quad$Iteratively update $\bar{q}$, $\{\tilde{f}_{\lambda_{k},i}^*\}_{i=1}^n$ and $\{\gamma_{\lambda_k, i}^*\}_{i=1}^n$</div> </div>
+<span style="color: gray;"> </br>$\qquad \bar{\gamma}^{-1} \leftarrow (\frac{1}{n} \sum \gamma_{\lambda_k, i}^*)^{-1}\ \ , \qquad$
+<span style="color: gray;" data-id="alg-k_update_qbar"> $\bar{q}_{\lambda_k}$ </span>
+<span style="color: gray;"> $\leftarrow \bar{q} \circ \bar{\gamma}^{-1}$</span>
+<span style="font-size: 100%; font-style: italic; color: gray;position: absolute; left:55%">(centering)</span>
+</br>
+<span style="color: gray;"> $\qquad \textsf{\textbf{for }} i = 1 \textsf{\textbf{ to }} n: \qquad$ </span>
+<span style="color: gray;" data-id="alg-k_update_f"> $\tilde{f}_{\lambda_k, i}$ </span>
+<span style="color: gray;"> $\leftarrow f_i^* \circ \bar{\gamma}^{-1}$ </span>
+<span style="font-size: 100%; font-style: italic; color: gray;position: absolute; left:55%">(alignment)</span>
+</br><span style="color: red;">$\qquad \hat{g}_{\lambda_k} \leftarrow \frac{1}{n} \sum \tilde{f}_{\lambda_k, i}$</span>
+<span style="font-size: 100%; font-style: italic; color: gray;position: absolute; left:55%">(aligned mean)</span></br>${\color{gray} \textsf{\textbf{end}}}$</div>
+
+
+## Persistent Peak Diagrams (PPD)
+<div style="margin-top: -1em;">
+<div class=custom-block>
+
+  <div class="custom-block-header" font-family="Computer Modern">Definition</div>
+  <div class="custom-block-body" font-family="Computer Modern">
+  A PPD of a set of functions $\{f_i\}_{i=1}^n$ is a graphical representation that tracks the evolution of significant internal peaks in the partial elastic mean, $\hat{g}_\lambda$, as a function of the penalty parameter $\lambda \in \mathbb{R}^+$.
+  </div>
+
+</div>
+
+<div class="middle-content2">
+
+<h3> <u> <a href="#/significance-of-peaks" style="color:#3333b3"> Significance of Peaks </a> </u> </h3>
+<div style="padding-left: 1em;">
+  The significance of a peak is determined by its relative curvature at the peak location and a predefined threshold value.
+</br>
+</div>
+
+<h3> <u> <a href="#/persistence-of-peaks" style="color:#3333b3"> Persistence of Peaks </a> </u> </h3>
+<div style="padding-left: 1em;">
+<div>
+  Persistence measures how long a peak remains significant as the penalty weight $\lambda$ varies.
+</div>
+<div>
+  A peak is considered persistent if its classification remains consistent with that of the most persistent peak across values of persistence measurements.
+</div>
+</div>
+
+</div>
+</div>
+
+## Selection of $\lambda$ via PPD
+<div class="middle-content2" style="margin-top: -1em;">
+
+Choose $\lambda^*$ as close to zero as possible while all persistent peaks are included.
+<div style="padding-left: 1em;">
+  - Scatter points: Partially aligned functions, $\{𝑓^*_{\lambda^*,𝑖}\}$
+  - <span style="color: blue;">Blue</span> Curve: Mean of partial elastic mean, $\hat{g}_{\lambda^*}$
+  - <span style="color: cyan;">Cyan Curve</span>: Initial shape function, $\hat{g}_{\mathrm{init}}$
+  - <span style="color: red;">Red Curve</span>: Ground truth, $g$
+</div>
+</div>
+
+::: {layout-ncol=2}
+
+<img src="figs/ppd/lambda_selection/ppd.png" style="width: 70%; display: block; margin: auto;" />
+
+<img src="figs/ppd/lambda_selection/scatter.png" style="width: 70%; display: block; margin: auto;" />
+
+:::
+
+<div style="padding-left: 2em;">
+ - <span style="color:magenta;"> Magent line</span>: $\lambda^*$, the selected penalty weight.
+</div>
+
+## Estimation of the underlying signal $g$
+
+<div class="middle-content">
+
+  Signal estimation of $g$ is feasible based on the $\hat{g}_{\lambda^*}$ </br>
+
+<div>
+  (1)$\,\,$Obtain shape template $\hat{g}_{\mathrm{init}}$ from $\hat g_{\lambda^*}$</div>
+
+<div>
+  (2)$\,\,$Estimate $\hat{g}$ with $\{f^*_{\lambda^*,i}\}_{i=1}^n$ by fixing the number of peaks.</div>
+
+</div>
+
+<span style="display: flex; justify-content: flex-end;"> <a href="#/estimation-of-the-underlying-signal" style="color:#3333b3">[details]</a> </span>
+
+
+## Results
+Will be updated soon.
+1 or 2 examples.
+
+## {auto-animate=true .unnumbered .center}
+<h2 style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, 0%); text-align: center; line-height: 1.4; width: 70%;"><span data-id="slide-title">Project 2</span> </br></br> <strong>Bayesian registration of functions with compositional and additive noises</strong></h2>
+
+## Introduction
+<div class="middle-content">
+To earn the robustness of the alignment process, our approach resorts to:
+
+1. **Bayesian model** to quantify the uncertainty in the alignment process.
+
+2. **Centered log-ratio** representation of warping representations to achieve mapping to a linear inner-product space via isometrically isomorphism.
+
+3. Use of the $\mathbb{L}^2$ metric in the **original function space** (**$\boldsymbol{f}$-space**) to achieve robustness against additive noise.
+</div>
+
+## Registration Frameworks
+<div class="middle-content2">
+There are three main distinctions in our registration framework compared to previous works:
+
+1. **Deterministic vs Bayesian Method**
+
+2. **SRVF vs CLR representations of $\gamma$**
+
+3. **SRVF-space ($q$-space) vs Original-function-space ($f$-space)**
+</div>
+
+## Registration Frameworks
+<div style="margin-top: -1em;">
+<h3> **(1)$\quad$Deterministic vs Bayesian Method** </h3>
+
+<div style="margin-top: -0.5em;">
+
+:::{.panel-tabset}
+### <span style="color:#3333b3; font-size:90%;">**Deterministic method**</span>
+
+<div class="middle-content2">
+A **deterministic** method such as (e.g., dynamic programming) finds a single optimal warping function $\gamma$ that maximizes the likelihood.
+
+- (**flexibility issue**)
+
+  - It does not quntify the **uncertainty** in the alignment process.
+  - It cannot capture the **multiple plausible alignments**.
+
+
+- (**computational cost issue**)</br>
+  - DP has quadratic time complexity, making it inefficient for large numbers of discrete points.
+  - DP does not account for smoothness, often resulting in undesirable or jagged warping paths.
+
+</div>
+
+### <span style="color:#3333b3; font-size:90%;">**Bayesian Modeling**</span>
+
+<div style="padding-left: 1em;">
+
+As an alternative of deterministic method, we use Bayesian framework which mainly takes advantages by allowing:
+
+- A comprehensive exploration of the warping function parameter space.
+
+- Principled uncertainty analysis via posterior inference (e.g., the discovery of multiple plausible alignments)
+
+- Incorporation of the prior information of warping functions.
+
+</div>
+
+:::
+</div>
+</div>
+
+
+## Registration Frameworks
+<div style="margin-top: -1em;">
+<h3> **(2)$\quad$SRVF vs CLR representations of $\gamma$** </h3>
+<div style="margin-top: -0.5em;">
+
+:::{.panel-tabset}
+
+### <span style="color:#3333b3; font-size:90%;">**SRVF representation of $\gamma$**</span>
+
+<div class="middle-content2">
+Previous Bayesian registration approaches (Lu et al. (2017) and Tucker et al. (2021)) maps the warping functions to the SRD manifold
+$$
+\mathbb{S}^+_{\infty} = \left\{ q_\gamma \in \mathbb{L}^2 \,\middle|\, q_\gamma(t) \geq 0,\; \int_0^1 q_\gamma^2(t)\, dt = 1 \right\} \qquad \text{where } \quad  q_\gamma(t) = \mathtt{srvf}(\gamma). 
+$$
+
+- Gaussian Process (GP) prior for warping functions on the tangent space at $\gamma_{\mathrm{id}}$
+
+- Happ et al. (2019) and Ma et al. (2024) addressed the SRVF representation may cause bias and inefficience in computation in posterior inference due to:
+  - geometric distortion
+  - improper posterior sampling
+
+</div>
+
+
+### <span style="color:#3333b3; font-size:90%;">**CLR representation of $\gamma$**</span>
+
+<div class="middle-content2" style="font-size:90%; line-height: 1;">
+- Centered log-ratio transformation was first introduced by Egozcue at el.(2006)
+- Ma et al. (2024) proposed the use of CLR for warping function representation.
+
+CLR transformation is $\psi: \Gamma_1 \rightarrow H(0,1)$, as follows:
+<div style="margin-top: -1em;">
+$$h(t) := \psi(\gamma)(t) = \log(\dot\gamma(t)) - \int_0^1 \log(\dot\gamma(s))ds$$
+</div>
+<div style="margin-top: -1em;">
+where $\Gamma_1 \subset \Gamma$ is a bounded subset and $H(0,1)$ is an Euclidean space under $\mathbb{L}^2$ norm.
+</div>
+<div style="margin-top: -1em;">
+$$\Gamma_1 = \left\{ \gamma: [0,1] \rightarrow [0,1] \mid  \gamma(0) = 0, \gamma(1) = 1, 0 < m_\gamma<\dot\gamma(t) < M_\gamma < \infty\right\}.$$
+</div>
+<div style="margin-top: -1em;">
+$$
+H(0,1) = \left\{ h \in \mathbb{L}^2([0,1]) \;\middle|\; \int_0^1 h(t)\,dt = 0,\; -\infty< m_h < h(t) < M_h < \infty \right\},
+$$
+</div>
+</div>
+
+- CLR **isometrically isomorphically** maps warpings to a **linear inner-product space**, enabling standard statistical analysis.
+
+- CLR avoids the issues of SRVF's geometric distortion and improper sampling. (<a href="#/illustration-of-fpca-in-srd-vs-clr" style="color:#3333b3">example</a>)
+
+
+:::
+
+</div>
+</div>
+
+## Registration Frameworks
+
+<div style="margin-top: -1em;">
+<h3> **(3)$\quad$ $q$-space vs $f$-space** </h3>
+<div style="margin-top: -0.5em;">
+
+:::{.panel-tabset}
+
+### <span style="color:#3333b3; font-size:90%;">**Alignment in $q$-space**</span>
+
+<div class="middle-content2">
+It aligns functions by using $\mathbb{L}^2$ metric in the SRVF space (**$\boldsymbol{q}$-space**)
+
+- (**robustness issue**)  It makes more sensitive to additive noise 
+  - The SRVF transformation is a function of the first derivative, which is sensitive to noise in the original function space. (<a href="#/robustness-by-the-use-of-f-space" style="color:#3333b3">example</a>)
+  
+- Previous approaches resorted to:
+
+  - pre-smoothing data but a mere smoothing individual functions may cause **over- or under-smoothing**.
+
+  - penalized elastic alignment but to choose a proper **penalty weight** becomes a sensitive issue.
+
+</div>
+
+### <span style="color:#3333b3; font-size:90%;">**Alignment in $f$-space**</span>
+
+<div class="middle-content2">
+- We perform alignment directly in the **original function space** rather than SRVF space.
+
+- The **pinching effect** arises when $\dot{\gamma}(t) \to 0$, causing extreme compression and distortion of function features.
+
+- By placing a GP prior on the CLR-transformed warping $\psi(\gamma)$, we ensure:
+	- $\dot{\gamma}(t) > 0$ almost surely (due to $\log \dot{\gamma}$),
+	- Prevented extreme compression and distortion of functions with the bounded derivative.
+
+- This Bayesian formulation systematically **avoids pinching effect**, unlike the penalty-based optimization methods that only weakly enforce identity proximity.
+</div>
+
+:::
+
+</div>
+</div>
+
+
+<!-- <div style="padding-left: 1em; color: blue; margin-top: 2em;">
+<div class="fragment" data-fragment-index="5">
+  $\quad$**(remedy)** <span style="position: absolute; left:31%">Use $\mathbb{L}^2$ metric in the original function space (**$\boldsymbol{f}$-space**).</span>
+</div>
+</div> -->
+
+
+<!-- 
+## Old Works with noise ()
+
+<!-- Old works -> F-R (compositional noise only) --> 
+
+<!-- ### Why Bayesian and randomness in warping function? {auto-animate=true .center} -->
+
+<!-- <div class="middle-content"> -->
+<!-- <div data-id="random-slide-content" style="padding-left: 1em;">
+
+- To Gain the robustness, 
+
+  1. pre-smoothing but a mere smoothing individual functions may cause **over- or under-smoothing**.
+
+  2. penalized elastic alignment but to choose a good **penalty weight** becomes a sensitive issue.
+
+</div> -->
+
+<!-- </div> -->
+
+
+<!-- 
+
+## Why $f$-space? {auto-animate=true .center}
+
+<div class="middle-content" auto-animate="true">
+<div style="padding-left: 1em; margin-top:-1em;">
+
+<h3> **---$\,\,$Noiseless case** </h3>
+<div style="padding-left: 1em;">
+  - Absolutely continuous functions: $f_1$ and $f_2 = f_1\circ\gamma$.
+  - SRVFs: $q_1$ and $q_2$.   
+
+$\,\,$ Alignment in $f$-space and $q$-space is equivalent. i.e.,
+
+  <!-- $\,\,$ If $f_2 = f_1 \circ \gamma$, then: -->
+<!-- 
+<div style="margin-top: -1em;">
+  $$
+  \|f_2 - f_1 \circ \gamma\|^2 = 0 \quad \Longleftrightarrow \quad \|q_2 - q_1 \star \gamma\|^2 = 0.
+  $$
+  </div></div>
+
+</div></div> -->
+<!-- 
+### {auto-animate=true .center}
+<div data-id = 'slide-title' class= "hh2">Why Bayesian Approach?</div>
+<div class="middle-content" auto-animate="true">
+<div style="padding-left: 1em; margin-top:-1em;">
+
+<h3> **---$\,\,$Under an additive noise model**</h3>
+<div style="padding-left: 1em;">
+
+  $\,\,$ This equivalence breaks down.
+
+  $$
+  y_i(t) = f_i(t) + \epsilon_i(t), \qquad \epsilon_i \in \mathbb{L}^2 \quad \textsf{ for } i = 1,2.
+  $$
+  
+- The SRVF transformation of $y_i$ is **nonlinear**, thus distorting both geometry and alignment structure in $q$-space.
+  - Aliging in $q$-space does not guarantee aligning of the signals. (<a href="#/robustness-by-the-use-of-f-space" style="color:#3333b3">example</a>)
+
+- SRVF transformation is a functions of the first derivative, which is sensitive to noise in the original function space.
+
+- A deterministic alignment in $q$-space may become **unreliable** in the presence of additive noise.
+
+- This motivates modeling $\gamma_i$ as a **random variable** to account for alignment uncertainty under noisy observations.
+
+</div>
+</div>
+
+</div> -->
+
+## Our Bayesian Framework Overall {auto-animate=true .center}
+
+<div class="middle-content" auto-animate="true">
+
+<div style="padding-left: 1em;">
+- Models $\gamma_i$ as a random variable to **reflect uncertainty** in alignment
+- Provides <span style="color:red">**robustness**</span> to additive noise process without pinching effect.
+- Allows <span style="color:red">**flexibility**</span> in modeling the warping function
+  - Enables **incorporation of prior belief** of warping functions (<a href="#/flexibility-of-bayesian-registration-prior-info-incorporation" style="color:#3333b3">Example</a>)
+  - Captures **multiple plausible alignments** via posterior inference  <a href="#/flexibility-of-bayesian-registration-quantification-of-uncertainty" style="color:#3333b3">(Example)</a>
+</div>
+
+</div>
+
+
+<!-- :::{.notes} -->
+<!-- The SRD manifold used in the SRVF framework is geometrically sound but statistically limiting. It's nonlinear and lives in the positive orthant, which complicates modeling and random sampling.
+
+These constraints make it difficult to apply methods like FPCA or Bayesian posterior inference directly in SRD space—samples can fall outside the valid region or distort alignment structure.
+
+In contrast, the CLR transformation maps warping functions to a linear inner-product space via an isometric isomorphism. This makes the space unconstrained, allowing for direct application of standard statistical methods without geometric distortion or invalid samples.
+
+As a result, CLR offers a more stable and flexible foundation for modeling warping variability, especially under uncertainty and in probabilistic frameworks. -->
+<!-- ::: -->
+
+
+## Pairwise Alignment
+The likelihood model for pairwise alignment
+$$
+    y_2([t]) - (y_1 \circ \gamma)([t]) \mid \gamma \sim \mathcal{N}(\mathbf{0},\sigma^2\mathbf{I})
+$$
+
+Prior for warping function $\gamma$:
+$$
+    h_\gamma \sim \mathcal{GP}(\mu_h, \mathcal{K}_h),
+$$
+
+### Algorithm
+will be updated
+
+## Multiple-Function Alignment
+
+will be updated
+
+### Algorithm
+will be updated
+
+### Centering with CLR
+will be updated
+
+## Underlying Signal Estimation
+will be updated
+
+### Algorithm
+will be updated
+
+## Future Work
+
+## References
+
+# Appendix
+
+
+### Significance of Peaks 
+
+- We define **strength** of a peak in any absolutely continuous function $f(t_0)$ at a location of a peak, $t_0 \in [0,1]$:
+
+$$ \frac{-\ddot{f}(t_0)}{\max_{t\in[0,1]}{\ddot{f}(t)}}$$
+
+- A strength always lies in the interval [0,1].
+
+- A peak is ***insignificant*** if the strength of a peak is less than a certain threshold, $\tau$.
+
+- Threshold Selection:
+  - We need an adaptable hyperparameter derived from the dataset.
+  - For $i = 1,...,n$, we collect all strengths of peaks in $f_i$.
+  - We choose $\tau$ to be the $p$-th percentile of such strength collection.
+
+
+<span style="display: flex; justify-content: flex-end;"> <a href="#/persistent-peak-diagrams-ppd" style="color:#3333b3">[Return]</a> </span>
+
+
+### Persistence of Peaks 
+
+<span style="display: flex; justify-content: flex-end;"> <a href="#/persistent-peak-diagrams-ppd" style="color:#3333b3">[Return]</a> </span>
+
+<!-- 
+
+## PPD and $\lambda$ Selection {.center}
+
+<div style="display: flex; justify-content: center; padding: 2em;">
+  <iframe
+    src="misc_pages/interactive-ppd.html" 
+    width="1200" 
+    height="780"
+    style="border:0px solid black;
+    display: block;">
+  </iframe>
+</div> -->
+
+### Estimation of the underlying signal
+
+<div style="padding-left: 1em;">
+  Signal estimation of $g$ is feasible based on the $\hat{g}_{\lambda^*}$ 
+</div>
+<div style="text-align: center;">
+  <img src="figs/ppd/curve_est/fig1.png" style="width: 25%;" />
+</div>
+<div data-id="algorithm-box" style="font-size: 80%; line-height: 1.2; border: 1px solid #ccc; padding: 0em 1em; border-radius: 8px; background-color: #eeeeee;">
+
+<div style="color: black;" data-id="line1">
+$\textsf{\textbf{Input: }} \qquad \textsf{data} \,\,\, \{\tilde{f}_{i,\lambda^*}\}_{i=1}^{n}\, , \qquad \, \textsf{number of peaks } \,\,\, m$</div>
+<div> $\textsf{\textbf{Output: }}$ $\qquad \textsf{signal estimate } \,\,\, \hat{g}$</div>
+
+<div>${\color{gray}\mathtt{1}.} \qquad \textsf{Initialize estimate }\hat{g}_{\mathrm{init}} \textsf{as follows:}$ </br> $\qquad\qquad\qquad \textsf{Connect the } m \textsf{ peaks (and corresponding valleys) of } \hat{g}_{\lambda^*} \textsf{ linearly}$ </br> $\qquad\qquad\qquad \textsf{to form a piecewise linear curve.}$</div>
+<div>${\color{gray}\mathtt{2}.}  \qquad \textsf{Obtain } \gamma^* \textsf{ and }\mathbf{v}^* \textsf{ by solving}$</div>
+$$
+(\gamma^*, \mathbf{v}^*) = \underset{\gamma \in \Gamma,\mathbf{v} \in {\mathcal V}}{\textrm{argmin}} \Bigg( \sum_{i=1}^n \int_0^1  (f_{\Phi(\mathbf{v})}(\gamma(t)) - \tilde{f}_{i,\lambda^*}(t))^2 dt + \rho \int_0^1 {f}_{\Phi(\mathbf{v})}^{\prime \prime}(\gamma(t))^2dt \Bigg)
+$$
+<div>${\color{gray}\mathtt{3}.} \qquad \textsf{\textbf{return}: }\,\,\hat{g} = f_{\Phi(\mathbf{v}^*)}(\gamma^*(t))$</div>
+</div>
+
+<div style="position: absolute; top: -1em; right: 0; padding: 0.5em;">
+  <a href="#/estimation-of-the-underlying-signal-g" style="color:#3333b3; font-size: 80%;">[Return]</a>
+</div>
+
+
+### Illustration of FPCA in SRD vs CLR
+
+<div style="display: flex; justify-content: space-around; align-items: flex-start; gap: 1em; text-align: center;">
+
+  <div style="width: 30%;">
+  <img src="figs/bayes/fpca/raw.svg" alt="Raw functions" style="width: 100%;">
+  <p style="font-size: 85%; margin-top: -0.5em;">Raw Functions</p>
+  </div>
+
+  <div style="width: 30%;">
+  <img src="figs/bayes/fpca/bayes.svg" alt="CLR FPCA" style="width: 100%;">
+  <p style="font-size: 85%; margin-top: -0.5em;">Resamples via CLR</p>
+  </div>
+
+  <div style="width: 30%;">
+  <img src="figs/bayes/fpca/srvf_with_imp.svg" alt="SRD FPCA" style="width: 100%;">
+  <p style="font-size: 85%; margin-top: -0.5em;">Resamples via SRVF</p>
+  </div>
+</div>
+
+- Two orthonormal bases $\{\phi_1(t), \phi_2(t)\} = \left\{ \sqrt{2}\cos(2\pi t), \sqrt{2}\sin(2\pi t) \right\}$ for $t \in [0, 1]$.
+- Each function $\gamma_i = \psi^{-1}(c_{1,i}\phi_1 + c_{2,i}\phi_2)$
+- $c_{1,i} \overset{\text{i.i.d.}}{\sim} \mathcal{N}(0, 0.6^2)$ and $c_{2,i} \overset{\text{i.i.d.}}{\sim} \mathcal{N}(0, 0.4^2)$ for $i = 1, \dots, 100$. 
+- Improper SRVF-based resampled functions (right) are highlighted in red.
+
+<div style="position: absolute; top: -1em; right: 0; padding: 0.5em;">
+  <a href="#/registration-frameworks-2" style="color:#3333b3; font-size: 80%;">[Return]</a>
+</div>
+
+## Robustness by the use of $f$-space
+<div style="margin-top: -2em; font-size: 120%;">
+$$
+f_1(t) = \overbrace{\sin(2\pi t)}^{\textsf{\text{main signal}}} \quad+   \overbrace{\ \epsilon\ \sin\left(\frac{t}{\epsilon^{2}}\right)}^{\textsf{\text{small, fast oscillation}}}, \quad
+f_2(t) = \sin\big(2\pi\, \overbrace{\gamma_1(t)}^{\substack{\textsf{\text{warping}} \\ \\ \textsf{\text{in signal}}}}\big) + \epsilon \sin\Bigl(\dfrac{\overbrace{\gamma_2(t)}^{\substack{\textsf{\text{warping}}\\ \\ \textsf{\text{in noise}}}}}{\epsilon^2}\Bigr)
+$$
+
+<div style="margin-top: -0.5em; margin-left: -1em; font-size: 90%;">
+
+$$\dot{f}_1(t) = 2\pi \cos(2\pi t) + 
+\underbrace{\dfrac{1}{\epsilon} \cos\left(\dfrac{t}{\epsilon^2}\right)}_{\textsf{noise 1}}, \quad
+\dot{f}_2(t) = 2\pi\, \dot{\gamma}_1(t)\, \cos\big(2\pi\, \gamma_1(t)\big) + 
+\underbrace{\dfrac{\dot\gamma_2(t)}{\epsilon} \cos\left(\dfrac{\gamma_2(t)}{\epsilon^2}\right)}_{\textsf{\text{noise 2}}} $$
+</div>
+
+<div class="fragment" style="margin-top: -3em; margin-left: 20%; font-size: 100%;">
+$$\qquad\qquad\underbrace{\phantom{
+\dfrac{1}{\epsilon} \cos\left(\dfrac{t}{\epsilon^2}\right) + 
+\dfrac{\dot\gamma_2(t)}{\epsilon} \cos\left(\dfrac{\gamma_2(t)}{\epsilon^2}\right) \qquad \qquad \qquad \quad
+}}_{\color{red}\textsf{each noise term dominates when } \epsilon \rightarrow 0}$$
+</div>
+
+</div>
+
+<div style="display: flex; justify-content: space-around; align-items: flex-start; gap: 1em; text-align: center; margin-top: -1em;">
+
+  <div style="width: 45%;">
+  <img src="figs/bayes/robustness/raw_signals.svg" style="width: 100%;">
+  </div>
+
+  <div style="width: 45%;">
+  <img src="figs/bayes/robustness/raw_srvfs.svg" style="width: 100%;">
+  </div>
+</div>
+
+
+### Alignment Results{.center}
+<div style="width: 100%; margin: auto; font-size: 75%;">
+
+<table style="margin: auto; border-collapse: collapse; border: 1px solid black;">
+  <thead>
+    <tr>
+      <th style="border: 1px solid black; vertical-align: middle; text-align: center;"></th>
+      <th style="text-align: center">Aligned Signals</th>
+      <th style="text-align: center">Warping Functions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="border: 1px solid black; vertical-align: middle; text-align: center; writing-mode: vertical-rl; transform: rotate(180deg);">
+      <strong>F-R</strong></td>
+      <td><img src="figs/bayes/robustness/aligned_signals_FR.svg" width="100%"/></td>
+      <td><img src="figs/bayes/robustness/gam_FR.svg" width="100%"/></td>
+    </tr>
+    <tr>
+      <td style="border: 1px solid black; vertical-align: middle; text-align: center; writing-mode: vertical-rl; transform: rotate(180deg);">
+      <strong>Bayes</strong></td>
+      <td><img src="figs/bayes/robustness/aligned_signals_Bayes.svg" width="100%"/></td>
+      <td><img src="figs/bayes/robustness/gam_Bayes.svg" width="100%"/></td>
+    </tr>
+  </tbody>
+</table>
+
+</div>
+
+<div style="position: absolute; top: -1em; right: 0; padding: 0.5em;">
+  <a href="#/registration-frameworks-3" style="color:#3333b3; font-size: 80%;">[Return]</a>
+</div>
+
+
+## Flexibility of Bayesian Registration </br> <span style="font-size:80%">(Quantification of Uncertainty)</span>
+<h3>$\qquad$Different number of peaks in two signals</h3>
+<div style="display: flex; justify-content: space-around; align-items: flex-start; gap: 1em; text-align: center;">
+
+  <div style="width: 45%;">
+  <img src="figs/bayes/diff_peaks/raw_signal.svg" style="width: 100%;">
+  </div>
+
+  <div style="width: 45%;">
+  <img src="figs/bayes/diff_peaks/raw_f.svg" style="width: 100%;">
+  </div>
+</div>
+
+### Alignment Results{.center}
+<div style="width: 100%; margin: auto; font-size: 75%;">
+
+<table style="margin: auto; border-collapse: collapse; border: 1px solid black;">
+  <thead>
+    <tr>
+      <th style="border: 1px solid black; vertical-align: middle; text-align: center;"></th>
+      <th style="text-align: center">Aligned Signals</th>
+      <th style="text-align: center">Aligned Noise-free Signals</th>
+      <th style="text-align: center">Warping Functions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="border: 1px solid black; vertical-align: middle; text-align: center; writing-mode: vertical-rl; transform: rotate(180deg);">
+      <strong>F-R</strong></td>
+      <td><img src="figs/bayes/diff_peaks/aligned_signals_FR.svg" width="100%"/></td>
+      <td><img src="figs/bayes/diff_peaks/aligned_f_FR.svg" width="100%"/></td>
+      <td><img src="figs/bayes/diff_peaks/gam_FR.svg" width="100%"/></td>
+    </tr>
+    <tr>
+      <td style="border: 1px solid black; vertical-align: middle; text-align: center; writing-mode: vertical-rl; transform: rotate(180deg);">
+      <strong>Bayes</strong></td>
+      <td><img src="figs/bayes/diff_peaks/aligned_signals_Bayes.svg" width="100%"/></td>
+      <td><img src="figs/bayes/diff_peaks/aligned_f_Bayes.svg" width="100%"/></td>
+      <td><img src="figs/bayes/diff_peaks/gam_Bayes.svg" width="100%"/></td>
+    </tr>
+  </tbody>
+</table>
+
+</div>
+
+
+<div style="position: absolute; top: -1em; right: 0; padding: 0.5em;">
+  <a href="#/our-bayesian-framework-overall" style="color:#3333b3; font-size: 80%;">[Return]</a>
+</div>
+
+## Flexibility of Bayesian Registration  </br> <span style="font-size:80%">(Prior Info Incorporation)</span>
+<h3>$\qquad$ COVID-19 death rate data (25 European countries 2020 - 2022)</h3> 
+
+<div style="display: flex; justify-content: space-around; align-items: flex-start; gap: 0.5em; text-align: center;">
+
+  <div style="width: 45%;">
+  <img src="figs/bayes/rd/covid_death/raw_signals.svg" style="width: 100%;">
+  <p style="font-size: 100%; margin-top: -0.5em;">Raw Data</p>
+  </div>
+
+  <div style="width: 30%;">
+  <img src="figs/bayes/rd/covid_death/cov.svg" style="width: 100%;">
+  <p style="font-size: 100%; margin-top: -0.5em;">Cov Operator for $\gamma$ Prior</p>
+  </div>
+</div>
+
+
+### Alignment Results{.center}
+<div style="width: 100%; margin: auto; font-size: 75%;">
+
+<table style="margin: auto; border-collapse: collapse; border: 1px solid black;">
+  <thead>
+    <tr>
+      <th style="border: 1px solid black; vertical-align: middle; text-align: center;"></th>
+      <th style="text-align: center">Aligned Signals</th>
+      <th style="text-align: center">Warping Functions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="border: 1px solid black; vertical-align: middle; text-align: center; writing-mode: vertical-rl; transform: rotate(180deg);">
+      <strong>F-R</strong></td>
+      <td><img src="figs/bayes/rd/covid_death/aligned_signals_FR.svg" width="100%"/></td>
+      <td><img src="figs/bayes/rd/covid_death/gam_FR.svg" width="100%"/></td>
+    </tr>
+    <tr>
+      <td style="border: 1px solid black; vertical-align: middle; text-align: center; writing-mode: vertical-rl; transform: rotate(180deg);">
+      <strong>Bayes</strong></td>
+      <td><img src="figs/bayes/rd/covid_death/aligned_signals_Bayes.svg" width="100%"/></td>
+      <td><img src="figs/bayes/rd/covid_death/gam_Bayes.svg" width="100%"/></td>
+    </tr>
+  </tbody>
+</table>
+
+</div>
+
+### Why is this prior info useful?
+
+<div style="display: flex; justify-content: space-around; align-items: flex-start; gap: 0.5em; text-align: center;">
+
+  <div style="width: 45%;">
+  <img src="figs/bayes/rd/covid_death/alignment_ex1_f.svg" style="width: 100%;">
+  <p style="font-size: 100%; margin-top: -0.5em;">alignment by F-R</p>
+  </div>
+
+  <div style="width: 45%;">
+  <img src="figs/bayes/rd/covid_death/alignment_ex1_b.svg" style="width: 100%;">
+  <p style="font-size: 100%; margin-top: -0.5em;">Alignment by Bayes</p>
+  </div>
+</div>
+
+- Two examples of extreme warping by
+the Fisher-Rao method
+- A peak originally located in January 2022
+(<span style="display:inline-block; width:0.8em; height:0.8em; background:magenta; border-radius:50%;"></span>) is shifted back to April 2021 (<span style="display:inline-block; width:0.8em; height:0.8em; background:red; border-radius:50%;"></span>), spanning nearly seven months, making it difficult to justify.
+- A peak from January 2021 (<span style="display:inline-block; width:0.8em; height:0.8em; background:cyan; border-radius:50%;"></span>) is warped to align
+with April 2021 (<span style="display:inline-block; width:0.8em; height:0.8em; background:blue; border-radius:50%;"></span>), bridging two temporally distant features (cyan and magenta dots) that
+have a **one-year gap** which seems implausible.
+<div style="position: absolute; top: -1em; right: 0; padding: 0.5em;">
+  <a href="#/our-bayesian-framework-overall" style="color:#3333b3; font-size: 80%;">[Return]</a>
+</div>
+
+
+## Center of Orbit
+
+- To ensure identifiability, one requires the warping functions to be centered around the identity $\gamma_{\text{id}}$. </br></br>
+- SRVF Framework
+  - The center of orbit is defined via the Karcher mean of $\mathtt{srvf}(\gamma_i)$
+  - SRVF’s isometry under warping group action allows to shift the mean at $\mathtt{srvf}(\gamma_{\text{id}})$.
+
+- CLR Framework
+  - The CLR transformation lacks isometry but enjoys a mean-preserving property under warping group actions.
+$$
+\mathbb{E}[\psi(\gamma_i \circ \gamma)] = \psi(\bar\gamma \circ \gamma) \quad \text{where } \bar\gamma = \psi^{-1}(\mathbb{E}[\psi(\gamma_i)])
+$$
+  
+  - By setting $\mathbb{E}[\psi(\gamma_i)] = 0$, we can center the sample at the identity: $\psi(\gamma_{\text{id}})(t) = 0$.
+
+
+<div style="position: absolute; top: -1em; right: 0; padding: 0.5em;">
+  <a href="#/our-bayesian-framework-overall" style="color:#3333b3; font-size: 80%;">[Return]</a>
+</div>

@@ -1,0 +1,3239 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<script src="Defense_files/libs/clipboard/clipboard.min.js"></script>
+<script src="Defense_files/libs/quarto-html/tabby.min.js"></script>
+<script src="Defense_files/libs/quarto-html/popper.min.js"></script>
+<script src="Defense_files/libs/quarto-html/tippy.umd.min.js"></script>
+<link href="Defense_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="Defense_files/libs/quarto-html/light-border.css" rel="stylesheet">
+<link href="Defense_files/libs/quarto-html/quarto-syntax-highlighting-e1a5c8363afafaef2c763b6775fbf3ca.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.7.31">
+
+  <meta name="author" content="Woo Min Kim">
+  <meta name="dcterms.date" content="2025-06-20">
+  <title>Function Alignment In Presence of  Compositional and Additive Noises</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="Defense_files/libs/revealjs/dist/reset.css">
+  <link rel="stylesheet" href="Defense_files/libs/revealjs/dist/reveal.css">
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+      vertical-align: middle;
+    }
+    /* CSS for citations */
+    div.csl-bib-body { }
+    div.csl-entry {
+      clear: both;
+      margin-bottom: 0em;
+    }
+    .hanging-indent div.csl-entry {
+      margin-left:2em;
+      text-indent:-2em;
+    }
+    div.csl-left-margin {
+      min-width:2em;
+      float:left;
+    }
+    div.csl-right-inline {
+      margin-left:2em;
+      padding-left:1em;
+    }
+    div.csl-indent {
+      margin-left: 2em;
+    }  </style>
+  <link rel="stylesheet" href="Defense_files/libs/revealjs/dist/theme/quarto-3d4f3d1e28b80dc287b29820906191c4.css">
+  <link rel="stylesheet" href="theme.css">
+  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+ var mathElements = document.getElementsByClassName("math");
+ var macros = [];
+ for (var i = 0; i < mathElements.length; i++) {
+  var texText = mathElements[i].firstChild;
+  if (mathElements[i].tagName == "SPAN") {
+   katex.render(texText.data, mathElements[i], {
+    displayMode: mathElements[i].classList.contains('display'),
+    throwOnError: false,
+    macros: macros,
+    fleqn: false
+   });
+}}});
+  </script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css">
+  <link href="Defense_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
+  <link href="Defense_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
+  <link href="Defense_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
+  <link href="Defense_files/libs/revealjs/plugin/verticator/verticator.css" rel="stylesheet">
+  <link href="Defense_files/libs/revealjs/plugin/multimodal/multimodal.css" rel="stylesheet">
+  <link href="Defense_files/libs/revealjs/plugin/simplemenu/simplemenu.css" rel="stylesheet">
+  <link href="Defense_files/libs/revealjs/plugin/reveal-drawer/drawer.css" rel="stylesheet">
+  <link href="Defense_files/libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
+  <style type="text/css">
+    .reveal div.sourceCode {
+      margin: 0;
+      overflow: auto;
+    }
+    .reveal div.hanging-indent {
+      margin-left: 1em;
+      text-indent: -1em;
+    }
+    .reveal .slide:not(.center) {
+      height: 100%;
+      overflow-y: auto;
+    }
+    .reveal .slide.scrollable {
+      overflow-y: auto;
+    }
+    .reveal .footnotes {
+      height: 100%;
+      overflow-y: auto;
+    }
+    .reveal .slide .absolute {
+      position: absolute;
+      display: block;
+    }
+    .reveal .footnotes ol {
+      counter-reset: ol;
+      list-style-type: none; 
+      margin-left: 0;
+    }
+    .reveal .footnotes ol li:before {
+      counter-increment: ol;
+      content: counter(ol) ". "; 
+    }
+    .reveal .footnotes ol li > p:first-child {
+      display: inline-block;
+    }
+    .reveal .slide ul,
+    .reveal .slide ol {
+      margin-bottom: 0.5em;
+    }
+    .reveal .slide ul li,
+    .reveal .slide ol li {
+      margin-top: 0.4em;
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide ul[role="tablist"] li {
+      margin-bottom: 0;
+    }
+    .reveal .slide ul li > *:first-child,
+    .reveal .slide ol li > *:first-child {
+      margin-block-start: 0;
+    }
+    .reveal .slide ul li > *:last-child,
+    .reveal .slide ol li > *:last-child {
+      margin-block-end: 0;
+    }
+    .reveal .slide .columns:nth-child(3) {
+      margin-block-start: 0.8em;
+    }
+    .reveal blockquote {
+      box-shadow: none;
+    }
+    .reveal .tippy-content>* {
+      margin-top: 0.2em;
+      margin-bottom: 0.7em;
+    }
+    .reveal .tippy-content>*:last-child {
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide > img.stretch.quarto-figure-center,
+    .reveal .slide > img.r-stretch.quarto-figure-center {
+      display: block;
+      margin-left: auto;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-left,
+    .reveal .slide > img.r-stretch.quarto-figure-left  {
+      display: block;
+      margin-left: 0;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-right,
+    .reveal .slide > img.r-stretch.quarto-figure-right  {
+      display: block;
+      margin-left: auto;
+      margin-right: 0; 
+    }
+  </style>
+</head>
+<body class="quarto-light">
+  <div class="reveal">
+    <div class="slides">
+
+<section id="title-slide" data-state="hide-menubar" class="quarto-title-block center">
+  <h1 class="title">Function Alignment In Presence of <br> Compositional and Additive Noises</h1>
+  <p class="subtitle">Ph.D Dissertation Defense</p>
+
+<div class="quarto-title-authors">
+<div class="quarto-title-author">
+<div class="quarto-title-author-name">
+Woo Min Kim 
+</div>
+        <p class="quarto-title-affiliation">
+            Department of Statistics, Florida State University
+          </p>
+    </div>
+</div>
+
+  <p class="date">2025-06-20</p>
+</section>
+<section id="acknowledgement" class="title-slide slide level2 unnumbered center" data-state="hide-menubar">
+<h2>Acknowledgement</h2>
+<ul>
+<li>I am sincerely thankful to my major advisor, <strong>Dr.&nbsp;Wei Wu</strong>, for his unwavering support, warm understanding, and encouragement in shaping my work and future path.</li>
+<li>I am deeply grateful to <strong>Dr.&nbsp;Anuj Srivastava</strong> for his guidance throughout this research.</li>
+<li>I deeply appreciate <strong>Dr.&nbsp;Eric Klassen</strong> and <strong>Dr.&nbsp;Xiulin Xie</strong> for their support and valuable feedbacks.</li>
+<li>Special thanks to <strong>Dr.&nbsp;Sutanoy Dasgupta</strong>, the co-author, for the research ideas and valuable assistance.</li>
+</ul>
+<p><strong>Thank you all for your support!</strong></p>
+<style>
+.reveal .slide .katex {
+  font-size: 1em;
+}
+.hh2{
+  font-size: 2.5rem !important;
+  color: #3333b3;
+  padding-top: 0.1em;
+  padding-bottom: 0.1em;
+  margin-bottom: 3rem !important;
+}
+.middle-content {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  height: 100%;
+  padding-left: 1em;
+}
+
+.middle-content2 {
+  /* display: flex; */
+  justify-content: center;
+  flex-direction: column;
+  height: 100%;
+  padding-left: 1em;
+}
+
+.custom-block {
+  border-radius: 16px;
+  box-shadow: 4px 4px 16px rgba(0, 0, 0, 0.25);
+  overflow: hidden;
+  margin: 1.5em 0;
+  line-height: 1.4;
+}
+
+.custom-block-header {
+  background-color: #2a2a94; /* deep blue */
+  color: white;
+  padding: 0em 0.5em;
+  font-size: 120%;
+}
+
+.custom-block-body {
+  padding: 0.5em 1em;
+  background-color: #f1f1f9;
+  color: #000;
+}
+
+.no-md p {
+  display: contents;
+  position: relative;
+}
+
+.drawing-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1000;
+  pointer-events: none;
+}
+
+</style>
+</section>
+
+
+
+<section id="brief-intro" class="title-slide slide level2 center" data-name="Introduction">
+<h2>Brief Intro</h2>
+<div class="middle-content">
+<ul>
+<li><strong>Two sources of variation</strong> in functional data:
+<ul>
+<li>Phase: temporal shifts of a function. (also known as compositional variation)</li>
+<li>Amplitude: changes in magnitude of a function. <br> <span style="padding-left:5em">(e.g., scaling, translation, additive noise process)</span></li>
+</ul></li>
+<li><strong>Problems</strong>:
+<ul>
+<li>Misalignment of phase leads to distorted key statistical summaries.</li>
+<li>With both compositional and additive noises, the alignment of the signals becomes challenging.</li>
+</ul></li>
+<li><strong>Goal</strong>: <br>
+<div style="margin-left: 1em">
+In presence of both noises, <br> <span class="math inline">\qquad</span><strong>(1) align multiple signals</strong> or <strong>(2) estimate the underlying signal</strong> robustly.
+</div></li>
+</ul>
+</div>
+</section>
+
+<section id="past-functional-alignment-methods" class="title-slide slide level2 scrollable center">
+<h2>Past Functional Alignment Methods</h2>
+<div class="columns" style="margin: 0 auto; gap: 5em;">
+<div class="column" style="width:66%;">
+<div class="columns" style="gap: 1em;">
+<div class="column" style="width:49%;">
+<div style="text-align:center; margin-top:0.5em;">
+<strong>Early works</strong> <sup>1</sup>
+</div>
+<div>
+<br> aligned noisy functions in original function space with various penalties. (e.g., smoothness etc.)
+</div>
+</div><div class="column" style="width:49%;">
+<div style="text-align:center;">
+<strong>SRVF-based</strong> <sup>2</sup> <strong>deterministic methods</strong>
+</div>
+<p>uses panalty constraining warping toward identity warping function.<br></p>
+</div><div class="fragment" style="line-height:0.8">
+<br> <span style="margin-left:1em"><strong>↳</strong></span>
+<div style="display: flex; align-items: baseline; margin-top: -1.8em; margin-left: 2.5em; margin-right:2em;">
+<p><span>both<span class="math inline">^{(1,2)}</span> approaches are sensitive to the penalty function and its weight.</span></p>
+</div>
+</div>
+</div>
+</div><div class="column" style="width:33%;">
+<div style="text-align:center;">
+<strong>SRVF-based</strong> <sup>3</sup><br> <strong>Bayesian models</strong>
+</div>
+<div style="margin-top:0.8rem;">
+leverage probabilistic priors and define likelihood with SRVFs.
+</div>
+<br>
+<div class="fragment" style="line-height: 1">
+<strong>↳</strong> assumed noise-free data and did not model additive noise.<sup>4</sup>
+</div>
+</div></div>
+<aside><ol class="aside-footnotes"><li id="fn1"><p><span class="citation" data-cites="kneip1992landmark">Kneip and Gasser (<a href="#/references" role="doc-biblioref" onclick="">1992</a>)</span>, <span class="citation" data-cites="ramsay1998curve">Ramsay and Li (<a href="#/references" role="doc-biblioref" onclick="">1998</a>)</span>, <span class="citation" data-cites="gervini2004self">Gervini and Gasser (<a href="#/references" role="doc-biblioref" onclick="">2004</a>)</span>, <span class="citation" data-cites="james2007curve">James (<a href="#/references" role="doc-biblioref" onclick="">2007</a>)</span></p></li><li id="fn2"><p><span class="citation" data-cites="srivastava2016functional">Srivastava and Klassen (<a href="#/references" role="doc-biblioref" onclick="">2016</a>)</span></p></li><li id="fn3"><p><span class="citation" data-cites="cheng2016bayesian">Cheng, Dryden, and Huang (<a href="#/references" role="doc-biblioref" onclick="">2016</a>)</span>; <span class="citation" data-cites="lu2017bayesian">Lu, Herbei, and Kurtek (<a href="#/references" role="doc-biblioref" onclick="">2017</a>)</span>; <span class="citation" data-cites="ma2025bayesian">Ma and Wu (<a href="#/references" role="doc-biblioref" onclick="">2025</a>)</span></p></li><li id="fn4"><p><span class="citation" data-cites="tucker2021multimodal">Tucker, Shand, and Chowdhary (<a href="#/references" role="doc-biblioref" onclick="">2021</a>)</span> indeed addressed functional alignment in the presence of additive noise. However,<br>
+(1) it is limited to pairwise alignment, and<br>
+(2) their hierarchical Bayesian model employed is not fully plausible.</p></li></ol></aside></section>
+
+<section id="projects-two-paths-forward" class="title-slide slide level2 center" data-auto-animate="true">
+<h2 data-id="quarto-animate-title">Projects: Two Paths Forward</h2>
+<div class="columns" style="display: flex; gap: 0.5em;">
+<div class="column" style="display: flex;">
+<!-- <div class="middle-content" style="line-height: 1;"> -->
+<div style="border: 2.5px solid black; padding-left:0.2em; padding-top:0.2em;padding-right:0.2em; border-radius: 4px;">
+<div data-id="slide-title" style="font-size: 2rem; color: #3333b3;  text-align: center;">
+(1)<span class="math inline">\,\,</span>Persistent Peak Diagrams (PPD)
+</div>
+<div style="margin-left: 1em">
+<p>A visual tool, which explores the effect of varying penalty weights on function alignment.</p>
+<ul>
+<li>Visualize how the alignment changes with varying penalty weights.</li>
+<li>Track the peaks in the aligned mean function to choose optimal penalty weights based on the stability of these peaks.</li>
+</ul>
+</div>
+</div>
+</div><div class="column" style="display: flex;">
+<div style="border: 2.5px solid black; padding-left:0.2em; padding-top:0.2em;padding-right:0.2em; border-radius: 4px;">
+<div style="font-size: 2rem; color: #3333b3; text-align: center;">
+(2)<span class="math inline">\,\,\,</span>Bayesian Registration
+</div>
+<div style="margin-left: 1em">
+<p>A probabilistic framework with prior distribution provides a <strong>flexible</strong> function-alignment under noisy observations.</p>
+<ul>
+<li>Enables the incorporation of prior knowledge</li>
+<li>Allows multiple plausible alignments</li>
+</ul>
+<p>We enable a more <strong>robust</strong> registration under noisy observations than previous SRVF-based approaches.</p>
+</div>
+</div>
+</div></div>
+</section>
+
+<section id="section" class="title-slide slide level2 unnumbered center" data-name="Project 1">
+<h2></h2>
+<h2 style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, 0%); text-align: center; line-height: 1.4; width: 70%;">
+<span data-id="slide-title">Project 1</span> <br><br> <strong>Signal Estimation in the Presence of Phase and Amplitude Noises via PPD</strong>
+</h2>
+<!-- <h2 class="r-fit-text"> **Function Alignment In Presence of </br> Phase and Amplitude Noises with Visual Aid** </h2> -->
+</section>
+
+<section>
+<section id="phase-and-amplitude-variation-model" class="title-slide slide level2 center">
+<h2>Phase and Amplitude Variation Model</h2>
+<div class="middle-content2">
+Given an <span style="color: red"> <strong>underlying signal <span class="math inline">\boldsymbol{g}</span></strong> </span>, the generative data model is:
+<div style="font-size: 140%;">
+<p><span class="math display">
+f_i(t)={\color{green}a_i} {\color{red}g}({\color{blue}\gamma_i}(t))+{\color{magenta}\epsilon_i}(t), \quad i=1,2,\ldots,n.
+</span></p>
+</div>
+</div>
+<div class="columns" style="display: flex; gap: 0.5em;">
+<div class="column" style="width:45%;">
+<span style="color:green"> <strong>Multiplicative noise</strong></span>: <br>
+<div style="padding-left:1em; padding-right:1em">
+<span class="math inline">{\color{green}a_i} \in \mathbb{R}^+</span> and i.i.d. with <span class="math inline">\mathbb{E}[a_i] = 1</span>.
+</div>
+<br><br> <span style="color:magenta"> <strong>Additive noise function</strong></span>: <br>
+<div style="padding-left:1em; padding-right:1em">
+<span class="math inline">{\color{magenta}\epsilon_i} \in \mathbb{L}^2</span>, random smooth function with <span class="math inline">\mathbb{E}[\epsilon_i(t)] = 0</span>.
+</div>
+</div><div class="column" style="width:55%;">
+<span style="color:blue"><strong>Warping noise</strong></span>: <br>
+<div style="padding-left:1em; padding-right:1em">
+A warping function, <span class="math inline">{\color{blue}\gamma_i} \in \Gamma</span>, controls the phase variation. Here, <span class="math inline">\Gamma</span> is a diffeomorphism forming a group s.t.
+</div>
+<div style="font-size:90%">
+<span class="math display">
+\Gamma = \{\gamma:[0,1]\to[0,1] \mid \gamma(0) = 0, \gamma(1) = 1, \dot \gamma &gt; 0\},
+</span>
+</div>
+<div style="padding-left:1em; padding-right:1em">
+We assume <span class="math inline">\{\gamma_i\}_{i=1}^n</span> is centered at <span class="math inline">\gamma_{\mathrm{id}}</span>.
+</div>
+</div></div>
+</section>
+<section id="generative-model-comparison" class="slide level3 center">
+<h3>Generative Model Comparison</h3>
+<div class="columns" style="display: flex; gap: 0.05em;">
+<div class="column" style="item-align: center; text-align: center; width: 50%;">
+<div class="fragment" data-fragment-index="1">
+Additive Noise Model<br> <img src="figs/ppd/intro/fig1.svg">
+</div>
+<div class="fragment" data-fragment-index="2">
+Phase Noise Model<br> <img src="figs/ppd/intro/fig2.svg">
+</div>
+</div><div class="column" style="item-align: center; text-align: center; padding-top:0.3em; width: 50%;">
+<div class="fragment" data-fragment-index="3">
+Phase and Additive Noise Model<br> <img src="figs/ppd/intro/fig3.svg">
+</div>
+</div></div>
+</section>
+<section id="penalized-functional-alignment" class="slide level3" data-auto-animate="true">
+<h3 data-id="quarto-animate-title">Penalized Functional Alignment</h3>
+<!-- <div style="margin-left: 1em; font-size: 90%;"> -->
+<div class="middle-content" style="margin-top: -1em;">
+<p>Given an absolutely continuous function, <span class="math inline">f</span>, we denote SRVF:</p>
+<div style="margin-top: -1em;">
+<span class="math display">q := \mathrm{srvf}(f) = \textrm{sign}(f^\prime)\sqrt{|f^\prime|}</span>
+</div>
+<div style="margin-top: -0.5em;">
+Penalized function alignment in SRVF-framework with multiple absolutely continuous functions, <span class="math inline">\{f_i\}_{i=1}^n</span> is formulated as:
+</div>
+<div data-id="eq" style="font-size:120%; margin-top: -0.5em;">
+<span class="math display">\min_{\bar{q} \in \mathbb{L}^2} \left[ \sum_{i=1}^n \left( \min_{c_i \in \mathbb{R}, \gamma_i\in \Gamma} \left( \| {\color{magenta}\bar{q}} - {\color{green}c_i} (q_i \star {\color{blue}\gamma_i})\|^2 + \lambda \mathcal{R}(\gamma_i) \right) \right) \right]</span>
+</div>
+<div style="margin-top: -1em;">
+<p><span class="math display">\begin{align*}
+\begin{array}{lclc}
+\textsf{SRVFs of data: } &amp; q_i := \mathrm{srvf}(f_i), &amp;\qquad {\color{green}\textsf{scale factor: }} &amp; {\color{green}c_i := \sqrt{a_i}}\\
+{\color{magenta}\textsf{template function: }}&amp; {\color{magenta}\bar{q} \in \mathbb{L}^2} &amp; \qquad {\color{blue}\textsf{warping functions: }} &amp; {\color{blue}\gamma_i \in \Gamma} \\
+\textsf{penalty weight: }&amp; \lambda \in \mathbb{R}^+ &amp; \qquad  \textsf{penalty choice:} &amp; \mathcal{R}(\gamma_i) := \|1-\dot\gamma_i\|^2
+\end{array}
+\end{align*}</span></p>
+</div>
+<div class="fragment" style="border:1px solid black; background-color: #eeeeee; margin-top:-0.5em; padding:0.5rem">
+Our approach is
+<div>
+(1)<span class="math inline">\,\,</span>Finding an appropriate alignment level (denoted by <span class="math inline">\lambda^*</span>) via a <strong>visual tool</strong>.
+</div>
+<div>
+(2)<span class="math inline">\,\,</span>Estimate <span class="math inline">g</span> from the aligned functions with <span class="math inline">\lambda^*</span>
+</div>
+</div>
+</div>
+</section></section>
+<section id="brief-recap" class="title-slide slide level2 center">
+<h2>Brief Recap</h2>
+<div class="r-stack">
+<div style="margin-top: -2em;">
+<p><img src="figs/ppd/ppd_diagrams.svg" style="width: 100%; height: auto; display: block; margin: 0 auto;"></p>
+</div>
+<div>
+<div style="position: relative; height: 2em;">
+<p><a href="#/pesa" style="position: absolute; top: 4em; left: -14em; color:#3333b3; font-size: 80%; border: 3px solid red;"><strong>PESA</strong></a> <a href="#/step-1-persistent-peak-diagrams-ppd" style="position: absolute; top: -7.5em; left: 3em; color:#3333b3; font-size: 80%; border: 3px solid red;"><span style="opacity:0"><strong>(</strong>PPD<strong>)</strong></span></a> <a href="#/lambda-selection" style="position: absolute; top:0.95em; left: 0.5em; color:#3333b3; font-size: 200%; border: 3px solid red;"><span style="opacity:0">(<strong>plpa</strong>)</span></a> <a href="#/estimation-of-the-underlying-signal-g" style="position: absolute; top: -0.15em; left: 3.05em; color:#3333b3; font-size: 350%; border: 3px solid red;"><span style="opacity:0;">l<strong>pp</strong>l</span></a></p>
+</div>
+</div>
+</div>
+<!-- 
+## Main Update
+<h3>Step 0: Partial Function Alignment</h3>
+
+Given $\{\lambda_\ell\}_{\ell=1}^L$, we collected each $\hat{g}_{\lambda_\ell}$ by aligning from the raw data.
+
+In our new approach, to save computational cost, we compute $\hat{g}_{\lambda_\ell}$ sequentially. -->
+</section>
+
+<section id="results" class="title-slide slide level2 center">
+<h2>Results</h2>
+<div style="line-height: 0.5; margin-top: -1em;">
+<div class="columns" style="display: flex;">
+<div class="column" style="width:20%;">
+
+</div><div class="column center" style="width:30%;">
+<div style="item-align: center; text-align: center;">
+<a href="#/" data-modal-type="image" data-modal-url="./figs/ppd/sim/ex2(1).png"><img data-src="./figs/ppd/sim/ex2(1).png"></a>
+<p style="margin-top:-0.8em;">
+Raw data
+</p>
+</div>
+</div><div class="column center" style="width:30%;">
+<div style="item-align: center; text-align: center;">
+<a href="#/" data-modal-type="image" data-modal-url="./figs/ppd/sim/ex2(2).png"><img data-src="./figs/ppd/sim/ex2(2).png"></a>
+<p style="margin-top:-0.8em;">
+Fully elastic alignment
+</p>
+</div>
+</div><div class="column" style="width:5%;">
+
+</div><div class="column" style="width:15%;">
+<p><img data-src="./figs/ppd/sim/legend.png"></p>
+</div></div>
+<div class="columns" style="display: flex;">
+<div class="column center" style="width:20%;">
+<div style="item-align: center; text-align: center;">
+<a href="#/" data-modal-type="image" data-modal-url="./figs/ppd/sim/ex2(3).png"><img data-src="./figs/ppd/sim/ex2(3).png"></a>
+<p style="margin-top:-0.8em;">
+PPD bar-chart
+</p>
+</div>
+</div><div class="column center" style="width:20%;">
+<div style="item-align: center; text-align: center;">
+<a href="#/" data-modal-type="image" data-modal-url="./figs/ppd/sim/ex2(4).png"><img data-src="./figs/ppd/sim/ex2(4).png"></a>
+<p style="margin-top:-0.8em;">
+PPD surface
+</p>
+</div>
+</div><div class="column center" style="width:20%;">
+<div style="item-align: center; text-align: center;">
+<a href="#/" data-modal-type="image" data-modal-url="./figs/ppd/sim/ex2(5).png"><img data-src="./figs/ppd/sim/ex2(5).png"></a>
+<p style="margin-top:-0.8em;">
+Aligned functions by proposed method
+</p>
+</div>
+</div></div>
+</div>
+</section>
+
+<section id="section-1" class="title-slide slide level2 unnumbered center" data-auto-animate="true" data-name="Project 2">
+<h2 data-id="quarto-animate-title"></h2>
+<h2 style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, 0%); text-align: center; line-height: 1.4; width: 70%;">
+<span data-id="slide-title">Project 2</span> <br><br> <strong>Bayesian Registration of Functions with Compositional and Additive Noises</strong>
+</h2>
+</section>
+
+<section id="introduction" class="title-slide slide level2 center scrollable">
+<h2>Introduction</h2>
+<div class="middle-content">
+<p>To earn the robustness in the alignment, our approach resorts to:</p>
+<ol type="1">
+<li><p><span style="color:red"><strong>Bayesian model</strong></span> to quantify the uncertainty in the alignment process.</p></li>
+<li><p><span style="color:red"><strong>Centered log-ratio</strong> (CLR)</span> representation of warping functions to achieve mapping to <strong>a subspace of <span class="math inline">\mathbb{L}^2</span> via isometrically isomorphism.</strong></p></li>
+<li><p><span style="color:red"><strong>Original function space</strong> (<strong><span class="math inline">\boldsymbol{f}</span>-space</strong>)</span> to compute the <span class="math inline">\mathbb{L}^2</span> distances.</p></li>
+</ol>
+</div>
+</section>
+
+<section>
+<section id="registration-frameworks" class="title-slide slide level2 center scrollable">
+<h2>Registration Frameworks</h2>
+<div class="middle-content2">
+<p>Three main distinctions in our registration framework from previous methods:</p>
+<ol type="1">
+<li><p><strong>Deterministic vs Bayesian Method</strong></p></li>
+<li><p><strong>SRVF vs CLR representations of <span class="math inline">\gamma</span></strong></p></li>
+<li><p><strong>SRVF-space (<span class="math inline">q</span>-space) vs Original-function-space (<span class="math inline">f</span>-space)</strong></p></li>
+</ol>
+</div>
+</section>
+<section id="section-2" class="slide level3" data-auto-animate="true">
+<h3 data-id="quarto-animate-title"></h3>
+<div data-id="slide-title">
+<div class="hh2">
+Registration Frameworks <span class="math inline">\quad\qquad</span><span style="font-size:70%">(1)<span class="math inline">\quad</span>Deterministic vs Bayesian Method </span>
+</div>
+</div>
+<div style="margin-top: -2em;">
+<div class="panel-tabset">
+<ul id="tabset-1" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-1-1"><span style="color:#3333b3; font-size:80%;"><strong>Deterministic method</strong></span></a></li><li><a href="#tabset-1-2"><span style="color:#3333b3; font-size:80%;"><strong>Bayesian Modeling</strong></span></a></li></ul>
+<div class="tab-content">
+<div id="tabset-1-1">
+<div style="padding-left: 1em; font-size: 90%; line-height: 1.2;">
+<p>A <strong>deterministic</strong> method (e.g., dynamic programming) finds a single optimal warping function <span class="math inline">\gamma</span> that maximizes the likelihood.</p>
+<ul>
+<li><p>(<em>Flexibility Issues</em>)</p>
+<ul>
+<li>Does <strong>not quantify uncertainty</strong> in the alignment process.</li>
+<li>Fails to represent <strong>multiple plausible alignments</strong>.</li>
+</ul></li>
+<li><p>(<em>Computational Considerations</em>)<br></p>
+<ul>
+<li>DP has quadratic time complexity, making it <strong>inefficient</strong> for large numbers of discrete points.</li>
+<li>DP does <strong>not</strong> account for <strong>smoothness</strong>, often resulting in undesirable or jagged warpings.</li>
+</ul></li>
+</ul>
+</div>
+</div>
+<div id="tabset-1-2">
+<div style="padding-left: 1em;font-size: 90%; line-height: 1.2;">
+<p>The <strong>Bayesian framework</strong> offers a probabilistic alternative with advantages in flexibility and interpretability.</p>
+<ul>
+<li>(<em>Flexibility Advantages</em>)
+<ul>
+<li>Enables <strong>uncertainty quantification</strong> through posterior distributions.</li>
+<li>Captures <strong>multiple plausible alignments</strong> by a comprehensive exploration of warping function space.</li>
+<li>Incorporates of the <strong>prior information</strong> of warping functions.</li>
+</ul></li>
+<li>(<em>Computational Considerations</em>)
+<ul>
+<li><p>Offers <strong>linear computational cost</strong> in the number of discrete points, making it more efficient for long functions.</p></li>
+<li><p>Allows explicit modeling of <strong>smooth</strong> warping functions via prior design.</p></li>
+</ul></li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="registration-frameworks-2" class="slide level3 scrollable" data-auto-animate="true">
+<h3 data-id="quarto-animate-title"></h3>
+<div data-id="slide-title">
+<div class="hh2">
+Registration Frameworks <span class="math inline">\quad\qquad</span><span style="font-size:70%">(2)<span class="math inline">\quad</span>SRVF vs CLR representations of <span class="math inline">\gamma</span></span>
+</div>
+</div>
+<div style="margin-top: -2em;">
+<div class="panel-tabset">
+<ul id="tabset-2" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-2-1"><span style="color:#3333b3; font-size:80%;"><strong>SRVF representation of <span class="math inline">\gamma</span></strong></span></a></li><li><a href="#tabset-2-2"><span style="color:#3333b3; font-size:80%;"><strong>CLR representation of <span class="math inline">\gamma</span></strong></span></a></li></ul>
+<div class="tab-content">
+<div id="tabset-2-1">
+<div style="padding-left: 1em;font-size: 90%; line-height: 1.2;">
+<p>Previous Bayesian registration approaches <sup>1</sup> maps the warping functions to the SRD manifold <span class="math display">
+\mathbb{S}^+_{\infty} = \left\{ q_\gamma \in \mathbb{L}^2 \,\middle|\, q_\gamma(t) \geq 0,\; \int_0^1 q_\gamma^2(t)\, dt = 1 \right\} \qquad \text{where } \quad  q_\gamma(t) = \mathtt{srvf}(\gamma).
+</span></p>
+<ul>
+<li><p>Gaussian Process (GP) prior for warping functions on the tangent space at <span class="math inline">\gamma_{\mathrm{id}}</span></p></li>
+<li><p>Literatures<sup>2</sup> addressed the SRVF representation may cause bias and inefficience in computation in posterior inference due to:</p>
+<ul>
+<li>geometric distortion</li>
+<li>improper posterior sampling</li>
+</ul></li>
+</ul>
+</div>
+</div>
+<div id="tabset-2-2">
+<div style="font-size:90%; line-height: 1; padding-left: 1em;">
+<p><span class="citation" data-cites="ma2024stochastic">Ma, Zhou, and Wu (<a href="#/references" role="doc-biblioref" onclick="">2024</a>)</span> proposed the use of CLR<sup>3</sup> for warping function representation.</p>
+<p><span class="math inline">\,\,</span>•<span class="math inline">\,\,\,</span>Consider <span class="math inline">\Gamma_1 \subset \Gamma</span> with bounded derivatives s.t. <span class="math display">\Gamma_1 = \left\{ \gamma: [0,1] \rightarrow [0,1] \mid  \gamma(0) = 0, \gamma(1) = 1, 0 &lt; m_\gamma&lt;\dot\gamma(t) &lt; M_\gamma &lt; \infty\right\}.</span></p>
+<!-- - To build an isometric isomorphism to transform $\Gamma_1$ to a proper Euclidean space, it is required to struct $\Gamma_1$ is an inner-product space under $\mathbb{L}^2$ norm. -->
+<p><span class="math inline">\,\,</span>•<span class="math inline">\,\,\,</span>Definitions of <strong>linear operations</strong> and <strong>inner product</strong> on <span class="math inline">\Gamma_1</span>.</p>
+<div class="columns" style="display: flex; margin-top: -0.5em;">
+<div class="column" style="width:49%;">
+<div style="margin-top: -1em;">
+<div class="custom-block" style="box-sizing: border-box; overflow-wrap: break-word; width: 98%;">
+<div class="custom-block-body" data-font-family="Computer Modern">
+For <span class="math inline">f, \, g \in \Gamma_1</span>, the <strong>product operator</strong>, <br> <span class="math inline">\,\,\, \oplus_\Gamma</span>: <span class="math inline">\Gamma_1 \times \Gamma_1 \rightarrow \Gamma_1</span>
+<div style="margin-top: -0.8em;">
+<span class="math display"> [f \oplus_\Gamma g](t) = \frac{\int_0^t \dot f(s)\dot g(s) ds}{\int_0^1 \dot f(\tau)\dot g(\tau) d\tau} </span>
+</div>
+</div>
+</div>
+</div>
+</div><div class="column" style="width:49%;">
+<!-- <div style="line-height: 0.8; border: 2px solid #000000; padding-left: 0.5em; border-radius: 8px; background-color: #ffffff;"> -->
+<div style="margin-top: -1em;">
+<div class="custom-block" style="box-sizing: border-box; overflow-wrap: break-word; width: 98%;">
+<div class="custom-block-body" data-font-family="Computer Modern">
+For <span class="math inline">f \in \Gamma_1</span>, <span class="math inline">\, \alpha \in \mathbb{R}</span>, the <strong>power operator</strong>, <br> <span class="math inline">\,\,\, \odot_\Gamma</span>: <span class="math inline">\mathbb{R} \times \Gamma_1 \rightarrow \Gamma_1</span>
+<div style="margin-top: -0.8em;">
+<span class="math display">
+[\alpha \odot_\Gamma f](t) = \frac{\int_0^t {\dot f}^{\alpha}(s) ds}{\int_0^1 {\dot f}^{\alpha}(\tau) d\tau}
+</span>
+</div>
+</div>
+</div>
+</div>
+</div></div>
+<!-- <div style="line-height: 0.8; border: 2px solid #000000; padding-left: 0.5em; border-radius: 8px; background-color: #ffffff; margin-top:0.5em">  -->
+<div style="margin-top: -1.5em;">
+<div class="custom-block" style="box-sizing: border-box; overflow-wrap: break-word; width: 98%;">
+<div class="custom-block-body" data-font-family="Computer Modern">
+For <span class="math inline">f, \, g \in \Gamma_1</span>, the <strong>inner product</strong>, <span class="math inline">\langle \cdot,\cdot \rangle_{\Gamma}: \Gamma_1 \times \Gamma_1 \rightarrow \mathbb{R}</span> <span class="math display">\langle f,g \rangle_{\Gamma} = \int_0^1 \log(\dot f(t)) \log(\dot g(t))dt - \int_0^1 \log(\dot f(s))ds \int_0^1 \log(\dot g(\tau)) d\tau</span>
+</div>
+</div>
+</div>
+<p><span class="math inline">\,\,</span>•<span class="math inline">\,\,\,</span>Let <span class="math inline">H(0,1) \subset \mathbb{L}^2([0,1])</span> be the space of functions with zero integral over <span class="math inline">[0,1]</span> and bounded functions:</p>
+<div style="margin-top: -0.8em;">
+<span class="math display">H(0,1) = \left\{ h \in \mathbb{L}^2([0,1]) \;\middle|\; \int_0^1 h(t)\,dt = 0,\; -\infty&lt; m_h &lt; h(t) &lt; M_h &lt; \infty \right\}
+</span>
+</div>
+<!-- - $\Gamma_1$ is closed under the operations $\oplus_\Gamma$ and $\odot_\Gamma$, making it a **vector space**. -->
+<span class="math inline">\,\,</span>•<span class="math inline">\,\,\,</span>CLR transformation, <span class="math inline">\psi: \Gamma_1 \rightarrow H(0,1)</span> and its inverse, <span class="math inline">\psi^{-1}</span>: <br> <span class="math inline">\quad</span> For all <span class="math inline">\gamma \in \Gamma_1, \,\, h \in H(0,1)</span>,
+<div style="margin-top: -1em;">
+<p><span class="math display">\psi(\gamma)(t) = \log(\dot\gamma(t)) - \int_0^1 \log(\dot\gamma(s))ds, \qquad
+\psi^{-1}(h)(t) = \frac{ \int_0^t \exp{ (h(s)) } ds }{ \int_0^1 \exp{ (h(\tau)) }  d\tau}</span></p>
+</div>
+<div style="margin-top: -0.8em;">
+<span class="math inline">\,\,</span>•<span class="math inline">\,\,\,</span>The spaces <span class="math inline">H(0,1)</span> and <span class="math inline">\Gamma_1</span> are <strong>isometric</strong> and <strong>isomorphic</strong> i.e.,<br> <span class="math inline">\quad</span> For all <span class="math inline">f,\, g \in \Gamma_1</span> and <span class="math inline">\alpha \in \mathbb{R}</span>,
+<div style="margin-left:35%;margin-top:-1.2em;">
+<span class="math inline">\langle \psi(f), \psi(g) \rangle_{\mathbb{L}^2} = \langle f, g \rangle_{\Gamma} \quad</span> <br> <span class="math inline">\psi(f \oplus_{\Gamma} g) = \psi(f) + \psi(g), \,\,\, \psi(\alpha \odot_\Gamma f) = \alpha \cdot \psi(f)</span>
+</div>
+</div>
+<br> <span class="math inline">\,\,</span>•<span class="math inline">\,\,\,</span>
+<div style="margin-left: 1.25em; margin-top: -1.2em;">
+CLR enables <span style="color:red;"><strong>directly representation of warpings in a subspace of <span class="math inline">\mathbb{L}^2</span></strong></span> without geometric distortion.
+</div>
+<br><span class="math inline">\,\,</span>•<span class="math inline">\,\,\,</span>
+<div style="margin-left: 1.25em; margin-top: -1.6em;">
+<p>CLR does not require truncation to handle improper sampling, improving computational efficiency and posterior inference. (<a href="#/illustration-of-fpca-in-srd-vs-clr" style="color:#3333b3">Example</a>) <br> <br></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<aside><ol class="aside-footnotes"><li id="fn5"><p><span class="citation" data-cites="lu2017bayesian">Lu, Herbei, and Kurtek (<a href="#/references" role="doc-biblioref" onclick="">2017</a>)</span>; <span class="citation" data-cites="tucker2021multimodal">Tucker, Shand, and Chowdhary (<a href="#/references" role="doc-biblioref" onclick="">2021</a>)</span></p></li><li id="fn6"><p><span class="citation" data-cites="happ2019general">Happ et al. (<a href="#/references" role="doc-biblioref" onclick="">2019</a>)</span>; <span class="citation" data-cites="ma2024stochastic">Ma, Zhou, and Wu (<a href="#/references" role="doc-biblioref" onclick="">2024</a>)</span></p></li><li id="fn7"><p><span class="citation" data-cites="egozcue2006hilbert">Egozcue, Dı́az–Barrero, and Pawlowsky–Glahn (<a href="#/references" role="doc-biblioref" onclick="">2006</a>)</span></p></li></ol></aside></section>
+<section id="registration-frameworks-3" class="slide level3" data-auto-animate="true">
+<h3 data-id="quarto-animate-title"></h3>
+<div data-id="slide-title">
+<div class="hh2">
+Registration Frameworks <span class="math inline">\quad\qquad</span><span style="font-size:70%">(3)<span class="math inline">\quad</span> <span class="math inline">q</span>-space vs <span class="math inline">f</span>-space</span>
+</div>
+</div>
+<div style="margin-top: -2em;">
+<div class="panel-tabset">
+<ul id="tabset-3" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-3-1"><span style="color:#3333b3; font-size:80%;"><strong>Alignment in <span class="math inline">q</span>-space</strong></span></a></li><li><a href="#tabset-3-2"><span style="color:#3333b3; font-size:80%;"><strong>Alignment in <span class="math inline">f</span>-space</strong></span></a></li></ul>
+<div class="tab-content">
+<div id="tabset-3-1">
+<div style="padding-left: 1em;">
+<p>It aligns functions by using <span class="math inline">\mathbb{L}^2</span> metric in the SRVF space (<strong><span class="math inline">\boldsymbol{q}</span>-space</strong>)</p>
+<ul>
+<li><p>(<em>Robustness Issue</em>)</p>
+<div style="padding-left: 1em;">
+<p>The SRVF transformation is a function of the first derivative, leaving high sensitivity to noise.</p>
+</div></li>
+<li><p>(<em>Previous approaches</em>):</p>
+<ul>
+<li><p><strong>pre-smoothing data</strong> but a mere smoothing individual functions may cause over- or under-smoothing.</p></li>
+<li><p><strong>penalized elastic alignment</strong> but to choose a proper penalty weight becomes a sensitive issue.</p></li>
+</ul></li>
+</ul>
+</div>
+</div>
+<div id="tabset-3-2">
+<div style="padding-left: 1em;">
+<ul>
+<li><p>We perform alignment directly in the <strong>original function space</strong> rather than SRVF space.</p></li>
+<li><p>The <strong>pinching effect</strong> arises when <span class="math inline">\dot{\gamma}(t) \to 0</span>, causing extreme compression and distortion of function features. (<a href="#/pinching-effect-example" style="color:#3333b3">Example</a>)</p></li>
+<li><p>By placing a GP prior on the CLR-transformed warping <span class="math inline">\psi(\gamma)</span>, we ensure:</p>
+<ul>
+<li><span class="math inline">\dot{\gamma}(t) &gt; 0</span> almost surely (due to <span class="math inline">\log \dot{\gamma}</span>),</li>
+<li>Prevented extreme compression and distortion of functions with the bounded derivative.</li>
+</ul></li>
+<li><p>This Bayesian formulation <strong>systematically avoids pinching effect</strong>, unlike the penalty-based optimization methods that only weakly enforce identity proximity.</p></li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- <div style="padding-left: 1em; color: blue; margin-top: 2em;">
+<div class="fragment" data-fragment-index="5">
+  $\quad$**(remedy)** <span style="position: absolute; left:31%">Use $\mathbb{L}^2$ metric in the original function space (**$\boldsymbol{f}$-space**).</span>
+</div>
+</div> -->
+<!-- 
+## Old Works with noise ()
+
+<!-- Old works -> F--R (compositional noise only) -->
+<!-- ### Why Bayesian and randomness in warping function? {auto-animate=true .center} -->
+<!-- <div class="middle-content"> -->
+<!-- <div data-id="random-slide-content" style="padding-left: 1em;">
+
+- To Gain the robustness, 
+
+  1. pre-smoothing but a mere smoothing individual functions may cause **over- or under-smoothing**.
+
+  2. penalized elastic alignment but to choose a good **penalty weight** becomes a sensitive issue.
+
+</div> -->
+<!-- </div> -->
+<!-- 
+### {auto-animate=true .center}
+<div data-id = 'slide-title' class= "hh2">Why Bayesian Approach?</div>
+<div class="middle-content" auto-animate="true">
+<div style="padding-left: 1em; margin-top:-1em;">
+
+<h3> **---$\,\,$Under an additive noise model**</h3>
+<div style="padding-left: 1em;">
+
+  $\,\,$ This equivalence breaks down.
+
+  $$
+  y_i(t) = f_i(t) + \epsilon_i(t), \qquad \epsilon_i \in \mathbb{L}^2 \quad \textsf{ for } i = 1,2.
+  $$
+  
+- The SRVF transformation of $y_i$ is **nonlinear**, thus distorting both geometry and alignment structure in $q$-space.
+  - Aliging in $q$-space does not guarantee aligning of the signals. (<a href="#/robustness-by-the-use-of-f-space" style="color:#3333b3">example</a>)
+
+- SRVF transformation is a functions of the first derivative, which is sensitive to noise in the original function space.
+
+- A deterministic alignment in $q$-space may become **unreliable** in the presence of additive noise.
+
+- This motivates modeling $\gamma_i$ as a **random variable** to account for alignment uncertainty under noisy observations.
+
+</div>
+</div>
+
+</div> -->
+<!-- :::{.notes} -->
+<!-- The SRD manifold used in the SRVF framework is geometrically sound but statistically limiting. It's nonlinear and lives in the positive orthant, which complicates modeling and random sampling.
+
+These constraints make it difficult to apply methods like FPCA or Bayesian posterior inference directly in SRD space—samples can fall outside the valid region or distort alignment structure.
+
+In contrast, the CLR transformation maps warping functions to a linear inner-product space via an isometric isomorphism. This makes the space unconstrained, allowing for direct application of standard statistical methods without geometric distortion or invalid samples.
+
+As a result, CLR offers a more stable and flexible foundation for modeling warping variability, especially under uncertainty and in probabilistic frameworks. -->
+<!-- ::: -->
+</section></section>
+<section id="methods" class="title-slide slide level2 center">
+<h2>Methods</h2>
+<div class="middle-content">
+<ul>
+<li><h3>
+Pairwise Alignment
+</h3>
+<br></li>
+<li><h3>
+Multiple-Function Alignment
+</h3>
+<br></li>
+<li><h3>
+Underlying Signal Estimation
+</h3></li>
+</ul>
+</div>
+</section>
+
+<section>
+<section id="pairwise-alignment" class="title-slide slide level2 center">
+<h2>Pairwise Alignment</h2>
+<div class="middle-content2">
+<ul>
+<li><p>The <strong>likelihood</strong> model for pairwise alignment <span class="math display">
+  y_2([t]) - (y_1 \circ \gamma)([t]) \mid \gamma \sim \mathcal{N}(\mathbf{0},\sigma^2\mathbf{I})
+</span> <!-- <div style="margin-top: -1em;"> --> <span class="math display">
+\begin{align*}
+\begin{array}{lcl}
+\textsf{noisy data: }&amp; y_1,y_2 \in \mathbb{L}^2, &amp;\qquad \textsf{ discretized time: }&amp; [t] \in \mathbb{R}^{T}\\
+\textsf{error variance: } &amp; \sigma^2 \in \mathbb{R}^+, &amp; \qquad \textsf{ identity matrix: }&amp; \mathbf{I}\in\mathbb{R}^{T\times T}
+\\
+\textsf{warping function: } &amp; \gamma \in \Gamma_1
+\end{array}
+\end{align*}
+</span> <!-- </div> --></p></li>
+<li><p>Gaussian Process prior for warping function <span class="math inline">\gamma</span>: <span class="math display">
+  h_\gamma \sim \mathcal{GP}(\mu_h, \mathcal{K}_h), \textsf{ where } h_\gamma = \psi(\gamma)
+</span></p></li>
+</ul>
+</div>
+</section>
+<section id="posterior-inference-for-functions-i" class="slide level3 center scrollable">
+<h3>Posterior Inference for Functions (I)</h3>
+<div class="middle-content">
+<ul>
+<li><p>We adopt the Z-mixture preconditioned Crank–Nicolson (Z-pCN)<sup>1</sup> method, as a MCMC method for efficient posterior sampling.</p></li>
+<li><p><strong>Finite-dimensional case:</strong><br>
+Posterior density of parameter <span class="math inline">\theta</span> given data <span class="math inline">y</span> is defined by Bayes’ rule: <span class="math display">
+p(\theta \mid y) \propto p(y \mid \theta) \pi(\theta)
+</span></p></li>
+<li><p><strong>Infinite-dimensional case:</strong> (e.g., functional parameters)<br>
+The posterior and prior <strong>densities are not well-defined</strong>, making direct inference infeasible.</p></li>
+</ul>
+</div>
+<aside><ol class="aside-footnotes"><li id="fn8"><p><span class="citation" data-cites="lu2017bayesian">Lu, Herbei, and Kurtek (<a href="#/references" role="doc-biblioref" onclick="">2017</a>)</span>; <span class="citation" data-cites="ma2025bayesian">Ma and Wu (<a href="#/references" role="doc-biblioref" onclick="">2025</a>)</span></p></li></ol></aside></section>
+<section id="posterior-inference-for-functions-ii" class="slide level3 center scrollable">
+<h3>Posterior Inference for Functions (II)</h3>
+<div class="middle-content">
+<ul>
+<li><strong>preconditioned Crank–Nicolson (pCN)</strong><sup>1</sup>
+<ul>
+<li>Extends Metropolis-Hastings sampling with Gaussian-based prior measure to function spaces.</li>
+<li>is <strong>robust to time-discretization</strong>. (its performance is stable with the discretization resolution.)</li>
+</ul></li>
+<li>The pCN method works with <strong>a Gaussian Process prior and a likelihood</strong>, where the acceptance probability depends only on the <strong>finite-dimensional likelihood</strong> (by time discretization), enabling feasible sampling even in infinite-dimensional spaces.</li>
+</ul>
+</div>
+<aside><ol class="aside-footnotes"><li id="fn9"><p><span class="citation" data-cites="cotter2013mcmc">Cotter et al. (<a href="#/references" role="doc-biblioref" onclick="">2013</a>)</span></p></li></ol></aside></section>
+<section id="posterior-inference-for-pairwise-alignment" class="slide level3">
+<h3>Posterior Inference for Pairwise Alignment</h3>
+<div class="middle-content2" style="font-size:90%; line-height: 1;">
+<ul>
+<li>The posterior measure <span class="math inline">\mu</span> is absolutely continuous with respect to the prior measure <span class="math inline">\mu_0</span>, and the Radon-Nikodym derivative is given by:</li>
+</ul>
+<div style="margin-top: -1em;">
+<p><span class="math display">
+\frac{d\mu}{d\mu_0}(h_\gamma) \propto \mathcal{L}(h_\gamma; y_1, y_2)
+</span></p>
+</div>
+<ul>
+<li>The likelihood function <span class="math inline">\mathcal{L}(h_\gamma; y_1, y_2)</span> is defined as:</li>
+</ul>
+<div style="margin-top: -0.5em;">
+<p><span class="math display">
+\mathcal{L}(h_\gamma; y_1, y_2) \propto \exp\left\{ -\frac{1}{2\sigma^2} \left\| y_2([t]) - \left(y_1 \circ \psi^{-1}(h_\gamma)\right)([t]) \right\|^2 \right\},
+</span></p>
+</div>
+<div style="margin-top: -0.5em;">
+<ul>
+<li>With a random weight <span class="math inline">\beta \sim \pi_{\beta}</span> in the interval <span class="math inline">(0,1)</span>, the proposal <span class="math inline">h_\gamma'</span> is:</li>
+</ul>
+</div>
+<div style="margin-top: -0.5em;">
+<span class="math display">
+h_\gamma' = \mu_h + \sqrt{1 - \beta^2} \ (h_{\gamma}-\mu_h) + \beta \, \xi, \qquad \xi \sim \mathcal{GP}(0, \mathcal{K}_h),
+</span>
+</div>
+<div style="margin-top: -0.5em;">
+<ul>
+<li><p>Acceptance probability depends only on <span class="math inline">\mathcal{L}</span> that is <span class="math inline">\min\left(1, \frac{\mathcal{L}(h_\gamma'; \ y_1,y_2)}{\mathcal{L}(h_\gamma;\ y_1, y_2)}\right)</span></p></li>
+<li><p><span class="math inline">\beta \rightarrow 0</span> lead to small changes from <span class="math inline">h_\gamma</span> in the previous step.</p></li>
+<li><p><span class="math inline">\beta \rightarrow 1</span> yield more exploratory moves in proposal for faster mixing and jumps among local modes in the posterior distribution.</p></li>
+</ul>
+</div>
+</div>
+</section>
+<section id="pairwise-alignment-algorithm" class="slide level3 center">
+<h3></h3>
+<h3>
+Pairwise Alignment Algorithm <span class="fragment"> <a href="#/pairwise-alignment-1">(Simulation Results)</a></span>
+</h3>
+<div data-id="algorithm-box" style="font-size: 80%; line-height: 0.8; border: 1px solid #ccc; padding: 0em 1em; border-radius: 8px; background-color: #eeeeee;">
+<div style="color: black;" data-id="line1">
+<span class="math inline">\textsf{\textbf{Input: }} \quad \textsf{Noisy pairwise data} \quad y_1, y_2; \quad \textsf{pre-given distribution}  \quad \pi_{\beta_h};</span> <br> <span class="math inline">\qquad \qquad \textsf{prior mean function and covariance operator for warpings} \,\, \mu_h, \,\, \mathcal{K}_h; \quad \textsf{error variance} \,\, \sigma^2</span>
+</div>
+<div>
+<span class="math inline">\textsf{\textbf{Output: }} \quad \textsf{Posterior samples} \,\, \{\gamma^{(m)}\}_{m=2}^{M+1}</span>
+</div>
+<div>
+<p><span class="math inline">{\color{gray}\mathtt{1}.} \qquad h^{(1)} = \mu_h; \quad \gamma_h^{(1)} = \psi^{-1}(h^{(1)})</span></p>
+</div>
+<div>
+<span class="math inline">{\color{gray}\mathtt{2}.}  \qquad \textsf{\textbf{For }} m = 1 \textsf{\textbf{ to }} M:</span><br> <span class="math inline">{\color{gray}\mathtt{3}.}  \qquad \qquad \textsf{Generate }\beta_h \sim \pi_{\beta_h} \textsf{ and }\xi \sim GP(0, \mathcal{K}_h)</span><br> <span class="math inline">{\color{gray}\mathtt{4}.}  \qquad\qquad \textsf{Propose }h' = \sqrt{1-\beta_h^2} \, h^{(m)} + \beta_h \xi</span><br> <span class="math inline">{\color{gray}\mathtt{5}.}  \qquad\qquad \textsf{Update }h^{(m+1)} = \begin{cases} h' &amp; \textsf{with probability }\\
+h^{(m)} &amp; \textsf{with probability } 1 - \alpha_h \end{cases}</span> <span style="display: inline-block; position: relative; top: -1rem; left: -3em;"> <a href="#/" data-modal-type="image" data-modal-url="./figs/eqns/equation1.svg" data-modal-background="white" data-modal-padding="1em"><span class="math inline">\alpha_h</span></a> </span> <br> <span class="math inline">{\color{gray}\mathtt{6}.}  \qquad\qquad \gamma_{h}^{(m+1)} = \psi^{-1}(h^{(m+1)})</span>
+<div>
+<span class="math inline">{\color{gray}\mathtt{7}.}  \qquad \textsf{\textbf{End}}</span>
+</div>
+</div>
+</div>
+</section></section>
+<section>
+<section id="multiple-function-alignment" class="title-slide slide level2 center">
+<h2>Multiple-Function Alignment</h2>
+<div class="middle-content2">
+<ul>
+<li><p>The <strong>likelihood</strong> model for pairwise alignment <span class="math display">
+y_i([t]) - (g \circ \gamma_i^{-1})([t]) \mid g, \gamma_i \sim \mathcal{N}(\mathbf{0}, \sigma^2\mathbf{I}) \quad \text{for } i = 1, \ldots, N.
+</span> <span class="math display">
+\begin{align*}
+\begin{array}{lcl}
+\textsf{noisy data: }&amp; y_1,...,y_N \in \mathbb{L}^2, &amp;\qquad \textsf{ discretized time: }&amp; [t] \in \mathbb{R}^{T}\\
+\textsf{error variance: } &amp; \sigma^2 \in \mathbb{R}^+, &amp; \qquad \textsf{ identity matrix: }&amp; \mathbf{I}\in\mathbb{R}^{T\times T} \\
+\textsf{warping functions: } &amp; \gamma_1,...,\gamma_N \in \Gamma_1, &amp; \qquad \textsf{ template function: }&amp; g \in \mathbb{L}^2
+\end{array}
+\end{align*}
+</span></p></li>
+<li><p>Gaussian Process prior for warping function <span class="math inline">\gamma_i</span> and <span class="math inline">g</span>: <span class="math display">
+\begin{align*}
+h_{\gamma_i},...,h_{\gamma_N} &amp; \overset{\mathrm{i.i.d.}}{\sim} \mathcal{GP}(\mu_h, \mathcal{K}_h)\quad \textsf{ where } \quad h_{\gamma_i} = \psi(\gamma_i)\\
+g &amp; \sim \mathcal{GP}(\mu_g, \mathcal{K}_g)
+\end{align*}
+</span></p></li>
+</ul>
+</div>
+</section>
+<section id="posterior-inference-for-multiple-function-alignment" class="slide level3 center">
+<h3>Posterior Inference for Multiple-Function Alignment</h3>
+<div class="middle-content2">
+<ul>
+<li><p>The prior and posterior measures are supported on the product space <span class="math inline">\mathbb{L}^2([0,1])^{N+1}</span>, corresponding to the tuple <span class="math inline">(h_{\gamma_1}, \ldots, h_{\gamma_N}, g)</span>.</p></li>
+<li><p>The posterior measure <span class="math inline">\mu</span> is absolutely continuous with respect to the prior measure <span class="math inline">\mu_0</span>, and the Radon-Nikodym derivative is given by:</p></li>
+</ul>
+<div style="margin-top: -0.5em;">
+<span class="math display">\frac{d\mu}{d\mu_0}(h_{\gamma_1},\ldots,h_{\gamma_N},g) \propto \mathcal{L}(h_{\gamma_1},\ldots,h_{\gamma_N},g;\  y_1,\ldots y_N) = \prod_{i=1}^N \mathcal{L}(h_{\gamma_i},g;y_i)</span>
+</div>
+<div style="margin-top: -0.5em;">
+<span class="math display">\mathcal{L}(h_{\gamma_i},g; \ y_i) \propto \exp\Big\{ - \frac{1}{2\sigma^2}{\left\|y_i([t]) - (g \circ \gamma_{h_i}^{-1})([t])\right\|^2} \Big\}</span>
+</div>
+<div style="margin-top: -0.5em;">
+<ul>
+<li>By Z-pCN, <span class="math inline">h_{\gamma_i}</span> and <span class="math inline">g</span> are updated sequentially. (Metropolis-within-Gibbs sampling).</li>
+</ul>
+</div>
+</div>
+</section>
+<section id="centering-with-clr" class="slide level3 center scrollable">
+<h3>Centering with CLR</h3>
+<div class="middle-content2">
+<ul>
+<li>To ensure identifiability, one requires the warping functions to be centered around the identity <span class="math inline">\gamma_{\text{id}}</span>.</li>
+<li>SRVF Framework
+<ul>
+<li>The center of orbit is defined via the Karcher mean of <span class="math inline">\mathtt{srvf}(\gamma_i)</span></li>
+<li>SRVF’s <a href="#/" data-modal-type="image" data-modal-url="./figs/eqns/srvf-iso.svg" data-modal-background="white" data-modal-padding="1em">isometry under warping group action</a> allows to shift its Karcher mean at <span class="math inline">\mathtt{srvf}(\gamma_{\text{id}})</span>.</li>
+</ul></li>
+<li>CLR Framework
+<ul>
+<li>The CLR transformation lacks isometry but enjoys a mean-preserving property under warping group actions.<sup>1</sup> <span class="math display">
+\mathbb{E}[\psi(\gamma_i \circ \gamma)] = \psi(\bar\gamma \circ \gamma) \quad \text{where } \psi(\bar\gamma) = \mathbb{E}[\psi(\gamma_i)]
+</span></li>
+</ul>
+<!-- - By setting $\mathbb{E}[\psi(\gamma_i)] = 0$, we can center the sample at the identity: $\psi(\gamma_{\text{id}})(t) = 0$. -->
+<ul>
+<li>By setting <span class="math inline">\gamma = \bar \gamma^{-1}</span>, the updated warpings have mean <span class="math inline">\gamma_\mathrm{id}</span> (i.e, <span class="math inline">\mathbb{E}[\psi (\gamma_i \circ \gamma)] = 0</span>.)</li>
+</ul></li>
+</ul>
+</div>
+<aside><ol class="aside-footnotes"><li id="fn10"><p><span class="citation" data-cites="ma2025bayesian">Ma and Wu (<a href="#/references" role="doc-biblioref" onclick="">2025</a>)</span> Lemma 1</p></li></ol></aside></section>
+<section id="multiple-alignment-algorithm" class="slide level3 center">
+<h3></h3>
+<h3>
+Multiple Alignment Algorithm <span class="fragment"> <a href="#/multiple-function-alignment-1">(Simulation Results)</a></span>
+</h3>
+<div data-id="algorithm-box" style="font-size: 70%; line-height: 0.8; border: 1px solid #ccc; padding: 0em 1em; border-radius: 8px; background-color: #eeeeee;">
+<div style="color: black;" data-id="line1">
+<span class="math inline">\textsf{\textbf{Input: }} \quad \textsf{Noisy pairwise data} \quad y_1, ..., y_N; \quad \textsf{pre-given distributions}  \quad \pi_{\beta_h}, \,\, \pi_{\beta_g};</span> <br> <span class="math inline">\qquad \qquad \textsf{prior mean and covariance  for warpings and templates} \,\, \mu_h, \,\, \mu_g, \,\, \mathcal{K}_h, \,\, \mathcal{K}_g; \qquad \textsf{error variance} \,\, \sigma^2</span>
+</div>
+<div>
+<span class="math inline">\textsf{\textbf{Output: }} \quad \textsf{Posterior samples} \,\, \{\gamma^{(m)}\}_{m=2}^{M+1}</span>
+</div>
+<div>
+<span class="math inline">{\color{gray}\mathtt{1}.} \qquad \, g^{(1)} = \mu_g; \quad h_{1:N}^{(1)} = \mu_h; \quad \gamma_{h_{1:N}}^{(1)} = \psi^{-1}(h_{1:N}^{(1)})</span>
+</div>
+<div>
+<span class="math inline">{\color{gray}\mathtt{2}.}  \qquad \, \textsf{\textbf{For }} m = 1 \textsf{\textbf{ to }} M:</span><br> <span class="math inline">{\color{gray}\mathtt{3}.}  \qquad \qquad \, \textsf{\textbf{For }} i = 1 \textsf{\textbf{ to }} N:</span><br> <span class="math inline">{\color{gray}\mathtt{4}.}  \qquad \qquad \qquad \, \textsf{Generate }\beta_{h_i} \sim \pi_{\beta_h} \textsf{ and }\xi \sim GP(0, \mathcal{K}_h)</span><br> <span class="math inline">{\color{gray}\mathtt{5}.}  \qquad\qquad \qquad \, \textsf{Propose }h_i' = \sqrt{1-\beta_{h_i}^2} \, h^{(m)} + \beta_{h_i} \xi</span><br> <span class="math inline">{\color{gray}\mathtt{6}.}  \qquad\qquad \qquad \, \textsf{Update }h_i^{(m+1)} = \begin{cases} h'_i &amp; \text{with probability } \\
+h^{(m)}_i &amp; \text{with probability } 1 - \alpha_h
+\end{cases}</span> <span style="display: inline-block; position: relative; top: -0.8rem; left: -3em;"> <a href="#/" data-modal-type="image" data-modal-url="./figs/eqns/equation2.svg" data-modal-background="white" data-modal-padding="1em"><span class="math inline">\alpha_h</span></a> </span> <br> <span class="math inline">{\color{gray}\mathtt{7}.}  \qquad\qquad \qquad \gamma_{h_i}^{(m+1)} = \psi^{-1}(h_i^{(m+1)})</span>
+</div>
+<div>
+<span class="math inline">{\color{gray}\mathtt{8}.}  \qquad\qquad \, \textsf{\textbf{End}}</span>
+</div>
+<div>
+<span class="math inline">{\color{gray}\mathtt{9}.}  \qquad \qquad \,</span> <span class="math inline">\bar{\gamma} = \psi^{-1}\left(\frac{1}{N}\sum_{i=1}^N h_i^{(m+1)}\right)</span>
+</div>
+<div>
+<span class="math inline">{\color{gray}\mathtt{10}.}\qquad\qquad \gamma_{h_{1:N}}^{(m+1)}\leftarrow \gamma_{h_{1:N}}^{(m+1)} \circ \bar{\gamma}^{-1}</span>; <span class="math inline">\quad</span> <span class="math inline">g^{(m)} \leftarrow g^{(m)} \circ \bar{\gamma}^{-1}</span> <span class="math inline">\quad</span> <span class="math inline">h_{1:N}^{(m+1)} \leftarrow \psi(\gamma_{h_{1:N}}^{(m+1)})</span>
+</div>
+<div>
+<span class="math inline">{\color{gray}\mathtt{11}.}\qquad\qquad \textsf{Generate } \beta_{g} \sim \pi_{\beta_{g}} \textsf{ and } \zeta \sim GP(0, \mathcal{K}_g)</span>
+</div>
+<div>
+<span class="math inline">{\color{gray}\mathtt{12}.}\qquad\qquad \textsf{Propose }</span> <span class="math inline">{g}' = \mu_g +\sqrt{1-\beta_{g}^2} \, ({g}^{(m)}-\mu_g) + \beta_{g} \zeta</span>
+</div>
+<div>
+<span class="math inline">{\color{gray}\mathtt{13}.}\qquad\qquad \textsf{Update } g^{(m+1)} = \begin{cases} g' &amp; \textsf{with probability }\\
+g^{(m)} &amp; \textsf{with probability } 1 - \alpha_g
+\end{cases}</span><span style="display: inline-block; position: relative; top: -0.8rem; left: -2.5em;"> <a href="#/" data-modal-type="image" data-modal-url="./figs/eqns/equation3.svg" data-modal-background="white" data-modal-padding="1em"><span class="math inline">\alpha_g</span></a> </span>
+</div>
+<div>
+<span class="math inline">{\color{gray}\mathtt{14}.} \quad\,\,\,\, \textsf{\textbf{End}}</span>
+</div>
+</div>
+</section></section>
+<section>
+<section id="underlying-signal-estimation" class="title-slide slide level2 center">
+<h2>Underlying Signal Estimation</h2>
+<div class="middle-content2">
+<ul>
+<li><p>Generative data model: <span class="math display">
+y_i([t]) = c_i g \circ \gamma_i^{-1}([t]) + e_i + \epsilon_i([t]),  \quad \epsilon_i([t]) \sim \mathcal{N}(\mathbf{0}, \sigma^2\mathbf{I}) \quad \text{for} \quad i = 1, \ldots, N</span> <span class="math display">
+\begin{align*}
+\begin{array}{lcl}
+\textsf{noisy data: }&amp; y_1,...,y_N \in \mathbb{L}^2, &amp;\qquad \textsf{ discretized time: }&amp; [t] \in \mathbb{R}^{T}\\
+\textsf{error variance: } &amp; \sigma^2 \in \mathbb{R}^+, &amp; \qquad \textsf{ identity matrix: }&amp; \mathbf{I}\in\mathbb{R}^{T\times T} \\
+\textsf{scale factor: } &amp; c_1,...,c_N \in \mathbb{R}^+, &amp; \qquad \textsf{ translation: }&amp; e_1,...,e_N \in \mathbb{R} \\
+\textsf{warping functions: } &amp; \gamma_1,...,\gamma_N \in \Gamma_1, &amp; \qquad \textsf{ template function: }&amp; g \in \mathbb{L}^2
+\end{array}
+\end{align*}
+</span></p></li>
+<li><p>For identifiability, we assume <span class="math inline">\mathbb{E}[c_i] = 1</span>, <span class="math inline">\mathbb{E}[e_i] = 0</span>, and <span class="math inline">\mathbb{E}[\psi(\gamma_i)] = 0</span>.</p></li>
+<li><p>GP prior for warping function <span class="math inline">\gamma_i</span> and <span class="math inline">g</span> as in the multiple-function alignment.</p></li>
+<li><p>The prior for the scale factor <span class="math inline">c_i</span> and translation <span class="math inline">e_i</span> are given by: <span class="math display">
+c_i,...,c_N \overset{\mathrm{i.i.d.}}{\sim}\textsf{Gamma}(\textsf{shape: } \alpha_c, \textsf{ scale: } \theta_c), \qquad e_i,...,e_N \overset{\mathrm{i.i.d.}}{\sim} \mathcal{N}(0, \sigma^2_e)
+</span></p></li>
+</ul>
+</div>
+</section>
+<section id="posterior-inference-for-underlying-signal-estimation-i" class="slide level3 center">
+<h3>Posterior Inference for Underlying Signal Estimation (I)</h3>
+<div class="middle-content2">
+<ul>
+<li><p>The parameter probability measure for tuple <span class="math inline">(h_{\gamma_1}, \ldots, h_{\gamma_N}, g, c_1, \ldots, c_N, e_1, \ldots, e_N)</span> is supported on the product space <span class="math inline">\mathbb{L}^2([0,1])^{N+1} \times \mathbb{R}^{2N}</span>.</p></li>
+<li><p>The posterior measure <span class="math inline">\mu</span> is absolutely continuous with respect to the prior measure <span class="math inline">\mu_0</span>, and the Radon-Nikodym derivative is given by:</p></li>
+</ul>
+<p><span class="math display">
+\frac{d\mu}{d\mu_0}(h_{\gamma_{1:N}}, g, c_{1:N}, e_{1:N}) \propto \prod_{i=1}^N \mathcal{L}(h_{\gamma_i}, g, c_i, e_i;\ y_i)
+</span></p>
+<div style="margin-top: -0.5em;">
+<p><span class="math display">\mathcal{L}(h_{\gamma_i}, g, c_i, e_i; \ y_i) \propto \exp\Big\{ - \frac{1}{2\sigma^2}{\left\|y_i([t]) - c_i (g \circ \gamma_{h_i}^{-1})([t]) - e_i\right\|^2} \Big\}</span></p>
+</div>
+<ul>
+<li>Identically to the multiple-function alignment, <span class="math inline">h_{\gamma_i}</span> and <span class="math inline">g</span> are updated sequentially via Z-pCN.</li>
+</ul>
+</div>
+</section>
+<section id="posterior-inference-for-underlying-signal-estimation-ii" class="slide level3 center">
+<h3>Posterior Inference for Underlying Signal Estimation (II)</h3>
+<div class="middle-content2">
+<h3>
+<span style="font-size:85%"> - Translation update (<span class="math inline">e_i</span>)</span>
+</h3>
+<p>Conjugacy allows a closed-form Gaussian update: <span class="math display">
+\mu_{e_i\mid y} = \sigma^2_{e \mid y} \left( \frac{1}{\sigma_e^2} \cdot \bm{1}^\top \left( y_i([t]) - c_i (g \circ \gamma_{h_i}^{-1})([t]) \right) \right),
+\quad
+\sigma^2_{e \mid y} = \left( \frac{1}{\sigma_e^2} + \frac{T}{\sigma^2} \right)^{-1}.</span></p>
+<h3>
+<span style="font-size:85%"> - Scale update (<span class="math inline">c_i</span>)</span>
+</h3>
+<p>MH step with Gamma prior</p>
+<ul>
+<li>Proposal with log-normal <span class="math display">
+c_i' \sim \text{Log}\mathcal{N}(\log c_i, \sigma^2_{\text{prop}}) \quad \text{where } u_i = \log c_i.
+</span></li>
+<li>Prior density in log-space: <span class="math inline">\qquad \pi_U(u_i) = \frac{1}{\Gamma(\alpha_c)\theta_c^{\alpha_c}} \cdot e^{\alpha_c u_i} \cdot \exp\left(-\frac{e^{u_i}}{\theta_c}\right)</span></li>
+<li>MH acceptance: <span class="math inline">\qquad \alpha_c = \min\left(1, \frac{
+\mathcal{L}(c_i', h_{\gamma_i}, e_i, g;\ y_i)\ \pi_U(\log c_i')}
+{\mathcal{L}(c_i, h_{\gamma_i}, e_i, g;\ y_i)\ \pi_U(\log c_i)}
+\right)</span></li>
+</ul>
+</div>
+</section>
+<section id="underlying-signal-estimation-algorithm" class="slide level3" data-auto-animate="true">
+<h3 data-id="quarto-animate-title">Underlying Signal Estimation Algorithm</h3>
+<!-- <div style="border: 1px solid #ccc; border-radius: 8px; background-color: #eeeeee;"> -->
+<div style="position: relative; font-size: 70%; line-height: 0.8;padding: 0em 1em; margin-top:-1em;">
+<div style="color: black;" data-id="line1">
+<span class="math inline">\textsf{\textbf{Input: }} \quad \textsf{Noisy pairwise data} \quad y_1, ..., y_N; \quad \textsf{pre-given distributions}  \quad \pi_{\beta_h}, \,\, \pi_{\beta_g};</span> <br> <span class="math inline">\qquad \qquad \textsf{prior mean and covariance  for warpings and templates} \,\, \mu_h, \,\, \mu_g, \,\, \mathcal{K}_h, \,\, \mathcal{K}_g; \qquad \textsf{error variance} \,\, \sigma^2</span><br> <span class="math inline">\textsf{\textbf{Output: }} \quad \textsf{Posterior samples} \,\, \{\gamma^{(m)}\}_{m=2}^{M+1}</span><br> <span class="math inline">{\color{gray}\mathtt{ 1}.} \qquad \, g^{(1)} = \mu_g; \quad h_{1:N}^{(1)} = \mu_h; \quad \gamma_{h_{1:N}}^{(1)} = \psi^{-1}(h_{1:N}^{(1)}); \quad c_{1:N} = 1; \quad e_{1:N}= 0</span><br> <span class="math inline">{\color{gray}\mathtt{ 2}.}  \qquad \, \textsf{\textbf{For }} m = 1\textsf{\textbf{ to }}M:</span><br> <span class="math inline">{\color{gray}\mathtt{ 3}.}  \qquad \qquad \,\textsf{\textbf{For }} i = 1 \textsf{\textbf{ to }} N:</span>
+</div>
+<div style="position: relative;">
+<span class="math inline">{\color{gray}\mathtt{ 4}.} \qquad \qquad \qquad \, \textsf{Generate }\beta_{h_i} \sim \pi_{\beta_h} \textsf{ and }\xi \sim GP(0, \mathcal{K}_h)</span><br> <span class="math inline">{\color{gray}\mathtt{ 5}.}  \qquad \qquad \qquad \, \textsf{Propose }h_i' = \sqrt{1-\beta_{h_i}^2} \, h^{(m)} + \beta_{h_i} \xi</span><br> <span class="math inline">{\color{gray}\mathtt{ 6}.}  \qquad\qquad \qquad \,\textsf{Update }h_i^{(m+1)} = \begin{cases}
+h'_i &amp; \textsf{with probability } \\
+h^{(m)}_i &amp; \textsf{with probability } 1 - \alpha_h
+\end{cases}</span><span style="display: inline-block; position: relative; top: -0.8rem; left: -2.5em;"> <a href="#/" data-modal-type="image" data-modal-url="./figs/eqns/equation4.svg" data-modal-background="white" data-modal-padding="1em"><span class="math inline">\alpha_h</span></a> </span><br> <span class="math inline">{\color{gray}\mathtt{ 7}.}  \qquad\qquad \qquad\, \gamma_{h_i}^{(m+1)} = \psi^{-1}(h_i^{(m+1)})</span>
+<div class="fragment" data-fragment-index="1" style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; border: 2.5px solid #888; border-radius: 4px; pointer-events: none; border-color:blue; margin-left:6em; margin-right:23em;">
+
+</div>
+<div class="fragment" data-fragment-index="1" style="position: absolute; top: 50%; left: 57%; color:blue; margin-top:-0.5em;">
+<span class="math inline">\textsf{Update } h_i^{(m+1)} \textsf{ and } \gamma_{h_i}^{(m+1)}</span>
+</div>
+</div>
+<div data-id="line8">
+<span class="math inline">{\color{gray}\mathtt{ 8}.}  \qquad\qquad \qquad\,\textsf{Update } e_i^{(m+1)} \sim \mathcal{N}(</span> <a href="#/" data-modal-type="image" data-modal-url="./figs/eqns/equation7.svg" data-modal-background="white" data-modal-padding="1em"><span class="math inline">\mu_{e_i|y}, \sigma^2_{e|y}</span></a> <span class="math inline">)</span><br> <span class="math inline">{\color{gray}\mathtt{9}.}  \qquad \qquad \qquad \, \textsf{Propose }c_i' \sim \text{Log}\mathcal{N}(u_i^{(m)}, \sigma^2_{\text{prop}}) \textsf{ where } u_i^{(m)} = \log c_i^{(m)}</span><br> <span class="math inline">{\color{gray}\mathtt{10}.} \qquad \qquad \quad \,\,\,\, \textsf{Update }c_i^{(m+1)} = \begin{cases} c'_i &amp; \textsf{with probability } \\
+c^{(m)}_i &amp; \textsf{with probability } 1 - \alpha_c
+\end{cases}</span><span style="display: inline-block; position: relative; top: -0.8rem; left: -2.5em;"> <a href="#/" data-modal-type="image" data-modal-url="./figs/eqns/equation5.svg" data-modal-background="white" data-modal-padding="1em"><span class="math inline">\alpha_c</span></a> </span>
+<div>
+<span class="math inline">{\color{gray}\mathtt{11}.}  \qquad\qquad \textsf{\textbf{End}}</span><br> <span class="math inline">{\color{gray}\mathtt{12}.}  \qquad \qquad \bar{c} = \sum_{i=1}^Nc^{(m+1)}_{i}/N; \quad \bar{\gamma} = \psi^{-1}\left(\frac{1}{N}\sum_{i=1}^N h_i^{(m+1)}\right)</span><br> <span class="math inline">{\color{gray}\mathtt{13}.}\qquad \qquad c^{(m+1)}_{1:N} \leftarrow c^{(m+1)}_{1:N}/{\bar{c}}; \quad g^{(m)} \leftarrow \bar{c} g^{(m)} \circ \bar{\gamma}^{-1}; \quad \gamma_{h_{1:N}}^{(m+1)}\leftarrow \gamma_{h_{1:N}}^{(m+1)} \circ \bar{\gamma}^{-1}; \quad h_{1:N}^{(m+1)} \leftarrow \psi(\gamma_{h_{1:N}}^{(m+1)})</span>
+</div>
+</div>
+<div style="position: relative;">
+<span class="math inline">{\color{gray}\mathtt{14}.}\qquad \qquad \textsf{Generate }</span> <span class="math inline">\beta_{g} \sim \pi_{\beta_{g}}</span> <span class="math inline">\zeta \sim GP(0, \mathcal{K}_g)</span><br> <span class="math inline">{\color{gray}\mathtt{15}.}\qquad \qquad \textsf{Propose }</span> <span class="math inline">{g}' = \mu_g +\sqrt{1-\beta_{g}^2} \, ({g}^{(m)}-\mu_g) + \beta_{g} \zeta</span><br> <span class="math inline">{\color{gray}\mathtt{16}.}\qquad \qquad \textsf{Update } g^{(m+1)} = \begin{cases}
+g' &amp; \textsf{with probability } \\
+g^{(m)} &amp; \textsf{with probability } 1 - \alpha_g
+\end{cases}</span><span style="display: inline-block; position: relative; top: -0.8rem; left: -2.5em;"> <a href="#/" data-modal-type="image" data-modal-url="./figs/eqns/equation9.svg" data-modal-background="white" data-modal-padding="1em"><span class="math inline">\alpha_g</span></a> </span>
+<div class="fragment" data-fragment-index="1" style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; border: 2.5px solid #888; border-radius: 4px; pointer-events: none; border-color:red; margin-left:4.5em; margin-right:24em;">
+
+</div>
+<div class="fragment" data-fragment-index="1" style="position: absolute; top: 50%; left: 55%; color:red;  margin-top:-0.5em;">
+<span class="math inline">\textsf{Update } g^{(m+1)}</span>
+</div>
+</div>
+<div data-id="line17">
+<span class="math inline">{\color{gray}\mathtt{17}.} \qquad \textsf{\textbf{End}}</span>
+</div>
+<div data-id="alg-box" style="position: absolute; top: 0; bottom: 0; left: 0; right: 0; border: 1px solid #ccc; border-radius: 8px; background-color: #eeeeee; z-index:-1;">
+
+</div>
+</div>
+</section>
+<section id="underlying-signal-algorithm" class="slide level3" data-auto-animate="true">
+<h3 data-id="quarto-animate-title"></h3>
+<h3>
+Underlying Signal Estimation Algorithm <span class="fragment"> <a href="#/underlying-signal-estimation-1">(Simulation Results)</a></span>
+</h3>
+<!-- <div style="font-size: 70%; line-height: 0.8; border: 1px solid #ccc; padding: 0em 1em; border-radius: 8px; background-color: #eeeeee;"> -->
+<div style="position: relative; font-size: 70%; line-height: 0.8;padding: 0em 1em; margin-top:-1em;">
+<div style="color: black;" data-id="line1">
+<span class="math inline">\textsf{\textbf{Input: }} \quad \textsf{Noisy pairwise data} \quad y_1, ..., y_N; \quad \textsf{pre-given distributions}  \quad \pi_{\beta_h}, \,\, \pi_{\beta_g};</span> <br> <span class="math inline">\qquad \qquad \textsf{prior mean and covariance  for warpings and templates} \,\, \mu_h, \,\, \mu_g, \,\, \mathcal{K}_h, \,\, \mathcal{K}_g; \qquad \textsf{error variance} \,\, \sigma^2</span><br> <span class="math inline">\textsf{\textbf{Output: }} \quad \textsf{Posterior samples} \,\, \{\gamma^{(m)}\}_{m=2}^{M+1}</span><br> <span class="math inline">{\color{gray}\mathtt{ 1}.} \qquad \, g^{(1)} = \mu_g; \quad h_{1:N}^{(1)} = \mu_h; \quad \gamma_{h_{1:N}}^{(1)} = \psi^{-1}(h_{1:N}^{(1)}); \quad c_{1:N} = 1; \quad e_{1:N}= 0</span><br> <span class="math inline">{\color{gray}\mathtt{ 2}.}  \qquad \, \textsf{\textbf{For }} m = 1\textsf{\textbf{ to }}M:</span><br> <span class="math inline">{\color{gray}\mathtt{ 3}.}  \qquad \qquad \,\textsf{\textbf{For }} i = 1 \textsf{\textbf{ to }} N:</span>
+</div>
+<div>
+<span class="math inline">{\color{gray}\mathtt{ 4}.}  \qquad \qquad \quad \,\,\,</span> <span style="border: 1.5px solid blue; padding-left:0.2em; padding-top:0.2em;padding-right:0.2em; border-radius: 4px;"> <a href="#/" data-modal-type="image" data-modal-url="./figs/eqns/equation8.svg" data-modal-background="white" data-modal-padding="1em"><span class="math inline">\textsf{Update } h_i^{(m+1)} \textsf{ and } \gamma_{h_i}^{(m+1)}</span></a></span>
+</div>
+<div data-id="line8">
+<span class="math inline">{\color{gray}\mathtt{ 8}.}  \qquad\qquad \qquad\,\textsf{Update } e_i^{(m+1)} \sim \mathcal{N}(</span> <a href="#/" data-modal-type="image" data-modal-url="./figs/eqns/equation7.svg" data-modal-background="white" data-modal-padding="1em"><span class="math inline">\mu_{e_i|y}, \sigma^2_{e|y}</span></a> <span class="math inline">)</span><br> <span class="math inline">{\color{gray}\mathtt{9}.}  \qquad \qquad \qquad \, \textsf{Propose }c_i' \sim \text{Log}\mathcal{N}(u_i^{(m)}, \sigma^2_{\text{prop}}) \textsf{ where } u_i^{(m)} = \log c_i^{(m)}</span><br> <span class="math inline">{\color{gray}\mathtt{10}.} \qquad \qquad \quad \,\,\,\, \textsf{Update }c_i^{(m+1)} = \begin{cases} c'_i &amp; \textsf{with probability } \\
+c^{(m)}_i &amp; \textsf{with probability } 1 - \alpha_c
+\end{cases}</span><span style="display: inline-block; position: relative; top: -0.8rem; left: -2.5em;"> <a href="#/" data-modal-type="image" data-modal-url="./figs/eqns/equation5.svg" data-modal-background="white" data-modal-padding="1em"><span class="math inline">\alpha_c</span></a> </span><br> <span class="math inline">{\color{gray}\mathtt{11}.}  \qquad\qquad \textsf{\textbf{End}}</span><br> <span class="math inline">{\color{gray}\mathtt{12}.}  \qquad \qquad \bar{c} = \sum_{i=1}^Nc^{(m+1)}_{i}/N; \quad \bar{\gamma} = \psi^{-1}\left(\frac{1}{N}\sum_{i=1}^N h_i^{(m+1)}\right)</span><br> <span class="math inline">{\color{gray}\mathtt{13}.}\qquad \qquad c^{(m+1)}_{1:N} \leftarrow c^{(m+1)}_{1:N}/{\bar{c}}; \quad g^{(m)} \leftarrow \bar{c} g^{(m)} \circ \bar{\gamma}^{-1}; \quad \gamma_{h_{1:N}}^{(m+1)}\leftarrow \gamma_{h_{1:N}}^{(m+1)} \circ \bar{\gamma}^{-1}; \quad h_{1:N}^{(m+1)} \leftarrow \psi(\gamma_{h_{1:N}}^{(m+1)})</span>
+</div>
+<div>
+<span class="math inline">{\color{gray}\mathtt{14}.}\qquad \quad \,\,</span> <span style="border: 1.5px solid red; padding-left:0.2em;padding-right:0.2em; border-radius: 4px;"> <a href="#/" data-modal-type="image" data-modal-url="./figs/eqns/equation9.svg" data-modal-background="white" data-modal-padding="1em"><span class="math inline">\textsf{Update } g^{(m+1)}</span></a></span>
+</div>
+<div data-id="line17">
+<span class="math inline">{\color{gray}\mathtt{17}.} \qquad \textsf{\textbf{End}}</span>
+</div>
+<div data-id="alg-box" style="position: absolute; top: 0; bottom: 0; left: 0; right: 0; border: 1px solid #ccc; border-radius: 8px; background-color: #eeeeee; z-index:-1;">
+
+</div>
+</div>
+</section></section>
+<section>
+<section id="overall-advantages-of-our-bayesian-framework" class="title-slide slide level2 center" data-auto-animate="true">
+<h2 data-id="quarto-animate-title">Overall Advantages of our Bayesian Framework</h2>
+<div class="middle-content" data-auto-animate="true">
+<ul>
+<li><p>Models <span class="math inline">\gamma_i</span> as a random variable to <strong>reflect uncertainty</strong> in alignment</p></li>
+<li><p>Provides <span style="color:red"><strong>robustness</strong></span> to additive noise process without pinching effect.(<a href="#/robustness-by-the-use-of-f-space" style="color:#3333b3">Example</a>) <!-- ([Example](#){data-modal-type="iframe" data-modal-url="/example_robustness.html"}) --></p></li>
+<li><p>Allows <span style="color:red"><strong>flexibility</strong></span> in modeling the warping function</p>
+<ul>
+<li>Enables <strong>incorporation of prior belief</strong> of warping functions (<a href="#/flexibility-of-bayesian-registration-prior-info-incorporation" style="color:#3333b3">Example</a>)</li>
+<li>Captures <strong>multiple plausible alignments</strong> via posterior inference <a href="#/flexibility-of-bayesian-registration-quantification-of-uncertainty" style="color:#3333b3">(Example)</a></li>
+</ul></li>
+<li><p>Eliminates the need for <strong>pre-smoothing</strong> data before alignment.</p></li>
+<li><p>Supports a broader class of functional data (i.e., <span class="math inline">\mathbb{L}^2</span>), whereas SRVF-based approaches require absolute continuity to ensure well-defined derivatives.</p></li>
+</ul>
+</div>
+<!-- ## Conclusion
+<div class="middle-content2" style="margin-top: -1em; font-size: 90%">
+
+First Systematic Approach to Multi-Function Alignment under Dual Noise
+
+1. **Bayesian Modeling** (vs deterministic approaches)
+    -   More flexible and interpretable
+    -   More robust to noise than deterministic approaches
+    -   Captures full posterior uncertainty over warpings
+
+2. **CLR-Based Time Warping Representation** (vs SRVF-based approaches)
+    -   Isometric mapping to a linear inner-product space avoids geometric distortion
+    -   Ensures well-behaved posteriors; avoids improper samples
+    -   Suppresses the pinching effect via bounded derivatives
+
+3. **Likelihood in $\boldsymbol{f}$-Space**(vs SRVF-based approaches)
+    -   Avoids amplifying noise by not differentiating signals
+    -   Eliminates need for inverse SRVF transformations
+    -   Pinching effect naturally mitigated by the CLR warp prior
+    -   Offers computational efficiency and numerical stability
+
+</div> -->
+</section>
+<section id="future-work" class="slide level3 center">
+<h3>Future Work</h3>
+<div class="middle-content2">
+<ul>
+<li>Explore more real datasets</li>
+<li>Extend and compare to <span class="math inline">\infty</span>-HMC and Z-pCN inference</li>
+<li>Introduce non-Gaussian priors via basis expansions</li>
+</ul>
+</div>
+</section></section>
+<section id="references" class="title-slide slide level2 smaller scrollable" data-sm="false">
+<h2>References</h2>
+<div style="font-size: 60%;">
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="ref-cheng2016bayesian" class="csl-entry" role="listitem">
+Cheng, Wen, Ian L Dryden, and Xianzheng Huang. 2016. <span>“Bayesian Registration of Functions and Curves.”</span> <em>Bayesian Analysis</em> 11 (2): 447–75.
+</div>
+<div id="ref-cotter2013mcmc" class="csl-entry" role="listitem">
+Cotter, Simon L, Gareth O Roberts, Andrew M Stuart, and David White. 2013. <span>“MCMC Methods for Functions: Modifying Old Algorithms to Make Them Faster.”</span> <em>Statistical Science</em> 28 (3).
+</div>
+<div id="ref-egozcue2006hilbert" class="csl-entry" role="listitem">
+Egozcue, Juan José, José Luis Dı́az–Barrero, and Vera Pawlowsky–Glahn. 2006. <span>“Hilbert Space of Probability Density Functions Based on Aitchison Geometry.”</span> <em>Acta Mathematica Sinica</em> 22 (4): 1175–82.
+</div>
+<div id="ref-gervini2004self" class="csl-entry" role="listitem">
+Gervini, Daniel, and Theo Gasser. 2004. <span>“Self-Modelling Warping Functions.”</span> <em>Journal of the Royal Statistical Society: Series B (Statistical Methodology)</em> 66 (4): 959–71.
+</div>
+<div id="ref-happ2019general" class="csl-entry" role="listitem">
+Happ, Clara, Fabian Scheipl, Alice-Agnes Gabriel, and Sonja Greven. 2019. <span>“A General Framework for Multivariate Functional Principal Component Analysis of Amplitude and Phase Variation.”</span> <em>Stat</em> 8 (1): e220.
+</div>
+<div id="ref-james2007curve" class="csl-entry" role="listitem">
+James, Gareth M. 2007. <span>“Curve Alignment by Moments.”</span> <em>The Annals of Applied Statistics</em> 1 (2): 480–501.
+</div>
+<div id="ref-kneip1992landmark" class="csl-entry" role="listitem">
+Kneip, Alois, and Theo Gasser. 1992. <span>“<span class="nocase">Statistical Tools to Analyze Data Representing a Sample of Curves</span>.”</span> <em>The Annals of Statistics</em> 20 (3): 1266–1305.
+</div>
+<div id="ref-lu2017bayesian" class="csl-entry" role="listitem">
+Lu, Yi, Radu Herbei, and Sebastian Kurtek. 2017. <span>“Bayesian Registration of Functions with a Gaussian Process Prior.”</span> <em>Journal of Computational and Graphical Statistics</em> 26 (4): 894–904.
+</div>
+<div id="ref-ma2025bayesian" class="csl-entry" role="listitem">
+Ma, Yijia, and Wei Wu. 2025. <span>“A New Framework for Bayesian Function Registration.”</span> <em>Electron. J. Statist.</em> 19 (1): 2171–98.
+</div>
+<div id="ref-ma2024stochastic" class="csl-entry" role="listitem">
+Ma, Yijia, Xinyu Zhou, and Wei Wu. 2024. <span>“A Stochastic Process Representation for Time Warping Functions.”</span> <em>Computational Statistics &amp; Data Analysis</em>, 107941.
+</div>
+<div id="ref-ramsay1998curve" class="csl-entry" role="listitem">
+Ramsay, James O, and Xiaochun Li. 1998. <span>“Curve Registration.”</span> <em>Journal of the Royal Statistical Society: Series B (Statistical Methodology)</em> 60 (2): 351–63.
+</div>
+<div id="ref-srivastava2016functional" class="csl-entry" role="listitem">
+Srivastava, Anuj, and Eric P Klassen. 2016. <em>Functional and Shape Data Analysis</em>. Vol. 1. Springer.
+</div>
+<div id="ref-tucker2021multimodal" class="csl-entry" role="listitem">
+Tucker, J Derek, Lyndsay Shand, and Kenny Chowdhary. 2021. <span>“Multimodal Bayesian Registration of Noisy Functions Using Hamiltonian Monte Carlo.”</span> <em>Computational Statistics &amp; Data Analysis</em> 163: 107298.
+</div>
+</div>
+</div>
+</section>
+
+<section>
+<section id="appendix" class="title-slide slide level2 appendix unnumbered center" data-state="hide-menubar">
+<h2>Appendix</h2>
+
+</section>
+<section id="significance-of-peaks" class="slide level3 center appendix" data-state="hide-menubar">
+<h3>Significance of Peaks</h3>
+<div class="middle-content">
+<ul>
+<li>We define <strong>strength</strong> of a peak in any absolutely continuous function <span class="math inline">f(t_0)</span> at a location of a peak, <span class="math inline">t_0 \in [0,1]</span>:</li>
+</ul>
+<p><span class="math display"> \frac{-{f}^{\prime\prime}(t_0)}{\max_{t\in[0,1]}{(-{f}^{\prime\prime}(t))}} \in [0,1]</span></p>
+<ul>
+<li><p>Peak significace parameter, <span class="math inline">\tau</span>, determines whether a peak is significant or not.</p></li>
+<li><p>Data-driven <span class="math inline">\tau</span> Selection:</p>
+<ul>
+<li>We need an adaptable hyperparameter derived from the dataset.</li>
+<li>For <span class="math inline">i = 1,...,n</span>, we collect all strengths of peaks in <span class="math inline">f_i</span>.</li>
+<li>We choose <span class="math inline">\tau</span> to be the <span class="math inline">p</span>-th percentile of such strength collection. <br><span class="math inline">\,\,</span>(empirically <span class="math inline">30^{th}</span> percentile)</li>
+</ul></li>
+</ul>
+</div>
+<div style="position: absolute; top: -1em; right: 0; padding: 0.5em;">
+<a href="#/step-1-persistent-peak-diagrams-ppd" style="color:#3333b3; font-size: 80%;">[Return]</a>
+</div>
+</section>
+<section id="persistence-of-peaks" class="slide level3 center appendix" data-state="hide-menubar">
+<h3>Persistence of Peaks</h3>
+<ul>
+<li><strong>Persistence measure</strong> ogf a peak <span class="math inline">k</span> for <span class="math inline">k = 1,...,K</span>:</li>
+</ul>
+<p><span class="math display">\left| \left\{ 0 \leq \lambda \leq \lambda_{\max} \mid \textsf{peak } k \textsf{ in } \hat{g}_{\lambda} \textsf{ is significant} \right\} \right|.</span></p>
+<ul>
+<li><p>Apply hierarchical clustering to the persistence measures of all peaks in the PPD.</p>
+<div style="text-align:center">
+→ Two groups: <strong>persistent</strong> vs.&nbsp;<strong>non-persistent</strong>
+</div></li>
+<li><p>Use the most persistent peak as the reference</p></li>
+<li><p>Any peak in the same cluster is marked as persistent</p></li>
+</ul>
+<!-- - The cluster with larger values is labeled as persistent, while the other is non-persistent. We then define $\lambda^*$ as the smallest $\lambda$ that retains the persistent peaks in $\hat{g}_{\lambda}$. -->
+<!-- This choice is motivated by the observation that extrema in $\hat{g}_{\lambda}$ tend to diminish as $\lambda$ increases. Finally, we denote the total number of persistent peaks by $m$. -->
+<div style="position: absolute; top: -1em; right: 0; padding: 0.5em;">
+<a href="#/step-1-persistent-peak-diagrams-ppd" style="color:#3333b3; font-size: 80%;">[Return]</a>
+</div>
+</section></section>
+<section id="illustration-of-fpca-in-srd-vs-clr" class="title-slide slide level2 center" data-state="hide-menubar">
+<h2></h2>
+<h3>
+Illustration of FPCA in SRD vs CLR
+</h3>
+<div style="display: flex; justify-content: space-around; align-items: flex-start; gap: 1em; text-align: center;">
+<div style="width: 30%;">
+<img src="figs/bayes/fpca/raw.svg" alt="Raw functions" style="width: 100%;">
+<p style="font-size: 85%; margin-top: -0.5em;">
+Raw Functions
+</p>
+</div>
+<div style="width: 30%;">
+<img src="figs/bayes/fpca/bayes.svg" alt="CLR FPCA" style="width: 100%;">
+<p style="font-size: 85%; margin-top: -0.5em;">
+Resamples via CLR
+</p>
+</div>
+<div style="width: 30%;">
+<img src="figs/bayes/fpca/srvf_with_imp.svg" alt="SRD FPCA" style="width: 100%;">
+<p style="font-size: 85%; margin-top: -0.5em;">
+Resamples via SRVF
+</p>
+</div>
+</div>
+<ul>
+<li>Two orthonormal bases <span class="math inline">\{\phi_1(t), \phi_2(t)\} = \left\{ \sqrt{2}\cos(2\pi t), \sqrt{2}\sin(2\pi t) \right\}</span> for <span class="math inline">t \in [0, 1]</span>.</li>
+<li>Each function <span class="math inline">\gamma_i = \psi^{-1}(c_{1,i}\phi_1 + c_{2,i}\phi_2)</span></li>
+<li><span class="math inline">c_{1,i} \overset{\mathrm{i.i.d.}}{\sim} \mathcal{N}(0, 0.6^2)</span> and <span class="math inline">c_{2,i} \overset{\mathrm{i.i.d.}}{\sim} \mathcal{N}(0, 0.4^2)</span> for <span class="math inline">i = 1, \dots, 100</span>.</li>
+<li>Improper SRVF-based resampled functions (right) are highlighted in red.</li>
+</ul>
+<div style="position: absolute; top: -1em; right: 0; padding: 0.5em;">
+<p><a href="#/registration-frameworks-2" style="color:#3333b3; font-size: 80%;">[Return]</a></p>
+</div>
+</section>
+
+<section>
+<section id="robustness-by-the-use-of-f-space" class="title-slide slide level2 center" data-state="hide-menubar">
+<h2></h2>
+<div style="margin-top:-4em">
+<h2>
+Robustness by the use of <span class="math inline">f</span>-space
+</h2>
+<div class="r-stack">
+<div class="fragment fade-out" data-fragment-index="2" style="margin-top: -1em; font-size: 100%;">
+<ul>
+<li><p>In noise-less settings, <span class="math display">f_2 = f_1 \circ \gamma \,\,\Leftrightarrow \,\, \mathrm{srvf}(f_2) = \mathrm{srvf}(f_1)\star\gamma.</span></p></li>
+<li><p>With additive noise, we may have different optimal warpings in <span class="math inline">f</span>-space and <span class="math inline">q</span>-space.</p></li>
+<li><p>Consider two noisy signals <span class="math inline">f_1</span> and <span class="math inline">f_2</span> with warping functions <span class="math inline">\gamma_1</span> and <span class="math inline">\gamma_2</span>, respectively: <br></p></li>
+</ul>
+</div>
+<div class="fragment fade-in" style="display: flex; justify-content: space-around; align-items: flex-start; text-align: center; margin-top: -1em; background-color: white; border:2px solid black;" data-fragment-index="2">
+<div style="height: 20%;">
+<img src="figs/bayes/robustness/gams_error.svg" style="width:100%;">
+</div>
+<div style="height: 20%;">
+<img src="figs/bayes/robustness/raw_signals.svg" style="width: 100%;">
+</div>
+<div style="height: 20%;">
+<img src="figs/bayes/robustness/raw_srvfs.svg" style="width: 100%;">
+</div>
+</div>
+</div>
+<div style="margin-top: -0.5em;">
+<span class="math display">
+{\color{#336699}\boldsymbol{f_1}}(t) = \overbrace{\sin(2\pi t)}^{\textsf{\text{main signal}}} \quad+   \overbrace{\ \epsilon\ \sin\left(\frac{t}{\epsilon^{2}}\right)}^{\textsf{\text{small, fast oscillation}}}, \quad
+{\color{#ff6600}\boldsymbol{f_2}}(t) = \sin\big(2\pi\, \overbrace{{\color{#cc00cc}\boldsymbol{\gamma_1}}(t)}^{\substack{\textsf{\text{warping}} \\ \\ \textsf{\text{in signal}}}}\big) + \epsilon \sin\Bigl(\dfrac{\overbrace{{\color{red}\boldsymbol{\gamma_2}}(t)}^{\substack{\textsf{\text{warping}}\\ \\ \textsf{\text{in noise}}}}}{\epsilon^2}\Bigr)
+</span>
+</div>
+<div style="margin-top: -0.5em; margin-left: 0.5em;">
+<ul>
+<li>The derivatives of these signals are:</li>
+</ul>
+</div>
+<div style="margin-top: -0.5em; margin-left: -1em; font-size: 90%;">
+<p><span class="math display">{\color{#336699}\boldsymbol{\dot{f}_1}}(t) = 2\pi \cos(2\pi t) +
+\underbrace{\dfrac{1}{\epsilon} \cos\left(\dfrac{t}{\epsilon^2}\right)}_{\large\textsf{noise 1}}, \quad
+{\color{#ff6600}\boldsymbol{\dot{f}_2}}(t) = 2\pi\, \dot{\gamma}_1(t)\, \cos\big(2\pi\, \gamma_1(t)\big) +
+\underbrace{\dfrac{\dot\gamma_2(t)}{\epsilon} \cos\left(\dfrac{\gamma_2(t)}{\epsilon^2}\right)}_{\large\textsf{noise 2}} </span></p>
+</div>
+<div class="fragment" style="margin-top: -3.8em; margin-left: 17%; font-size: 100%; padding-left: 15%;" data-fragment-index="1">
+<p><span class="math inline">\underbrace{\phantom{
+\dfrac{1}{\epsilon} \cos\left(\dfrac{t}{\epsilon^2}\right) +
+\dfrac{\dot\gamma_2(t)}{\epsilon} \cos\left(\dfrac{\gamma_2(t)}{\epsilon^2}\right) \,\,\,\,\,\,\,
+}}_{\large\color{red}\textsf{each noise term dominates when } \epsilon \rightarrow 0}</span></p>
+</div>
+</div>
+</section>
+<section id="alignment-results" class="slide level3 center" data-state="hide-menubar">
+<h3>Alignment Results</h3>
+<div style="position: relative; width: 100%; font-size: 75%; margin: auto;">
+<table style="margin: auto; border-collapse: collapse; border: 1px solid black;">
+<thead>
+<tr>
+<th style="border: 1px solid black; vertical-align: middle; text-align: center;">
+</th>
+<th style="text-align: center">
+Aligned Signals
+</th>
+<th style="text-align: center">
+Warping Functions
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="border: 1px solid black; vertical-align: middle; text-align: center; writing-mode: vertical-rl; transform: rotate(180deg);">
+<strong>F–R</strong>
+</td>
+<td>
+<img src="figs/bayes/robustness/aligned_signals_FR.svg" width="100%">
+</td>
+<td>
+<img src="figs/bayes/robustness/gam_FR.svg" width="100%">
+</td>
+</tr>
+<tr>
+<td style="border: 1px solid black; vertical-align: middle; text-align: center; writing-mode: vertical-rl; transform: rotate(180deg);">
+<strong>Bayes</strong>
+</td>
+<td>
+<img src="figs/bayes/robustness/aligned_signals_Bayes.svg" width="100%">
+</td>
+<td>
+<img src="figs/bayes/robustness/gam_Bayes.svg" width="100%">
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="fragment fade-in-then-out">
+<div class="no-md">
+<div class="drawing-overlay">
+<svg width="100%" height="100%" viewbox="0 0 100 100">
+<defs> <marker id="head-red" orient="auto" markerwidth="4" markerheight="4" refx="0.1" refy="2"> <path d="M0,0 V4 L2,2 Z" fill="red"></path> </marker> </defs> <path d="M32.8 36.2 L31.4 36.2
+    V36.4
+    L31.1 36.2
+    L31.4 36
+    V36.2" stroke="red" stroke-width="1" fill="none"></path>
+</svg>
+</div>
+<div class="drawing-overlay">
+<svg width="100%" height="100%" viewbox="0 0 100 100">
+<defs> <marker id="head-magenta" orient="auto" markerwidth="4" markerheight="4" refx="0.1" refy="2"> <path d="M0,0 V4 L2,2 Z" fill="magenta"></path> </marker> </defs> <path d="M32.8 78.3 L38.4 78.3" stroke="magenta" stroke-width="1" fill="none" marker-end="url(#head-magenta)"></path>
+</svg>
+</div>
+</div>
+</div>
+<div style="position: absolute; top: -1em; right: 0; padding: 0.5em;">
+<p><a href="#/overall-advantages-of-our-bayesian-framework" style="color:#3333b3; font-size: 80%;">[Return]</a></p>
+</div>
+</section></section>
+<section>
+<section id="flexibility-of-bayesian-registration-quantification-of-uncertainty" class="title-slide slide level2 center" data-state="hide-menubar">
+<h2>Flexibility of Bayesian Registration <br> <span style="font-size:80%">(Quantification of Uncertainty)</span></h2>
+<h3>
+<span class="math inline">\qquad</span>Different number of peaks in two signals
+</h3>
+<div style="display: flex; justify-content: space-around; align-items: flex-start; gap: 1em; text-align: center;">
+<div style="width: 45%;">
+<img src="figs/bayes/diff_peaks/raw_signal.svg" style="width: 100%;">
+</div>
+<div style="width: 45%;">
+<img src="figs/bayes/diff_peaks/raw_f.svg" style="width: 100%;">
+</div>
+</div>
+</section>
+<section id="alignment-results-1" class="slide level3 center" data-state="hide-menubar">
+<h3>Alignment Results</h3>
+<div style="width: 100%; margin: auto; font-size: 75%;">
+<table style="margin: auto; border-collapse: collapse; border: 1px solid black;">
+<thead>
+<tr>
+<th style="border: 1px solid black; vertical-align: middle; text-align: center;">
+</th>
+<th style="text-align: center">
+Aligned Signals
+</th>
+<th style="text-align: center">
+Aligned Noise-free Signals
+</th>
+<th style="text-align: center">
+Warping Functions
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="border: 1px solid black; vertical-align: middle; text-align: center; writing-mode: vertical-rl; transform: rotate(180deg);">
+<strong>F–R</strong>
+</td>
+<td>
+<img src="figs/bayes/diff_peaks/aligned_signals_FR.svg" width="100%">
+</td>
+<td>
+<img src="figs/bayes/diff_peaks/aligned_f_FR.svg" width="100%">
+</td>
+<td>
+<img src="figs/bayes/diff_peaks/gam_FR.svg" width="100%">
+</td>
+</tr>
+<tr>
+<td style="border: 1px solid black; vertical-align: middle; text-align: center; writing-mode: vertical-rl; transform: rotate(180deg);">
+<strong>Bayes</strong>
+</td>
+<td>
+<img src="figs/bayes/diff_peaks/aligned_signals_Bayes.svg" width="100%">
+</td>
+<td>
+<img src="figs/bayes/diff_peaks/aligned_f_Bayes.svg" width="100%">
+</td>
+<td>
+<img src="figs/bayes/diff_peaks/gam_Bayes.svg" width="100%">
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div style="position: absolute; top: -1em; right: 0; padding: 0.5em;">
+<p><a href="#/overall-advantages-of-our-bayesian-framework" style="color:#3333b3; font-size: 80%;">[Return]</a></p>
+</div>
+</section></section>
+<section>
+<section id="flexibility-of-bayesian-registration-prior-info-incorporation" class="title-slide slide level2 center" data-state="hide-menubar">
+<h2>Flexibility of Bayesian Registration <br> <span style="font-size:80%">(Prior Info Incorporation)</span></h2>
+<h3>
+<span class="math inline">\qquad</span> COVID-19 death rate data (25 European countries 2020 - 2022)
+</h3>
+<div style="display: flex; justify-content: space-around; align-items: flex-start; gap: 0.5em; text-align: center;">
+<div style="width: 45%;">
+<img src="figs/bayes/rd/covid_death/raw_signals.svg" style="width: 100%;">
+<p style="font-size: 100%; margin-top: -0.5em;">
+Raw Data
+</p>
+</div>
+<div style="width: 30%;">
+<img src="figs/bayes/rd/covid_death/cov.svg" style="width: 100%;">
+<p style="font-size: 100%; margin-top: -0.5em;">
+Cov Operator for <span class="math inline">\gamma</span> Prior
+</p>
+</div>
+</div>
+</section>
+<section id="alignment-results-2" class="slide level3 center" data-state="hide-menubar">
+<h3>Alignment Results</h3>
+<div style="width: 100%; margin: auto; font-size: 75%;">
+<table style="margin: auto; border-collapse: collapse; border: 1px solid black;">
+<thead>
+<tr>
+<th style="border: 1px solid black; vertical-align: middle; text-align: center;">
+</th>
+<th style="text-align: center">
+Aligned Signals
+</th>
+<th style="text-align: center">
+Warping Functions
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="border: 1px solid black; vertical-align: middle; text-align: center; writing-mode: vertical-rl; transform: rotate(180deg);">
+<strong>F–R</strong>
+</td>
+<td>
+<img src="figs/bayes/rd/covid_death/aligned_signals_FR.svg" width="100%">
+</td>
+<td>
+<img src="figs/bayes/rd/covid_death/gam_FR.svg" width="100%">
+</td>
+</tr>
+<tr>
+<td style="border: 1px solid black; vertical-align: middle; text-align: center; writing-mode: vertical-rl; transform: rotate(180deg);">
+<strong>Bayes</strong>
+</td>
+<td>
+<img src="figs/bayes/rd/covid_death/aligned_signals_Bayes.svg" width="100%">
+</td>
+<td>
+<img src="figs/bayes/rd/covid_death/gam_Bayes.svg" width="100%">
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div style="position: absolute; top: -1em; right: 0; padding: 0.5em;">
+<p><a href="#/overall-advantages-of-our-bayesian-framework" style="color:#3333b3; font-size: 80%;">[Return]</a></p>
+</div>
+</section>
+<section id="why-is-this-prior-info-useful" class="slide level3 center" data-state="hide-menubar">
+<h3>Why is this prior info useful?</h3>
+<div style="display: flex; justify-content: space-around; align-items: flex-start; gap: 0.5em; text-align: center;">
+<div style="width: 45%;">
+<img src="figs/bayes/rd/covid_death/alignment_ex1_f.svg" style="width: 100%;">
+<p style="font-size: 100%; margin-top: -0.5em;">
+alignment by F–R
+</p>
+</div>
+<div style="width: 45%;">
+<img src="figs/bayes/rd/covid_death/alignment_ex1_b.svg" style="width: 100%;">
+<p style="font-size: 100%; margin-top: -0.5em;">
+Alignment by Bayes
+</p>
+</div>
+</div>
+<ul>
+<li>Two examples of extreme warping by the Fisher-Rao method</li>
+<li>A peak originally located in January 2022 (<span style="display:inline-block; width:0.8em; height:0.8em; background:#CC00CC; border-radius:50%;"></span>) is shifted back to April 2021 (<span style="display:inline-block; width:0.8em; height:0.8em; background:red; border-radius:50%;"></span>), spanning nearly seven months, making it difficult to justify.</li>
+<li>A peak from January 2021 (<span style="display:inline-block; width:0.8em; height:0.8em; background:cyan; border-radius:50%;"></span>) is warped to align with April 2021 (<span style="display:inline-block; width:0.8em; height:0.8em; background:blue; border-radius:50%;"></span>), bridging two temporally distant features (cyan and magenta dots) that have a <strong>one-year gap</strong> which seems implausible.
+<div style="position: absolute; top: -1em; right: 0; padding: 0.5em;">
+<p><a href="#/overall-advantages-of-our-bayesian-framework" style="color:#3333b3; font-size: 80%;">[Return]</a></p>
+</div></li>
+</ul>
+</section></section>
+<section>
+<section id="pairwise-alignment-1" class="title-slide slide level2 center" data-state="hide-menubar" data-auto-animate="true">
+<h2 data-id="quarto-animate-title">Pairwise Alignment</h2>
+<div class="columns" style="display: flex; gap: -1em;">
+<div class="column" style="width: 59%">
+Latent noise-free signals <span style="color:#336699;"><span class="math inline">\boldsymbol f_1</span></span>and <span style="color:#ff6600;"><span class="math inline">\boldsymbol f_2</span></span>with Gaussian pdf (denoted by <span class="math inline">\phi(t; \mu, \sigma^2)</span>):<br><br>
+<div style="color:#336699;">
+<span class="math inline">\quad f_1(t) = \phi(t; 0.3, 0.05^2) + \phi(t; 0.7, 0.08^2)</span>
+</div>
+<div style="color:#ff6600;">
+<span class="math inline">\quad f_2(t) = 0.5 \cdot \phi(t; 0.17, 0.045^2) + \phi(t; 0.54, 0.06^2)</span>
+</div>
+</div><div class="column" style="item-align: center; text-align: center; width: 39%; margin-top: -1.5em;">
+<img src="figs/bayes/pairwise/raw_f.svg" style="width: 80%;">
+<p style="margin-top: -1em;">
+<span style="color:#336699;"><span class="math inline">\quad\boldsymbol f_1</span></span>and <span style="color:#ff6600;"><span class="math inline">\boldsymbol f_2</span></span>
+</p>
+</div></div>
+<div class="columns" style="display: flex; gap: 0em; margin-top: 0em; items-align: center;">
+<div class="column center" style="width: 59%">
+The observed noisy signals <span style="color:#336699;"><span class="math inline">\boldsymbol y_1</span></span>and <span style="color:#ff6600;"><span class="math inline">\boldsymbol y_2</span></span>: <br><br>
+<div style="text-align:center;">
+<span style="color:#336699;"><span class="math inline">y_1([t]) = f_1([t]) + \epsilon_1([t])</span></span><br> <span style="color:#ff6600;"><span class="math inline">y_2([t]) = f_2([t]) + \epsilon_2([t])</span></span>
+</div>
+<p><span class="math inline">\qquad\,\,\textsf{additive noise: } \,\, \epsilon_1([t]), \,\, \epsilon_2([t]) \overset{\textrm{i.i.d.}}{\sim} \mathcal{N}(\mathbf{0}, 4^2\ \mathbf{I})</span><br> <span class="math inline">\qquad\,\,\textsf{discretized time: } \,\, [t] \in \mathbb{R}^{T}</span><br> <span class="math inline">\qquad\,\,\textsf{identity matrix: } \,\, \mathbf{I}\in\mathbb{R}^{T\times T}</span></p>
+</div><div class="column" style="item-align: center; text-align: center; width: 39%; margin-top: 1em;">
+<img src="figs/bayes/pairwise/raw_signal.svg" style="width: 80%;" data-id="fig-pe">
+<p style="margin-top: -1em;">
+<span style="color:#336699;"><span class="math inline">\quad\boldsymbol y_1</span></span>and <span style="color:#ff6600;"><span class="math inline">\boldsymbol y_2</span></span>
+</p>
+</div></div>
+</section>
+<section id="section-3" class="slide level3" data-state="hide-menubar" data-auto-animate="true">
+<h3 data-id="quarto-animate-title"></h3>
+<h2>
+Pairwise Alignment <span class="fragment" data-fragment-index="1"> (only for display purpose) </span>
+</h2>
+<div class="r-stack">
+<div class="fragment fade-out" data-fragment-index="1" style="display: block; width: fit-content; margin-left: 0;">
+• estimated warping: <span class="math inline">\hat\gamma</span> <br> • aligned noisy ob: <br> <span class="math inline">\qquad\qquad\tilde{y}_1 = y_1\circ\hat\gamma</span>
+</div>
+<div class="fragment fade-in" data-fragment-index="1" style="display: block; width: fit-content; margin-left: 0;">
+• estimated warping: <span class="math inline">\hat\gamma</span> <br> • aligned signal: <br> <span class="math inline">\qquad\qquad\tilde{f}_1 = f_1\circ\hat\gamma</span>
+</div>
+</div>
+<div class="columns" style="display: flex; align-items: center; gap: -5em; margin-top: -2em;">
+<div class="column" style="width: 30%; text-align: center;">
+<div class="r-stack">
+<div class="fragment fade-out" data-fragment-index="1">
+<img src="figs/bayes/pairwise/raw_signal.svg" style="width: 100%;" data-id="fig-pe">
+<div style="font-size: 100%; text-align: center; margin-top: -1em;">
+<span style="color:#336699;"><span class="math inline">\quad y_1</span></span> and <span style="color:#ff6600;"><span class="math inline">y_2</span></span>
+</div>
+</div>
+<div class="fragment fade-in" data-fragment-index="1">
+<img src="figs/bayes/pairwise/raw_f.svg" style="width: 100%;">
+<div style="font-size: 100%; text-align: center; margin-top: -1em;">
+<span style="color:#336699;"><span class="math inline">f_1</span></span> and <span style="color:#ff6600;"><span class="math inline">f_2</span></span>
+</div>
+</div>
+</div>
+<p><br></p>
+</div><div class="column" style="width: 70%; margin-top: -3em;">
+<div class="r-stack">
+<table style="margin: auto; border-collapse: collapse; border: 1px solid black; padding: -0.5em;" class="fragment fade-out" data-fragment-index="1">
+<thead>
+<tr>
+<th style="border: 1px solid black; vertical-align: middle; text-align: center;">
+</th>
+<th style="text-align: center">
+Aligned Signals
+</th>
+<th style="text-align: center">
+Warping Fns
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="border: 1px solid black; vertical-align: middle; text-align: center; writing-mode: vertical-rl; transform: rotate(180deg);">
+<strong>F–R</strong>
+</td>
+<td>
+<img src="figs/bayes/pairwise/aligned_signals_FR.svg" width="100%">
+<div style="font-size: 100%; text-align: center; margin-top: -0.5em;">
+<span style="color:#339933;"><span class="math inline">\tilde{y}_1^{\scriptscriptstyle\textrm{(F--R)}}</span></span> and <span style="color:#ff6600;"><span class="math inline">y_2</span></span>
+</div>
+</td>
+<td>
+<img src="figs/bayes/pairwise/gam_FR.svg" width="100%">
+<div style="font-size: 100%; text-align: center; margin-top: -0.5em;">
+<span style="color:#339933;"><span class="math inline">\hat{\gamma}^{\scriptscriptstyle\textrm{(F--R)}}</span></span>
+</div>
+</td>
+</tr>
+<tr>
+<td style="border: 1px solid black; vertical-align: middle; text-align: center; writing-mode: vertical-rl; transform: rotate(180deg);">
+<strong>Bayes</strong>
+</td>
+<td>
+<img src="figs/bayes/pairwise/aligned_signals_Bayes.svg" width="100%">
+<div style="font-size: 100%; text-align: center; margin-top: -0.5em;">
+<span style="color:#000066;"><span class="math inline">\tilde{y}_1^{\scriptscriptstyle\textrm{(Bayes)}}</span></span> and <span style="color:#ff6600;"><span class="math inline">y_2</span></span>
+</div>
+</td>
+<td>
+<img src="figs/bayes/pairwise/gam_Bayes.svg" width="100%">
+<div style="font-size: 100%; text-align: center; margin-top: -0.5em;">
+<span style="color:#000066;"><span class="math inline">\hat{\gamma}^{\scriptscriptstyle\textrm{(Bayes)}}</span></span>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+<table class="fragment fade-in" data-fragment-index="1" style="margin: auto; border-collapse: collapse; border: 1px solid black;">
+<thead>
+<tr>
+<th style="border: 1px solid black; vertical-align: middle; text-align: center;">
+</th>
+<th style="text-align: center">
+Aligned Signals
+</th>
+<th style="text-align: center">
+Warping Fns
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="border: 1px solid black; vertical-align: middle; text-align: center; writing-mode: vertical-rl; transform: rotate(180deg);">
+<strong>F–R</strong>
+</td>
+<td>
+<img src="figs/bayes/pairwise/aligned_f_FR.svg" width="100%">
+<div style="font-size: 100%; text-align: center; margin-top: -0.5em;">
+<span style="color:#339933;"><span class="math inline">\tilde{f}_1^{\scriptscriptstyle\textrm{(F--R)}}</span></span> and <span style="color:#ff6600;"><span class="math inline">f_2</span></span>
+</div>
+</td>
+<td>
+<img src="figs/bayes/pairwise/gam_FR.svg" width="100%">
+<div style="font-size: 100%; text-align: center; margin-top: -0.5em;">
+<span style="color:#339933;"><span class="math inline">\hat{\gamma}^{\scriptscriptstyle\textrm{(F--R)}}</span></span>
+</div>
+</td>
+</tr>
+<tr>
+<td style="border: 1px solid black; vertical-align: middle; text-align: center; writing-mode: vertical-rl; transform: rotate(180deg);">
+<strong>Bayes</strong>
+</td>
+<td>
+<img src="figs/bayes/pairwise/aligned_f_Bayes.svg" width="100%">
+<div style="font-size: 100%; text-align: center; margin-top: -0.5em;">
+<span style="color:#000066;"><span class="math inline">\tilde{f}_1^{\scriptscriptstyle\textrm{(Bayes)}}</span></span> and <span style="color:#ff6600;"><span class="math inline">f_2</span></span>
+</div>
+</td>
+<td>
+<img src="figs/bayes/pairwise/gam_Bayes.svg" width="100%">
+<div style="font-size: 100%; text-align: center; margin-top: -0.5em;">
+<span style="color:#000066;"><span class="math inline">\hat{\gamma}^{\scriptscriptstyle\textrm{(Bayes)}}</span></span>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div></div>
+<div style="position: absolute; top: -0.5em; right: 0; padding: 0.5em;">
+<a href="#/pairwise-alignment-algorithm" style="color:#3333b3; font-size: 80%;">[Return]</a>
+</div>
+</section></section>
+<section>
+<section id="multiple-function-alignment-1" class="title-slide slide level2 center" data-state="hide-menubar" data-auto-animate="true">
+<h2 data-id="quarto-animate-title">Multiple-function Alignment</h2>
+<div class="columns" style="display: flex; gap: -1em;">
+<div class="column" style="width: 59%">
+Latent noise-free signals <span class="math inline">\{f_i\}_{i=1}^5</span>:
+<div>
+<span class="math display">f_i(t) = \sum_{j=1}^2 a_{ij} \cdot \exp\left\{ -\frac{(t - \mu_{ij})^2}{2\sigma_{ij}^2} \right\}</span>
+</div>
+<div style="margin-top: -0.5em; font-size: 90%;">
+<p><span class="math inline">\quad\,\,a_{i1},\,\,a_{i,2}\overset{\textrm{i.i.d.}}{\sim} \mathrm{Unif([0.6,1])}</span><br> <span class="math inline">\quad\,\, \mu_{i1} \overset{\textrm{i.i.d.}}{\sim} \mathrm{Unif}([0.2,0.45]),\,\, \mu_{i2} \overset{\textrm{i.i.d.}}{\sim} \mathrm{Unif}([0.55,0.95])</span><br> <span class="math inline">\quad\,\, \sigma_{i1} \overset{\textrm{i.i.d.}}{\sim} \mathrm{Unif}([0.05,0.08]),\,\, \sigma_{i2} \overset{\textrm{i.i.d.}}{\sim} \mathrm{Unif}([0.05,0.12])</span></p>
+</div>
+</div><div class="column" style="item-align: center; text-align: center; width: 41%; margin-top: 0em;">
+<img src="figs/bayes/mult/raw_f.svg" style="width: 80%;">
+<p style="margin-top: -1em;">
+<span class="math inline">\quad f_i</span>’s
+</p>
+</div></div>
+<div class="columns" style="display: flex; gap: 0em; margin-top: 0em; items-align: center;">
+<div class="column center" style="width: 59%">
+<p>The observed noisy signals <span class="math inline">\{y_i\}_{i=1}^5</span>:</p>
+<div style="text-align:center;">
+<span class="math inline">y_i([t]) = f_i([t]) + \epsilon_i([t])</span>
+</div>
+<p><span class="math inline">\qquad\,\,</span> additive noise: <span class="math inline">\,\, \epsilon_i([t])\overset{\textrm{i.i.d.}}{\sim} \mathcal{N}(\mathbf{0}, 0.2^2\ \mathbf{I})</span><br> <span class="math inline">\qquad\,\,</span> discretized time: <span class="math inline">\,\, [t] \in \mathbb{R}^{T}</span><br> <span class="math inline">\qquad\,\,</span> identity matrix: <span class="math inline">\,\, \mathbf{I}\in\mathbb{R}^{T\times T}</span></p>
+</div><div class="column" style="item-align: center; text-align: center; width: 41%; margin-top: 0em;">
+<img src="figs/bayes/mult/raw_signals.svg" style="width: 80%;" data-id="fig-pe">
+<p style="margin-top: -1em;">
+<span class="math inline">\quad \,\, y_i</span>’s
+</p>
+</div></div>
+<div style="position: absolute; top: -1em; right: 0; padding: 0.5em;">
+<a href="#/multiple-alignment-algorithm" style="color:#3333b3; font-size: 80%;">[Return]</a>
+</div>
+</section>
+<section id="section-4" class="slide level3" data-state="hide-menubar" data-auto-animate="true">
+<h3 data-id="quarto-animate-title"></h3>
+<h2>
+Multiple-function Alignment <span class="fragment" data-fragment-index="1"> (only for display purpose) </span>
+</h2>
+<div class="r-stack">
+<div class="fragment fade-out" data-fragment-index="1" style="display: block; width: fit-content; margin-left: 0;">
+• estimated warpings: <span class="math inline">\hat\gamma_i</span> <br> • aligned noisy obs: <br> <span class="math inline">\qquad\qquad\tilde{y}_i = y_i\circ\hat\gamma_i</span>
+</div>
+<div class="fragment fade-in" data-fragment-index="1" style="display: block; width: fit-content; margin-left: 0;">
+• estimated warpings: <span class="math inline">\hat\gamma_i</span> <br> • aligned signals: <br> <span class="math inline">\qquad\qquad\tilde{f}_i = f_i\circ\hat\gamma_i</span>
+</div>
+</div>
+<div class="columns" style="display: flex; align-items: center; gap: -5em; margin-top: -2em;">
+<div class="column" style="width: 30%; text-align: center;">
+<div class="r-stack">
+<div class="fragment fade-out" data-fragment-index="1">
+<img src="figs/bayes/mult/raw_signals.svg" style="width: 100%;" data-id="fig-pe">
+<div style="font-size: 100%; text-align: center; margin-top: -1em;">
+<span class="math inline">\quad \,\, y_i</span>’s
+</div>
+</div>
+<div class="fragment fade-in" data-fragment-index="1">
+<img src="figs/bayes/mult/raw_f.svg" style="width: 100%;">
+<div style="font-size: 100%; text-align: center; margin-top: -1em;">
+<span class="math inline">\quad \,\, f_i</span>’s
+</div>
+</div>
+</div>
+<p><br></p>
+</div><div class="column" style="width: 70%; margin-top: -3em;">
+<div class="r-stack">
+<table style="margin: auto; border-collapse: collapse; border: 1px solid black; padding: -0.5em;" class="fragment fade-out" data-fragment-index="1">
+<thead>
+<tr>
+<th style="border: 1px solid black; vertical-align: middle; text-align: center;">
+</th>
+<th style="text-align: center">
+Aligned Signals
+</th>
+<th style="text-align: center">
+Warping Fns
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="border: 1px solid black; vertical-align: middle; text-align: center; writing-mode: vertical-rl; transform: rotate(180deg);">
+<strong>F–R</strong>
+</td>
+<td>
+<img src="figs/bayes/mult/aligned_signals_FR.svg" width="100%">
+<div style="font-size: 100%; text-align: center; margin-top: -0.5em;">
+<span class="math inline">\quad \,\, \tilde{y}_i^{\scriptscriptstyle\textrm{(F--R)}}</span>’s
+</div>
+</td>
+<td>
+<img src="figs/bayes/mult/gam_FR.svg" width="100%">
+<div style="font-size: 100%; text-align: center; margin-top: -0.5em;">
+<span class="math inline">\quad \,\, \hat{\gamma}_i^{\scriptscriptstyle\textrm{(F--R)}}</span>
+</div>
+</td>
+</tr>
+<tr>
+<td style="border: 1px solid black; vertical-align: middle; text-align: center; writing-mode: vertical-rl; transform: rotate(180deg);">
+<strong>Bayes</strong>
+</td>
+<td>
+<img src="figs/bayes/mult/aligned_signals_Bayes.svg" width="100%">
+<div style="font-size: 100%; text-align: center; margin-top: -0.5em;">
+<span class="math inline">\quad \,\, \tilde{y}_i^{\scriptscriptstyle\textrm{(Bayes)}}</span>’s
+</div>
+</td>
+<td>
+<img src="figs/bayes/mult/gam_Bayes.svg" width="100%">
+<div style="font-size: 100%; text-align: center; margin-top: -0.5em;">
+<span style="color:#000066;"><span class="math inline">\quad \,\, \hat{\gamma}_i^{\scriptscriptstyle\textrm{(Bayes)}}</span></span>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+<table class="fragment fade-in" data-fragment-index="1" style="margin: auto; border-collapse: collapse; border: 1px solid black; margin-top: -0.5em;">
+<thead>
+<tr>
+<th style="border: 1px solid black; vertical-align: middle; text-align: center;">
+</th>
+<th style="text-align: center;font-size:80%;">
+Aligned Signals
+</th>
+<th style="text-align: center;font-size:80%;">
+Warping Fns
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="border: 1px solid black; vertical-align: middle; text-align: center; writing-mode: vertical-rl; transform: rotate(180deg);font-size:80%;">
+<strong>F–R</strong>
+</td>
+<td>
+<img src="figs/bayes/mult/aligned_f_FR.svg" width="75%">
+</td>
+<td>
+<img src="figs/bayes/mult/gam_FR.svg" width="75%">
+</td>
+</tr>
+<tr>
+<td style="border: 1px solid black; vertical-align: middle; text-align: center; writing-mode: vertical-rl; transform: rotate(180deg);font-size:80%;">
+<strong>Bayes</strong>
+</td>
+<td>
+<img src="figs/bayes/mult/aligned_f_Bayes.svg" width="75%">
+</td>
+<td>
+<img src="figs/bayes/mult/gam_Bayes.svg" width="75%">
+</td>
+</tr>
+<tr>
+<td style="border: 1px solid black; vertical-align: middle; text-align: center; writing-mode: vertical-rl; transform: rotate(180deg); font-size:60%;">
+<strong>F–R (noise-free)</strong>
+</td>
+<td>
+<img src="figs/bayes/mult/aligned_f_FR_noisefree.svg" width="75%">
+</td>
+<td>
+<img src="figs/bayes/mult/gam_FR_noisefree.svg" width="75%">
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div></div>
+<div style="position: absolute; top: -0.5em; right: 0; padding: 0.5em;">
+<a href="#/multiple-alignment-algorithm" style="color:#3333b3; font-size: 80%;">[Return]</a>
+</div>
+</section></section>
+<section>
+<section id="underlying-signal-estimation-1" class="title-slide slide level2 center" data-state="hide-menubar" data-auto-animate="true">
+<h2 data-id="quarto-animate-title">Underlying Signal Estimation</h2>
+<div style="margin-top:-1em;">
+<div class="columns" style="display: flex; gap: -1em;">
+<div class="column" style="width: 59%">
+<p>Latent underlying signal <span class="math inline">g(t)</span>: <span class="math display">g(t) = \sum_{j=1}^3 a_j \exp\left(-\frac{(t - \mu_j)^2}{2 \sigma_j^2}\right)</span></p>
+<div style="margin-top: -0.5em; font-size: 80%;">
+<p><span class="math inline">\qquad\,\,(a_1, a_2, a_3) = (1.5, 1.2, 1.5)</span><br> <span class="math inline">\qquad\,\, (\mu_1, \mu_2, \mu_3) = (0.06, 0.5, 0.94)</span><br> <span class="math inline">\qquad\,\, (\sigma_1, \sigma_2, \sigma_3) = (0.2, 0.15, 0.2)</span></p>
+</div>
+</div><div class="column" style="item-align: center; text-align: center; width: 42%; margin-top: 0em;">
+<div style="display: flex; justify-content: center; align-items: center;">
+<div style="flex: 1;">
+<img src="figs/bayes/sig_est/raw_f.svg" style="width: 100%;">
+<p style="margin-top: -1em;">
+<span class="math inline">\quad \,\,f_i</span>’s and <span style="color:red"><span class="math inline">\boldsymbol g</span></span>
+</p>
+</div>
+<div style="flex: 0 0 auto;">
+<img src="figs/bayes/sig_est/legend_only.svg" style="width: 100%;">
+</div>
+</div>
+</div></div>
+<div class="columns" style="display: flex; gap: 0em; margin-top: 0em; items-align: center;">
+<div class="column center" style="width: 59%">
+The observed noisy signals <span class="math inline">\{y_i\}_{i=1}^5</span>:
+<div style="text-align:center;">
+<span class="math display">y_i = e_i + c_i (g\ \circ \gamma_i^{-1}) + \epsilon_i</span>
+</div>
+<div style="font-size:80%;">
+<p><span class="math inline">\qquad\,\,</span> additive noise: <span class="math inline">\,\, \epsilon_i([t])\overset{\textrm{i.i.d.}}{\sim} \mathcal{N}(\mathbf{0}, 0.2^2\ \mathbf{I})</span><br> <span class="math inline">\qquad\,\,</span> translation: <span class="math inline">\,\, e_i\overset{\textrm{i.i.d.}}{\sim} \mathcal{N}(0,0.1^2)</span><br> <span class="math inline">\qquad\,\,</span> scale factor: <span class="math inline">\,\, c_i \overset{\textrm{i.i.d.}}{\sim} \mathrm{Gamma}(10,0.1)</span><br> <span class="math inline">\qquad\,\,</span> discretized time: <span class="math inline">\,\, [t] \in \mathbb{R}^{T}</span><br> <span class="math inline">\qquad\,\,</span> identity matrix: <span class="math inline">\,\, \mathbf{I}\in\mathbb{R}^{T\times T}</span></p>
+</div>
+</div><div class="column" style="item-align: center; text-align: center; width: 37%; margin-top: 1em;">
+<img src="figs/bayes/sig_est/raw_signals.svg" style="width: 80%;" data-id="fig-pe">
+<p style="margin-top: -1em;">
+<span class="math inline">\quad \,\, y_i</span>’s
+</p>
+</div></div>
+</div>
+<div style="position: absolute; top: -1em; right: 0; padding: 0.5em;">
+<a href="#/underlying-signal-algorithm" style="color:#3333b3; font-size: 80%;">[Return]</a>
+</div>
+</section>
+<section id="section-5" class="slide level3" data-state="hide-menubar" data-auto-animate="true">
+<h3 data-id="quarto-animate-title"></h3>
+<h2>
+Underlying Signal Estimation <span class="fragment" data-fragment-index="1"> (only for display purpose) </span>
+</h2>
+<div style="margin-top:-1em;">
+<div class="r-stack">
+<div class="fragment fade-out" data-fragment-index="1" style="display: block; width: fit-content; margin-left: 0;">
+• estimated warpings: <span class="math inline">\hat\gamma_i</span> <br> • aligned noisy obs: <br> <span class="math inline">\qquad\qquad\tilde{y}_i = y_i\circ\hat\gamma_i</span>
+</div>
+<div class="fragment fade-in" data-fragment-index="1" style="display: block; width: fit-content; margin-left: 0;">
+• estimated warpings: <span class="math inline">\hat\gamma_i</span> <br> • aligned signals: <br> <span class="math inline">\qquad\qquad\tilde{f}_i = f_i\circ\hat\gamma_i</span>
+</div>
+</div>
+</div>
+<div style="margin-top:1em;">
+<div class="columns" style="display: flex; align-items: center; gap: -5em; margin-top: -2em;">
+<div class="column" style="width: 30%; text-align: center;">
+<div class="r-stack">
+<div class="fragment fade-out" data-fragment-index="1">
+<img src="figs/bayes/sig_est/raw_signals.svg" style="width: 100%;" data-id="fig-pe">
+<div style="font-size: 100%; text-align: center; margin-top: -1em;">
+<span class="math inline">\quad \,\, y_i</span>’s
+</div>
+</div>
+<div class="fragment fade-in" data-fragment-index="1">
+<img src="figs/bayes/sig_est/raw_f.svg" style="width: 100%;">
+<div style="font-size: 100%; text-align: center; margin-top: -1em;">
+<span class="math inline">\quad \,\, f_i</span>’s
+</div>
+</div>
+</div>
+<div class="fragment fade-in" data-fragment-index="2" style="margin-left:-1em;">
+<p><img src="figs/bayes/sig_est/g_Bayes.svg" style="width: 92%;"></p>
+</div>
+</div><div class="column" style="width: 70%; margin-top: -3em;">
+<div class="r-stack">
+<table style="margin: auto; border-collapse: collapse; border: 1px solid black; padding: -0.5em;" class="fragment fade-out" data-fragment-index="1">
+<thead>
+<tr>
+<th style="border: 1px solid black; vertical-align: middle; text-align: center;">
+</th>
+<th style="text-align: center">
+Aligned Signals
+</th>
+<th style="text-align: center">
+Warping Fns
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="border: 1px solid black; vertical-align: middle; text-align: center; writing-mode: vertical-rl; transform: rotate(180deg);">
+<strong>F–R</strong>
+</td>
+<td>
+<img src="figs/bayes/sig_est/aligned_signals_FR.svg" width="100%">
+<div style="font-size: 100%; text-align: center; margin-top: -0.5em;">
+<span class="math inline">\quad \,\, \tilde{y}_i^{\scriptscriptstyle\textrm{(F--R)}}</span>’s
+</div>
+</td>
+<td>
+<img src="figs/bayes/sig_est/gam_FR.svg" width="100%">
+<div style="font-size: 100%; text-align: center; margin-top: -0.5em;">
+<span class="math inline">\quad \,\, \hat{\gamma}_i^{\scriptscriptstyle\textrm{(F--R)}}</span>
+</div>
+</td>
+</tr>
+<tr>
+<td style="border: 1px solid black; vertical-align: middle; text-align: center; writing-mode: vertical-rl; transform: rotate(180deg);">
+<strong>Bayes</strong>
+</td>
+<td>
+<img src="figs/bayes/sig_est/aligned_signals_Bayes.svg" width="100%">
+<div style="font-size: 100%; text-align: center; margin-top: -0.5em;">
+<span class="math inline">\quad \,\, \tilde{y}_i^{\scriptscriptstyle\textrm{(Bayes)}}</span>’s
+</div>
+</td>
+<td>
+<img src="figs/bayes/sig_est/gam_Bayes.svg" width="100%">
+<div style="font-size: 100%; text-align: center; margin-top: -0.5em;">
+<span style="color:#000066;"><span class="math inline">\quad \,\, \hat{\gamma}_i^{\scriptscriptstyle\textrm{(Bayes)}}</span></span>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+<table class="fragment fade-in" data-fragment-index="1" style="margin: auto; border-collapse: collapse; border: 1px solid black; margin-top: -0.5em;">
+<thead>
+<tr>
+<th style="border: 1px solid black; vertical-align: middle; text-align: center;">
+</th>
+<th style="text-align: center;font-size:80%;">
+Aligned Signals
+</th>
+<th style="text-align: center;font-size:80%;">
+Warping Fns
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="border: 1px solid black; vertical-align: middle; text-align: center; writing-mode: vertical-rl; transform: rotate(180deg);font-size:80%;">
+<strong>F–R</strong>
+</td>
+<td>
+<img src="figs/bayes/sig_est/aligned_f_FR.svg" width="75%">
+</td>
+<td>
+<img src="figs/bayes/sig_est/gam_FR.svg" width="75%">
+</td>
+</tr>
+<tr>
+<td style="border: 1px solid black; vertical-align: middle; text-align: center; writing-mode: vertical-rl; transform: rotate(180deg);font-size:80%;">
+<strong>Bayes</strong>
+</td>
+<td>
+<img src="figs/bayes/sig_est/aligned_f_Bayes.svg" width="75%">
+</td>
+<td>
+<img src="figs/bayes/sig_est/gam_Bayes.svg" width="75%">
+</td>
+</tr>
+<tr>
+<td style="border: 1px solid black; vertical-align: middle; text-align: center; writing-mode: vertical-rl; transform: rotate(180deg); font-size:60%;">
+<strong>F–R (noise-free)</strong>
+</td>
+<td>
+<img src="figs/bayes/sig_est/aligned_f_FR_noisefree.svg" width="75%">
+</td>
+<td>
+<img src="figs/bayes/sig_est/gam_FR_noisefree.svg" width="75%">
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div></div>
+</div>
+<div style="position: absolute; top: -0.5em; right: 0; padding: 0.5em;">
+<a href="#/section-12" style="color:#3333b3; font-size: 80%;">[Return]</a>
+</div>
+</section></section>
+<section id="pinching-effect-example" class="title-slide slide level2 center" data-state="hide-menubar">
+<h2>Pinching Effect Example</h2>
+<div style="margin-top:-1em;">
+<div class="columns" style="display: flex; column-gap: 0.5em; align-items: center;">
+<div class="column" style="width:42%;">
+<ul>
+<li><p>Registration of <span style="color:#336699"><span class="math inline">f_1</span></span> toward <span style="color:#ff6600"><span class="math inline">f_2</span></span></p></li>
+<li><p>Registered signal: <span style="color:#339933"><span class="math inline">\tilde{f}_1</span></span> (i.e., <span class="math inline">f_1 \circ \hat\gamma</span>)</p>
+<div style="margin-left:0.5em">
+where <span class="math inline">\hat\gamma</span> minimizing <span class="math inline">\|\tilde f_1 -  f_2\|_{\mathbb{L}^2}</span>.
+</div></li>
+</ul>
+</div><div class="column" style="width:58%;">
+<div class="column" style="width: 58%; margin-right: -1em;">
+<div class="r-stack">
+<div class="fragment fade-out" data-fragment-index="1">
+<img src="figs/bayes/pinching/pinching0.svg" style="width: 100%;">
+<div style="font-size: 100%; text-align: center; margin-top: -0.5em;">
+<span style="color:#336699"><span class="math inline">f_1</span></span> and <span style="color:#ff6600"><span class="math inline">f_2</span></span>
+</div>
+</div>
+<div class="fragment fade-in" data-fragment-index="1">
+<img src="figs/bayes/pinching/pinching.svg" style="width: 100%;">
+<div style="font-size: 100%; text-align: center; margin-top: -0.5em;">
+<span style="color:#336699"><span class="math inline">f_1</span></span>, <span style="color:#ff6600"><span class="math inline">f_2</span></span> and <span style="color:#339933"><span class="math inline">\tilde{f}_1</span></span>
+</div>
+</div>
+</div>
+</div><div class="column" style="width: 48%; margin-left: -1em;">
+<div class="fragment fade-in" data-fragment-index="1" style="text-align: center;">
+<img src="figs/bayes/pinching/gam0.svg" style="width: 70%;">
+<div style="font-size: 100%; margin-top: -0.5em;">
+<span style="color:#339933"><span class="math inline">\quad \,\, \hat\gamma</span></span>
+</div>
+</div>
+</div></div></div>
+<ul>
+<li><p>Recall the CLR transformation: <span style="font-size: 80%;"><span class="math inline">\quad\psi(\gamma)(t) = \log(\dot\gamma(t)) - \int_0^1 \log(\dot\gamma(s))ds</span></span>.</p></li>
+<li><p>CLR transformation is a function of <span class="math inline">\log(\dot \gamma)</span>.</p></li>
+</ul>
+<div style="text-align:center; margin-top:-0.5em;">
+<span class="math inline">\log(\dot\gamma) \rightarrow -\infty \,\,\, \Longrightarrow \,\,\, \dot\gamma \rightarrow 0 \quad</span> and <span class="math inline">\quad \log(\dot\gamma) \rightarrow \infty \,\,\, \Longrightarrow \,\,\, \dot\gamma \rightarrow \infty</span>
+</div>
+<ul>
+<li><p>Consider <span class="math inline">h \in H(0,1)</span> and <span class="math inline">h \sim \mathcal{GP}(\mu_h, \mathcal{K}_h)</span>.</p></li>
+<li><p>Extreme values of <span class="math inline">\dot\gamma</span> (e.g., <span class="math inline">0</span> or <span class="math inline">\infty</span>) can be effectively avoided as the changes by confining the magnitude of the covariance operator <span class="math inline">\mathcal{K}_h</span> that does not allow for large fluctuations.</p></li>
+</ul>
+</div>
+<div style="position: absolute; top: -0.5em; right: 0; padding: 0.5em;">
+<a href="#/registration-frameworks-3" style="color:#3333b3; font-size: 80%;">[Return]</a>
+</div>
+<div class="fragment" data-fragment-index="2">
+<div class="no-md">
+<div class="drawing-overlay">
+<svg width="100%" height="100%" viewbox="0 0 100 100">
+<path d="M103.5 31 L104 21.5" stroke="red" stroke-width="1" fill="none" stroke-opacity="0.5"></path>
+</svg>
+</div>
+</div>
+</div>
+<!-- 
+
+## Why $f$-space? {auto-animate=true .center}
+
+<div class="middle-content" auto-animate="true">
+<div style="padding-left: 1em; margin-top:-1em;">
+
+
+<h3> **---$\,\,$Noiseless case** </h3>
+<div style="padding-left: 1em;">
+  - Absolutely continuous functions: $f_1$ and $f_2 = f_1\circ\gamma$.
+  - SRVFs: $q_1$ and $q_2$.   
+
+$\,\,$ Alignment in $f$-space and $q$-space is equivalent. i.e.,
+
+$\,\,$ If $f_2 = f_1 \circ \gamma$, then:
+
+<div style="margin-top: -1em;">
+  $$
+  \|f_2 - f_1 \circ \gamma\|^2 = 0 \quad \Longleftrightarrow \quad \|q_2 - q_1 \star \gamma\|^2 = 0.
+  $$
+  </div></div>
+
+</div></div> -->
+</section>
+
+<section>
+<section id="pesa" class="title-slide slide level2 center" data-auto-animate="true" data-state="hide-menubar">
+<h2 data-id="quarto-animate-title"></h2>
+<h3>
+Step 0: Penalized Elastic Signal Alignment (PESA) (I)
+</h3>
+<div class="middle-content2">
+Objective function:
+<div data-id="eq" style="font-size:90%;">
+<span class="math display">\min_{\bar{q} \in \mathbb{L}^2} \left[ \sum_{i=1}^n \left( \min_{c_i \in \mathbb{R}, \gamma_i\in \Gamma} \left( \| {\color{magenta}\bar{q}} - {\color{green}c_i} (q_i \star {\color{blue}\gamma_i})\|^2 + \lambda \mathcal{R}(\gamma_i) \right) \right) \right]</span>
+</div>
+<p><span style="color:#3333d3"><u>Given a fixed penalty weight <span class="math inline">\lambda</span></u></span>, the alignment process is as follows:</p>
+With fixed <span class="math inline">\color{magenta}\bar q</span>,
+<div style="margin-top: -0.5em; margin-left: 1em;">
+<p>1.<span style="color:blue"><span class="math inline">\,\,</span>Optimal warping function <span class="math inline">\gamma_i^*</span></span>: <br> <span class="math inline">\quad\qquad\gamma_{\lambda,i}^* = \underset{\gamma_i \in \Gamma}{\mathrm{argmin}} \left(\| \bar{q} - c_i^* (q_i \star \gamma_i) \|^2 + \lambda \mathcal{R}(\gamma_i) \right).</span> <span style="font-size:80%"><span class="math inline">\quad</span>(by Dynamic Programming)</span> <br> <!-- <div style="margin-top: -1em;"> --> <span class="math inline">\qquad\qquad</span>↳(Aligned functions) <span class="math inline">\quad f^*_{\lambda, i} = f_i \circ \gamma_{\lambda,i}^*\quad</span> for <span class="math inline">\quad i=1,2,\ldots,n</span>.</p>
+<p>2.<span style="color:green"><span class="math inline">\,\,</span>Optimal scale factor <span class="math inline">c_i^*</span></span> given fixed <span class="math inline">\color{magenta}\bar q</span>:<br> <!-- <div style="margin-top:-1em;"> --> <span class="math inline">\qquad\quad c_i^* = \frac{\langle \bar{q}\,\, , \,q_i^* \rangle}{\langle q_i^*,\,q_i^*\rangle} \quad \textsf{ where } \quad q_i^* = \mathrm{srvf}(f^*_{\lambda,i})</span></p>
+</div>
+<p>3.<span style="color:magenta"><span class="math inline">\,\,</span>Update the template function <span class="math inline">\bar{q}</span>: </span><span class="math inline">\quad \bar{q} \leftarrow \frac{1}{n}\sum_{i=1}^n q_i^*</span></p>
+<div class="fragment">
+<!-- 
+::: {.no-md}
+
+<div class="drawing-overlay">
+<svg width="100%" height="100%" viewBox="0 0 100 100">
+  <defs>
+        <marker id="arrowhead" markerWidth="4" markerHeight="3"
+            refX="2" refY="1.5" orient="auto" markerUnits="strokeWidth">
+      <polygon points="0 0, 4 1.5, 0 3" fill="#ff3b30" fill-opacity="0.05"/>
+    </marker>
+  </defs><path d="
+    M-17 82
+    L-17 82
+    C-17 87, -23 87, -23 82
+    V45
+    C-23 40, -17 40, -17 45
+    L-17 75
+    H-15
+    L-17 77.5
+    L-19 75
+    H-17"
+    fill="none"
+    stroke="#ff3b30"
+    stroke-width="2"
+    stroke-opacity="0.5"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  /></svg></div>
+
+::: -->
+<p><strong>Repeat 1-3 until convergence in the objective function.</strong></p>
+</div>
+</div>
+</section>
+<section id="step-0-penalized-elastic-signal-alignment-pesa-ii" class="slide level3 center" data-auto-animate="true" data-state="hide-menubar">
+<h3 data-id="quarto-animate-title">Step 0: Penalized Elastic Signal Alignment (PESA) (II)</h3>
+<div class="r-stack">
+<div class="fragment fade-out" data-fragment-index="1">
+<ul>
+<li>Let <span class="math inline">F^*_{\lambda} = \{ f_i \circ \gamma^*_{\lambda,i} \}_{i=1}^n</span> be the aligned functions at penalty weight <span class="math inline">\lambda</span>.</li>
+<li>Given the candidate penalty weights <span class="math inline">\lambda_\ell</span> for <span class="math inline">\ell= 1,...,L</span>, previously we compute the aligned functions <strong>independently</strong> for each <span class="math inline">\lambda_\ell</span>.</li>
+</ul>
+</div>
+<div class="fragment fade-in" data-fragment-index="1">
+<ul>
+<li><span style="color:blue"> (Computational Issue) </span> For each <span class="math inline">\lambda_\ell</span>, <span class="math inline">\texttt{while}</span> loop can be computationally expensive.</li>
+<li><span style="color:blue"> (Our Update) </span> Update <span class="math inline">f_{1:n}</span> by <strong>re-using</strong> <span class="math inline">F^*_{\lambda}</span> from the previous penalty weight <span class="math inline">\lambda</span>.</li>
+<li>We update <span class="math inline">f_{1:n}</span>’s from <span class="math inline">\lambda_L</span> to <span class="math inline">\lambda_1</span> since the greater <span class="math inline">\lambda</span>, the less alignment.</li>
+</ul>
+</div>
+</div>
+<div style="display: flex; justify-content: center; align-items: center; gap: 0.5em; font-size:130%; margin-top: -1em">
+<div style="text-align: center;" data-id="lam1">
+<span class="math display"> \lambda_1 </span>
+<div style="text-align: center; font-size: 200%; font-weight: bold;">
+↓
+</div>
+<div style="margin-top: -1em; color: red;">
+<span class="math display"> F^*_{\lambda_1} </span>
+</div>
+<div style="text-align: center; font-size: 200%; font-weight: bold;">
+↑
+</div>
+<div style="margin-top: -1em;">
+<span class="math display">f_{1:n}</span>
+</div>
+</div>
+<div style="text-align: center;">
+<span class="math display"> \quad </span>
+<div style="text-align: center; font-size: 200%; font-weight: bold;">
+<span class="math inline">\quad</span>
+</div>
+<div style="margin-top: -1em;">
+<span class="math display">\quad</span>
+</div>
+<div style="text-align: center; font-size: 200%; font-weight: bold;">
+<span class="math inline">\quad</span>
+</div>
+<div style="margin-top: -1em;">
+<span class="math display">\quad</span>
+</div>
+</div>
+<div style="text-align: center;" data-id="lam2">
+<span class="math display"> \lambda_2 </span>
+<div style="text-align: center; font-size: 200%; font-weight: bold;">
+↓
+</div>
+<div style="margin-top: -1em; color: red;">
+<span class="math display"> F^*_{\lambda_2} </span>
+</div>
+<div style="text-align: center; font-size: 200%; font-weight: bold;">
+↑
+</div>
+<div style="margin-top: -1em;">
+<span class="math display">f_{1:n}</span>
+</div>
+</div>
+<div style="text-align: center;">
+<span class="math display"> \quad </span>
+<div style="text-align: center; font-size: 200%; font-weight: bold;">
+<span class="math inline">\quad</span>
+</div>
+<div style="margin-top: -1em;">
+<span class="math display">\quad</span>
+</div>
+<div style="text-align: center; font-size: 200%; font-weight: bold;">
+<span class="math inline">\quad</span>
+</div>
+<div style="margin-top: -1em;">
+<span class="math display">\quad</span>
+</div>
+</div>
+<div style="text-align: center;">
+<span class="math display"> \cdots </span>
+<div style="text-align: center; font-size: 200%; font-weight: bold;">
+<span class="math inline">\quad</span>
+</div>
+<div style="margin-top: -1em;">
+<span class="math display"> \cdots </span>
+</div>
+<div style="text-align: center; font-size: 200%; font-weight: bold;">
+<span class="math inline">\quad</span>
+</div>
+<div style="margin-top: -1em;">
+<span class="math display">\quad</span>
+</div>
+</div>
+<div style="text-align: center;">
+<span class="math display"> \quad </span>
+<div style="text-align: center; font-size: 200%; font-weight: bold;">
+<span class="math inline">\quad</span>
+</div>
+<div style="margin-top: -1em;">
+<span class="math display">\quad</span>
+</div>
+<div style="text-align: center; font-size: 200%; font-weight: bold;">
+<span class="math inline">\quad</span>
+</div>
+<div style="margin-top: -1em;">
+<span class="math display">\quad</span>
+</div>
+</div>
+<div style="text-align: center;" data-id="lamL-1">
+<span class="math display"> \lambda_{L-1} </span>
+<div style="text-align: center; font-size: 200%; font-weight: bold;">
+↓
+</div>
+<div style="margin-top: -1em; color: red;">
+<span class="math display"> F^*_{\lambda_{L-1}} </span>
+</div>
+<div style="text-align: center; font-size: 200%; font-weight: bold;">
+↑
+</div>
+<div style="margin-top: -1em;">
+<span class="math display">f_{1:n}</span>
+</div>
+</div>
+<div style="text-align: center;">
+<span class="math display"> \quad </span>
+<div style="text-align: center; font-size: 200%; font-weight: bold;">
+<span class="math inline">\quad</span>
+</div>
+<div style="margin-top: -1em;">
+<span class="math display">\quad</span>
+</div>
+<div style="text-align: center; font-size: 200%; font-weight: bold;">
+<span class="math inline">\quad</span>
+</div>
+<div style="margin-top: -1em;">
+<span class="math display">\quad</span>
+</div>
+</div>
+<div style="text-align: center;" data-id="lamL">
+<span class="math display"> \lambda_L </span>
+<div style="text-align: center; font-size: 200%; font-weight: bold;">
+↓
+</div>
+<div style="margin-top: -1em; color: red;">
+<span class="math display"> F^*_{\lambda_L}</span>
+</div>
+<div style="text-align: center; font-size: 200%; font-weight: bold;">
+↑
+</div>
+<div style="margin-top: -1em;">
+<span class="math display">f_{1:n}</span>
+</div>
+</div>
+</div>
+</section>
+<section id="step-0-penalized-elastic-signal-alignment-pesa-iii" class="slide level3 center" data-auto-animate="true" data-auto-animate-duration="2.5" data-state="hide-menubar">
+<h3 data-id="quarto-animate-title">Step 0: Penalized Elastic Signal Alignment (PESA) (III)</h3>
+<div class="r-stack">
+<div>
+<ul>
+<li><span style="color:blue"> (Computational Issue) </span> For each <span class="math inline">\lambda_\ell</span>, <span class="math inline">\texttt{while}</span> loop can be computationally expensive.</li>
+<li><span style="color:blue"> (Our Update) </span> Update <span class="math inline">f_{1:n}</span> by <strong>re-using</strong> <span class="math inline">F^*_{\lambda}</span> from the previous penalty weight <span class="math inline">\lambda</span>.</li>
+<li>We update <span class="math inline">f_{1:n}</span>’s from <span class="math inline">\lambda_L</span> to <span class="math inline">\lambda_1</span> since the greater <span class="math inline">\lambda</span>, the less alignment.</li>
+</ul>
+</div>
+</div>
+<div style="display: flex; justify-content: center; align-items: center; gap: 0.5em; font-size:130%; margin-top: -1em;">
+<div style="text-align: center;" data-id="lamL">
+<span class="math display"> \lambda_L </span>
+<div style="text-align: center; font-size: 200%; font-weight: bold;">
+↓
+</div>
+<div style="margin-top: -1em; color: red;">
+<span class="math display"> F^*_{\lambda_L} </span>
+</div>
+<div style="text-align: center; font-size: 200%; font-weight: bold;">
+↑
+</div>
+<div style="margin-top: -1em;">
+<span class="math display">f_{1:n}</span>
+</div>
+</div>
+<div style="text-align: center;">
+<span class="math display"> \quad </span>
+<div style="text-align: center; font-size: 200%; font-weight: bold;">
+<span class="math inline">\quad</span>
+</div>
+<div class="fragment" style="text-align: center; font-size: 200%; font-weight: bold; margin-top:-0.2em;" data-fragment-index="1">
+→
+</div>
+<div style="text-align: center; font-size: 200%; font-weight: bold;">
+<span class="math inline">\quad</span>
+</div>
+<div style="margin-top: -1em;">
+<span class="math display">\quad</span>
+</div>
+</div>
+<div style="text-align: center;" data-id="lamL-1">
+<span class="math display"> \lambda_{L-1} </span>
+<div class="fragment" style="text-align: center; font-size: 200%; font-weight: bold;" data-fragment-index="1">
+↓
+</div>
+<div style="margin-top: -1em; color: red;">
+<span class="math display"> F^*_{\lambda_{L-1}} </span>
+</div>
+<div style="text-align: center; font-size: 200%; font-weight: bold;">
+<span class="math inline">\quad</span>
+</div>
+<div style="margin-top: -1em;">
+<span class="math display">\quad</span>
+</div>
+</div>
+<div style="text-align: center;">
+<span class="math display"> \quad </span>
+<div style="text-align: center; font-size: 200%; font-weight: bold;">
+<span class="math inline">\quad</span>
+</div>
+<div class="fragment" style="text-align: center; font-size: 200%; font-weight: bold; margin-top:-0.2em;" data-fragment-index="2">
+→
+</div>
+<div style="text-align: center; font-size: 200%; font-weight: bold;">
+<span class="math inline">\quad</span>
+</div>
+<div style="margin-top: -1em;">
+<span class="math display">\quad</span>
+</div>
+</div>
+<div style="text-align: center;">
+<span class="math display"> \cdots </span>
+<div style="text-align: center; font-size: 200%; font-weight: bold;">
+<span class="math inline">\quad</span>
+</div>
+<div style="margin-top: -1em;">
+<span class="math display"> \cdots </span>
+</div>
+<div style="text-align: center; font-size: 200%; font-weight: bold;">
+<span class="math inline">\quad</span>
+</div>
+<div style="margin-top: -1em;">
+<span class="math display">\quad</span>
+</div>
+</div>
+<div style="text-align: center;">
+<span class="math display"> \quad </span>
+<div style="text-align: center; font-size: 200%; font-weight: bold;">
+<span class="math inline">\quad</span>
+</div>
+<div class="fragment" style="text-align: center; font-size: 200%; font-weight: bold; margin-top:-0.2em;" data-fragment-index="2">
+→
+</div>
+<div style="text-align: center; font-size: 200%; font-weight: bold;">
+<span class="math inline">\quad</span>
+</div>
+<div style="margin-top: -1em;">
+<span class="math display">\quad</span>
+</div>
+</div>
+<div style="text-align: center;" data-id="lam2">
+<span class="math display"> \lambda_2 </span>
+<div class="fragment" style="text-align: center; font-size: 200%; font-weight: bold;" data-fragment-index="2">
+↓
+</div>
+<div style="margin-top: -1em; color: red;">
+<span class="math display"> F^*_{\lambda_2} </span>
+</div>
+<div style="text-align: center; font-size: 200%; font-weight: bold;">
+<span class="math inline">\quad</span>
+</div>
+<div style="margin-top: -1em;">
+<span class="math display">\quad</span>
+</div>
+</div>
+<div style="text-align: center;">
+<span class="math display"> \quad </span>
+<div style="text-align: center; font-size: 200%; font-weight: bold;">
+<span class="math inline">\quad</span>
+</div>
+<div class="fragment" style="text-align: center; font-size: 200%; font-weight: bold; margin-top:-0.2em;" data-fragment-index="3">
+→
+</div>
+<div style="text-align: center; font-size: 200%; font-weight: bold;">
+<span class="math inline">\quad</span>
+</div>
+<div style="margin-top: -1em;">
+<span class="math display">\quad</span>
+</div>
+</div>
+<div style="text-align: center;" data-id="lam1">
+<span class="math display"> \lambda_1 </span>
+<div class="fragment" style="text-align: center; font-size: 200%; font-weight: bold;" data-fragment-index="3">
+↓
+</div>
+<div style="margin-top: -1em; color: red;">
+<span class="math display"> F^*_{\lambda_1}</span>
+</div>
+<div style="text-align: center; font-size: 200%; font-weight: bold;">
+<span class="math inline">\quad</span>
+</div>
+<div style="margin-top: -1em;">
+<span class="math display">\quad</span>
+</div>
+</div>
+</div>
+</section>
+<section id="pesa-peusdo-code" class="slide level3" data-auto-animate="true" data-state="hide-menubar">
+<h3 data-id="quarto-animate-title">PESA Peusdo-code</h3>
+<div style="position: relative; font-size: 90%; line-height: 1.2; padding: 0em 1em;">
+<div data-id="input" style="color: black;">
+<span class="math inline">\textsf{\textbf{Input: }}</span> <span class="math inline">\quad \{f_1, ..., f_n\}\ \ , \,\,\,\, \{\lambda_1, ..., \lambda_L\}</span> <span class="math inline">\qquad \textsf{\textbf{Output: }}</span> <span class="math inline">\quad \{\hat{g}_{\lambda_1}, ..., \hat{g}_{\lambda_L}\}</span>
+</div>
+<div data-id="front" style="color: black;">
+<span class="math inline">{\color{black} \textsf{\textbf{for }} \ell = L \textsf{\textbf{ down to }} 1:}</span> <br><span class="math inline">\qquad \textsf{\textbf{for }} i = 1 \textsf{\textbf{ to }} n:</span> <span class="math inline">\qquad c_i^* \leftarrow 1</span>; <span class="math inline">\quad</span> <span class="math inline">q_i \leftarrow
+\begin{cases}
+\mathtt{srvf}(f_i) &amp; \textsf{\text{if }} \ell = L \\
+\mathtt{srvf}(\tilde{f}_{\lambda_{\ell+1}, i}) &amp; \textsf{\text{otherwise}}
+\end{cases}</span> <span class="math inline">\quad \textsf{\textbf{end}}</span><br> <span class="math inline">\qquad \bar{q} \leftarrow
+\begin{cases}
+\frac{1}{n}\sum q_i &amp; \textsf{\text{if }} \ell = L \\
+\bar{q}_{\lambda_{\ell+1}} &amp; \textsf{\text{otherwise}}
+\end{cases}</span><br><br>
+</div>
+<div style="position: relative; margin-top: -1em; margin-left: 2em;">
+<div data-id="repeat-box-content">
+<span style="align-items: flex-start; gap: 1em;"><span class="math inline">\textsf{\textbf{repeat until convergence:}}</span> <br> <span class="math inline">\qquad \textsf{\textbf{for }} i = 1 \textsf{\textbf{ to }} n:</span><br> <span class="math inline">\qquad\qquad \gamma_{\lambda_\ell,i}^* \leftarrow \mathrm{argmin}_\gamma \big[ \|\bar{q} - c_i^*(q_i \circ \gamma)\|^2 + \lambda_\ell \mathcal{R}(\gamma) \big]</span></span>
+<div style="position: absolute; top: 2.58em; left: 68%; font-size: 100%; font-style: italic; color: #444; white-space: nowrap;">
+via Dynamic Programming
+</div>
+<span><br><span class="math inline">\qquad\qquad f_i^* \leftarrow \tilde{f}_{\lambda_{\ell-1}, i} \circ \gamma_{\lambda_\ell,i}^*</span> , </span> <span><span class="math inline">\quad q_i^* \leftarrow \mathtt{srvf}(f_i^*)</span> , </span> <span><span class="math inline">\quad c_i^* \leftarrow \frac{\langle \bar{q},\ \, q_i^* \rangle}{\langle q_i^*,\ \ q_i^* \rangle}</span><br> <span class="math inline">\qquad \textsf{\textbf{end}}</span><br> </span>
+<div>
+<span class="math inline">\qquad\qquad \bar{q}^* \leftarrow \frac{1}{n}\sum q_i^*, \quad \epsilon \leftarrow \|\bar{q} - \bar{q}^*\|^2</span><br> <span class="math inline">\qquad\qquad \textsf{\textbf{if }} \epsilon &gt; tol: \bar{q} \leftarrow \bar{q}^*</span>
+<div style="font-size: 200%; position: absolute; top: 75.5%; left: 50%; transform: translate(-50%, -50%); text-align: center;">
+}
+</div>
+<div class="fragment" data-fragment-index="6" data-id="alg-box1" style="position: absolute; top: 75.5%; left: 65%; transform: translate(-50%, -50%); text-align: center; font-size: 100%; font-style: italic; color: #444;">
+convergence check
+</div>
+</div>
+<div>
+<span class="math inline">\textsf{\textbf{end repeat}}</span>
+</div>
+</div>
+<div class="fragment" data-id="repeat-box" data-fragment-index="6" style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; border: 2.5px solid #888; border-radius: 0px; pointer-events: none; border-color: #3333b3; margin-left:-0.5em">
+
+</div>
+</div>
+<div data-id="back" style="margin-top:-0.5em;">
+<br><span class="math inline">\qquad \bar{\gamma}^{-1} \leftarrow (\frac{1}{n} \sum \gamma_{\lambda_\ell, i}^*)^{-1}\ \ , \quad</span> <span class="math inline">\boldsymbol{\bar{q}_{\lambda_\ell}}</span> <span style="color: black;"> <span class="math inline">\leftarrow \bar{q} \circ \bar{\gamma}^{-1}</span></span> <span style="font-size: 100%; font-style: italic; color: black;position: absolute; left:55%">(centering)</span><br> <span style="color: black;"> <span class="math inline">\qquad \textsf{\textbf{for }} i = 1 \textsf{\textbf{ to }} n: \quad</span> </span> <span class="math inline">\boldsymbol{\tilde{f}_{\lambda_\ell, i}}</span> <span style="color: black;"> <span class="math inline">\leftarrow f_i^* \circ \bar{\gamma}^{-1}</span> <span class="math inline">\quad \textsf{\textbf{end}}</span> </span> <span style="font-size: 100%; font-style: italic; color: black;position: absolute; left:55%">(alignment)</span><br> <span class="math inline">\qquad \textsf{Collect}\quad\hat{g}_{\lambda_\ell} \leftarrow \frac{1}{n} \sum \tilde{f}_{\lambda_\ell, i}</span> <span style="font-size: 100%; font-style: italic; color: black;position: absolute; left:55%">(aligned mean)</span><br><span class="math inline">{\color{black}\textsf{\textbf{end}}}</span>
+</div>
+<div data-id="box" style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; border: 1px solid #ccc; padding: 0em 1em; border-radius: 8px; pointer-events: none;background-color: #eeeeee; z-index: -1;">
+
+</div>
+</div>
+<!-- border: 1px solid #ccc; padding: 0em 1em; border-radius: 8px; background-color: #eeeeee;"></div></div> -->
+</section>
+<section id="pesa-peusdo-code-1" class="slide level3" data-auto-animate="true" data-state="hide-menubar">
+<h3 data-id="quarto-animate-title">PESA Peusdo-code</h3>
+<!-- <div style="font-size: 90%; line-height: 1.2; border: 1px solid #ccc; padding: 0em 1em; border-radius: 8px; background-color: #eeeeee;"> -->
+<div style="position: relative; font-size: 90%; line-height: 1.2; padding: 0em 1em;">
+<div data-id="input" style="color: black;">
+<span class="math inline">\textsf{\textbf{Input: }}</span> <span class="math inline">\quad \{f_1, ..., f_n\}\ \ , \,\,\,\, \{\lambda_1, ..., \lambda_L\}</span> <span class="math inline">\qquad \textsf{\textbf{Output: }}</span> <span class="math inline">\quad \{\hat{g}_{\lambda_1}, ..., \hat{g}_{\lambda_L}\}</span>
+</div>
+<br>
+<div data-id="front" style="color: black;">
+<span class="math inline">{\color{black} \textsf{\textbf{for }} \ell = L \textsf{\textbf{ down to }} 1:}</span> <br><span class="math inline">\qquad \textsf{\textbf{for }} i = 1 \textsf{\textbf{ to }} n:</span> <span class="math inline">\qquad c_i^* \leftarrow 1</span>; <span class="math inline">\quad</span> <span class="math inline">q_i \leftarrow
+\begin{cases}
+\mathtt{srvf}(f_i) &amp; \textsf{\text{if }} \ell = L \\
+\mathtt{srvf}(\tilde{f}_{\lambda_{\ell+1}, i}) &amp; \textsf{\text{otherwise}}
+\end{cases}</span> <span class="math inline">\quad \textsf{\textbf{end}}</span><br> <span class="math inline">\qquad \bar{q} \leftarrow
+\begin{cases}
+\frac{1}{n}\sum q_i &amp; \textsf{\text{if }} \ell = L \\
+\bar{q}_{\lambda_{\ell+1}} &amp; \textsf{\text{otherwise}}
+\end{cases}</span><br><br>
+</div>
+<br>
+<div style="position: relative; margin-top: -1em; margin-left: 1.5em;">
+<a href="#/" data-modal-type="image" data-modal-url="./figs/ppd/alg/dtw.svg"><span style="color: black; padding-left:0.5em; padding-right:0.5em"><strong>Iteratively update <span class="math inline">c^*_{1:n},</span> <span class="math inline">\bar{q},</span> <span class="math inline">\,\,\{\gamma_{\lambda_\ell, i}^*\}_{i=1}^n,</span> and <span class="math inline">\{f_{\lambda_{\ell},i}^*\}_{i=1}^n</span></strong></span></a><br>
+<div data-id="repeat-box" style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; border: 2.5px solid #888; border-radius: 0px; pointer-events: none; border-color: #3333b3; margin-left:-0.5em; padding-bottom:1em;">
+
+</div>
+</div>
+<div data-id="back">
+<br><span class="math inline">\qquad \bar{\gamma}^{-1} \leftarrow (\frac{1}{n} \sum \gamma_{\lambda_\ell, i}^*)^{-1}\ \ , \quad</span> <span class="math inline">\boldsymbol{\bar{q}_{\lambda_\ell}}</span> <span style="color: black;"> <span class="math inline">\leftarrow \bar{q} \circ \bar{\gamma}^{-1}</span></span> <span style="font-size: 100%; font-style: italic; color: black;position: absolute; left:55%">(centering)</span><br> <span style="color: black;"> <span class="math inline">\qquad \textsf{\textbf{for }} i = 1 \textsf{\textbf{ to }} n: \quad</span> </span> <span class="math inline">\boldsymbol{\tilde{f}_{\lambda_\ell, i}}</span> <span style="color: black;"> <span class="math inline">\leftarrow f_i^* \circ \bar{\gamma}^{-1}</span> <span class="math inline">\quad \textsf{\textbf{end}}</span> </span> <span style="font-size: 100%; font-style: italic; color: black;position: absolute; left:55%">(alignment)</span><br> <span class="math inline">\qquad \textsf{Collect}\quad\hat{g}_{\lambda_\ell} \leftarrow \frac{1}{n} \sum \tilde{f}_{\lambda_\ell, i}</span> <span style="font-size: 100%; font-style: italic; color: black;position: absolute; left:55%">(aligned mean)</span><br><span class="math inline">{\color{black}\textsf{\textbf{end}}}</span>
+</div>
+<div data-id="box" style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; border: 1px solid #ccc; padding: 0em 1em; border-radius: 8px; pointer-events: none;background-color: #eeeeee; z-index: -1;">
+
+</div>
+</div>
+<div style="position: absolute; top: -0.5em; right: 0; padding: 0.5em;">
+<a href="#/brief-recap" style="color:#3333b3; font-size: 80%;">[Return]</a>
+</div>
+</section></section>
+<section>
+<section id="step-1-persistent-peak-diagrams-ppd" class="title-slide slide level2 center" data-state="hide-menubar">
+<h2>Step 1: Persistent Peak Diagrams (PPD) and Selection of <span class="math inline">\lambda^*</span></h2>
+<div style="margin-top: -1em;">
+<div class="custom-block">
+<div class="custom-block-header" data-font-family="Computer Modern">
+Definition
+</div>
+<div class="custom-block-body" data-font-family="Computer Modern">
+A PPD of a set of functions <span class="math inline">\{f_i\}_{i=1}^n</span> is a graphical representation that tracks the evolution of <strong>significant internal peaks</strong> in the <strong>partial elastic mean</strong>, <span class="math inline">\hat{g}_\lambda</span>, as a function of the penalty parameter <span class="math inline">\lambda \in \mathbb{R}^+</span>. <a href="#/" data-modal-type="iframe" data-modal-url="./misc_pages/interactive-ppd.html"><span class="math inline">\,\,</span>(<u>Example of PPD</u>)</a>
+</div>
+</div>
+<div class="middle-content2" style="margin-top: -1em;">
+<h3>
+<u> <a href="#/significance-of-peaks" style="color:#3333b3"> Significance of a peak in <span class="math inline">\hat g_\lambda</span></a> </u>
+</h3>
+<div style="padding-left: 1em;">
+<p>For more robustness, we filter out negligible (insignificant) peaks in <span class="math inline">\hat g_\lambda</span> based on the <strong>curvature</strong> at the each peak. <br></p>
+</div>
+<h3>
+<u> <a href="#/persistence-of-peaks" style="color:#3333b3"> Persistence of a peak </a> </u>
+</h3>
+<div style="padding-left: 1em;">
+<div>
+<ul>
+<li>Strong peaks in <span class="math inline">g</span> should remain in <span class="math inline">\hat{g}_\lambda</span> over a broad range of <span class="math inline">\lambda</span>.</li>
+<li>We evaluate how long each peak stays significant across <span class="math inline">\lambda</span> values and determine its persistence.</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div style="position: absolute; top: -1.5em; right: 0; padding: 0.5em;">
+<a href="#/brief-recap" style="color:#3333b3; font-size: 80%;">[Return]</a>
+</div>
+</section>
+<section id="lambda-selection" class="slide level3 center" data-state="hide-menubar">
+<h3></h3>
+<div style="margin-top: -2em;">
+<h3>
+Selection of <span class="math inline">\lambda</span> via PPD
+</h3>
+</div>
+<div class="middle-content2">
+<p>Choose <span class="math inline">{\color{magenta}\lambda^*}</span> as close to zero as possible while all persistent peaks are included.</p>
+</div>
+<div class="columns" style="display: flex; gap: 1em; margin-top:-1.5em; item-align:center">
+<div class="column" style="width:30%;">
+<p><img src="figs/ppd/lambda_selection/ppd2.svg"></p>
+</div><div class="column" style="width:30%;">
+<p><img src="figs/ppd/lambda_selection/scatter.png" style="width:80%; margin-top:1.3em;"></p>
+</div></div>
+<div class="columns" style="display: flex; gap: 1em; margin-top:-1em; font-size: 80%;">
+<div class="column" style="margin-top: -1.5em; margin-left: 2em; width:48%;">
+<ul>
+<li>7 peaks in the PPD.</li>
+<li>▇▇: the range of <span class="math inline">\lambda</span> for which the peak is significant.</li>
+<li><span style="color:#CCCCCC;">▇▇</span>: the range of <span class="math inline">\lambda</span> for which the peak is <em>NOT</em> significant.</li>
+<li>Persistence classification of peaks:<br> <span class="math inline">\qquad</span>Persistent peaks: {2, 4, 5}<br> <span class="math inline">\qquad</span>Inpersistent peaks: {1, 3, 6, 7}</li>
+</ul>
+</div><div class="column" style="margin-left: 2em; width:48%;">
+<div style="margin-top:-1em">
+<ul>
+<li>Scatter points (<span class="math inline">\{𝑓^*_{\lambda^*,𝑖}\}</span>): <br> <span class="math inline">\quad\quad</span>partially aligned functions at <span class="math inline">\lambda^*</span></li>
+<li><span style="color: blue;"><span style="font-size:50%">▀ ▀ ▀ ▀</span> (<span class="math inline">\hat{g}_{\lambda^*}</span>)</span>: <br> <span class="math inline">\quad\quad</span>partial elastic mean at <span class="math inline">\lambda^*</span></li>
+<li><span style="color: #00ccff;"><span style="font-size:50%">▀ ▀ ▀ ▀</span> (<span class="math inline">\hat{g}_{\mathrm{init}}</span>)</span>: <br> <span class="math inline">\quad\quad</span>initial shape function</li>
+<li><span style="color: red;"><span style="font-size:50%">▀▀▀▀▀</span> (<span class="math inline">g</span>)</span>: <br> <span class="math inline">\quad\quad</span>ground truth</li>
+</ul>
+</div>
+</div></div>
+<div style="position: absolute; top: -1.5em; right: 0; padding: 0.5em;">
+<a href="#/brief-recap" style="color:#3333b3; font-size: 80%;">[Return]</a>
+</div>
+</section></section>
+<section>
+<section id="estimation-of-the-underlying-signal-g" class="title-slide slide level2 center scrollable" data-state="hide-menubar">
+<h2>Step 2: Estimation of the underlying signal <span class="math inline">g</span> (I)</h2>
+<div class="middle-content" style="margin-top: -1.5em;">
+<p>Signal estimation of <span class="math inline">g</span> is feasible based on the <span class="math inline">\hat{g}_{\lambda^*}</span> <br></p>
+<p>Let <span class="math inline">M</span> be the number of <strong>extrema points</strong> in <span class="math inline">\hat{g}_{\lambda^*}</span>, which comprises interior peaks, valleys and the two endpoints.</p>
+<div>
+(1)<span class="math inline">\,\,</span>Obtain <span style="color:blue;"><strong>shape template</strong> <span class="math inline">\hat{g}_{\mathrm{init}}</span></span> from <span class="math inline">\hat g_{\lambda^*}</span>
+</div>
+<div style="margin-left: 2em;">
+<p>By interpolating the extrema points <strong>significant peaks</strong> (and corresponding valleys) of <span class="math inline">\hat{g}_{\lambda^*}</span></p>
+</div>
+<div>
+(2)<span class="math inline">\,\,</span>Estimate <span class="math inline">\hat{g}</span> by <strong>deforming</strong> <span class="math inline">\hat{g}_{\mathrm{init}}</span> in:
+<div style="margin-left: 2em;">
+<ol type="1">
+<li><strong>Amplitude</strong>: the heights of extrema points (i.e., <span class="math inline">\mathbf{h}=[h_1, h_2, \ldots, h_M]\in\mathbb{R}^M</span>)</li>
+<li><strong>Phase</strong>: a warping function (<span class="math inline">\gamma</span>)</li>
+</ol>
+</div>
+(constraint) <span class="math inline">\mathbf{v}\in [-1, 1, -1, 1, \ldots] \cup [1, -1, 1 , -1, \ldots] \subset \{-1,1\}^M</span> can be formulated:
+<div style="margin-left: 1em; margin-top: -0.5em;">
+<p><span class="math display">\mathbf{v}_m = \begin{cases} \mathrm{sign}(\mathbf{h}_1-\mathbf{h}_2) &amp; \textsf{for } m=1\\ \mathrm{sign}(\mathbf{h}_m - \mathbf{h}_{m-1}) &amp; \textsf{for } 2\leq m \leq M \end{cases}</span>.</p>
+</div>
+</div>
+</div>
+<!-- <span style="display: flex; justify-content: flex-end; margin-top:2em;"> <a href="#/estimation-of-the-underlying-signal" style="color:#3333b3">[details]</a> </span> -->
+<div style="position: absolute; top: -0.5em; right: 0; padding: 0.5em;">
+<a href="#/brief-recap" style="color:#3333b3; font-size: 80%;">[Return]</a>
+</div>
+</section>
+<section id="section-6" class="slide level3" data-state="hide-menubar">
+<h3></h3>
+<h2>
+Step 2: Estimation of the underlying signal <span class="math inline">g</span> (II)
+</h2>
+<ul>
+<li><p>Let <span class="math inline">f_{\mathbf{h}}</span> be a piecewise linear function with heights at extrema points given by <span class="math inline">\mathbf{h}</span>.</p></li>
+<li><p>Then, we solve the optimization problem by a global solver <span class="math inline">\texttt{fmincon}</span>. <span class="math display">
+(\gamma^*, \mathbf{h}^*) = \underset{\gamma \in \Gamma,\mathbf{h} \in {\mathcal H}}{\textrm{argmin}} \Bigg( \sum_{i=1}^n \int_0^1  (f_{\mathbf{h}}(\gamma(t)) - \tilde{f}_{i,\lambda^*}(t))^2 dt + \rho \int_0^1 {f}_{\mathbf{h}}^{\prime \prime}(\gamma(t))^2dt \Bigg)
+</span></p></li>
+</ul>
+<div class="columns" style="display: flex;">
+<div class="column center" style="width:33%;">
+<div style="item-align: center;">
+<p><a href="#/" data-modal-type="image" data-modal-url="./figs/ppd/curve_est/fig1.png"><img data-src="./figs/ppd/curve_est/fig1.png"></a></p>
+</div>
+</div><div class="column" style="width:67%;">
+<div data-id="algorithm-box" style="font-size: 75%; line-height: 1.2; border: 1px solid #ccc; padding: 0.5em 0.5em; border-radius: 8px; background-color: #eeeeee;">
+<div style="color: black;" data-id="line1">
+<span class="math inline">\textsf{\textbf{Input: }} \qquad \textsf{data} \,\,\, \{\tilde{f}_{i,\lambda^*}\}_{i=1}^{n}\, , \qquad \, \textsf{number of peaks } \,\,\, m</span>
+</div>
+<div>
+<span class="math inline">\textsf{\textbf{Output: }}</span> <span class="math inline">\qquad \textsf{signal estimate } \,\,\, \hat{g}</span>
+</div>
+<div>
+<span class="math inline">{\color{gray}\mathtt{1}.} \qquad \textsf{Initialize estimate }\hat{g}_{\mathrm{init}} \textsf{as follows:}</span> <br> <span class="math inline">\qquad\qquad\qquad \textsf{Connect the } m \textsf{ peaks (and corresponding valleys) of } \hat{g}_{\lambda^*} \textsf{ linearly}</span> <br> <span class="math inline">\qquad\qquad\qquad \textsf{to form a piecewise linear curve.}</span>
+</div>
+<div>
+<span class="math inline">{\color{gray}\mathtt{2}.}  \qquad \textsf{Obtain } \gamma^* \textsf{ and }\mathbf{h}^* \textsf{ by solving}</span>
+</div>
+<div style="font-size:90%;">
+<p><span class="math display">
+(\gamma^*, \mathbf{h}^*) = \underset{\gamma \in \Gamma,\mathbf{h} \in {\mathcal H}}{\textrm{argmin}} \Bigg( \sum_{i=1}^n \int_0^1  (f_{\mathbf{h}}(\gamma(t)) - \tilde{f}_{i,\lambda^*}(t))^2 dt + \rho \int_0^1 {f}_{\mathbf{h}}^{\prime \prime}(\gamma(t))^2dt \Bigg)
+</span></p>
+</div>
+<div>
+<span class="math inline">{\color{gray}\mathtt{3}.} \qquad \textsf{\textbf{return}: }\,\,\hat{g} = f_{\mathbf{h}^*}(\gamma^*(t))</span>
+</div>
+</div>
+</div></div>
+<div style="position: absolute; top: -1em; right: 0; padding: 0.5em;">
+<p><a href="#/brief-recap" style="color:#3333b3; font-size: 80%;">[Return]</a></p>
+</div>
+
+</section></section>
+
+    </div>
+  <div class="quarto-auto-generated-content" style="display: none;">
+<div class="footer footer-default">
+
+</div>
+</div></div>
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script>
+  <script src="Defense_files/libs/revealjs/dist/reveal.js"></script>
+  <!-- reveal.js plugins -->
+  <script src="Defense_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
+  <script src="Defense_files/libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
+  <script src="Defense_files/libs/revealjs/plugin/reveal-menu/menu.js"></script>
+  <script src="Defense_files/libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
+  <script src="Defense_files/libs/revealjs/plugin/verticator/verticator.js"></script>
+  <script src="Defense_files/libs/revealjs/plugin/multimodal/multimodal.js"></script>
+  <script src="Defense_files/libs/revealjs/plugin/simplemenu/simplemenu.js"></script>
+  <script src="Defense_files/libs/revealjs/plugin/reveal-drawer/drawer.js"></script>
+  <script src="Defense_files/libs/revealjs/plugin/quarto-support/support.js"></script>
+  
+
+  <script src="Defense_files/libs/revealjs/plugin/notes/notes.js"></script>
+  <script src="Defense_files/libs/revealjs/plugin/search/search.js"></script>
+  <script src="Defense_files/libs/revealjs/plugin/zoom/zoom.js"></script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://revealjs.com/config/
+      Reveal.initialize({
+'controlsAuto': false,
+'previewLinksAuto': false,
+'pdfSeparateFragments': false,
+'autoAnimateEasing': "ease",
+'autoAnimateDuration': 1,
+'autoAnimateUnmatched': true,
+'jumpToSlide': true,
+'menu': {"side":"left","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"<i class=\"fas fa-gear\"></i>","content":"<ul class=\"slide-menu-items\">\n<li class=\"slide-tool-item active\" data-item=\"0\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\"><kbd>f</kbd> Fullscreen</a></li>\n<li class=\"slide-tool-item\" data-item=\"1\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\"><kbd>s</kbd> Speaker View</a></li>\n<li class=\"slide-tool-item\" data-item=\"2\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>o</kbd> Slide Overview</a></li>\n<li class=\"slide-tool-item\" data-item=\"3\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.togglePdfExport(event)\"><kbd>e</kbd> PDF Export Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"4\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleScrollView(event)\"><kbd>r</kbd> Scroll View Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"5\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\"><kbd>?</kbd> Keyboard Help</a></li>\n</ul>"}],"openButton":true},
+'verticator': {"themetag":"h2","color":"","inversecolor":"","skipuncounted":false,"clickable":true,"position":"auto","offset":"3vmin","autogenerate":true,"tooltip":false,"scale":3,"debug":true},
+'simplemenu': {"menubarclass":"menubar","menuclass":"menu","activeclass":"active","activeelement":"li","flat":true,"barhtml":{"header":"<div class='menubar'><ul class='menu'></ul> <div class='slide-number'></div> <div>","footer":""},"scale":0.6},
+'smaller': true,
+ 
+        // Display controls in the bottom right corner
+        controls: true,
+
+        // Help the user learn the controls by providing hints, for example by
+        // bouncing the down arrow when they first encounter a vertical slide
+        controlsTutorial: false,
+
+        // Determines where controls appear, "edges" or "bottom-right"
+        controlsLayout: 'edges',
+
+        // Visibility rule for backwards navigation arrows; "faded", "hidden"
+        // or "visible"
+        controlsBackArrows: 'faded',
+
+        // Display a presentation progress bar
+        progress: true,
+
+        // Display the page number of the current slide
+        slideNumber: 'c/t',
+
+        // 'all', 'print', or 'speaker'
+        showSlideNumber: 'all',
+
+        // Add the current slide number to the URL hash so that reloading the
+        // page/copying the URL will return you to the same slide
+        hash: true,
+
+        // Start with 1 for the hash rather than 0
+        hashOneBasedIndex: false,
+
+        // Flags if we should monitor the hash and change slides accordingly
+        respondToHashChanges: true,
+
+        // Push each slide change to the browser history
+        history: false,
+
+        // Enable keyboard shortcuts for navigation
+        keyboard: true,
+
+        // Enable the slide overview mode
+        overview: true,
+
+        // Disables the default reveal.js slide layout (scaling and centering)
+        // so that you can use custom CSS layout
+        disableLayout: false,
+
+        // Vertical centering of slides
+        center: false,
+
+        // Enables touch navigation on devices with touch input
+        touch: true,
+
+        // Loop the presentation
+        loop: false,
+
+        // Change the presentation direction to be RTL
+        rtl: false,
+
+        // see https://revealjs.com/vertical-slides/#navigation-mode
+        navigationMode: 'linear',
+
+        // Randomizes the order of slides each time the presentation loads
+        shuffle: false,
+
+        // Turns fragments on and off globally
+        fragments: true,
+
+        // Flags whether to include the current fragment in the URL,
+        // so that reloading brings you to the same fragment position
+        fragmentInURL: false,
+
+        // Flags if the presentation is running in an embedded mode,
+        // i.e. contained within a limited portion of the screen
+        embedded: false,
+
+        // Flags if we should show a help overlay when the questionmark
+        // key is pressed
+        help: true,
+
+        // Flags if it should be possible to pause the presentation (blackout)
+        pause: true,
+
+        // Flags if speaker notes should be visible to all viewers
+        showNotes: false,
+
+        // Global override for autoplaying embedded media (null/true/false)
+        autoPlayMedia: null,
+
+        // Global override for preloading lazy-loaded iframes (null/true/false)
+        preloadIframes: null,
+
+        // Number of milliseconds between automatically proceeding to the
+        // next slide, disabled when set to 0, this value can be overwritten
+        // by using a data-autoslide attribute on your slides
+        autoSlide: 0,
+
+        // Stop auto-sliding after user input
+        autoSlideStoppable: true,
+
+        // Use this method for navigation when auto-sliding
+        autoSlideMethod: null,
+
+        // Specify the average time in seconds that you think you will spend
+        // presenting each slide. This is used to show a pacing timer in the
+        // speaker view
+        defaultTiming: null,
+
+        // Enable slide navigation via mouse wheel
+        mouseWheel: false,
+
+        // The display mode that will be used to show slides
+        display: 'block',
+
+        // Hide cursor if inactive
+        hideInactiveCursor: true,
+
+        // Time before the cursor is hidden (in ms)
+        hideCursorTime: 5000,
+
+        // Opens links in an iframe preview overlay
+        previewLinks: false,
+
+        // Transition style (none/fade/slide/convex/concave/zoom)
+        transition: 'slide',
+
+        // Transition speed (default/fast/slow)
+        transitionSpeed: 'default',
+
+        // Transition style for full page slide backgrounds
+        // (none/fade/slide/convex/concave/zoom)
+        backgroundTransition: 'fade',
+
+        // Number of slides away from the current that are visible
+        viewDistance: 3,
+
+        // Number of slides away from the current that are visible on mobile
+        // devices. It is advisable to set this to a lower number than
+        // viewDistance in order to save resources.
+        mobileViewDistance: 2,
+
+        // The "normal" size of the presentation, aspect ratio will be preserved
+        // when the presentation is scaled to fit different resolutions. Can be
+        // specified using percentage units.
+        width: 1050,
+
+        height: 700,
+
+        // Factor of the display size that should remain empty around the content
+        margin: 0.1,
+
+        // Bounds for smallest/largest possible scale to apply to content
+        minScale: 0.2,
+
+        maxScale: 2,
+
+        // reveal.js plugins
+        plugins: [QuartoLineHighlight, PdfExport, RevealMenu, Verticator, Multimodal, Simplemenu, RevealDrawer, QuartoSupport,
+
+          RevealNotes,
+          RevealSearch,
+          RevealZoom
+        ]
+      });
+    </script>
+    <script id="quarto-html-after-body" type="application/javascript">
+      window.document.addEventListener("DOMContentLoaded", function (event) {
+        const tabsets =  window.document.querySelectorAll(".panel-tabset-tabby")
+        tabsets.forEach(function(tabset) {
+          const tabby = new Tabby('#' + tabset.id);
+        });
+        const isCodeAnnotation = (el) => {
+          for (const clz of el.classList) {
+            if (clz.startsWith('code-annotation-')) {                     
+              return true;
+            }
+          }
+          return false;
+        }
+        const onCopySuccess = function(e) {
+          // button target
+          const button = e.trigger;
+          // don't keep focus
+          button.blur();
+          // flash "checked"
+          button.classList.add('code-copy-button-checked');
+          var currentTitle = button.getAttribute("title");
+          button.setAttribute("title", "Copied!");
+          let tooltip;
+          if (window.bootstrap) {
+            button.setAttribute("data-bs-toggle", "tooltip");
+            button.setAttribute("data-bs-placement", "left");
+            button.setAttribute("data-bs-title", "Copied!");
+            tooltip = new bootstrap.Tooltip(button, 
+              { trigger: "manual", 
+                customClass: "code-copy-button-tooltip",
+                offset: [0, -8]});
+            tooltip.show();    
+          }
+          setTimeout(function() {
+            if (tooltip) {
+              tooltip.hide();
+              button.removeAttribute("data-bs-title");
+              button.removeAttribute("data-bs-toggle");
+              button.removeAttribute("data-bs-placement");
+            }
+            button.setAttribute("title", currentTitle);
+            button.classList.remove('code-copy-button-checked');
+          }, 1000);
+          // clear code selection
+          e.clearSelection();
+        }
+        const getTextToCopy = function(trigger) {
+            const codeEl = trigger.previousElementSibling.cloneNode(true);
+            for (const childEl of codeEl.children) {
+              if (isCodeAnnotation(childEl)) {
+                childEl.remove();
+              }
+            }
+            return codeEl.innerText;
+        }
+        const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+          text: getTextToCopy
+        });
+        clipboard.on('success', onCopySuccess);
+        if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+          const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+            text: getTextToCopy,
+            container: window.document.getElementById('quarto-embedded-source-code-modal')
+          });
+          clipboardModal.on('success', onCopySuccess);
+        }
+          var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+          var mailtoRegex = new RegExp(/^mailto:/);
+            var filterRegex = new RegExp('/' + window.location.host + '/');
+          var isInternal = (href) => {
+              return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+          }
+          // Inspect non-navigation links and adorn them if external
+         var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+          for (var i=0; i<links.length; i++) {
+            const link = links[i];
+            if (!isInternal(link.href)) {
+              // undo the damage that might have been done by quarto-nav.js in the case of
+              // links that we want to consider external
+              if (link.dataset.originalHref !== undefined) {
+                link.href = link.dataset.originalHref;
+              }
+            }
+          }
+        function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+          const config = {
+            allowHTML: true,
+            maxWidth: 500,
+            delay: 100,
+            arrow: false,
+            appendTo: function(el) {
+                return el.closest('section.slide') || el.parentElement;
+            },
+            interactive: true,
+            interactiveBorder: 10,
+            theme: 'light-border',
+            placement: 'bottom-start',
+          };
+          if (contentFn) {
+            config.content = contentFn;
+          }
+          if (onTriggerFn) {
+            config.onTrigger = onTriggerFn;
+          }
+          if (onUntriggerFn) {
+            config.onUntrigger = onUntriggerFn;
+          }
+            config['offset'] = [0,0];
+            config['maxWidth'] = 700;
+          window.tippy(el, config); 
+        }
+        const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+        for (var i=0; i<noterefs.length; i++) {
+          const ref = noterefs[i];
+          tippyHover(ref, function() {
+            // use id or data attribute instead here
+            let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+            try { href = new URL(href).hash; } catch {}
+            const id = href.replace(/^#\/?/, "");
+            const note = window.document.getElementById(id);
+            if (note) {
+              return note.innerHTML;
+            } else {
+              return "";
+            }
+          });
+        }
+        const findCites = (el) => {
+          const parentEl = el.parentElement;
+          if (parentEl) {
+            const cites = parentEl.dataset.cites;
+            if (cites) {
+              return {
+                el,
+                cites: cites.split(' ')
+              };
+            } else {
+              return findCites(el.parentElement)
+            }
+          } else {
+            return undefined;
+          }
+        };
+        var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+        for (var i=0; i<bibliorefs.length; i++) {
+          const ref = bibliorefs[i];
+          const citeInfo = findCites(ref);
+          if (citeInfo) {
+            tippyHover(citeInfo.el, function() {
+              var popup = window.document.createElement('div');
+              citeInfo.cites.forEach(function(cite) {
+                var citeDiv = window.document.createElement('div');
+                citeDiv.classList.add('hanging-indent');
+                citeDiv.classList.add('csl-entry');
+                var biblioDiv = window.document.getElementById('ref-' + cite);
+                if (biblioDiv) {
+                  citeDiv.innerHTML = biblioDiv.innerHTML;
+                }
+                popup.appendChild(citeDiv);
+              });
+              return popup.innerHTML;
+            });
+          }
+        }
+      });
+      </script>
+    
+
+</body></html>

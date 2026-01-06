@@ -2,102 +2,241 @@
 layout: default
 ---
 
+<style>
+  /* --- Card Container Layout --- */
+  .projects-container {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  /* --- Individual Card Style --- */
+  .project-card {
+    background-color: #ffffff;
+    border: 1px solid #e0e0e0;
+    border-radius: 12px;
+    padding: 2rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.04);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .project-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.08);
+  }
+
+  /* --- Typography inside cards --- */
+  .project-card h3 {
+    margin-top: 0;
+    border-bottom: 2px solid #f0f0f0;
+    padding-bottom: 0.5rem;
+    margin-bottom: 1.5rem;
+    font-size: 1.5rem;
+    color: #222;
+  }
+
+  .project-card h4 {
+    margin-top: 0;
+    font-size: 1.25rem;
+    color: #444;
+    margin-bottom: 0.8rem;
+    font-weight: 600;
+  }
+
+  .project-card p, .project-card li {
+    color: #555;
+    line-height: 1.6;
+    margin-bottom: 1rem;
+  }
+
+  /* --- Sub-section divider --- */
+  .card-divider {
+    border: 0;
+    height: 1px;
+    background: #eaeaea;
+    margin: 2.5rem 0;
+  }
+
+  /* --- Chips for Research Interests --- */
+  .interest-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 2rem;
+  }
+
+  .interest-chip {
+    background-color: #f5f5f5;
+    color: #555;
+    padding: 0.4rem 0.8rem;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    border: 1px solid #ddd;
+  }
+
+  /* --- Iframe Wrapper --- */
+  .iframe-container {
+    width: 100%;
+    margin: 1.5rem 0;
+    border-radius: 8px;
+    overflow: hidden;
+    background: #fafafa;
+    border: 1px solid #eee;
+  }
+
+  /* --- Blockquote --- */
+  .project-card blockquote {
+    border-left: 4px solid #7e7eff;
+    background: #f9f9f9;
+    margin: 1rem 0;
+    padding: 0.5rem 1rem;
+    color: #555;
+    font-style: italic;
+  }
+</style>
+
 <h2 id="research">RESEARCH INTEREST</h2>
 
-Functional Data Anaylsis ⏐ Functional Registration ⏐ Bayesian Statistics ⏐ Generative Models (VAEs)
+<div class="interest-chips">
+  <span class="interest-chip">Functional Data Analysis</span>
+  <span class="interest-chip">Functional Registration</span>
+  <span class="interest-chip">Bayesian Statistics</span>
+  <span class="interest-chip">Generative Models (VAEs)</span>
+</div>
 
 <h2 id="projects">PROJECTS</h2>
 
-<h3 id="fda">■ Functional Data Analysis (Functional Registration)</h3>
-Functional data — curves, shapes, and other complex structures — arise in fields like biology, medicine, and the social sciences, where understanding dynamic patterns is critical.
-Functional Data Analysis (FDA) provides a framework for modeling these datasets, offering tools to uncover meaningful structure and variability. However, in many real-world applications, functional data are noisy, misaligned, and highly complex, posing challenges even for FDA.
+<div class="projects-container">
 
-My primary research focuses on **functional registration** — or alignment — using the Fisher-Rao metric within a <a href="https://en.wikipedia.org/wiki/Riemannian_manifold">Riemannian manifold</a> framework. To understand functional registration, it is important to recognize that functional data typically exhibit two types of variation:
-- Phase variation: temporal shifts of a function.
-- Amplitude variation: changes in magnitude of a function.
+  <div class="project-card" id="fda">
+    <h3>Functional Data Analysis (Functional Registration)</h3>
+    
+    <p>
+      Functional data — curves, shapes, and other complex structures — arise in fields like biology, medicine, and the social sciences. My primary research focuses on <strong>functional registration</strong> using the Fisher-Rao metric within a <a href="https://en.wikipedia.org/wiki/Riemannian_manifold">Riemannian manifold</a> framework.
+    </p>
+    <p>
+      Functional registration addresses <strong>phase variation</strong> (temporal misalignment) to align functions in a geometrically meaningful way.
+    </p>
+    
+    <p>
+      <em>Consider a smooth function, $f(t)$. The left plot shows the warping function $\gamma(t)$, and the right plot shows the aligned function $f(\gamma(t))$.</em>
+    </p>
 
-Functional registration primarily addresses phase variation — temporal misalignment among functions — by aligning them in a geometrically meaningful way.
+    <div class="iframe-container">
+      <iframe 
+        id="warpingFrame"
+        src="misc_pages/warping.html" 
+        style="width: 100%; border: none; overflow: hidden; display: block;"
+        scrolling="no">
+      </iframe>
+    </div>
 
-Consider a smooth function, $f(t)$, defined on the interval $[0,1]$, where $t$ represents time.
+    <p>
+      Correcting phase variation enables more accurate statistical analysis. To address computational challenges, we utilize the Square Root Velocity Function (SRVF) representation (<a href="https://doi.org/10.1109/TPAMI.2010.184" target="_blank">Srivastava et al., 2011</a>).
+    </p>
 
-- The left plot: a warping function $\gamma(t)$.
-- The right plot: the function after time warping, $f(\gamma(t))$.
+    <hr class="card-divider">
+    
+    <div id="ppd">
+      <h4>▫ Peak Persistence Diagrams (<a href="https://github.com/wk45/PPD">PPD</a>)</h4>
+      <p>
+        In practice, functional data often contains noise and small fluctuations. When applying dynamic time warping (DTW) with the Fisher-Rao metric, this noise can lead to <strong>over-alignment</strong> (warping functions matching insignificant noise).
+      </p>
+      <p>
+        To mitigate this, we propose the <strong>Peak Persistence Diagram (PPD)</strong>. PPD helps identify and summarize significant internal peaks, offering robustness to noise while remaining sensitive to meaningful structural patterns, avoiding the need for arbitrary penalty term selection.
+      </p>
+    </div>
 
-You can explore these ideas with the interactive plot below. 
+    <hr class="card-divider">
 
-<span style="color:rgb(126, 127, 255);">(Drag the red points to see how $\gamma(t)$ warps $f(t)$.)</span>
-<div style="display: flex; justify-content: center; margin-top: -1.5em; margin-bottom: -3em; margin-left: -3em;">
-  <iframe 
-    src="misc_pages/warping.html" 
-    width="500" 
-    height="350"
-    style="border:0px solid black;
-    display: block;">
-  </iframe>
+    <div id="bayes">
+      <h4>▫ Bayesian Functional Alignment (on-going)</h4>
+      <p>
+        We are developing a <strong>Bayesian framework</strong> for functional registration to handle noisy and misaligned data more robustly than classical optimization methods.
+      </p>
+      <p>
+        Unlike DTW, which finds a single global optimum, the Bayesian approach models the full posterior distribution of warping functions. This allows us to incorporate prior information and capture multiple plausible warping solutions (multimodality).
+      </p>
+      <p>
+        We have successfully developed a method for simultaneous registration and signal estimation. A <a href="misc_pages/bayes_reg/main.html" style="font-weight: bold;">short report</a> is available.
+      </p>
+    </div>
+  </div>
+
+  <div class="project-card" id="network">
+    <h3>Network Analysis via Bayesian Method</h3>
+    <h4>(<a href="/Projects/HLSVD/HSVD.pdf">Hierarchical Latent SVD Model</a>)</h4>
+    <p>
+      In social network analysis, Latent Space Models (LDMs) embed nodes in a latent space to uncover structure. <a href="https://doi.org/doi:10.48550/arXiv.0711.1146">Hoff (2008)</a> introduced eigenmodel-based LDMs to account for <strong>homophily</strong> (the tendency of similar nodes to connect).
+    </p>
+    
+    <div style="text-align: center; margin: 1.5rem 0;">
+      <img src="figs/network/homophiliy.png" width="400" style="max-width: 100%; height: auto; border-radius: 4px;">
+    </div>
+    
+    <blockquote>
+      "Homophily helps explain common patterns in social networks, including transitivity and the formation of cohesive subgroups." (Hoff 2008)
+    </blockquote>
+    
+    <p>
+      This project applies <strong>Bayesian hierarchical modeling</strong> to latent SVD models to induce shrinkage effects and improve parameter estimation by borrowing strength across the network structure.
+    </p>
+  </div>
+
+  <div class="project-card" id="tda">
+    <h3>Topological Feature Extraction</h3>
+    <h4>With Human Brain Connectome</h4>
+    <p>
+      We explored how <strong>Topological Data Analysis (TDA)</strong> can reveal structural patterns in brain connectivity. Using multi-level white matter tractography datasets, we applied <a href="https://en.wikipedia.org/wiki/Persistent_homology">persistent homology</a> to capture features like loops and voids across scales.
+    </p>
+    
+    <div class="iframe-container">
+      <iframe 
+        id="persFrame"
+        src="misc_pages/pers.html" 
+        style="width: 100%; border: none; overflow: hidden; display: block;"
+        scrolling="no">
+      </iframe>
+    </div>
+  </div>
+
 </div>
 
-Functional registration is particularly important when phase variation is present.
-When functions are generated from a common underlying signal with phase variability, the cross-sectional mean of the unregistered functions can be severely biased.
-Correcting phase variation enables more accurate and robust statistical analysis.
+<script>
+  function adjustHeight(iframe) {
+    if (iframe && iframe.contentWindow) {
+      setTimeout(() => {
+        try {
+          var newHeight = iframe.contentWindow.document.body.scrollHeight;
+          iframe.style.height = (newHeight + 20) + 'px';
+        } catch (e) {
+          console.log("Frame load error or cross-origin issue.");
+        }
+      }, 200); 
+    }
+  }
 
-A straightforward approach is to minimize $\mathbb{L}^2$ distances directly among functions, but the $\mathbb{L}^2$ metric is not invariant under time warping, making it unsuitable for phase alignment.
-In contrast, the Fisher-Rao metric is invariant to warping transformations, providing a consistent framework for registration.
+  function initIframeResize() {
+    var warpingFrame = document.getElementById('warpingFrame');
+    var persFrame = document.getElementById('persFrame');
 
-To address the computational challenges of Fisher-Rao metric, <a href="https://doi.org/10.1109/TPAMI.2010.184" target="_blank">Srivastava et al. (2011)</a> introduced the Square Root Velocity Function (SRVF) representation, where the standard $\mathbb{L}^2$ metric corresponds exactly to the Fisher-Rao distance, enabling efficient and principled computation.
+    if(warpingFrame) {
+      warpingFrame.onload = function() { adjustHeight(this); };
+      adjustHeight(warpingFrame);
+    }
+    if(persFrame) {
+      persFrame.onload = function() { adjustHeight(this); };
+      adjustHeight(persFrame);
+    }
+  }
 
-<h4 id="ppd">▫ Peak Persistence Diagrams (<a href="https://github.com/wk45/PPD">PPD</a>)</h4>
-<div style="margin-left: 1em;">
+  window.addEventListener('resize', function() {
+    adjustHeight(document.getElementById('warpingFrame'));
+    adjustHeight(document.getElementById('persFrame'));
+  });
 
-In practice, functional data often arise as noisy, discretized measurements that are later smoothed to approximate continuous curves. To preserve important features like peaks and valleys, practitioners typically avoid aggressive smoothing, which leaves small residual fluctuations in the data.
-<br><br>
-These minor fluctuations pose a challenge when applying <a href="https://en.wikipedia.org/wiki/Dynamic_time_warping">dynamic time warping</a> (DTW) combined with the Fisher-Rao metric for alignment. Because the Fisher-Rao framework seeks to minimize geodesic distance precisely, it can be overly sensitive to noise, resulting in over-alignment where the warping function matches even insignificant variations.
-
-<!-- <img src="figs/ppd/fig1.png" width="300"> -->
-<br><br>
-To mitigate over-alignment in such cases, practitioners often introduce penalty terms — but selecting appropriate penalties remains an open and challenging problem. To address this limitation, we propose a simple yet effective visual tool: the Peak Persistence Diagram (PPD).
-PPD helps identify and summarize significant internal peaks in functional data, offering robustness to noise while remaining sensitive to meaningful structural patterns.
-</div>
-<br>
-<!-- #### • Phase Alignment of functions via [Trajectory Analysis](/Projects/PathAnalysis/Visualization/test99.html)
-Functional registration is accomplished by analyzing the trajectory of the mean function after alignment. This is done by projecting the aligned functions onto a lower-dimensional space using Functional Principal Component Analysis (FPCA), enabling effective visualization and interpretation of the registration process. -->
-
-<h4 id="bayes">▫ Bayesian Functional Alignment (on-going)</h4>
-<div style="margin-left: 1em;">
-We addressed the challenge of functional registration under noisy and misaligned data by developing a more robust solution within a Bayesian framework.
-<br><br>
-Classical optimization-based methods such as DTW find a global optimal warping path, so they are often highly sensitive to noise and outliers. In contrast, the Bayesian framework offers several key advantages:
-it provides a probabilistic solution by modeling the full posterior distribution of warping functions;
-it allows prior information to be naturally incorporated into the registration process;
-and it can capture multiple modes in the posterior distribution, enabling exploration of multiple plausible warping solutions — a flexibility that traditional optimization-based methods cannot offer.
-<br><br>
-We have successfully <strong> successfully developed a Bayesian method</strong> for functional registration and signal estimation under noisy and time-warped data, providing greater robustness to noise by moving beyond the traditional Fisher-Rao framework. 
-
-A <a href="misc_pages/bayes_reg/main.html" style="font-weight: bold;">short report</a> on this work is available.
-
-</div>
-
-<br>
-
-<h3 id="others"> ■ Other Projects than Functional Data </h3>
-
-<h4 id="network"> ▫ Network Analysis via Bayesian Method (<a href="/Projects/HLSVD/HSVD.pdf">Hierarchical Latent SVD Model</a>) </h4>
-
-<div style="margin-left: 1em;">
-
-In social network data analysis, latent space models (LDMs) are widely used to uncover underlying structures among nodes by embedding them in a latent space. These models can capture various relational metrics—such as distances, classes, and clusters—that facilitate further statistical analysis. Among the different types of LDMs, <a href="https://doi.org/doi:10.48550/arXiv.0711.1146">Hoff (2008)</a> introduced an eigenmodel-based latent space to account for <em>homophily</em>, the tendency of similar nodes to connect.
-</div>
-
-<div style="text-align: center;">
-  <img src="figs/network/homophiliy.png" width="400">
-</div>
-> Homophily helps explain common patterns in social networks, including transitivity (“a friend of a friend is a friend”), balance (“the enemy of my friend is an enemy”), and the formation of cohesive subgroups of nodes” (Hoff 2008).
-
-<div style="margin-left: 1em;">
-The goal of this project is to apply <strong>Bayesian hierarchical modeling</strong> to a more general class of latent space models—specifically, the latent SVD model—to induce a shrinkage effect and improve parameter estimation by borrowing strength across the network structure.
-</div>
-
-<br>
-<h4 id="tda"> ▫ Topological Feature Extraction with Human Brain Connectome</h4>
-<div style="margin-left: 1em;">
-    We explored how topological data analysis can simplify and reveal structural patterns within complex brain connectivity data. Using multi-level white matter tractography datasets, we applied <a href="https://en.wikipedia.org/wiki/Persistent_homology">persistent homology</a> — a method that captures topological features such as loops and voids across different scales — to better understand the organization of the human brain connectome. The analysis was implemented in R with computational support from <a href="https://github.com/Ripser/ripser">Ripser</a>, a fast and efficient tool for computing persistence diagrams.
-</div>
+  document.addEventListener("DOMContentLoaded", initIframeResize);
+</script>
