@@ -564,6 +564,15 @@ header {
   /* 목록 스타일 초기화 (점 없애기) */
   /* 각 메뉴 항목 스타일 */
 }
+header h2 {
+  font-size: 1.5rem !important; /* 글자 크기 대폭 확대 (원하는 만큼 숫자 조절) */
+  font-weight: 900 !important; /* 아주 두껍게 (Ultra Bold) */
+  color: #222; /* 진한 검정색 */
+  margin-top: 60px; /* 위쪽 여백을 줘서 시원하게 분리 */
+  margin-bottom: 30px; /* 아래쪽 내용과 간격 */
+  letter-spacing: -0.5px; /* 자간을 살짝 좁히면 단단해 보임 */
+  text-transform: uppercase; /* (선택) 무조건 대문자로 출력 */
+}
 header h3 {
   margin-top: 30px; /* 위쪽 여백 */
   font-size: 0.85rem; /* 글자 크기를 조금 작게 */

@@ -98,16 +98,16 @@ layout: default
   }
 </style>
 
-<h2 id="research">RESEARCH INTEREST</h2>
+<h2 id="research">Technical Expertise</h2>
 
 <div class="interest-chips">
   <span class="interest-chip">Functional Data Analysis</span>
-  <span class="interest-chip">Functional Registration</span>
   <span class="interest-chip">Bayesian Statistics</span>
-  <span class="interest-chip">Generative Models (VAEs)</span>
+  <span class="interest-chip">Probabilistic Deep Learning</span>
+  <span class="interest-chip">Time-series Analysis</span>
 </div>
 
-<h2 id="projects">PROJECTS</h2>
+<h2 id="projects">Projects</h2> 
 
 <div class="projects-container">
 
