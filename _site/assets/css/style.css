@@ -565,7 +565,7 @@ header {
   /* 각 메뉴 항목 스타일 */
 }
 header h2 {
-  font-size: 1.5rem !important; /* 글자 크기 대폭 확대 (원하는 만큼 숫자 조절) */
+  font-size: 2.2rem !important; /* 글자 크기 대폭 확대 (원하는 만큼 숫자 조절) */
   font-weight: 900 !important; /* 아주 두껍게 (Ultra Bold) */
   color: #222; /* 진한 검정색 */
   margin-top: 60px; /* 위쪽 여백을 줘서 시원하게 분리 */

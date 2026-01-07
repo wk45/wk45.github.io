@@ -6,7 +6,6 @@
 
 header {
   width: 200px !important;
-  flex-shrink: 0;
 
   h2 {
   font-size: 2.2rem !important; /* 글자 크기 대폭 확대 (원하는 만큼 숫자 조절) */
@@ -17,6 +16,7 @@ header {
   letter-spacing: -0.5px;       /* 자간을 살짝 좁히면 단단해 보임 */
   text-transform: uppercase;    /* (선택) 무조건 대문자로 출력 */
   }
+
 
   /* "Table of Contents" 제목 스타일 */
   h3 { 
@@ -76,8 +76,9 @@ header {
 
 
 section {
-  width: 100%;         /* 본문이 나머지 공간을 다 쓰도록 */
-  max-width: none;     /* 본문 내부의 제한 해제 */
+  width: calc(100% - 250px) !important;
+  max-width: none !important;
+}
 
 @media screen and (max-width: 768px) {
   header, section {
