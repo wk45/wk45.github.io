@@ -1,3 +1,4 @@
+@charset "UTF-8";
 @font-face {
   font-family: "Noto Sans";
   font-weight: 400;
@@ -559,6 +560,54 @@ footer {
 }
 header {
   width: 200px !important;
+  /* "Table of Contents" 제목 스타일 */
+  /* 목록 스타일 초기화 (점 없애기) */
+  /* 각 메뉴 항목 스타일 */
+}
+header h3 {
+  margin-top: 30px; /* 위쪽 여백 */
+  font-size: 0.85rem; /* 글자 크기를 조금 작게 */
+  text-transform: uppercase; /* 대문자로 변환 */
+  color: #999; /* 연한 회색으로 은은하게 */
+  letter-spacing: 1px; /* 글자 간격 넓히기 */
+  border-bottom: 1px solid #eee; /* 아래에 얇은 줄 긋기 */
+  padding-bottom: 10px;
+  margin-bottom: 15px;
+}
+header ul {
+  list-style: none !important;
+  padding-left: 0 !important;
+  margin-left: 0 !important;
+}
+header li {
+  margin-bottom: 5px; /* 항목 간 간격 */
+  /* 하위 메뉴 (들여쓰기) */
+}
+header li a {
+  display: block; /* 박스 형태로 만들어 전체 클릭 가능하게 */
+  text-decoration: none; /* 밑줄 제거 */
+  color: #555; /* 기본 글자색 (진한 회색) */
+  font-size: 0.95rem;
+  padding: 8px 12px; /* 안쪽 여백을 줘서 통통하게 */
+  border-radius: 4px; /* 모서리 둥글게 */
+  transition: all 0.2s ease; /* 부드러운 애니메이션 */
+  /* 마우스 올렸을 때 효과 (Hover) */
+}
+header li a:hover {
+  background-color: rgba(68, 138, 255, 0.08); /* 연한 파란 배경 */
+  color: #448aff; /* 글자는 파란색으로 */
+  font-weight: 500; /* 글자 약간 두껍게 */
+  transform: translateX(5px); /* 오른쪽으로 살짝 이동하는 느낌 */
+}
+header li ul {
+  margin-left: 10px !important; /* 들여쓰기 간격 */
+  margin-top: 5px;
+  border-left: 2px solid #eee; /* 계층 구조를 보여주는 세로선 */
+}
+header li ul li a {
+  font-size: 0.85rem; /* 하위 메뉴는 글씨를 좀 더 작게 */
+  color: #777;
+  padding-left: 15px; /* 텍스트 시작 위치 조정 */
 }
 
 section {

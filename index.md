@@ -185,7 +185,7 @@ layout: default
     </div>
     
     <blockquote>
-      "Homophily helps explain common patterns in social networks, including transitivity and the formation of cohesive subgroups." (Hoff 2008)
+      Homophily helps explain common patterns in social networks, including transitivity (“a friend of a friend is a friend”), balance (“the enemy of my friend is an enemy”), and the formation of cohesive subgroups of nodes. (Hoff 2008)
     </blockquote>
     
     <p>
