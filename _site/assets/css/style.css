@@ -1,4 +1,5 @@
 @charset "UTF-8";
+@import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&display=swap");
 @font-face {
   font-family: "Noto Sans";
   font-weight: 400;
@@ -558,8 +559,142 @@ footer {
     color: #444;
   }
 }
+:root {
+  color-scheme: light dark;
+  --bg: #fbfbfb;
+  --surface: #ffffff;
+  --surface-muted: #fafafa;
+  --text: #222222;
+  --text-strong: #1a1a1a;
+  --text-muted: #555555;
+  --border: #e0e0e0;
+  --border-soft: #eeeeee;
+  --media-border: #e0e0e0;
+  --accent: #9a2f45;
+  --accent-soft: rgba(154, 47, 69, 0.12);
+  --shadow: 0 4px 6px rgba(0, 0, 0, 0.04);
+  --brand: #9a2f45;
+  --brand-ink: #9a2f45;
+  --brand-soft: rgba(154, 47, 69, 0.15);
+  --brand-secondary: #b38f4a;
+  --neutral-soft: #f2f2f2;
+}
+
+html[data-theme=dark] {
+  color-scheme: dark;
+  --bg: #0f1115;
+  --surface: #171a21;
+  --surface-muted: #12151b;
+  --text: #ededed;
+  --text-strong: #f8f9fb;
+  --text-muted: #b8b8b8;
+  --border: #2a2f3a;
+  --border-soft: #262b35;
+  --media-border: #3b4251;
+  --accent: #c66d7f;
+  --accent-soft: rgba(198, 109, 127, 0.18);
+  --shadow: 0 10px 18px rgba(0, 0, 0, 0.4);
+  --brand: #c66d7f;
+  --brand-ink: #c66d7f;
+  --brand-soft: rgba(198, 109, 127, 0.18);
+  --brand-secondary: #d7c195;
+  --neutral-soft: #1b1f28;
+}
+
+body {
+  background-color: var(--bg);
+  color: var(--text);
+}
+
+a {
+  color: var(--accent);
+  font-weight: normal;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 2px;
+  text-decoration-color: var(--accent);
+}
+
+a:hover,
+a:focus {
+  color: var(--brand);
+  text-decoration-color: var(--brand);
+}
+
+.theme-toggle {
+  border: 1px solid var(--border);
+  background: var(--neutral-soft);
+  color: var(--text);
+  width: 36px;
+  height: 36px;
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: transform 0.2s ease, background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.theme-toggle:hover {
+  transform: translateY(-1px);
+  background: var(--surface-muted);
+}
+
+.theme-toggle:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.header-name-row {
+  display: block;
+  text-align: center;
+}
+
+.header-name-row h3 {
+  margin: 0;
+}
+
+.toc-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.theme-toggle .theme-icon {
+  display: none;
+}
+
+html[data-theme=light] .theme-icon-moon,
+body[data-theme=light] .theme-icon-moon {
+  display: block;
+}
+
+html[data-theme=dark] .theme-icon-sun,
+body[data-theme=dark] .theme-icon-sun {
+  display: block;
+}
+
+.center-figure {
+  text-align: center;
+}
+
+.dark-mode-img {
+  border: 1px solid var(--media-border);
+  border-radius: 8px;
+}
+
+html[data-theme=dark] .dark-mode-img {
+  filter: invert(1) hue-rotate(180deg) brightness(1.05) contrast(1.05);
+}
+
 header {
-  width: 200px !important;
+  width: 315px !important;
+  position: sticky !important;
+  top: 24px;
+  float: none !important;
+  align-self: flex-start;
+  background: var(--bg);
   /* "Table of Contents" 제목 스타일 */
   /* 목록 스타일 초기화 (점 없애기) */
   /* 각 메뉴 항목 스타일 */
@@ -567,7 +702,7 @@ header {
 header h2 {
   font-size: 2.2rem !important; /* 글자 크기 대폭 확대 (원하는 만큼 숫자 조절) */
   font-weight: 900 !important; /* 아주 두껍게 (Ultra Bold) */
-  color: #222; /* 진한 검정색 */
+  color: var(--text); /* 진한 검정색 */
   margin-top: 60px; /* 위쪽 여백을 줘서 시원하게 분리 */
   margin-bottom: 30px; /* 아래쪽 내용과 간격 */
   letter-spacing: -0.5px; /* 자간을 살짝 좁히면 단단해 보임 */
@@ -577,9 +712,9 @@ header h3 {
   margin-top: 30px; /* 위쪽 여백 */
   font-size: 0.85rem; /* 글자 크기를 조금 작게 */
   text-transform: uppercase; /* 대문자로 변환 */
-  color: #999; /* 연한 회색으로 은은하게 */
+  color: var(--text-muted); /* 연한 회색으로 은은하게 */
   letter-spacing: 1px; /* 글자 간격 넓히기 */
-  border-bottom: 1px solid #eee; /* 아래에 얇은 줄 긋기 */
+  border-bottom: 1px solid var(--border-soft); /* 아래에 얇은 줄 긋기 */
   padding-bottom: 10px;
   margin-bottom: 15px;
 }
@@ -587,6 +722,7 @@ header ul {
   list-style: none !important;
   padding-left: 0 !important;
   margin-left: 0 !important;
+  padding-right: 0;
 }
 header li {
   margin-bottom: 5px; /* 항목 간 간격 */
@@ -595,7 +731,7 @@ header li {
 header li a {
   display: block; /* 박스 형태로 만들어 전체 클릭 가능하게 */
   text-decoration: none; /* 밑줄 제거 */
-  color: #555; /* 기본 글자색 (진한 회색) */
+  color: var(--text-muted); /* 기본 글자색 (진한 회색) */
   font-size: 0.95rem;
   padding: 8px 12px; /* 안쪽 여백을 줘서 통통하게 */
   border-radius: 4px; /* 모서리 둥글게 */
@@ -603,27 +739,75 @@ header li a {
   /* 마우스 올렸을 때 효과 (Hover) */
 }
 header li a:hover {
-  background-color: rgba(68, 138, 255, 0.08); /* 연한 파란 배경 */
-  color: #448aff; /* 글자는 파란색으로 */
+  background-color: var(--brand-soft); /* 연한 브랜드 배경 */
+  color: var(--brand); /* 글자는 브랜드 색으로 */
   font-weight: 500; /* 글자 약간 두껍게 */
   transform: translateX(5px); /* 오른쪽으로 살짝 이동하는 느낌 */
 }
 header li ul {
   margin-left: 10px !important; /* 들여쓰기 간격 */
   margin-top: 5px;
-  border-left: 2px solid #eee; /* 계층 구조를 보여주는 세로선 */
+  border-left: 2px solid var(--border-soft); /* 계층 구조를 보여주는 세로선 */
 }
 header li ul li a {
   font-size: 0.85rem; /* 하위 메뉴는 글씨를 좀 더 작게 */
-  color: #777;
+  color: var(--text-muted);
   padding-left: 15px; /* 텍스트 시작 위치 조정 */
 }
 
-section {
-  width: calc(100% - 250px) !important;
-  max-width: none !important;
+header img {
+  width: 100%;
+  max-width: 170px;
+  height: auto;
+  display: block;
+  margin: 0 auto;
 }
 
+.wrapper {
+  display: flex;
+  align-items: flex-start;
+  gap: 24px;
+  width: min(1040px, 100%);
+}
+
+section {
+  float: none !important;
+  flex: 1 1 auto;
+  width: auto !important;
+  max-width: none !important;
+  min-width: 0;
+}
+
+@media screen and (max-width: 960px) {
+  .wrapper {
+    width: 100% !important;
+    margin: 0 !important;
+    flex-direction: column;
+    gap: 16px;
+  }
+  header, section {
+    float: none !important;
+    position: static !important;
+    width: 100% !important;
+  }
+  header {
+    padding-right: 0 !important;
+    background: var(--bg);
+    z-index: 1;
+  }
+  header ul {
+    position: static !important;
+    right: auto !important;
+    top: auto !important;
+    width: 100%;
+  }
+  header img {
+    max-width: 220px;
+  }
+  section {
+    margin: 0 !important;
+  }
+}
 @media screen and (max-width: 768px) {
   header, section {
     width: 100% !important;

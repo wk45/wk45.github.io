@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="120" viewBox="0 0 640 120">
+  <defs>
+    <linearGradient id="rainbow" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#1f5fbf"/>
+      <stop offset="35%" stop-color="#2f9d6a"/>
+      <stop offset="70%" stop-color="#c39b2c"/>
+      <stop offset="100%" stop-color="#c0394b"/>
+    </linearGradient>
+    <style>
+      .label { font: 14px 'Space Grotesk', 'Segoe UI', Arial, sans-serif; fill: #1f2328; }
+      .line { fill: none; stroke-width: 3; }
+    </style>
+  </defs>
+  <rect x="0" y="0" width="640" height="120" fill="#ffffff"/>
+  <line class="line" x1="20" y1="32" x2="120" y2="32" stroke="#c0394b"/>
+  <text class="label" x="140" y="36">Ground-truth signal</text>
+
+  <line class="line" x1="20" y1="62" x2="120" y2="62" stroke="#1f5fbf" stroke-dasharray="2,6" stroke-linecap="round"/>
+  <text class="label" x="140" y="66">Fully aligned estimate</text>
+
+  <line class="line" x1="20" y1="92" x2="120" y2="92" stroke="url(#rainbow)"/>
+  <text class="label" x="140" y="96">Observed signals</text>
+</svg>

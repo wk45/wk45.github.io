@@ -14,11 +14,11 @@ layout: default
 
   /* --- Individual Card Style --- */
   .project-card {
-    background-color: #ffffff;
-    border: 1px solid #e0e0e0;
+    background-color: var(--surface);
+    border: 1px solid var(--border);
     border-radius: 12px;
     padding: 2rem;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.04);
+    box-shadow: var(--shadow);
     transition: transform 0.2s ease, box-shadow 0.2s ease;
   }
 
@@ -28,34 +28,241 @@ layout: default
   }
 
   /* --- Typography inside cards --- */
+  h2 {
+    color: var(--text-strong);
+    font-size: 2rem;
+    letter-spacing: -0.01em;
+    font-family: "Space Grotesk", "Segoe UI", Helvetica, Arial, sans-serif;
+  }
+
+  .section-divider {
+    border: 0;
+    height: 1px;
+    background: var(--border-soft);
+    margin: 2rem 0;
+  }
+
   .project-card h3 {
     margin-top: 0;
-    border-bottom: 2px solid #f0f0f0;
+    border-bottom: 2px solid var(--border-soft);
     padding-bottom: 0.5rem;
     margin-bottom: 1.5rem;
     font-size: 1.5rem;
-    color: #222;
+    color: var(--brand-ink);
   }
 
   .project-card h4 {
     margin-top: 0;
     font-size: 1.25rem;
-    color: #444;
+    color: var(--brand-secondary);
     margin-bottom: 0.8rem;
     font-weight: 600;
   }
 
   .project-card p, .project-card li {
-    color: #555;
+    color: var(--text-muted);
     line-height: 1.6;
     margin-bottom: 1rem;
+  }
+
+  .project-card strong {
+    color: var(--brand-ink);
+  }
+
+  .story-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 1.25rem;
+    margin-top: 1.5rem;
+  }
+
+  .ph-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1.25rem;
+    margin-top: 1.5rem;
+  }
+
+  .ph-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .story-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 1rem;
+    cursor: zoom-in;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .story-card h5 {
+    margin: 0 0 0.6rem 0;
+    font-size: 0.95rem;
+    color: var(--brand-ink);
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+  }
+
+  .story-card p {
+    margin: 0 0 0.75rem 0;
+    font-size: 0.85rem;
+    color: var(--text-muted);
+  }
+
+  .story-card img {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+    border: 1px solid var(--border-soft);
+    display: block;
+    pointer-events: none;
+  }
+
+  .story-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 18px rgba(0, 0, 0, 0.12);
+  }
+
+  .story-zoom {
+    cursor: inherit;
+  }
+
+  .story-card.compact img {
+    max-width: 85%;
+    margin: 0 auto;
+  }
+
+  .story-card.solution img {
+    max-width: 85%;
+    margin: 0 auto;
+  }
+
+  .story-row {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.75rem;
+  }
+
+  .story-card.solution .story-row {
+    grid-template-columns: 1fr;
+  }
+
+  html[data-theme="dark"] .story-card img,
+  body[data-theme="dark"] .story-card img {
+    filter: brightness(0.95) contrast(1.05);
+  }
+
+  .lightbox {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.75);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    padding: 24px;
+  }
+
+  .lightbox.open {
+    display: flex;
+  }
+
+  .lightbox-inner {
+    max-width: min(640px, 88vw);
+    width: 100%;
+    max-height: 85vh;
+    background: var(--surface);
+    border-radius: 14px;
+    padding: 16px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
+    margin: 0;
+    overflow: hidden;
+  }
+
+  .lightbox-figures {
+    display: grid;
+    gap: 12px;
+    max-height: 72vh;
+    overflow: hidden;
+  }
+
+  .lightbox-figure {
+    width: 100%;
+    height: auto;
+    max-height: 70vh;
+    object-fit: contain;
+    border-radius: 10px;
+    border: 1px solid var(--border-soft);
+    display: block;
+  }
+
+  .lightbox-figures.multi .lightbox-figure {
+    max-height: 32vh;
+  }
+
+  .lightbox-legend-img {
+    width: 100%;
+    height: auto;
+    margin-top: 8px;
+    max-height: 14vh;
+    object-fit: contain;
+    border-radius: 10px;
+    border: 1px solid var(--border-soft);
+    display: none;
+  }
+
+  .story-toggle {
+    display: inline-flex;
+    gap: 0;
+    border-bottom: 2px solid var(--border);
+    margin-top: 0.75rem;
+  }
+
+  .story-toggle button {
+    border: 0;
+    background: transparent;
+    padding: 8px 14px;
+    font-size: 0.85rem;
+    cursor: pointer;
+    color: var(--text-muted);
+    border-bottom: 2px solid transparent;
+    margin-bottom: -2px;
+  }
+
+  .story-toggle button.active {
+    color: var(--brand-ink);
+    border-bottom-color: var(--brand-ink);
+    font-weight: 600;
+  }
+
+  @media screen and (max-width: 960px) {
+    .story-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .ph-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media screen and (max-width: 640px) {
+    .story-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .ph-grid {
+      grid-template-columns: 1fr;
+    }
   }
 
   /* --- Sub-section divider --- */
   .card-divider {
     border: 0;
     height: 1px;
-    background: #eaeaea;
+    background: var(--border-soft);
     margin: 2.5rem 0;
   }
 
@@ -68,13 +275,13 @@ layout: default
   }
 
   .interest-chip {
-    background-color: #f5f5f5;
-    color: #555;
+    background-color: var(--neutral-soft);
+    color: var(--text-muted);
     padding: 0.4rem 0.8rem;
     border-radius: 20px;
     font-size: 0.9rem;
     font-weight: 500;
-    border: 1px solid #ddd;
+    border: 1px solid var(--border);
   }
 
   /* --- Iframe Wrapper --- */
@@ -83,22 +290,110 @@ layout: default
     margin: 1.5rem 0;
     border-radius: 8px;
     overflow: hidden;
-    background: #fafafa;
-    border: 1px solid #eee;
+    background: var(--surface-muted);
+    border: 1px solid var(--media-border);
   }
 
   /* --- Blockquote --- */
   .project-card blockquote {
-    border-left: 4px solid #7e7eff;
-    background: #f9f9f9;
+    border-left: 4px solid var(--brand);
+    background: var(--surface-muted);
     margin: 1rem 0;
     padding: 0.5rem 1rem;
-    color: #555;
+    color: var(--text-muted);
     font-style: italic;
+  }
+
+  /* Container for the text and the popup */
+  .hover-trigger {
+    position: relative; /* Establishes a reference point for the popup */
+    cursor: help;       /* Changes cursor to a question mark or pointer */
+    border-bottom: 1px dotted var(--text-muted); /* distinct underline */
+    color: var(--brand-ink);     /* Optional: make the text blue */
+    font-weight: 500;
+  }
+
+  /* The actual explanation box (Hidden by default) */
+  .hover-content {
+    visibility: hidden;
+    opacity: 0;
+    width: 280px;       /* Width of the popup box */
+    background-color: var(--surface);
+    color: var(--text);
+    text-align: left;
+    border-radius: 8px;
+    padding: 15px;
+    position: absolute;
+    z-index: 10;
+    bottom: 125%;       /* Position it above the text */
+    left: 50%;
+    transform: translateX(-50%); /* Center it horizontally */
+    
+    /* Shadow for a floating effect */
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+    border: 1px solid var(--border-soft);
+    
+    /* Smooth transition */
+    transition: opacity 0.3s, bottom 0.3s;
+    
+    /* Font settings for the popup text */
+    font-size: 0.9rem;
+    line-height: 1.4;
+    font-weight: normal;
+  }
+
+  /* The little arrow pointing down */
+  .hover-content::after {
+    content: "";
+    position: absolute;
+    top: 100%; /* At the bottom of the tooltip */
+    left: 50%;
+    margin-left: -8px;
+    border-width: 8px;
+    border-style: solid;
+    border-color: var(--surface) transparent transparent transparent;
+  }
+
+  /* Show the popup on hover */
+  .hover-trigger:hover .hover-content {
+    visibility: visible;
+    opacity: 1;
+    bottom: 140%; /* Moves up slightly for a nice animation effect */
+  }
+
+  html[data-theme="dark"] .dark-filter,
+  body[data-theme="dark"] .dark-filter {
+    filter: brightness(0.9) contrast(1.1) saturate(0.9);
+  }
+
+  .fda-section {
+    background: var(--surface-muted);
+    border: 1px solid var(--border);
+  }
+
+  .fda-subcard {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 1.25rem;
+    margin-top: 1.25rem;
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.04);
+  }
+
+  .fda-subcard h4 {
+    display: inline-block;
+    padding: 0.35rem 0.6rem;
+    border-radius: 8px;
+    background: rgba(179, 143, 74, 0.16);
+  }
+
+  html[data-theme="dark"] .fda-subcard h4,
+  body[data-theme="dark"] .fda-subcard h4 {
+    background: rgba(215, 193, 149, 0.18);
   }
 </style>
 
-<h2 id="research">Technical Expertise</h2>
+<h2 id="research">TECHNICAL EXPERTISE</h2>
 
 <div class="interest-chips">
   <span class="interest-chip">Functional Data Analysis</span>
@@ -107,18 +402,20 @@ layout: default
   <span class="interest-chip">Time-series Analysis</span>
 </div>
 
-<h2 id="projects">Projects</h2> 
+<hr class="section-divider">
+
+<h2 id="projects">PROJECTS</h2> 
 
 <div class="projects-container">
 
-  <div class="project-card" id="fda">
-    <h3>Functional Data Analysis (Functional Registration)</h3>
+  <div class="project-card fda-section" id="fda">
+    <h3>Functional Data Analysis</h3>
     
     <p>
-      Functional data — curves, shapes, and other complex structures — arise in fields like biology, medicine, and the social sciences. My primary research focuses on <strong>functional registration</strong> using the Fisher-Rao metric within a <a href="https://en.wikipedia.org/wiki/Riemannian_manifold">Riemannian manifold</a> framework.
+      Functional data — curves, shapes, and other complex structures — arise in fields like biology, medicine, and the social sciences. My primary research focuses on <strong>functional registration</strong> using the Fisher-Rao metric within a <a href="https://en.wikipedia.org/wiki/Riemannian_manifold">Riemannian manifold</a> framework <i> under noisy condition </i>.
     </p>
     <p>
-      Functional registration addresses <strong>phase variation</strong> (temporal misalignment) to align functions in a geometrically meaningful way.
+    Functional registration addresses <strong>phase variation</strong> (temporal misalignment) to separate meaningful structural patterns from timing differences.
     </p>
     
     <p>
@@ -135,82 +432,300 @@ layout: default
     </div>
 
     <p>
-      Correcting phase variation enables more accurate statistical analysis. To address computational challenges, we utilize the Square Root Velocity Function (SRVF) representation (<a href="https://doi.org/10.1109/TPAMI.2010.184" target="_blank">Srivastava et al., 2011</a>).
+    By aligning corresponding features—such as peaks and valleys—across samples, we can analyze the <strong>pure shape variability (amplitude)</strong> independent of time, recovering the true underlying signal structure that would otherwise be lost in conventional averaging. To address computational challenges, we utilize the Square Root Velocity Function (SRVF) representation (<a href="https://doi.org/10.1109/TPAMI.2010.184" target="_blank">Srivastava et al., 2011</a>).
     </p>
 
-    <hr class="card-divider">
-    
-    <div id="ppd">
+    <div id="ppd" class="fda-subcard">
       <h4>▫ Peak Persistence Diagrams</h4>
+      <p>
+        <strong>"A Visual Analytics Tool for Robust Signal Recovery"</strong>
+      </p>
 
-      <div style="margin-bottom: 1rem;">
-        <span style="font-size: 0.95rem; color: #555; margin-left: 8px; vertical-align: middle;">
-          (Published in <em>IEEE Transactions on Signal Processing, 2025</em>. <a href="https://doi.org/10.1109/TSP.2025.3613678" target="_blank" style="text-decoration: underline;">View Paper</a>)
-        </span>
+      <p>PPD solves the challenge of distinguishing true trends from noise in complex datasets. It replaces manual guesswork with a data-driven visualization, ensuring reliable model performance.</p>
+
+      <ul>
+      <li><strong>Automated Parameter Tuning</strong>: Eliminates trial-and-error by visually identifying the optimal balance between noise reduction and signal preservation.</li>
+      <li><strong>Validated Performance</strong>: Achieved a 25–60% reduction in error (RMSE) in controlled benchmarks compared to state-of-art baseline.  </li>
+      <li><strong>Real-World Application</strong>: Successfully applied to energy demand forecasting and COVID-19 trend analysis, recovering clear and interpretable patterns where traditional methods failed to separate signal from noise.</li>
+      </ul>
+
+      <p> <strong><a href="https://doi.org/10.1109/TSP.2025.3613678">This work</a></strong> is published in IEEE Transactions on Signal Processing, 2025.
+      </p>
+
+      <div class="story-toggle" id="ppdStoryToggle">
+        <button type="button" class="active" data-ppd="d1">Dataset 1</button>
+        <button type="button" data-ppd="d2">Dataset 2</button>
       </div>
 
+      <div class="story-grid">
+        <div class="story-card compact">
+          <h5>Raw Data</h5>
+          <p>Raw observations with strong phase variation and noise.</p>
+          <img data-ppd-img="raw" class="story-zoom dark-mode-img" data-legend-img="figs/ppd/ppd_legend_raw.svg" src="figs/ppd/ppd_d1_parts/ex1(1).png" alt="Raw data plot">
+        </div>
+        <div class="story-card compact">
+          <h5>Challenge</h5>
+          <p>Fully aligned data can over-align, obscuring meaningful structure.</p>
+          <img data-ppd-img="challenge" class="story-zoom dark-mode-img" data-legend-img="figs/ppd/ppd_legend_challenge.svg" src="figs/ppd/ppd_d1_parts/ex1(2).png" alt="Over-aligned raw data plot">
+        </div>
+        <div class="story-card solution">
+          <h5>Solution</h5>
+          <p>PPD visualizes topological structure and guides optimal tuning.</p>
+          <div class="story-row">
+            <img data-ppd-img="solution1" class="story-zoom dark-mode-img" data-legend-img="figs/ppd/ppd_legend_solution.svg" src="figs/ppd/ppd_d1_parts/ex1(3).png" alt="PPD solution plot 1">
+            <img data-ppd-img="solution2" class="story-zoom dark-mode-img" src="figs/ppd/ppd_d1_parts/ex1(4).png" alt="PPD solution plot 2">
+          </div>
+        </div>
+        <div class="story-card compact">
+          <h5>Result</h5>
+          <p>Recovered signals align with ground truth and reveal hidden patterns.</p>
+          <img data-ppd-img="result" class="story-zoom dark-mode-img" data-legend-img="figs/ppd/ppd_legend_result.svg" src="figs/ppd/ppd_d1_parts/ex1(5).png" alt="Recovered signal result plot">
+        </div>
+      </div>
+
+      <div class="lightbox" id="ppdLightbox" role="dialog" aria-modal="true">
+        <div class="lightbox-inner">
+          <div class="lightbox-figures" id="ppdLightboxFigures"></div>
+          <img class="lightbox-legend-img" id="ppdLightboxLegendImg" alt="Figure legend">
+        </div>
+      </div>
+
+      <script>
+        (function () {
+          var map = {
+            d1: {
+              raw: "figs/ppd/ppd_d1_parts/ex1(1).png",
+              challenge: "figs/ppd/ppd_d1_parts/ex1(2).png",
+              solution1: "figs/ppd/ppd_d1_parts/ex1(3).png",
+              solution2: "figs/ppd/ppd_d1_parts/ex1(4).png",
+              result: "figs/ppd/ppd_d1_parts/ex1(5).png",
+              resultLegendImg: "figs/ppd/ppd_legend_result.svg"
+            },
+            d2: {
+              raw: "figs/ppd/ppd_d2_parts/ex2(1).png",
+              challenge: "figs/ppd/ppd_d2_parts/ex2(2).png",
+              solution1: "figs/ppd/ppd_d2_parts/ex2(3).png",
+              solution2: "figs/ppd/ppd_d2_parts/ex2(4).png",
+              result: "figs/ppd/ppd_d2_parts/ex2(5).png",
+              resultLegendImg: "figs/ppd/ppd_legend_result.svg"
+            }
+          };
+
+          var toggle = document.getElementById("ppdStoryToggle");
+          if (!toggle) return;
+          var imgs = document.querySelectorAll("[data-ppd-img]");
+          var lightbox = document.getElementById("ppdLightbox");
+          var lightboxFigures = document.getElementById("ppdLightboxFigures");
+          var lightboxLegendImg = document.getElementById("ppdLightboxLegendImg");
+
+          if (lightbox && lightbox.parentElement !== document.body) {
+            document.body.appendChild(lightbox);
+          }
+
+          function openLightbox(card) {
+            if (!lightbox || !lightboxFigures) return;
+            lightboxFigures.innerHTML = "";
+            var cardImages = card.querySelectorAll("img");
+            lightboxFigures.classList.toggle("multi", cardImages.length > 1);
+            cardImages.forEach(function (img) {
+              var clone = document.createElement("img");
+              clone.src = img.src;
+              clone.alt = img.alt || "Expanded plot";
+              clone.className = "lightbox-figure";
+              lightboxFigures.appendChild(clone);
+            });
+            var legendImg = card.querySelector("[data-legend-img]");
+            if (legendImg && lightboxLegendImg) {
+              var src = legendImg.getAttribute("data-legend-img");
+              lightboxLegendImg.src = src;
+              lightboxLegendImg.style.display = "block";
+            } else if (lightboxLegendImg) {
+              lightboxLegendImg.style.display = "none";
+            }
+            lightbox.classList.add("open");
+          }
+
+          function closeLightbox() {
+            if (!lightbox) return;
+            lightbox.classList.remove("open");
+          }
+
+          toggle.addEventListener("click", function (e) {
+            var btn = e.target.closest("button[data-ppd]");
+            if (!btn) return;
+            var key = btn.getAttribute("data-ppd");
+            var conf = map[key];
+            if (!conf) return;
+            toggle.querySelectorAll("button").forEach(function (b) {
+              b.classList.toggle("active", b === btn);
+            });
+            imgs.forEach(function (img) {
+              var name = img.getAttribute("data-ppd-img");
+              if (conf[name]) img.src = conf[name];
+              if (name === "result") {
+                if (conf.resultLegendImg) {
+                  img.setAttribute("data-legend-img", conf.resultLegendImg);
+                }
+              }
+            });
+          });
+
+          document.addEventListener("click", function (e) {
+            var card = e.target.closest(".story-card");
+            if (!card) return;
+            openLightbox(card);
+          });
+
+          if (lightbox) {
+            lightbox.addEventListener("click", function (e) {
+              if (e.target === lightbox) closeLightbox();
+            });
+          }
+
+          document.addEventListener("keydown", function (e) {
+            if (e.key === "Escape") closeLightbox();
+          });
+        })();
+      </script>
+
+      <!--
       <p>
-        In practice, functional data often contains noise and small fluctuations. When applying dynamic time warping (DTW) with the Fisher-Rao metric, this noise can lead to <strong>over-alignment</strong> (warping functions matching insignificant noise).
-      </p>
-      <p>
-        To mitigate this, we propose the <strong>Peak Persistence Diagram (PPD)</strong>. PPD helps identify and summarize significant internal peaks, offering robustness to noise while remaining sensitive to meaningful structural patterns, avoiding the need for arbitrary penalty term selection.
-      </p>
+        To mitigate this, I developed the <strong>Peak Persistence Diagram (PPD)</strong>, a robust topological signal estimation framework. PPD identifies and summarizes significant internal peaks, effectively filtering noise without the need for arbitrary parameter tuning. <strong><i>This approach achieved a 25–60% reduction in RMSE compared to state-of-the-art baselines</i></strong>, demonstrating superior accuracy in recovering true signal structures from noisy data.
+
+      </p> -->
     </div>
 
-    <hr class="card-divider">
-
-    <div id="bayes">
-      <h4>▫ Bayesian Functional Alignment (on-going)</h4>
+    <div id="bayes" class="fda-subcard">
+      <h4>▫ Bayesian Functional Alignment</h4>
+      <p><strong>"A Probabilistic Framework for Robust Signal Recovery under Noise"</strong></p>
       <p>
         We are developing a <strong>Bayesian framework</strong> for functional registration to handle noisy and misaligned data more robustly than classical optimization methods.
       </p>
       <p>
-        Unlike DTW, which finds a single global optimum, the Bayesian approach models the full posterior distribution of warping functions. This allows us to incorporate prior information and capture multiple plausible warping solutions (multimodality).
+        Unlike DTW, which finds a single global optimum, the Bayesian approach models the full posterior distribution of warping functions. This allows us to incorporate prior information and capture multiple plausible warping solutions.
       </p>
+
+      <ul>
+      
+      <li><strong>Probabilistic Modeling</strong>: Unlike deterministic methods that force a single "best fit," this approach models the full posterior distribution of warping functions to quantify uncertainty and prevent over-alignment.</li>
+
+      <li><strong>Informed Priors</strong>: Utilizes covariance operators to inject domain knowledge, strictly constraining time-warping to physically plausible   windows and avoiding unrealistic distortions.</li>
+
+      <li><strong>Superior Accuracy</strong>: Outperforms state-of-the-art baseline with <i><strong>up to 70% lower L2 estimation error</strong></i>, successfully recovering sharp signal peaks even from highly corrupted data.</li>
+      
+      </ul>
+
+      A <a href="misc_pages/bayes_reg/main.html">short report</a> is available.
+      
+
+      <div class="story-grid" style="margin-top: 1.25rem;">
+        <div class="story-card compact">
+          <h5>Raw Data</h5>
+          <p><strong>Noisy Observations</strong> </p><p>Raw COVID-19 death rates show phase variation that hides the shared wave across countries.</p>
+          <img src="figs/bayes_reg/converted/bay01.svg" alt="Raw data spaghetti plot">
+        </div>
+        <div class="story-card compact">
+          <h5>The Strategy</h5>
+          <p><strong>Informative Priors</strong></p> <p>A Gaussian process prior constrains warping to plausible time windows (yellow zones).</p>
+          <img src="figs/bayes_reg/converted/bay02.svg" alt="Covariance prior heatmap">
+        </div>
+        <div class="story-card compact">
+          <h5>The Mechanism</h5>
+          <p><strong>Probabilistic Warping</strong></p><p> We model a posterior over warpings to capture uncertainty and avoid over-alignment.</p>
+          <img src="figs/bayes_reg/converted/bay03.svg" alt="Posterior warping functions">
+        </div>
+        <div class="story-card compact">
+          <h5>Result</h5>
+          <p><strong>Robust Recovery</strong></p><p> Recovers sharp peaks with fewer artifacts and ~70% lower error.</p>
+          <img src="figs/bayes_reg/converted/bay04.svg" alt="Recovered aligned signals">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="project-card fda-section" id="network">
+    <h3>Social Network Analysis via Bayesian Method</h3>
+    <div class="fda-subcard">
+      <h4>▫ Hierarchical Latent SVD Model</h4>
       <p>
-        We have successfully developed a method for simultaneous registration and signal estimation. A <a href="misc_pages/bayes_reg/main.html" style="font-weight: bold;">short report</a> is available.
+        In social network analysis, Latent Distance Models (LDMs) embed nodes in a latent space to uncover structure. <a href="https://doi.org/doi:10.48550/arXiv.0711.1146">Hoff (2008)</a> introduced eigenmodel-based LDMs to account for <strong>homophily</strong> (the tendency of similar nodes to connect).
+      </p>
+      
+      <div class="center-figure" style="margin: 1.5rem 0;">
+        <img class="dark-mode-img" src="figs/network/homophiliy.png" width="450" style="max-width: 100%; height: auto; border-radius: 4px;">
+      </div>
+      
+      <blockquote>
+        Homophily helps explain common patterns in social networks, including transitivity (“a friend of a friend is a friend”), balance (“the enemy of my friend is an enemy”), and the formation of cohesive subgroups of nodes. (Hoff 2008)
+      </blockquote>
+      
+      <p>
+        This project applies <strong>Bayesian hierarchical modeling</strong> to latent SVD models to induce shrinkage effects and improve parameter estimation by borrowing strength across the network structure.
+        A <a href="/Projects/HLSVD/HSVD.pdf"> short report </a> is available.
       </p>
     </div>
   </div>
 
-  <div class="project-card" id="network">
-    <h3>Network Analysis via Bayesian Method</h3>
-    <h4>(<a href="/Projects/HLSVD/HSVD.pdf">Hierarchical Latent SVD Model</a>)</h4>
-    <p>
-      In social network analysis, Latent Space Models (LDMs) embed nodes in a latent space to uncover structure. <a href="https://doi.org/doi:10.48550/arXiv.0711.1146">Hoff (2008)</a> introduced eigenmodel-based LDMs to account for <strong>homophily</strong> (the tendency of similar nodes to connect).
-    </p>
-    
-    <div style="text-align: center; margin: 1.5rem 0;">
-      <img src="figs/network/homophiliy.png" width="400" style="max-width: 100%; height: auto; border-radius: 4px;">
-    </div>
-    
-    <blockquote>
-      Homophily helps explain common patterns in social networks, including transitivity (“a friend of a friend is a friend”), balance (“the enemy of my friend is an enemy”), and the formation of cohesive subgroups of nodes. (Hoff 2008)
-    </blockquote>
-    
-    <p>
-      This project applies <strong>Bayesian hierarchical modeling</strong> to latent SVD models to induce shrinkage effects and improve parameter estimation by borrowing strength across the network structure.
-    </p>
-  </div>
+  <div class="project-card fda-section" id="tda">
+    <h3>Topological Data Analysis</h3>
+      <p>
+        <strong>Topological features</strong> simplify complex geometric information, allowing for a clearer understanding of brain connectivity. By applying <a href="https://en.wikipedia.org/wiki/Persistent_homology">persistent homology</a> to multi-level white matter tractography, we capture essential structural patterns like loops and voids that remain robust across multiple scales.
+      </p>
+      
+      <div class="iframe-container">
+        <iframe 
+          id="persFrame"
+          src="misc_pages/pers.html" 
+          style="width: 100%; border: none; overflow: hidden; display: block;"
+          scrolling="no">
+        </iframe>
+      </div>
+      
+      <div class="fda-subcard">
 
-  <div class="project-card" id="tda">
-    <h3>Topological Feature Extraction</h3>
-    <h4>With Human Brain Connectome</h4>
-    <p>
-      We explored how <strong>Topological Data Analysis (TDA)</strong> can reveal structural patterns in brain connectivity. Using multi-level white matter tractography datasets, we applied <a href="https://en.wikipedia.org/wiki/Persistent_homology">persistent homology</a> to capture features like loops and voids across scales.
-    </p>
-    
-    <div class="iframe-container">
-      <iframe 
-        id="persFrame"
-        src="misc_pages/pers.html" 
-        style="width: 100%; border: none; overflow: hidden; display: block;"
-        scrolling="no">
-      </iframe>
+      <h4>▫ Topological Feature Extraction With Human Brain Connectome</h4>
+
+      <p><strong>"A Rank-Based Topological Approach to Brain Fingerprinting"</strong></p>
+
+      <p>This exploratory project analyzes brain connectivity using 0-dimensional persistent homology on white matter endpoints. We shift the focus from absolute connection strength to relative structural uniqueness within a population.</p>
+      <ul>
+        <li><strong>Population-Based Context</strong>: Instead of analyzing single brains in isolation, we leverage an 88-subject cohort to define a normative baseline, interpreting connectivity as a relative deviation from the group.</li>
+        <li><strong>Rank-Based Embedding</strong>: We transform topological distances into median rank matrices. This measures "identifiability"—quantifying how distinct a specific connection is compared to the general population.</li>
+        <li><strong>Exploratory Insights</strong>: While successful in capturing individual brain fingerprints, the rank transformation abstracted away fine trajectory details, pointing towards future hybrid topological models.</li>
+      </ul>
+
+      <div class="ph-grid">
+        <div class="story-card compact">
+          <h5>Population Context</h5>
+          <p><strong>The Cohort (88 Subjects)</strong> We visualize fibers for a single connection (ROI pair) across 88 subjects. This defines a "normative" baseline, allowing us to see if an individual's structure is typical or an anomaly.</p>
+          <img src="figs/PH/streamline_left.png" alt="Scatter plot (left)">
+        </div>
+        <div class="story-card compact">
+          <h5>Relational Embedding</h5>
+          <p><strong>0-dim Persistence Summary</strong> Before comparison, we compute the 0-dimensional persistent homology (H0) for each subject. This generates a "barcode" summarizing the multiscale clustering structure of fiber endpoints, serving as the fundamental topological feature.</p>
+          <div class="ph-stack">
+            <img src="figs/PH/streamline_right.png" alt="Scatter plot (right)">
+            <img src="figs/PH/ph0.svg" alt="PH0 plot">
+          </div>
+        </div>
+        <div class="story-card compact">
+          <h5>Rank-Based Feature</h5>
+          <p><strong>Median Rank Connectivity Matrix</strong> Topological differences are converted into rankings, and the median rank is assigned to the subject's 68×68 ROI Matrix. A high rank indicates a unique "fingerprint," while a low rank suggests a common pattern.</p>
+          <img src="figs/PH/plot_rankanlaysis.png" alt="Rank analysis plot">
+        </div>
+      </div>
     </div>
   </div>
 
 </div>
+<hr class="section-divider">
+<h2 id="publications">PUBLICATIONS</h2>
+<ul>
+  <li>Kim, W., Dasgupta, S., Turaga, P., and Srivastava, A. (2025) "Peak Persistence Diagrams for Shape-Based
+Signal Estimation," in IEEE Transactions on Signal Processing, doi: 10.1109/TSP.2025.3613678</li>
+  <li>Kim, W., Ma, Y., Wu, W. (2025). "Bayesian Registration and Signal Estimation with Compositional and Additive
+Noises", in Computational Statistics and Data Analysis. (Under review)</li>
+</ul>
 
 <script>
   function adjustHeight(iframe) {

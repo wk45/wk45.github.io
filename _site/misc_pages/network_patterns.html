@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Network Patterns</title>
+    <style>
+      :root {
+        --surface: #ffffff;
+        --text: #1f2328;
+        --muted: #5b636d;
+        --frame: #8b8b8b;
+        --accent: #9a2f45;
+        --edge: rgba(31, 35, 40, 0.18);
+        --edge-strong: rgba(31, 35, 40, 0.5);
+        --note: #9a2f45;
+      }
+
+      html[data-theme="dark"] {
+        --surface: #171a21;
+        --text: #e6e6e6;
+        --muted: #b8b8b8;
+        --frame: #d7d7d7;
+        --accent: #c66d7f;
+        --edge: rgba(230, 230, 230, 0.16);
+        --edge-strong: rgba(230, 230, 230, 0.48);
+        --note: #c66d7f;
+      }
+
+      body {
+        margin: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        background-color: var(--surface);
+        font-family: "IBM Plex Sans", "Segoe UI", Helvetica, Arial, sans-serif;
+        color: var(--text);
+        padding: 20px 0;
+        font-size: 14px;
+        line-height: 1.4;
+      }
+
+      .note {
+        color: var(--note);
+        font-style: italic;
+        text-align: center;
+        margin-bottom: 14px;
+      }
+
+      .card {
+        width: 500px;
+        background: var(--surface);
+        display: flex;
+        flex-direction: column;
+      }
+
+      .pair {
+        display: flex;
+        justify-content: space-between;
+        gap: 18px;
+      }
+
+      .canvas-wrap {
+        width: 220px;
+        height: 220px;
+        border: 2px solid var(--frame);
+        background: var(--surface);
+        overflow: hidden;
+      }
+
+      canvas {
+        width: 100%;
+        height: 100%;
+        display: block;
+      }
+
+      @media (max-width: 560px) {
+        .card {
+          width: 100%;
+        }
+        .pair {
+          flex-direction: column;
+          align-items: center;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <span class="note"><i>(Hover nodes to highlight local structure.)</i></span>
+
+    <div class="card">
+      <div class="pair">
+        <div class="canvas-wrap"><canvas id="homophilyCanvas"></canvas></div>
+        <div class="canvas-wrap"><canvas id="equivCanvas"></canvas></div>
+      </div>
+    </div>
+
+    <script>
+      const homophilyCanvas = document.getElementById("homophilyCanvas");
+      const equivCanvas = document.getElementById("equivCanvas");
+
+      const COLORS = {
+        a: "#4f8df7",
+        b: "#3fc7a4",
+        c: "#f6b450",
+        accent: "#9a2f45",
+      };
+
+      function readCssVar(name, fallback) {
+        const value = getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+        return value || fallback;
+      }
+
+      function makeRng(seed) {
+        let s = seed;
+        return function () {
+          s = (s * 1664525 + 1013904223) % 4294967296;
+          return s / 4294967296;
+        };
+      }
+
+      function resizeCanvas(canvas) {
+        const dpr = window.devicePixelRatio || 1;
+        const rect = canvas.getBoundingClientRect();
+        canvas.width = Math.max(1, Math.round(rect.width * dpr));
+        canvas.height = Math.max(1, Math.round(rect.height * dpr));
+        const ctx = canvas.getContext("2d");
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+        return ctx;
+      }
+
+      function drawEdges(ctx, edges, nodes, stroke, width) {
+        ctx.strokeStyle = stroke;
+        ctx.lineWidth = width;
+        ctx.lineCap = "round";
+        edges.forEach((edge) => {
+          const a = nodes[edge[0]];
+          const b = nodes[edge[1]];
+          ctx.beginPath();
+          ctx.moveTo(a.x, a.y);
+          ctx.lineTo(b.x, b.y);
+          ctx.stroke();
+        });
+      }
+
+      function drawNodes(ctx, nodes, hovered, relatedSet) {
+        nodes.forEach((node, i) => {
+          const isHover = hovered === i;
+          const isRelated = !relatedSet || relatedSet.has(i);
+          ctx.fillStyle = readCssVar("--surface", "#ffffff");
+          ctx.strokeStyle = isRelated ? node.color : readCssVar("--muted", "#9aa0a6");
+          ctx.lineWidth = isHover ? 2.2 : 1.6;
+          ctx.globalAlpha = isRelated ? 1 : 0.35;
+          const r = isHover ? 5 : 4;
+
+          ctx.beginPath();
+          ctx.arc(node.x, node.y, r, 0, Math.PI * 2);
+          ctx.fill();
+          ctx.stroke();
+          ctx.globalAlpha = 1;
+        });
+      }
+
+      function nearestNode(nodes, x, y) {
+        let best = null;
+        let bestD = 18;
+        nodes.forEach((node, i) => {
+          const d = Math.hypot(node.x - x, node.y - y);
+          if (d < bestD) {
+            bestD = d;
+            best = i;
+          }
+        });
+        return best;
+      }
+
+      function buildHomophily() {
+        const rng = makeRng(42);
+        const clusters = [
+          { x: 0.28, y: 0.32, color: COLORS.a },
+          { x: 0.68, y: 0.32, color: COLORS.b },
+          { x: 0.48, y: 0.68, color: COLORS.c },
+        ];
+        const nodes = [];
+        clusters.forEach((cluster, g) => {
+          for (let i = 0; i < 10; i++) {
+            const angle = rng() * Math.PI * 2;
+            const radius = 0.08 + rng() * 0.08;
+            nodes.push({
+              x: cluster.x + Math.cos(angle) * radius,
+              y: cluster.y + Math.sin(angle) * radius,
+              color: cluster.color,
+              group: g,
+            });
+          }
+        });
+
+        const edgesStrong = [];
+        const edgesWeak = [];
+        for (let i = 0; i < nodes.length; i++) {
+          for (let j = i + 1; j < nodes.length; j++) {
+            const same = nodes[i].group === nodes[j].group;
+            const p = same ? 0.33 : 0.04;
+            if (rng() < p) (same ? edgesStrong : edgesWeak).push([i, j]);
+          }
+        }
+
+        return { nodes, edgesStrong, edgesWeak };
+      }
+
+      function buildEquivalence() {
+        const rng = makeRng(1337);
+        const groups = [
+          { x: 0.2, y: 0.45, color: COLORS.a },
+          { x: 0.55, y: 0.3, color: COLORS.b },
+          { x: 0.78, y: 0.62, color: COLORS.c },
+        ];
+        const nodes = [];
+        groups.forEach((group, g) => {
+          for (let i = 0; i < 10; i++) {
+            const angle = rng() * Math.PI * 2;
+            const radius = 0.09 + rng() * 0.07;
+            nodes.push({
+              x: group.x + Math.cos(angle) * radius,
+              y: group.y + Math.sin(angle) * radius,
+              color: group.color,
+              group: g,
+            });
+          }
+        });
+
+        const pattern = [
+          [0.03, 0.32, 0.05],
+          [0.32, 0.03, 0.28],
+          [0.05, 0.28, 0.3],
+        ];
+
+        const edges = [];
+        for (let i = 0; i < nodes.length; i++) {
+          for (let j = i + 1; j < nodes.length; j++) {
+            const p = pattern[nodes[i].group][nodes[j].group];
+            if (rng() < p) edges.push([i, j]);
+          }
+        }
+
+        return { nodes, edges };
+      }
+
+      function renderHomophily(state, hoverIndex) {
+        const ctx = resizeCanvas(homophilyCanvas);
+        const w = homophilyCanvas.getBoundingClientRect().width;
+        const h = homophilyCanvas.getBoundingClientRect().height;
+        const edgeWeak = readCssVar("--edge", "rgba(0,0,0,0.18)");
+        const edgeStrong = readCssVar("--edge-strong", "rgba(0,0,0,0.5)");
+
+        ctx.clearRect(0, 0, w, h);
+        ctx.fillStyle = readCssVar("--surface", "#ffffff");
+        ctx.fillRect(0, 0, w, h);
+
+        const nodes = state.nodes.map((n) => ({ ...n, x: n.x * w, y: n.y * h }));
+
+        drawEdges(ctx, state.edgesWeak, nodes, edgeWeak, 1);
+        drawEdges(ctx, state.edgesStrong, nodes, edgeStrong, 2);
+
+        let relatedSet = null;
+        if (hoverIndex !== null) {
+          const related = state.edgesStrong.concat(state.edgesWeak).filter((e) => e[0] === hoverIndex || e[1] === hoverIndex);
+          relatedSet = new Set([hoverIndex]);
+          related.forEach((e) => {
+            relatedSet.add(e[0]);
+            relatedSet.add(e[1]);
+          });
+          drawEdges(ctx, related, nodes, readCssVar("--accent", COLORS.accent), 2.4);
+        }
+
+        drawNodes(ctx, nodes, hoverIndex, relatedSet);
+      }
+
+      function renderEquivalence(state, hoverIndex) {
+        const ctx = resizeCanvas(equivCanvas);
+        const w = equivCanvas.getBoundingClientRect().width;
+        const h = equivCanvas.getBoundingClientRect().height;
+        const edge = readCssVar("--edge", "rgba(0,0,0,0.18)");
+
+        ctx.clearRect(0, 0, w, h);
+        ctx.fillStyle = readCssVar("--surface", "#ffffff");
+        ctx.fillRect(0, 0, w, h);
+
+        const nodes = state.nodes.map((n) => ({ ...n, x: n.x * w, y: n.y * h }));
+
+        drawEdges(ctx, state.edges, nodes, edge, 1.2);
+
+        let relatedSet = null;
+        if (hoverIndex !== null) {
+          const related = state.edges.filter((e) => e[0] === hoverIndex || e[1] === hoverIndex);
+          relatedSet = new Set([hoverIndex]);
+          related.forEach((e) => {
+            relatedSet.add(e[0]);
+            relatedSet.add(e[1]);
+          });
+          drawEdges(ctx, related, nodes, readCssVar("--accent", COLORS.accent), 2.4);
+          const hoverNode = nodes[hoverIndex];
+          ctx.fillStyle = readCssVar("--accent", COLORS.accent);
+          ctx.beginPath();
+          ctx.arc(hoverNode.x, hoverNode.y, 8, 0, Math.PI * 2);
+          ctx.fill();
+        }
+
+        drawNodes(ctx, nodes, hoverIndex, relatedSet);
+      }
+
+      const homophilyState = buildHomophily();
+      const equivState = buildEquivalence();
+
+      let hoverHom = null;
+      let hoverEquiv = null;
+
+      function redraw() {
+        renderHomophily(homophilyState, hoverHom);
+        renderEquivalence(equivState, hoverEquiv);
+      }
+
+      function handleHover(canvas, nodes, setHover, setOtherHover, otherCount) {
+        canvas.addEventListener("mousemove", (e) => {
+          const rect = canvas.getBoundingClientRect();
+          const x = e.clientX - rect.left;
+          const y = e.clientY - rect.top;
+          const scaled = nodes.map((n) => ({ ...n, x: n.x * rect.width, y: n.y * rect.height }));
+          const idx = nearestNode(scaled, x, y);
+          setHover(idx);
+          if (setOtherHover) setOtherHover(idx < otherCount ? idx : null);
+          redraw();
+        });
+        canvas.addEventListener("mouseleave", () => {
+          setHover(null);
+          if (setOtherHover) setOtherHover(null);
+          redraw();
+        });
+      }
+
+      handleHover(
+        homophilyCanvas,
+        homophilyState.nodes,
+        (v) => (hoverHom = v),
+        (v) => (hoverEquiv = v),
+        equivState.nodes.length
+      );
+      handleHover(
+        equivCanvas,
+        equivState.nodes,
+        (v) => (hoverEquiv = v),
+        (v) => (hoverHom = v),
+        homophilyState.nodes.length
+      );
+
+      function setTheme(theme) {
+        if (!theme) return;
+        document.documentElement.setAttribute("data-theme", theme);
+        redraw();
+      }
+
+      function applyThemeFromParent() {
+        try {
+          const parentTheme = window.parent.document.documentElement.getAttribute("data-theme");
+          if (parentTheme) setTheme(parentTheme);
+        } catch (e) {
+          redraw();
+        }
+      }
+
+      window.addEventListener("message", (event) => {
+        if (event.data && event.data.type === "theme") setTheme(event.data.theme);
+      });
+
+      window.addEventListener("resize", () => {
+        redraw();
+      });
+
+      applyThemeFromParent();
+      redraw();
+    </script>
+  </body>
+</html>

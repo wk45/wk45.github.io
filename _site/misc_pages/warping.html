@@ -5,21 +5,49 @@
     <title>Simple Warping Visualization (500px)</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.6.0/p5.min.js"></script>
     <style>
+      :root {
+        --text: #333333;
+        --muted: #666666;
+        --bg: #f7f7f5;
+        --surface: #ffffff;
+        --grid: #e0e0e0;
+        --frame: #333333;
+        --ghost: #cccccc;
+        --note: #9a2f45;
+        --control-fill: #ffffff;
+        --halo: #ffffff;
+      }
+
+      html[data-theme="dark"] {
+        --text: #e6e6e6;
+        --muted: #b8b8b8;
+        --bg: #0f1115;
+        --surface: #171a21;
+        --grid: #2a2f3a;
+        --frame: #d7d7d7;
+        --ghost: #6b7280;
+        --note: #c66d7f;
+        --control-fill: #171a21;
+        --halo: #0f1115;
+      }
+
       body {
         margin: 0;
         display: flex;
         flex-direction: column;
         align-items: center;
-        background-color: transparent !important;
-        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-        color: #333;
+        background-color: var(--surface);
+        font-family: "IBM Plex Sans", "Segoe UI", Helvetica, Arial, sans-serif;
+        color: var(--text);
         padding: 20px 0;
+        font-size: 14px;
+        line-height: 1.4;
       }
       
       /* Card fixed to 500px */
       .card {
         width: 500px;
-        background: transparent;
+        background: var(--surface);
         border: none;
         box-shadow: none;
         display: flex;
@@ -27,7 +55,7 @@
         overflow: hidden;
       }
 
-      #canvas-wrapper { width: 100%; background: transparent; }
+      #canvas-wrapper { width: 100%; background: var(--surface); }
 
       /* Legend Area */
       .legend-panel {
@@ -43,20 +71,21 @@
         justify-content: center; 
         gap: 15px; 
         font-size: 0.75rem; 
-        color: #666;
+        color: var(--muted);
         flex-wrap: wrap; 
       }
       
       .legend-item { display: flex; align-items: center; gap: 5px; white-space: nowrap; }
       
       .line-icon { width: 16px; height: 3px; border-radius: 2px; }
-      .ghost-icon { width: 16px; height: 3px; background: #cccccc; border-radius: 2px; }
+      .ghost-icon { width: 16px; height: 3px; background: var(--ghost); border-radius: 2px; }
       .dot { width: 8px; height: 8px; border-radius: 50%; }
+      .note { color: var(--note); }
 
     </style>
   </head>
   <body>
-    <span style="color:rgb(126, 127, 255);"><i>(Drag the red points to see how γ(t) warps f(t).)</i></span>
+    <span class="note"><i>(Drag the red points to see how γ(t) warps f(t).)</i></span>
 
     <div class="card" id="mainCard">
       <div id="canvas-wrapper"></div>
@@ -76,11 +105,17 @@
       // --- Constants ---
       const cBlue = '#4E79A7';
       const cRed = '#E15759';
-      const cGrid = '#e0e0e0';  
-      const cFrame = '#333333'; 
       const cMax = '#00b894';
       const cMin = '#fdcb6e';
-      const cText = '#666666';
+      let cGrid = '#e0e0e0';
+      let cFrame = '#333333';
+      let cText = '#666666';
+      let cGhost = '#cccccc';
+      let cControlFill = '#ffffff';
+      let cHalo = '#ffffff';
+      let cCanvas = '#ffffff';
+      let cBg = '#ffffff';
+      const cPulse = [124, 180, 255];
 
       // --- State ---
       const N = 200; 
@@ -94,8 +129,46 @@
       let margin = 35; // 기존 15에서 35로 증가 (라벨 잘림 해결)
       let gap = 30;    // 그래프 사이 간격 조정
       let stacked = false;
+      let hasInteracted = false;
+
+      function readCssVar(name, fallback) {
+        var value = getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+        return value || fallback;
+      }
+
+      function updateThemeColors() {
+        cGrid = readCssVar('--grid', cGrid);
+        cFrame = readCssVar('--frame', cFrame);
+        cText = readCssVar('--muted', cText);
+        cGhost = readCssVar('--ghost', cGhost);
+        cControlFill = readCssVar('--control-fill', cControlFill);
+        cHalo = readCssVar('--halo', cHalo);
+        cCanvas = readCssVar('--surface', cCanvas);
+        cBg = readCssVar('--surface', cBg);
+        document.body.style.backgroundColor = cBg;
+      }
+
+      function setTheme(theme) {
+        if (!theme) return;
+        document.documentElement.setAttribute('data-theme', theme);
+        updateThemeColors();
+      }
+
+      function applyThemeFromParent() {
+        try {
+          var parentTheme = window.parent.document.documentElement.getAttribute('data-theme');
+          if (parentTheme) setTheme(parentTheme);
+        } catch (e) {
+          updateThemeColors();
+        }
+      }
+
+      window.addEventListener('message', function (event) {
+        if (event.data && event.data.type === 'theme') setTheme(event.data.theme);
+      });
 
       function setup() {
+        applyThemeFromParent();
         let container = document.getElementById('mainCard');
         let w = container.getBoundingClientRect().width;
         
@@ -134,7 +207,7 @@
       }
 
       function draw() {
-        clear();
+        background(cCanvas);
         
         // 1. Left Plot (Gamma)
         push();
@@ -157,7 +230,7 @@
       function drawLeftPlot() {
         drawAxes(plotSize, "Time (t)", "Warped Time γ(t)");
         
-        stroke(200); strokeWeight(1); drawingContext.setLineDash([4, 4]);
+        stroke(cGhost); strokeWeight(1); drawingContext.setLineDash([4, 4]);
         line(0, plotSize, plotSize, 0); drawingContext.setLineDash([]);
 
         noFill(); stroke(cRed); strokeWeight(2.5);
@@ -189,7 +262,7 @@
         drawAxes(plotSize, "Time (t)", "Amplitude");
 
         // Ghost Signal (Original) - No dots as requested
-        noFill(); stroke(200); strokeWeight(1.5);
+        noFill(); stroke(cGhost); strokeWeight(1.5);
         beginShape();
         for (let i = 0; i <= N; i++) {
           let t = i / N;
@@ -213,7 +286,7 @@
             if(tNew !== null) {
                 let px = tNew * plotSize;
                 let py = mapSignal(pt.val); 
-                stroke(255); strokeWeight(1.5); 
+                stroke(cHalo); strokeWeight(1.5); 
                 fill(pt.type === 'max' ? cMax : cMin);
                 circle(px, py, 8);
             }
@@ -285,6 +358,7 @@
 
       // --- Interaction ---
       function mousePressed() {
+        hasInteracted = true;
         let mx = mouseX - margin; let my = mouseY - margin;
         if (mx < 0 || mx > plotSize || my < 0 || my > plotSize) return;
         let r = 20; 
@@ -293,6 +367,7 @@
       }
 
       function mouseDragged() {
+        hasInteracted = true;
         if (!dragging) return;
         let mx = mouseX - margin, my = mouseY - margin;
         let valX = constrain(mx/plotSize, 0, 1);
@@ -329,8 +404,13 @@
 
       function drawControlPoint(pt) {
         let px = pt.x*plotSize, py = (1-pt.y)*plotSize;
+        if (!hasInteracted) {
+          let glow = 40 + 25 * Math.sin(frameCount * 0.06);
+          noStroke(); fill(cPulse[0], cPulse[1], cPulse[2], glow);
+          circle(px, py, 22);
+        }
         noStroke(); fill(0,0,0,20); circle(px, py, 16); 
-        stroke(cRed); strokeWeight(2); fill(255); circle(px, py, 10);
+        stroke(cRed); strokeWeight(2); fill(cControlFill); circle(px, py, 10);
         noStroke(); fill(cRed); circle(px, py, 4);
       }
     </script>

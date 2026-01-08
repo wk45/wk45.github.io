@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="140" viewBox="0 0 640 140">
+  <defs>
+    <linearGradient id="rainbow2" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#1f5fbf"/>
+      <stop offset="50%" stop-color="#2f9d6a"/>
+      <stop offset="100%" stop-color="#c0394b"/>
+    </linearGradient>
+    <style>
+      .label { font: 14px 'Space Grotesk', 'Segoe UI', Arial, sans-serif; fill: #1f2328; }
+      .line { fill: none; stroke-width: 3; }
+    </style>
+  </defs>
+  <rect x="0" y="0" width="640" height="140" fill="#ffffff"/>
+  <line class="line" x1="20" y1="30" x2="120" y2="30" stroke="url(#rainbow2)"/>
+  <text class="label" x="140" y="34">Fully aligned signals</text>
+
+  <line class="line" x1="20" y1="70" x2="120" y2="70" stroke="#1f5fbf"/>
+  <text class="label" x="140" y="74">Unaligned estimate</text>
+
+  <line class="line" x1="20" y1="110" x2="120" y2="110" stroke="#1f5fbf" stroke-dasharray="2,6" stroke-linecap="round"/>
+  <text class="label" x="140" y="114">Fully aligned estimate</text>
+</svg>

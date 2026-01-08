@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="160" viewBox="0 0 640 160">
+  <defs>
+    <style>
+      .label { font: 12px 'Space Grotesk', 'Segoe UI', Arial, sans-serif; fill: #1f2328; }
+      .line { fill: none; stroke-width: 3; }
+    </style>
+  </defs>
+  <rect x="0" y="0" width="640" height="160" fill="#ffffff"/>
+
+  <line class="line" x1="20" y1="30" x2="80" y2="30" stroke="#c0394b"/>
+  <text class="label" x="95" y="34">Solid red = ground-truth signal</text>
+
+  <line class="line" x1="20" y1="65" x2="80" y2="65" stroke="#1f5fbf" stroke-dasharray="2,6" stroke-linecap="round"/>
+  <text class="label" x="95" y="69">Dotted blue = fully aligned estimate</text>
+
+  <line class="line" x1="20" y1="100" x2="80" y2="100" stroke="#1f5fbf"/>
+  <text class="label" x="95" y="104">Solid blue = unaligned estimate</text>
+
+  <line class="line" x1="330" y1="30" x2="390" y2="30" stroke="#1f5fbf" stroke-dasharray="8,6"/>
+  <text class="label" x="405" y="34">Dashed blue = estimate at optimal lambda</text>
+
+  <line class="line" x1="330" y1="65" x2="390" y2="65" stroke="#2f9d6a" stroke-dasharray="8,6"/>
+  <text class="label" x="405" y="69">Dashed green = final recovered signal</text>
+
+  <rect x="330" y="88" width="60" height="18" fill="#bfc3c7" fill-opacity="0.6" stroke="#bfc3c7"/>
+  <text class="label" x="405" y="102">Gray band = 95% bootstrap confidence interval</text>
+</svg>

@@ -65,9 +65,10 @@
 
         
         <br>
-        <div style="text-align: center;">
+        <div class="header-name-row">
           <h3>Woo Min Kim</h3>
         </div>
+
         
         <br><br>
         
@@ -91,14 +92,44 @@
           <a href="#network"> ▫ Network Analysis via Bayesian Method</a></div>
           <div style="margin-left: 2.5em;">
           <a href="#tda"> ▫ Topological Feature Extraction with Human Brain Connectome</a><div> -->
-        <h3>Table of Contents</h3>  <ul>
-          <li><a href="#fda">Functional Data Analysis (Functional Registration)</a></li>
-          <li><a href="#other">Other Projects than Functional Data</a>
+        <div class="toc-row">
+          <h3>Table of Contents</h3>
+          <button id="theme-toggle" class="theme-toggle" type="button" aria-pressed="false" aria-label="Toggle color theme">
+            <svg class="theme-icon theme-icon-sun" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <circle cx="12" cy="12" r="4"></circle>
+              <path d="M12 2v2"></path>
+              <path d="M12 20v2"></path>
+              <path d="m4.93 4.93 1.41 1.41"></path>
+              <path d="m17.66 17.66 1.41 1.41"></path>
+              <path d="M2 12h2"></path>
+              <path d="M20 12h2"></path>
+              <path d="m6.34 17.66-1.41 1.41"></path>
+              <path d="m19.07 4.93-1.41 1.41"></path>
+            </svg>
+            <svg class="theme-icon theme-icon-moon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M12 3a7 7 0 1 0 9 9 9 9 0 1 1-9-9Z"></path>
+            </svg>
+          </button>
+        </div>
+        <ul>
+          <li><a href="#research">TECHNICAL EXPERTISE</a></li>
+          <li><a href="#projects">PROJECTS</a>
             <ul>
-              <li><a href="#network">Network Analysis via Bayesian Method</a></li>
-              <li><a href="#tda">Topological Feature Extraction with Human Brain Connectome</a></li>
+              <li><a href="#fda">Functional Data Analysis</a>
+                <ul>
+                  <li><a href="#ppd">▫ Peak Persistence Diagrams</a></li>
+                  <li><a href="#bayes">▫ Bayesian Functional Alignment</a></li>
+                </ul>
+              </li>
+              <li><a href="#additional-projects">Additional Projects</a>
+                <ul>
+                  <li><a href="#network">Social Network Analysis via Bayesian Method</a></li>
+                  <li><a href="#tda">Topological Data Analysis</a></li>
+                </ul>
+              </li>
             </ul>
           </li>
+          <li><a href="#publications">PUBLICATIONS</a></li>
         </ul>
             
       </header>
@@ -201,6 +232,47 @@
       </footer>
     </div>
     <script src="/assets/js/scale.fix.js"></script>
+    <script>
+      (function () {
+        var storageKey = "theme";
+        var root = document.documentElement;
+        var toggle = document.getElementById("theme-toggle");
+        var prefersDark = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
+        var stored = localStorage.getItem(storageKey);
+        var theme = stored || (prefersDark ? "dark" : "light");
+
+        function broadcastTheme(nextTheme) {
+          var frames = document.querySelectorAll("iframe");
+          frames.forEach(function (frame) {
+            try {
+              frame.contentWindow.postMessage({ type: "theme", theme: nextTheme }, "*");
+            } catch (e) {
+              return;
+            }
+          });
+        }
+
+        root.setAttribute("data-theme", theme);
+        document.body.setAttribute("data-theme", theme);
+        if (toggle) {
+          toggle.setAttribute("aria-pressed", theme === "dark" ? "true" : "false");
+          toggle.setAttribute("aria-label", theme === "dark" ? "Switch to light mode" : "Switch to dark mode");
+          toggle.addEventListener("click", function () {
+            var next = root.getAttribute("data-theme") === "dark" ? "light" : "dark";
+            root.setAttribute("data-theme", next);
+            document.body.setAttribute("data-theme", next);
+            localStorage.setItem(storageKey, next);
+            toggle.setAttribute("aria-pressed", next === "dark" ? "true" : "false");
+            toggle.setAttribute("aria-label", next === "dark" ? "Switch to light mode" : "Switch to dark mode");
+            broadcastTheme(next);
+          });
+        }
+
+        document.addEventListener("DOMContentLoaded", function () {
+          broadcastTheme(theme);
+        });
+      })();
+    </script>
     
     <script>
       (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){

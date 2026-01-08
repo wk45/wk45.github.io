@@ -21,6 +21,69 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+body {
+  background: #ffffff;
+  color: #222222;
+}
+a {
+  color: #2a7ae2;
+}
+.content {
+  background: transparent;
+}
+.return-link {
+.return-link {
+  position: sticky;
+  top: 12px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 10px;
+  border: 1px solid #ddd;
+  border-radius: 999px;
+  font-size: 0.9rem;
+  text-decoration: none;
+  color: #333;
+  background: #fff;
+}
+.return-link:hover {
+  background: #f5f5f5;
+  text-decoration: none;
+}
+@media (prefers-color-scheme: dark) {
+  body {
+    background: #0f1115;
+    color: #e6e6e6;
+  }
+  a {
+    color: #7cb4ff;
+  }
+  .quarto-title,
+  .title,
+  .quarto-title-meta-heading,
+  .quarto-title-meta-contents {
+    color: #e6e6e6;
+  }
+  .toc-active a,
+  .toc-active a:visited {
+    color: #cfd8e3;
+  }
+  .sidebar {
+    background: #12151b;
+  }
+  pre, code {
+    background: #171a21;
+    color: #e6e6e6;
+  }
+  .return-link {
+    border-color: #2a2f3a;
+    color: #e6e6e6;
+    background: #171a21;
+  }
+  .return-link:hover {
+    background: #1f2430;
+  }
+}
 </style>
 
 
@@ -85,6 +148,11 @@ window.Quarto = {
 <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
 </div>
 <main class="content" id="quarto-document-content">
+<div style="margin-bottom: 0.75rem;">
+  <a class="return-link" href="../../">
+    ← Back to Portfolio
+  </a>
+</div>
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">

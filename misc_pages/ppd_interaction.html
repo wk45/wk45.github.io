@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PPD Interaction Plots</title>
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap"
+    />
+    <style>
+      :root {
+        --surface: #ffffff;
+        --text: #1f2328;
+        --text-muted: #5b636d;
+        --border: #e6e6e6;
+        --brand: #9a2f45;
+        --grid: rgba(0, 0, 0, 0.08);
+        --grid-strong: rgba(0, 0, 0, 0.18);
+        --frame: rgba(0, 0, 0, 0.22);
+      }
+
+      body {
+        margin: 0;
+        font-family: "Space Grotesk", system-ui, -apple-system, Segoe UI, Helvetica, Arial, sans-serif;
+        color: var(--text);
+        background: var(--surface);
+      }
+
+      .page {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 32px 24px 48px;
+      }
+
+      .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        gap: 16px;
+        margin-bottom: 18px;
+      }
+
+      .title {
+        font-family: "Source Serif 4", Georgia, serif;
+        font-size: 2rem;
+        font-weight: 600;
+        margin: 0;
+      }
+
+      .subtitle {
+        margin: 6px 0 0;
+        color: var(--text-muted);
+        font-size: 0.95rem;
+      }
+
+      .dataset-toggle {
+        display: inline-flex;
+        border: 1px solid var(--border);
+        border-radius: 999px;
+        padding: 4px;
+        gap: 4px;
+      }
+
+      .dataset-toggle button {
+        border: 0;
+        background: transparent;
+        padding: 6px 12px;
+        border-radius: 999px;
+        cursor: pointer;
+        color: var(--text-muted);
+        font-size: 0.85rem;
+      }
+
+      .dataset-toggle button.active {
+        background: rgba(154, 47, 69, 0.12);
+        color: var(--brand);
+      }
+
+      .control-row {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin-top: 12px;
+        flex-wrap: wrap;
+      }
+
+      .control-row label {
+        font-size: 0.85rem;
+        color: var(--text-muted);
+      }
+
+      .slider-wrap {
+        position: relative;
+        flex: 1 1 220px;
+        min-width: 220px;
+      }
+
+      .lambda-slider {
+        width: 100%;
+        accent-color: var(--brand);
+      }
+
+
+      .lambda-readout {
+        font-size: 0.85rem;
+        color: var(--text-muted);
+      }
+
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 18px;
+      }
+
+      .card {
+        border: 1px solid var(--border);
+        border-radius: 16px;
+        padding: 16px;
+        box-shadow: 0 6px 18px rgba(0, 0, 0, 0.05);
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      .card h3 {
+        margin: 0;
+        font-size: 1rem;
+      }
+
+      .card p {
+        margin: 0;
+        font-size: 0.85rem;
+        color: var(--text-muted);
+        line-height: 1.35;
+      }
+
+      .plot-frame {
+        width: min(100%, 360px);
+        aspect-ratio: 3 / 2;
+        min-height: 220px;
+        margin: 0 auto;
+      }
+
+      canvas {
+        width: 100%;
+        height: 100%;
+        border-radius: 12px;
+        border: 1px solid var(--border);
+        background: var(--surface);
+        display: block;
+      }
+
+      #barCanvas {
+        aspect-ratio: 4 / 3;
+      }
+
+      .legend {
+        display: flex;
+        gap: 12px;
+        flex-wrap: wrap;
+        font-size: 0.8rem;
+        color: var(--text-muted);
+      }
+
+      .legend-item {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+      }
+
+      .legend-dot {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+      }
+
+      @media (max-width: 980px) {
+        .grid {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="page">
+      <div class="header">
+        <div>
+          <h1 class="title">PPD Interaction Summary</h1>
+          <p class="subtitle">Percentile fixed at 15%. Choose dataset to update all panels.</p>
+          <div class="control-row">
+            <label for="lambdaSlider">λ</label>
+            <div class="slider-wrap">
+              <input id="lambdaSlider" class="lambda-slider" type="range" min="0" max="0" value="0" step="1">
+            </div>
+            <div class="lambda-readout">
+              current: <span id="lambdaValue">-</span> · optimal: <span id="lambdaOpt">-</span>
+            </div>
+          </div>
+        </div>
+        <div class="dataset-toggle" role="tablist">
+          <button type="button" class="active" data-dataset="data1">Dataset 1</button>
+          <button type="button" data-dataset="data2">Dataset 2</button>
+        </div>
+      </div>
+
+      <div class="grid">
+        <div class="card">
+          <h3>Peak Status Bar Plot</h3>
+          <p>Within each bar: black = sig, gray = insig, white = missing.</p>
+          <div class="plot-frame">
+            <canvas id="barCanvas"></canvas>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>PPD Surface (λ × Time)</h3>
+          <p>Wireframe surface with 15% slice highlighted.</p>
+          <div class="plot-frame">
+            <canvas id="surfaceCanvas"></canvas>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>Signal vs. Estimated Curve</h3>
+          <p>Ground truth g(t) and estimation g-hat.</p>
+          <div class="plot-frame">
+            <canvas id="curveCanvas"></canvas>
+          </div>
+          <div class="legend">
+            <div class="legend-item"><span class="legend-dot" style="background:#1f2328"></span> g(t)</div>
+            <div class="legend-item"><span class="legend-dot" style="background:#9a2f45"></span> g-hat</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // ---- dataset paths ----
+      const datasets = {
+        data1: "ppd_data/data1_p15.json",
+        data2: "ppd_data/data2_p15.json",
+      };
+
+      // ---- canvases ----
+      const barCanvas = document.getElementById("barCanvas");
+      const surfaceCanvas = document.getElementById("surfaceCanvas");
+      const curveCanvas = document.getElementById("curveCanvas");
+      const lambdaSlider = document.getElementById("lambdaSlider");
+      const lambdaValue = document.getElementById("lambdaValue");
+      const lambdaOpt = document.getElementById("lambdaOpt");
+      let currentData = null;
+      let currentIdx = null;
+
+      // ---- colors ----
+      const CSS = (name, fallback) =>
+        getComputedStyle(document.documentElement).getPropertyValue(name).trim() || fallback;
+
+      function colors() {
+        return {
+          text: CSS("--text", "#1f2328"),
+          muted: CSS("--text-muted", "#5b636d"),
+          brand: CSS("--brand", "#9a2f45"),
+          grid: CSS("--grid", "rgba(0,0,0,0.08)"),
+          gridStrong: CSS("--grid-strong", "rgba(0,0,0,0.18)"),
+          frame: CSS("--frame", "rgba(0,0,0,0.22)"),
+          gray: "#9fa3a9",
+        };
+      }
+
+      // ---- hidpi canvas ctx ----
+      function ctx2d(canvas) {
+        const dpr = window.devicePixelRatio || 1;
+        const r = canvas.getBoundingClientRect();
+        canvas.width = Math.max(1, Math.round(r.width * dpr));
+        canvas.height = Math.max(1, Math.round(r.height * dpr));
+        const ctx = canvas.getContext("2d");
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+        return ctx;
+      }
+
+      // -------------------------
+      // BARPLOT (SEGMENTED)
+      // -------------------------
+      // We want per-row bins: sig/insig/missing across λ.
+      // We will use:
+      //   - data.sigMat_p15[i] is an ARRAY => segmented bins (desired)
+      //   - else fallback to 1D behavior (whole bar single color)
+      //
+      // Bin value interpretation:
+      //   1/true => sig (black)
+      //   0/false => insig (gray)
+      //   null/undefined => missing (white)
+      function drawBarPlot(data) {
+        const C = colors();
+        const ctx = ctx2d(barCanvas);
+        const w = barCanvas.getBoundingClientRect().width;
+        const h = barCanvas.getBoundingClientRect().height;
+
+        ctx.clearRect(0, 0, w, h);
+
+        const peakMat = data.peakHeight;
+        const sigMat = data.sigMat;
+        const lam = data.lam;
+
+        if (!Array.isArray(peakMat) || !Array.isArray(sigMat) || !Array.isArray(lam)) return;
+
+        const rows = peakMat[0] ? peakMat[0].length : 0;
+        const cols = lam.length;
+        if (!rows || !cols) return;
+        const padL = 46, padR = 16, padT = 18, padB = 34;
+        const chartW = w - padL - padR;
+        const chartH = h - padT - padB;
+        const rowH = chartH / rows;
+
+        // frame
+        ctx.strokeStyle = C.frame;
+        ctx.lineWidth = 1;
+        ctx.strokeRect(padL, padT, chartW, chartH);
+
+        const selectedPerc = 15;
+        const lamMin = Number.isFinite(data.lam_min) ? data.lam_min : 0;
+        const lamMax = Number.isFinite(data.lam_max) ? data.lam_max : 1;
+        const lamRange = lamMax - lamMin || 1;
+
+        // Draw rows
+        for (let i = 0; i < rows; i++) {
+          const y = padT + i * rowH;
+
+          // row grid
+          ctx.strokeStyle = C.gridStrong;
+          ctx.beginPath();
+          ctx.moveTo(padL, y);
+          ctx.lineTo(padL + chartW, y);
+          ctx.stroke();
+
+          // label
+          ctx.fillStyle = C.muted;
+          ctx.font = "12px Space Grotesk";
+          ctx.textAlign = "right";
+          ctx.textBaseline = "middle";
+          ctx.fillText(`P${i + 1}`, padL - 10, y + rowH / 2);
+
+          // Merge consecutive λ segments to avoid choppy vertical bands.
+          let segmentStart = 0;
+          let currentFill = null;
+          const getFill = (l) => {
+            const sigVal = sigMat[l] ? sigMat[l][i] : null;
+            const peakVal = peakMat[l] ? peakMat[l][i] : null;
+            if (sigVal === null || peakVal === null) return "#ffffff";
+            return sigVal <= selectedPerc ? C.gray : C.text;
+          };
+          currentFill = getFill(0);
+          for (let l = 1; l <= cols; l++) {
+            const nextFill = l < cols ? getFill(l) : null;
+            if (l === cols || nextFill !== currentFill) {
+              const start = (lam[segmentStart] - lamMin) / lamRange;
+              const end = l < cols ? (lam[l] - lamMin) / lamRange : 1;
+              const x = padL + start * chartW;
+              const wSeg = Math.max(0, (end - start) * chartW);
+              ctx.fillStyle = currentFill;
+              ctx.fillRect(x, y, wSeg, rowH);
+              segmentStart = l;
+              currentFill = nextFill;
+            }
+          }
+
+          ctx.strokeStyle = C.frame;
+          ctx.strokeRect(padL, y, chartW, rowH);
+        }
+
+        // bottom grid
+        ctx.strokeStyle = C.gridStrong;
+        ctx.beginPath();
+        ctx.moveTo(padL, padT + chartH);
+        ctx.lineTo(padL + chartW, padT + chartH);
+        ctx.stroke();
+
+        // x ticks (λ)
+        const ticks = 4;
+        const baseY = padT + chartH;
+
+        ctx.strokeStyle = C.grid;
+        ctx.fillStyle = C.muted;
+        ctx.font = "11px Space Grotesk";
+        ctx.textAlign = "center";
+        ctx.textBaseline = "alphabetic";
+
+        for (let t = 0; t <= ticks; t++) {
+          const x = padL + (chartW * t) / ticks;
+          ctx.beginPath();
+          ctx.moveTo(x, baseY);
+          ctx.lineTo(x, baseY + 4);
+          ctx.stroke();
+          const v = (lamMin + (lamMax - lamMin) * (t / ticks)).toFixed(2);
+          ctx.fillText(v, x, baseY + 18);
+        }
+        ctx.fillText("λ", padL + chartW / 2, baseY + 32);
+
+        // highlight selected lambda
+        const idx = Number.isFinite(currentIdx) ? currentIdx : data.idx_p15;
+        const lamAtIdx = Number.isFinite(idx) && data.lam ? data.lam[idx] : null;
+        if (Number.isFinite(lamAtIdx)) {
+          const xSel = padL + ((lamAtIdx - lamMin) / lamRange) * chartW;
+          ctx.strokeStyle = C.brand;
+          ctx.lineWidth = 1.5;
+          ctx.beginPath();
+          ctx.moveTo(xSel, padT);
+          ctx.lineTo(xSel, padT + chartH);
+          ctx.stroke();
+        }
+
+        // y axis title
+        ctx.save();
+        ctx.translate(16, padT + chartH / 2);
+        ctx.rotate(-Math.PI / 2);
+        ctx.fillStyle = C.muted;
+        ctx.font = "12px Space Grotesk";
+        ctx.textAlign = "center";
+        ctx.fillText("Peak Index", 0, 0);
+        ctx.restore();
+
+      }
+
+      // -------------------------
+      // SURFACE (kept, compact)
+      // -------------------------
+      function drawSurface(data) {
+        const C = colors();
+        const ctx = ctx2d(surfaceCanvas);
+        const w = surfaceCanvas.getBoundingClientRect().width;
+        const h = surfaceCanvas.getBoundingClientRect().height;
+        ctx.clearRect(0, 0, w, h);
+
+        const { x, lam_norm, ghat } = data;
+        if (!Array.isArray(x) || !Array.isArray(lam_norm) || !Array.isArray(ghat) || !Array.isArray(ghat[0])) return;
+
+        let minZ = Infinity, maxZ = -Infinity;
+        for (const row of ghat) for (const v of row) {
+          if (!Number.isFinite(v)) continue;
+          minZ = Math.min(minZ, v); maxZ = Math.max(maxZ, v);
+        }
+        const zR = (maxZ - minZ) || 1;
+
+        const cx = w / 2, cy = h * 0.5, s = Math.min(w, h) * 0.55;
+        const proj = (u, v, z01) => {
+          const vInv = 1 - v;
+          return [
+            cx + (u - vInv) * s,
+            cy + (u + vInv) * s * 0.45 - z01 * s * 0.62
+          ];
+        };
+
+        const uN = x.length, vN = lam_norm.length;
+        const uStep = Math.max(1, Math.floor(uN / 30));
+        const vStep = Math.max(1, Math.floor(vN / 28));
+
+        ctx.strokeStyle = C.gridStrong; ctx.lineWidth = 1.1;
+
+        for (let vi = 0; vi < vN; vi += vStep) {
+          ctx.beginPath();
+          for (let ui = 0; ui < uN; ui += uStep) {
+            const raw = ghat?.[vi]?.[ui];
+            if (!Number.isFinite(raw)) continue;
+            const [px, py] = proj(ui/(uN-1), vi/(vN-1), (raw - minZ)/zR);
+            if (ui === 0) ctx.moveTo(px, py); else ctx.lineTo(px, py);
+          }
+          ctx.stroke();
+        }
+
+        for (let ui = 0; ui < uN; ui += uStep) {
+          ctx.beginPath();
+          for (let vi = 0; vi < vN; vi += vStep) {
+            const raw = ghat?.[vi]?.[ui];
+            if (!Number.isFinite(raw)) continue;
+            const [px, py] = proj(ui/(uN-1), vi/(vN-1), (raw - minZ)/zR);
+            if (vi === 0) ctx.moveTo(px, py); else ctx.lineTo(px, py);
+          }
+          ctx.stroke();
+        }
+
+        const hi = Math.max(0, Math.min(Number(currentIdx ?? data.idx_p15 ?? 0), vN - 1));
+        ctx.strokeStyle = C.brand; ctx.lineWidth = 2;
+        ctx.beginPath();
+        for (let ui = 0; ui < uN; ui += uStep) {
+          const raw = ghat?.[hi]?.[ui];
+          if (!Number.isFinite(raw)) continue;
+          const [px, py] = proj(ui/(uN-1), hi/(vN-1), (raw - minZ)/zR);
+          if (ui === 0) ctx.moveTo(px, py); else ctx.lineTo(px, py);
+        }
+        ctx.stroke();
+      }
+
+      // -------------------------
+      // CURVE (kept, compact)
+      // -------------------------
+      function nearestIndex(arr, value) {
+        let bestI = 0, bestD = Infinity;
+        for (let i = 0; i < arr.length; i++) {
+          const d = Math.abs(arr[i] - value);
+          if (d < bestD) { bestD = d; bestI = i; }
+        }
+        return bestI;
+      }
+
+      function drawCurve(data) {
+        const C = colors();
+        const ctx = ctx2d(curveCanvas);
+        const w = curveCanvas.getBoundingClientRect().width;
+        const h = curveCanvas.getBoundingClientRect().height;
+        ctx.clearRect(0, 0, w, h);
+
+        const { x, g, ghat, peakLoc } = data;
+        if (!Array.isArray(x) || !Array.isArray(g) || !Array.isArray(ghat) || !Array.isArray(ghat[0])) return;
+
+        const vi = Math.max(0, Math.min(Number(currentIdx ?? data.idx_p15 ?? 0), ghat.length - 1));
+        const slice = ghat[vi];
+        if (!Array.isArray(slice)) return;
+
+        const pad = 28, W = w - pad*2, H = h - pad*2;
+        const minY = Math.min(...g, ...slice);
+        const maxY = Math.max(...g, ...slice);
+        const yR = (maxY - minY) || 1;
+
+        const xTo = (v) => pad + ((v - x[0]) / ((x[x.length-1]-x[0])||1)) * W;
+        const yTo = (v) => h - pad - ((v - minY) / yR) * H;
+
+        ctx.strokeStyle = C.grid; ctx.lineWidth = 1;
+        ctx.beginPath(); ctx.moveTo(pad, h-pad); ctx.lineTo(w-pad, h-pad); ctx.stroke();
+
+        ctx.strokeStyle = C.text; ctx.lineWidth = 2;
+        ctx.beginPath();
+        g.forEach((v,i)=>{ const px=xTo(x[i]), py=yTo(v); if(i===0)ctx.moveTo(px,py); else ctx.lineTo(px,py); });
+        ctx.stroke();
+
+        ctx.strokeStyle = C.brand; ctx.lineWidth = 2;
+        ctx.beginPath();
+        slice.forEach((v,i)=>{ const px=xTo(x[i]), py=yTo(v); if(i===0)ctx.moveTo(px,py); else ctx.lineTo(px,py); });
+        ctx.stroke();
+
+        const sigMat = data.sigMat;
+        const peakHeight = data.peakHeight;
+        if (Array.isArray(peakLoc) && Array.isArray(peakLoc[vi])) {
+          const rowLoc = peakLoc[vi];
+          const rowHeight = Array.isArray(peakHeight) ? peakHeight[vi] : [];
+          const rowSig = Array.isArray(sigMat) ? sigMat[vi] : [];
+          rowLoc.forEach((loc, k) => {
+            const n = typeof loc === "number" ? loc : Number(loc);
+            if (!Number.isFinite(n)) return;
+            if (!rowHeight || rowHeight[k] === null) return;
+            const isAlive = rowSig && Number.isFinite(rowSig[k]) ? rowSig[k] > 15 : false;
+            ctx.fillStyle = isAlive ? C.brand : C.gray;
+            ctx.beginPath();
+            ctx.arc(xTo(x[nearestIndex(x, n)]), yTo(rowHeight[k]), 4, 0, Math.PI * 2);
+            ctx.fill();
+          });
+        }
+      }
+
+      // -------------------------
+      // LOAD / UI
+      // -------------------------
+      async function loadDataset(name) {
+        const url = datasets[name];
+        const res = await fetch(url + "?v=" + Date.now()); // dev cache-bust
+        if (!res.ok) throw new Error(`Fetch failed: ${url} (${res.status})`);
+        return res.json();
+      }
+
+      function renderAll(data) {
+        drawBarPlot(data);
+        drawSurface(data);
+        drawCurve(data);
+      }
+
+      function updateSlider(data) {
+        if (!data || !Array.isArray(data.lam)) return;
+        lambdaSlider.max = Math.max(0, data.lam.length - 1);
+        const optIdx = Number.isFinite(data.idx_p15) ? data.idx_p15 : 0;
+        if (currentIdx === null || currentIdx === undefined) currentIdx = optIdx;
+        lambdaSlider.value = currentIdx;
+        lambdaValue.textContent = Number.isFinite(data.lam[currentIdx]) ? data.lam[currentIdx].toFixed(2) : '-';
+        lambdaOpt.textContent = Number.isFinite(data.lam_opt) ? data.lam_opt.toFixed(2) : '-';
+      }
+
+      async function init() {
+        currentData = await loadDataset("data1");
+        currentIdx = currentData.idx_p15;
+        updateSlider(currentData);
+        renderAll(currentData);
+
+        document.querySelectorAll(".dataset-toggle button").forEach((btn) => {
+          btn.addEventListener("click", async () => {
+            document.querySelectorAll(".dataset-toggle button").forEach((b) => b.classList.remove("active"));
+            btn.classList.add("active");
+            currentData = await loadDataset(btn.dataset.dataset);
+            currentIdx = currentData.idx_p15;
+            updateSlider(currentData);
+            renderAll(currentData);
+          });
+        });
+
+        lambdaSlider.addEventListener("input", () => {
+          if (!currentData) return;
+          currentIdx = Number(lambdaSlider.value);
+          updateSlider(currentData);
+          renderAll(currentData);
+        });
+
+        let t = null;
+        window.addEventListener("resize", () => {
+          clearTimeout(t);
+          t = setTimeout(() => currentData && renderAll(currentData), 80);
+        });
+      }
+
+      init().catch((e) => {
+        console.error(e);
+        alert(String(e));
+      });
+    </script>
+  </body>
+</html>
