@@ -76,6 +76,27 @@ layout: default
     margin-top: 1.5rem;
   }
 
+  .story-grid-ppd .story-card {
+    position: relative;
+  }
+
+  .story-step {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    color: var(--brand-ink);
+    font-weight: 600;
+    font-size: 0.8rem;
+    display: grid;
+    place-items: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+  }
+
   .ph-grid {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -457,18 +478,21 @@ layout: default
         <button type="button" data-ppd="d2">Dataset 2</button>
       </div>
 
-      <div class="story-grid">
+      <div class="story-grid story-grid-ppd">
         <div class="story-card compact">
+          <span class="story-step">1</span>
           <h5>Raw Data</h5>
           <p>Raw observations with strong phase variation and noise.</p>
           <img data-ppd-img="raw" class="story-zoom dark-mode-img" data-legend-img="figs/ppd/ppd_legend_raw.svg" src="figs/ppd/ppd_d1_parts/ex1(1).png" alt="Raw data plot">
         </div>
         <div class="story-card compact">
+          <span class="story-step">2</span>
           <h5>Challenge</h5>
           <p>Fully aligned data can over-align, obscuring meaningful structure.</p>
           <img data-ppd-img="challenge" class="story-zoom dark-mode-img" data-legend-img="figs/ppd/ppd_legend_challenge.svg" src="figs/ppd/ppd_d1_parts/ex1(2).png" alt="Over-aligned raw data plot">
         </div>
         <div class="story-card solution">
+          <span class="story-step">3</span>
           <h5>Solution</h5>
           <p>PPD visualizes topological structure and guides optimal tuning.</p>
           <div class="story-row">
@@ -477,6 +501,7 @@ layout: default
           </div>
         </div>
         <div class="story-card compact">
+          <span class="story-step">4</span>
           <h5>Result</h5>
           <p>Recovered signals align with ground truth and reveal hidden patterns.</p>
           <img data-ppd-img="result" class="story-zoom dark-mode-img" data-legend-img="figs/ppd/ppd_legend_result.svg" src="figs/ppd/ppd_d1_parts/ex1(5).png" alt="Recovered signal result plot">
@@ -588,6 +613,7 @@ layout: default
         })();
       </script>
 
+
       <!--
       <p>
         To mitigate this, I developed the <strong>Peak Persistence Diagram (PPD)</strong>, a robust topological signal estimation framework. PPD identifies and summarizes significant internal peaks, effectively filtering noise without the need for arbitrary parameter tuning. <strong><i>This approach achieved a 25–60% reduction in RMSE compared to state-of-the-art baselines</i></strong>, demonstrating superior accuracy in recovering true signal structures from noisy data.
@@ -696,13 +722,14 @@ layout: default
 
       <div class="ph-grid">
         <div class="story-card compact">
-          <h5>Population Context</h5>
-          <p><strong>The Cohort (88 Subjects)</strong> We visualize fibers for a single connection (ROI pair) across 88 subjects. This defines a "normative" baseline, allowing us to see if an individual's structure is typical or an anomaly.</p>
+          <h5>HIGH-DIMENSIONAL NETWORK CONTEXT</h5>
+          <p><strong>3D Tractography Visualization</strong></p> <p>The figure displays 3D white matter streamlines connecting a single pair of Regions of Interest (ROIs). This geometric structure represents just one entry in our dataset: [3D Tracts] × [68×68 Connectivity Matrix] × [88 Subjects], capturing the full structural complexity of the brain.</p>
           <img src="figs/PH/streamline_left.png" alt="Scatter plot (left)">
         </div>
         <div class="story-card compact">
-          <h5>Relational Embedding</h5>
-          <p><strong>0-dim Persistence Summary</strong> Before comparison, we compute the 0-dimensional persistent homology (H0) for each subject. This generates a "barcode" summarizing the multiscale clustering structure of fiber endpoints, serving as the fundamental topological feature.</p>
+          <h5>TOPOLOGICAL TRANSFORMATION</h5>
+          <p><strong>From Geometry to Topology</strong></p> 
+          <p>We translate raw 3D geometric data into robust topological descriptors using 0-dimensional persistent homology (H0). This process tracks the multiscale clustering of fiber endpoints, generating a "persistence barcode" that captures the intrinsic structural organization while filtering out noise and rigid coordinate variations.</p>
           <div class="ph-stack">
             <img src="figs/PH/streamline_right.png" alt="Scatter plot (right)">
             <img src="figs/PH/ph0.svg" alt="PH0 plot">
@@ -710,7 +737,7 @@ layout: default
         </div>
         <div class="story-card compact">
           <h5>Rank-Based Feature</h5>
-          <p><strong>Median Rank Connectivity Matrix</strong> Topological differences are converted into rankings, and the median rank is assigned to the subject's 68×68 ROI Matrix. A high rank indicates a unique "fingerprint," while a low rank suggests a common pattern.</p>
+          <p><strong>Median Rank Connectivity Matrix</strong></p> <p>Topological differences are converted into rankings, and the median rank is assigned to the subject's 68×68 ROI Matrix. A high rank indicates a unique "fingerprint," while a low rank suggests a common pattern.</p>
           <img src="figs/PH/plot_rankanlaysis.png" alt="Rank analysis plot">
         </div>
       </div>
