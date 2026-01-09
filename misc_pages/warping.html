@@ -203,14 +203,14 @@
       function calcLayout(w) {
         stacked = false;
         if (w < 420) {
-            margin = 18;
-            gap = 14;
+            margin = 12;
+            gap = 18;
         } else {
             margin = 35;
             gap = 30;
         }
         plotSize = (w - (margin * 2) - gap) / 2;
-        plotSize = Math.max(120, plotSize);
+        plotSize = Math.max(110, plotSize);
       }
 
       function calcTotalHeight() {
@@ -405,11 +405,12 @@
         stroke(cFrame); noFill(); rect(0,0,size,size);
         
         noStroke(); fill(cText); textSize(10); 
-        // x-label 위치 조정 (조금 더 아래로)
-        textAlign(CENTER, TOP); text(xLabel, size/2, size+10);
+        // x-label 위치 조정 (플랏에 더 가깝게)
+        textAlign(CENTER, TOP); text(xLabel, size/2, size+2);
         
-        // y-label 위치 조정 (왼쪽으로 더 밀어서 잘림 방지)
-        push(); translate(-18, size/2); rotate(-HALF_PI); 
+        // y-label 위치 조정 (플랏에 더 가깝게)
+        const yOffset = size < 180 ? -2 : -6;
+        push(); translate(yOffset, size/2); rotate(-HALF_PI); 
         textAlign(CENTER, BOTTOM); text(yLabel, 0, 0); pop();
       }
 
