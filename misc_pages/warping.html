@@ -83,6 +83,18 @@
       .dot { width: 8px; height: 8px; border-radius: 50%; }
       .note { color: var(--note); }
 
+      @media (max-width: 480px) {
+        body {
+          padding: 12px 0;
+          font-size: 12px;
+        }
+
+        .legend {
+          font-size: 0.68rem;
+          gap: 10px;
+        }
+      }
+
     </style>
   </head>
   <body>
@@ -189,18 +201,16 @@
       }
 
       function calcLayout(w) {
-        if (w < 400) {
-            stacked = true;
-            margin = 35; 
-            gap = 30;
-            plotSize = w - (margin * 2); 
+        stacked = false;
+        if (w < 420) {
+            margin = 18;
+            gap = 14;
         } else {
-            stacked = false;
-            margin = 35; // 여백 확보
+            margin = 35;
             gap = 30;
-            // 500px 너비에서 여백 빼고 남은 공간을 반으로 나눔
-            plotSize = (w - (margin * 2) - gap) / 2;
         }
+        plotSize = (w - (margin * 2) - gap) / 2;
+        plotSize = Math.max(120, plotSize);
       }
 
       function calcTotalHeight() {

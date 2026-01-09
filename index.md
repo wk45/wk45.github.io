@@ -74,27 +74,12 @@ layout: default
     grid-template-columns: repeat(4, minmax(0, 1fr));
     gap: 1.25rem;
     margin-top: 1.5rem;
+    width: 100%;
+    box-sizing: border-box;
   }
 
   .story-grid-ppd .story-card {
     position: relative;
-  }
-
-  .story-step {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    width: 26px;
-    height: 26px;
-    border-radius: 50%;
-    background: var(--surface);
-    border: 1px solid var(--border);
-    color: var(--brand-ink);
-    font-weight: 600;
-    font-size: 0.8rem;
-    display: grid;
-    place-items: center;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
   }
 
   .ph-grid {
@@ -116,6 +101,8 @@ layout: default
     border-radius: 14px;
     padding: 1rem;
     cursor: zoom-in;
+    position: relative;
+    box-sizing: border-box;
     transition: transform 0.2s ease, box-shadow 0.2s ease;
   }
 
@@ -125,12 +112,34 @@ layout: default
     color: var(--brand-ink);
     letter-spacing: 0.02em;
     text-transform: uppercase;
+    text-align: center;
+  }
+
+  .story-card .story-step {
+    position: absolute;
+    top: -1px;
+    left: -1px;
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    color: var(--brand-ink);
+    font-weight: 600;
+    font-size: 0.8rem;
+    display: grid;
+    place-items: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+    pointer-events: none;
   }
 
   .story-card p {
     margin: 0 0 0.75rem 0;
     font-size: 0.85rem;
     color: var(--text-muted);
+    max-width: 92%;
+    margin-left: auto;
+    margin-right: auto;
   }
 
   .story-card img {
@@ -259,6 +268,62 @@ layout: default
     font-weight: 600;
   }
 
+  .story-stepper {
+    display: none;
+    flex-direction: column;
+    gap: 10px;
+    align-items: center;
+    width: 44px;
+    padding-top: 25px;
+  }
+
+  .story-stepper button {
+    width: 32px;
+    height: 32px;
+    border-radius: 999px;
+    border: 1px solid var(--border);
+    background: var(--neutral-soft);
+    color: var(--text-muted);
+    font-size: 0.85rem;
+    cursor: pointer;
+  }
+
+  .story-stepper button.active {
+    background: var(--brand-soft);
+    color: var(--brand-ink);
+    font-weight: 600;
+    border-color: var(--brand-ink);
+  }
+
+  .story-tabs .story-stepper {
+    display: flex;
+  }
+
+  .story-tabs .story-mobile-wrap {
+    display: grid;
+    grid-template-columns: 44px minmax(0, 1fr);
+    gap: 12px;
+    align-items: start;
+  }
+
+  .story-tabs .story-grid,
+  .story-tabs .ph-grid {
+    display: block;
+    padding: 0;
+  }
+
+  .story-tabs .story-mobile-wrap .story-card {
+    display: none;
+  }
+
+  .story-tabs .story-mobile-wrap .story-card.is-active {
+    display: block;
+  }
+
+  .story-tabs .ppd-dots {
+    display: none;
+  }
+
   @media screen and (max-width: 960px) {
     .story-grid {
       grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -267,13 +332,14 @@ layout: default
     .ph-grid {
       grid-template-columns: repeat(2, minmax(0, 1fr));
     }
+
+    .story-card img {
+      max-width: 65%;
+      margin: 0 auto;
+    }
   }
 
   @media screen and (max-width: 640px) {
-    .story-grid {
-      grid-template-columns: 1fr;
-    }
-
     .ph-grid {
       grid-template-columns: 1fr;
     }
@@ -297,12 +363,14 @@ layout: default
 
     .story-card p {
       font-size: 0.8rem;
+      max-width: 86%;
     }
 
     .story-card.compact img,
     .story-card.solution img {
-      max-width: 100%;
+      max-width: 65%;
     }
+
 
     .iframe-container {
       margin: 1rem 0;
@@ -628,6 +696,10 @@ layout: default
           document.addEventListener("click", function (e) {
             var card = e.target.closest(".story-card");
             if (!card) return;
+            var ppdRoot = document.getElementById("ppd");
+            if (!ppdRoot || !ppdRoot.contains(card)) return;
+            var isTabs = document.documentElement.classList.contains("story-tabs");
+            if (isTabs && !card.classList.contains("is-active")) return;
             openLightbox(card);
           });
 
@@ -676,21 +748,25 @@ layout: default
 
       <div class="story-grid" style="margin-top: 1.25rem;">
         <div class="story-card compact">
+          <span class="story-step">1</span>
           <h5>Raw Data</h5>
           <p><strong>Noisy Observations</strong> </p><p>Raw COVID-19 death rates show phase variation that hides the shared wave across countries.</p>
           <img src="figs/bayes_reg/converted/bay01.svg" alt="Raw data spaghetti plot">
         </div>
         <div class="story-card compact">
+          <span class="story-step">2</span>
           <h5>The Strategy</h5>
           <p><strong>Informative Priors</strong></p> <p>A Gaussian process prior constrains warping to plausible time windows (yellow zones).</p>
           <img src="figs/bayes_reg/converted/bay02.svg" alt="Covariance prior heatmap">
         </div>
         <div class="story-card compact">
+          <span class="story-step">3</span>
           <h5>The Mechanism</h5>
           <p><strong>Probabilistic Warping</strong></p><p> We model a posterior over warpings to capture uncertainty and avoid over-alignment.</p>
           <img src="figs/bayes_reg/converted/bay03.svg" alt="Posterior warping functions">
         </div>
         <div class="story-card compact">
+          <span class="story-step">4</span>
           <h5>Result</h5>
           <p><strong>Robust Recovery</strong></p><p> Recovers sharp peaks with fewer artifacts and ~70% lower error.</p>
           <img src="figs/bayes_reg/converted/bay04.svg" alt="Recovered aligned signals">
@@ -752,11 +828,13 @@ layout: default
 
       <div class="ph-grid">
         <div class="story-card compact">
+          <span class="story-step">1</span>
           <h5>HIGH-DIMENSIONAL NETWORK CONTEXT</h5>
           <p><strong>3D Tractography Visualization</strong></p> <p>The figure displays 3D white matter streamlines connecting a single pair of Regions of Interest (ROIs). This geometric structure represents just one entry in our dataset: [3D Tracts] × [68×68 Connectivity Matrix] × [88 Subjects], capturing the full structural complexity of the brain.</p>
           <img src="figs/PH/streamline_left.png" alt="Scatter plot (left)">
         </div>
         <div class="story-card compact">
+          <span class="story-step">2</span>
           <h5>TOPOLOGICAL TRANSFORMATION</h5>
           <p><strong>From Geometry to Topology</strong></p> 
           <p>We translate raw 3D geometric data into robust topological descriptors using 0-dimensional persistent homology (H0). This process tracks the multiscale clustering of fiber endpoints, generating a "persistence barcode" that captures the intrinsic structural organization while filtering out noise and rigid coordinate variations.</p>
@@ -766,6 +844,7 @@ layout: default
           </div>
         </div>
         <div class="story-card compact">
+          <span class="story-step">3</span>
           <h5>Rank-Based Feature</h5>
           <p><strong>Median Rank Connectivity Matrix</strong></p> <p>Topological differences are converted into rankings, and the median rank is assigned to the subject's 68×68 ROI Matrix. A high rank indicates a unique "fingerprint," while a low rank suggests a common pattern.</p>
           <img src="figs/PH/plot_rankanlaysis.png" alt="Rank analysis plot">
@@ -818,4 +897,89 @@ Noises", in Computational Statistics and Data Analysis. (Under review)</li>
   });
 
   document.addEventListener("DOMContentLoaded", initIframeResize);
+</script>
+
+<script>
+  (function () {
+    function enableStoryTabs() {
+      var enabled = window.matchMedia("(max-width: 768px)").matches;
+      document.documentElement.classList.toggle("story-tabs", enabled);
+      document.body.classList.toggle("story-tabs", enabled);
+
+      document.querySelectorAll(".story-grid, .ph-grid").forEach(function (grid) {
+        var cards = Array.from(grid.querySelectorAll(".story-card"));
+        if (!cards.length) return;
+
+        var stepper = grid.previousElementSibling;
+        if (!stepper || !stepper.classList.contains("story-stepper")) {
+          stepper = document.createElement("div");
+          stepper.className = "story-stepper";
+          cards.forEach(function (_, index) {
+            var btn = document.createElement("button");
+            btn.type = "button";
+            btn.textContent = String(index + 1);
+            btn.dataset.stepIndex = String(index);
+            stepper.appendChild(btn);
+          });
+          grid.parentNode.insertBefore(stepper, grid);
+        }
+
+        if (enabled) {
+          var wrap = grid.closest(".story-mobile-wrap");
+          if (!wrap) {
+            wrap = document.createElement("div");
+            wrap.className = "story-mobile-wrap";
+            grid.parentNode.insertBefore(wrap, grid);
+            wrap.appendChild(stepper);
+            wrap.appendChild(grid);
+          }
+
+          var activeIndex = cards.findIndex(function (c) { return c.classList.contains("is-active"); });
+          if (activeIndex < 0) activeIndex = 0;
+          cards.forEach(function (card, index) {
+            card.classList.toggle("is-active", index === activeIndex);
+          });
+          stepper.querySelectorAll("button").forEach(function (btn, index) {
+            btn.classList.toggle("active", index === activeIndex);
+          });
+        } else {
+          var currentWrap = grid.closest(".story-mobile-wrap");
+          if (currentWrap && currentWrap.parentNode) {
+            currentWrap.parentNode.insertBefore(stepper, currentWrap);
+            currentWrap.parentNode.insertBefore(grid, currentWrap);
+            currentWrap.remove();
+          }
+          cards.forEach(function (card) {
+            card.classList.remove("is-active");
+          });
+          stepper.querySelectorAll("button").forEach(function (btn) {
+            btn.classList.remove("active");
+          });
+        }
+
+        if (!stepper.dataset.stepReady) {
+          stepper.dataset.stepReady = "true";
+          stepper.addEventListener("click", function (event) {
+            var btn = event.target.closest("button[data-step-index]");
+            if (!btn) return;
+            if (!document.documentElement.classList.contains("story-tabs")) return;
+            var index = Number(btn.dataset.stepIndex);
+            cards.forEach(function (card, i) {
+              card.classList.toggle("is-active", i === index);
+            });
+            stepper.querySelectorAll("button").forEach(function (b, i) {
+              b.classList.toggle("active", i === index);
+            });
+          });
+        }
+      });
+    }
+
+    if (document.readyState === "loading") {
+      document.addEventListener("DOMContentLoaded", enableStoryTabs);
+    } else {
+      enableStoryTabs();
+    }
+    window.addEventListener("resize", enableStoryTabs);
+  })();
 </script>

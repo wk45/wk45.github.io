@@ -299,11 +299,17 @@ section {
 }
 
 @media screen and (max-width: 768px) {
+  .wrapper {
+    width: 100% !important;
+    padding: 0 16px;
+    box-sizing: border-box;
+  }
+
   header, section {
     width: 100% !important;
-    width: auto !important;
     position: relative !important;
     max-width: 100%;
+    box-sizing: border-box;
   }
 
   header img {
