@@ -156,18 +156,22 @@
       // Right Margin: 15px
       // Total = 15 + 240 + 20 + 210 + 15 = 500
       
-      const margin = 15;
-      const colGap = 20;     
-      const rowGap = 20;     // Gap between H0 and H1 vertical
-      
-      const scatterSize = 240; 
-      const barcodeW = 210;    
-      
-      // Calculate barcode height
-      const barcodeH = (scatterSize - rowGap) / 2; 
+      const baseW = 500;
+      const baseMargin = 15;
+      const baseColGap = 20;
+      const baseRowGap = 20;     // Gap between H0 and H1 vertical
+      const baseScatter = 240;
+      const baseBarcodeW = 210;
 
-      const totalW = margin + scatterSize + colGap + barcodeW + margin;
-      const totalH = margin + scatterSize + margin;
+      let margin = baseMargin;
+      let colGap = baseColGap;
+      let rowGap = baseRowGap;
+      let scatterSize = baseScatter;
+      let barcodeW = baseBarcodeW;
+      let barcodeH = (scatterSize - rowGap) / 2;
+      let totalW = baseW;
+      let totalH = baseMargin + baseScatter + baseMargin;
+      let scaleFactor = 1;
 
       const cBlue = '#4E79A7';
       const cRed = '#E15759';
@@ -232,6 +236,7 @@
 
       function setup() {
         applyThemeFromParent();
+        calcLayout();
         let c = createCanvas(totalW, totalH);
         c.parent('canvas-wrapper');
         
@@ -266,6 +271,26 @@
         
         axisMax = (lastDeath > 0) ? lastDeath * 1.15 : 0.5;
         maxLabel.innerText = axisMax.toFixed(2);
+      }
+
+      function windowResized() {
+        calcLayout();
+        resizeCanvas(totalW, totalH);
+      }
+
+      function calcLayout() {
+        var container = document.getElementById('canvas-wrapper');
+        if (!container) return;
+        var w = container.getBoundingClientRect().width || baseW;
+        scaleFactor = Math.min(1, w / baseW);
+        margin = baseMargin * scaleFactor;
+        colGap = baseColGap * scaleFactor;
+        rowGap = baseRowGap * scaleFactor;
+        scatterSize = baseScatter * scaleFactor;
+        barcodeW = baseBarcodeW * scaleFactor;
+        barcodeH = (scatterSize - rowGap) / 2;
+        totalW = margin + scatterSize + colGap + barcodeW + margin;
+        totalH = margin + scatterSize + margin;
       }
       
       function createJitteredCircle(cx, cy, r, count) {
@@ -385,7 +410,7 @@
         strokeWeight(1);
         
         // Label
-        noStroke(); fill(cTextStrong); textAlign(LEFT, TOP); textStyle(BOLD); textSize(10); 
+        noStroke(); fill(cTextStrong); textAlign(LEFT, TOP); textStyle(BOLD); textSize(10 * scaleFactor); 
         text(label, 5, 4); textStyle(NORMAL);
         
         if(intervals.length === 0) {
