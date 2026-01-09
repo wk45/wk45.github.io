@@ -17,7 +17,7 @@
 <meta name="twitter:card" content="summary" />
 <meta property="twitter:title" content="Woo Min Kim" />
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"WebSite","headline":"Woo Min Kim","name":"Woo Min Kim","publisher":{"@type":"Organization","logo":{"@type":"ImageObject","url":"http://localhost:4000/ego.png"}},"url":"http://localhost:4000/"}</script>
+{"@context":"https://schema.org","@type":"WebSite","headline":"Woo Min Kim","name":"Woo Min Kim","publisher":{"@type":"Organization","logo":{"@type":"ImageObject","url":"http://localhost:4000/figs/ego/ego.png"}},"url":"http://localhost:4000/"}</script>
 <!-- End Jekyll SEO tag -->
 
     <link rel="stylesheet" href="/assets/css/style.css?v=">
@@ -54,7 +54,7 @@
         <!-- <h1 style="text-align: center;"><a href="http://localhost:4000/"></a></h1> -->
         
         
-          <img src="/ego.png" alt="Logo" style="display: block; margin: 0 auto; width: 70%;"/>
+          <img src="/figs/ego/ego.png" alt="Logo" style="display: block; margin: 0 auto; width: 70%;"/>
         
 
         <!-- <p></p> -->
@@ -94,6 +94,7 @@
           <a href="#tda"> ▫ Topological Feature Extraction with Human Brain Connectome</a><div> -->
         <div class="toc-row">
           <h3>Table of Contents</h3>
+          <button id="toc-toggle" class="toc-toggle" type="button" aria-expanded="true" aria-controls="toc-list">−</button>
           <button id="theme-toggle" class="theme-toggle" type="button" aria-pressed="false" aria-label="Toggle color theme">
             <svg class="theme-icon theme-icon-sun" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
               <circle cx="12" cy="12" r="4"></circle>
@@ -111,7 +112,7 @@
             </svg>
           </button>
         </div>
-        <ul>
+        <ul id="toc-list">
           <li><a href="#research">TECHNICAL EXPERTISE</a></li>
           <li><a href="#projects">PROJECTS</a>
             <ul>
@@ -409,6 +410,36 @@
 
     .ph-grid {
       grid-template-columns: 1fr;
+    }
+
+    .project-card {
+      padding: 1.25rem;
+      border-radius: 10px;
+    }
+
+    .project-card h3 {
+      font-size: 1.3rem;
+    }
+
+    .story-card {
+      padding: 0.85rem;
+    }
+
+    .story-card h5 {
+      font-size: 0.85rem;
+    }
+
+    .story-card p {
+      font-size: 0.8rem;
+    }
+
+    .story-card.compact img,
+    .story-card.solution img {
+      max-width: 100%;
+    }
+
+    .iframe-container {
+      margin: 1rem 0;
     }
   }
 
@@ -963,6 +994,39 @@ Noises", in Computational Statistics and Data Analysis. (Under review)</li>
         document.addEventListener("DOMContentLoaded", function () {
           broadcastTheme(theme);
         });
+
+        var tocToggle = document.getElementById("toc-toggle");
+        var tocList = document.getElementById("toc-list");
+        var header = document.querySelector("header");
+
+        function setTocCollapsed(collapsed) {
+          if (!header || !tocToggle) return;
+          header.classList.toggle("toc-collapsed", collapsed);
+          tocToggle.setAttribute("aria-expanded", collapsed ? "false" : "true");
+          tocToggle.textContent = collapsed ? "+" : "−";
+        }
+
+        if (tocToggle && tocList && header) {
+          tocToggle.addEventListener("click", function () {
+            var collapsed = header.classList.contains("toc-collapsed");
+            setTocCollapsed(!collapsed);
+          });
+
+          var mq = window.matchMedia && window.matchMedia("(max-width: 768px)");
+          if (mq) {
+            var onChange = function () {
+              setTocCollapsed(mq.matches);
+            };
+            if (mq.addEventListener) {
+              mq.addEventListener("change", onChange);
+            } else if (mq.addListener) {
+              mq.addListener(onChange);
+            }
+            onChange();
+          } else {
+            setTocCollapsed(false);
+          }
+        }
       })();
     </script>
     

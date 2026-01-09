@@ -277,6 +277,36 @@ layout: default
     .ph-grid {
       grid-template-columns: 1fr;
     }
+
+    .project-card {
+      padding: 1.25rem;
+      border-radius: 10px;
+    }
+
+    .project-card h3 {
+      font-size: 1.3rem;
+    }
+
+    .story-card {
+      padding: 0.85rem;
+    }
+
+    .story-card h5 {
+      font-size: 0.85rem;
+    }
+
+    .story-card p {
+      font-size: 0.8rem;
+    }
+
+    .story-card.compact img,
+    .story-card.solution img {
+      max-width: 100%;
+    }
+
+    .iframe-container {
+      margin: 1rem 0;
+    }
   }
 
   /* --- Sub-section divider --- */
